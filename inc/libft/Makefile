@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 12:39:11 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 13:51:46 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/11 13:56:30 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ fclean:			clean
 		@echo "$(RED)$(NAME) archive deleted!$(DEFAULT)"
 
 re:	fclean all
+
+.SILENT:
 
 .PHONY:			all clean fclean re
 
