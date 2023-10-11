@@ -9,9 +9,9 @@ int	main(void)
 	while (1)
 	{
 		readline(buf);
-		if (ft_strncmp("exit", buf, ft_strlen("exit") + 1))
+		if (!ft_strncmp("exit", readline(buf), ft_strlen("exit") + 1))
 			exit(0);
 	}
-	free(buf);
+	// free(buf);
 	return (0);
 }
