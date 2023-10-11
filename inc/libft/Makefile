@@ -3,12 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 12:39:11 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 12:39:13 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/11 13:56:30 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME			= libft.a
+
+CC				= gcc
+RM				= rm -rf
+AR				= ar -rcs $@ $^
+CFLAGS			= -Wall -Wextra -Werror -I.
 
 SRCS			=	ft_isalnum.c ft_isprint.c ft_strncmp.c\
 					ft_isalpha.c ft_memcpy.c ft_memchr.c\
@@ -28,23 +35,30 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_strncmp.c\
 
 OBJS	=	${SRCS:.c=.o}
 
-CC				= gcc
-RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -I.
-
-NAME			= libft.a
-
-all:			$(NAME)
+all: $(NAME)
 
 $(NAME):  $(OBJS)
-				ar rcs $@ $^
+		@$(AR)
+		@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 clean:
-				$(RM) $(OBJS)
+		@$(RM) $(OBJS)
+		@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
 
 fclean:			clean
-				$(RM) $(NAME)
+		@$(RM) $(NAME)
+		@echo "$(RED)$(NAME) archive deleted!$(DEFAULT)"
 
-re:				fclean $(NAME)
+re:	fclean all
+
+.SILENT:
 
 .PHONY:			all clean fclean re
+
+# COLORS DEFENITION
+
+RED = \033[1;31m
+DEFAULT = \033[0m
+GREEN = \033[1;32m
+BOLD = \033[1m
+YELLOW = \033[1;33m
