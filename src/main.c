@@ -19,6 +19,14 @@ void handle_signal(int signo)
 	}
 }
 
+<<<<<<< HEAD
+=======
+typedef struct data {
+	int *signals;
+	char *buf;
+}
+
+>>>>>>> 8c25933a27e7dbc6eb48c009cfc5817235eea70c
 int	main(void)
 {
 
@@ -39,6 +47,10 @@ int	main(void)
 		if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
 			exit(0);
 	}
+<<<<<<< HEAD
 	free(data->promt);
+=======
+	// free(buf);
+>>>>>>> 8c25933a27e7dbc6eb48c009cfc5817235eea70c
 	return (0);
 }
