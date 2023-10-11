@@ -6,7 +6,7 @@
 #    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 18:40:49 by alappas          ###   ########.fr        #
+#    Updated: 2023/10/12 00:20:20 by alappas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 RM			= rm -rf
 MAKE_LIB	= make --no-print-directory -C
-
+RL_PREFIX	= $(HOME)/.local/pkg/readline
+RL_CFLAGS   = -I $(RL_PREFIX)/include
+RL_LIBS     = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
 # FILES AND PATH
 
 SRCS		= main.c
@@ -32,12 +34,12 @@ OBJS_P		=	$(addprefix $(OBJS_F), $(OBJS))
 # COMMANDS
 
 $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
-	@mkdir -p $(OBJS_F)
-	@$(CC) $(FLAGS) -c $< -o $@
+	@mkdir -p $(OBJS_F) 
+	@$(CC) $(FLAGS) $(RL_CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_P)
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBFT)/libft.a -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME) $(OBJS_P)
+	@$(CC) $(FLAGS) $(LIBFT)/libft.a -o $(NAME) $(OBJS_P) $(RL_LIBS)
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 all: $(NAME)
