@@ -17,11 +17,5 @@ int main()
 			break ;
 	}
 	free(buf);
-	minish.infile = open(".minishell_tmp", O_RDONLY);
-	if (minish.infile < 0)
-	{
-		unlink(".minishell_tmp");
-		perror(ERR_MINISHELL);
-	}
 	return (0);
 }
