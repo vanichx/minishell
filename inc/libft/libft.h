@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 13:31:33 by alappas           #+#    #+#             */
-/*   Updated: 2023/05/26 16:38:44 by alappas          ###   ########.fr       */
+/*   Created: 2023/10/11 12:39:02 by ipetruni          #+#    #+#             */
+/*   Updated: 2023/10/11 12:39:03 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef LIBFT_H
 # define LIBFT_H

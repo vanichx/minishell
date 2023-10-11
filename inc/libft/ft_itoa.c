@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 19:58:28 by alappas           #+#    #+#             */
-/*   Updated: 2023/08/17 20:38:27 by alappas          ###   ########.fr       */
+/*   Created: 2023/10/11 12:36:47 by ipetruni          #+#    #+#             */
+/*   Updated: 2023/10/11 12:40:04 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "libft.h"
 

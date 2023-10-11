@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/11 12:39:11 by ipetruni          #+#    #+#              #
+#    Updated: 2023/10/11 12:39:13 by ipetruni         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS			=	ft_isalnum.c ft_isprint.c ft_strncmp.c\
 					ft_isalpha.c ft_memcpy.c ft_memchr.c\
 					ft_tolower.c  ft_isascii.c ft_strlcpy.c\
