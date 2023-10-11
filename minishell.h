@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 12:30:30 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:07:53 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,66 @@
 # define MINISHELL_H
 
 /* printf */
-#include <stdio.h>
+# include <stdio.h>
 
 /* readline */
-#include <readline/readline.h>
+# include <readline/readline.h>
 
 /* strerror, perror */
-#include <string.h>
+# include <string.h>
 
 /* stat, lstat, fstat */
-#include <sys/stat.h>
+# include <sys/stat.h>
 
 /* malloc, free, exit */
-#include <stdlib.h>
+# include <stdlib.h>
 
 /* tcsetattr, tcgetattr */
-#include <termios.h>
+# include <termios.h>
 
 /* command history functions */
-#include <readline/history.h>
+# include <readline/history.h>
 
 /* opendir, readdir, closedir */
-#include <dirent.h>
+# include <dirent.h>
 
 /* wait, waitpid, wait3, wait4 */
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 /* signal, sigaction, sigemptyset, sigaddset, kill */
-#include <signal.h>
+# include <signal.h>
 
 /* tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs */
-#include <termcap.h>
+# include <termcap.h>
 
 /*	write, access, close, fork,	getcwd, chdir, unlink, execve, dup, dup2, pipe, isatty, ttyname, ttyslot */
-#include <unistd.h>
+# include <unistd.h>
 
+/* Our Get Next Line Program */
+# include "inc/gnl/get_next_line.h"
 
+/* Our Get Next Line Program */
+# include "inc/libft/libft.h"
+
+/* error-defenitions */
+# define ERR_MINISHELL "minishell"
+
+/* data_structures */
+
+typedef struct s_minsh
+{
+	pid_t	pid;
+	int		infile;
+	int		outfile;
+	int		*pipe;
+	int		idx;
+	int		cmd_nbrs;
+	int		here_doc;
+	int		pipe_nbrs;
+	char	*cmd;
+	char	*env_paths;
+	char	**cmd_args;
+	char	**cmd_paths;
+}				t_minsh;
 
 #endif
