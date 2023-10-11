@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 11:51:20 by ipetruni          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/10/11 16:18:15 by alappas          ###   ########.fr        #
-=======
-#    Updated: 2023/10/11 16:18:07 by eseferi          ###   ########.fr        #
->>>>>>> ff0e53c65dc306a40c5b81888e7c62263e6a0af3
+#    Updated: 2023/10/11 17:18:10 by alappas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
