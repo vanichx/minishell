@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/11 11:51:20 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 17:18:10 by alappas          ###   ########.fr        #
+#    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
+#    Updated: 2023/10/11 18:40:49 by alappas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
 
 $(NAME): $(OBJS_P)
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBFT)/libft.a -lreadline -o $(NAME) $(OBJS_P)
+	@$(CC) $(FLAGS) $(LIBFT)/libft.a -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline -o $(NAME) $(OBJS_P)
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 all: $(NAME)

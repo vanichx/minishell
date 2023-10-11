@@ -26,6 +26,8 @@ int	main(void)
 		if (!ft_strncmp("exit", promt, ft_strlen("exit") + 1))
 			exit(0);
 	}
+	rl_on_new_line();
+	rl_replace_line()
 	// free(buf);
 	return (0);
 }
