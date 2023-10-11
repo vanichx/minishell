@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 11:51:20 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 15:48:58 by alappas          ###   ########.fr        #
+#    Updated: 2023/10/11 16:18:07 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,13 +36,8 @@ $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_P)
-<<<<<<< HEAD
-	@$(MAKE_LIB) $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBFT)/libft.a -o $(NAME) $(OBJS_P)
-=======
 	@$(MAKE) -C $(LIBFT)
 	@$(CC) $(FLAGS) $(LIBFT)/libft.a -lreadline -o $(NAME) $(OBJS_P)
->>>>>>> refs/remotes/origin/main
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 all: $(NAME)
