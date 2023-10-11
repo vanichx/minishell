@@ -6,14 +6,14 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 11:51:20 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 11:51:26 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/11 12:15:50 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS		=	main.c
 
 CC_FLAGS		=	-Wall -Wextra -Werror -g
-CC				=	gcc
+CC				= gcc
 SRCS_F			= src/
 OBJS_F			= obj/
 
@@ -42,6 +42,6 @@ clean:
 fclean:	clean
 	@rm -rf $(NAME)
 
-re:		fclean all
+re: fclean all
 
 .PHONY:	all clean fclean re
