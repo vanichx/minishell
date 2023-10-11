@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 15:07:53 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:35:46 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@
 /*	write, access, close, fork,	getcwd, chdir, unlink, execve, dup, dup2, pipe, isatty, ttyname, ttyslot */
 # include <unistd.h>
 
-/* Our Get Next Line Program */
-# include "inc/gnl/get_next_line.h"
 
-/* Our Get Next Line Program */
+
+/* libft */
 # include "inc/libft/libft.h"
 
 /* error-defenitions */

@@ -13,7 +13,7 @@ int main()
 	while (1)
 	{
 		write(1, "minishell> ", 12);
-		if (get_next_line(0, &buf) < 0)
+		if (readline(&buf) < 0)
 			exit(1);
 		if (!ft_strncmp("exit", buf, ft_strlen("exit") + 1))
 			break ;
