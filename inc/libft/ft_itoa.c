@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 12:36:47 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 12:40:04 by ipetruni         ###   ########.fr       */
+/*   Created: 2023/10/11 12:43:26 by ipetruni          #+#    #+#             */
+/*   Updated: 2023/10/11 12:43:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "libft.h"
 
@@ -65,7 +64,7 @@ char	*ft_itoa(int n)
 	sign = ft_sign(n);
 	if (n < 0)
 		len = len + 1;
-	str = malloc(sizeof(char) * (len + 1));
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	str[len] = '\0';
