@@ -16,6 +16,7 @@ NAME		= minishell
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 RM			= rm -rf
+MAKE_LIB	= make --no-print-directory -C
 
 # FILES AND PATH
 
@@ -35,8 +36,13 @@ $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
 	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_P)
+<<<<<<< HEAD
+	@$(MAKE_LIB) $(LIBFT)
+	@$(CC) $(FLAGS) $(LIBFT)/libft.a -o $(NAME) $(OBJS_P)
+=======
 	@$(MAKE) -C $(LIBFT)
 	@$(CC) $(FLAGS) $(LIBFT)/libft.a -lreadline -o $(NAME) $(OBJS_P)
+>>>>>>> refs/remotes/origin/main
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 all: $(NAME)
