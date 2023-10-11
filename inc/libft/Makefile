@@ -7,16 +7,14 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_strncmp.c\
 					ft_strdup.c ft_strrchr.c ft_memcmp.c\
 					ft_strlcat.c ft_memmove.c ft_substr.c\
 					ft_strjoin.c ft_strtrim.c ft_split.c\
-					ft_itoa.c ft_putchar_fd.c ft_putnbr_fd.c\
+					ft_putchar_fd.c ft_putnbr_fd.c ft_itoa.c\
 					ft_putstr_fd.c ft_putendl_fd.c ft_strmapi.c\
+					ft_lstnew.c ft_lstadd_front.c ft_lstsize.c\
+					ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
+					ft_lstclear.c ft_lstiter.c ft_lstmap.c\
 					ft_striteri.c
 
-SRCS_BONUS 		=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c\
-					ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
-					ft_lstclear.c ft_lstiter.c ft_lstmap.c
-
 OBJS	=	${SRCS:.c=.o}
-BONUS_OBJ	= ${SRCS_BONUS:.c=.o}
 
 CC				= gcc
 RM				= rm -f
@@ -29,15 +27,12 @@ all:			$(NAME)
 $(NAME):  $(OBJS)
 				ar rcs $@ $^
 
-bonus:			$(OBJS) $(BONUS_OBJ)
-				ar rcs ${NAME} $(OBJS) $(BONUS_OBJ)
-
 clean:
-				$(RM) $(OBJS) $(BONUS_OBJ)
+				$(RM) $(OBJS)
 
 fclean:			clean
 				$(RM) $(NAME)
 
 re:				fclean $(NAME)
 
-.PHONY:			all clean fclean re bonus
+.PHONY:			all clean fclean re
