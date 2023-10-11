@@ -3,15 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-<<<<<<< HEAD
-#    Created: 2023/10/11 11:51:20 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 19:12:30 by eseferi          ###   ########.fr        #
-=======
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/11 17:18:53 by ipetruni         ###   ########.fr        #
->>>>>>> 8c25933a27e7dbc6eb48c009cfc5817235eea70c
+#    Updated: 2023/10/11 20:31:05 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +17,9 @@ CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 RM			= rm -rf
 MAKE_LIB	= make --no-print-directory -C
-READLINE	= -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
+RL_PREFIX	= $(HOME)/.local/pkg/readline
+RL_CFLAGS   = -I $(RL_PREFIX)/include
+RL_LIBS     = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
 # FILES AND PATH
 
 SRCS		= main.c
@@ -37,12 +34,12 @@ OBJS_P		=	$(addprefix $(OBJS_F), $(OBJS))
 # COMMANDS
 
 $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
-	@mkdir -p $(OBJS_F)
-	@$(CC) $(FLAGS) -c $< -o $@
+	@mkdir -p $(OBJS_F) 
+	@$(CC) $(FLAGS) $(RL_CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_P)
 	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBFT)/libft.a $(READLINE) -o $(NAME) $(OBJS_P)
+	@$(CC) $(FLAGS) $(LIBFT)/libft.a -o $(NAME) $(OBJS_P) $(RL_LIBS)
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 all: $(NAME)
