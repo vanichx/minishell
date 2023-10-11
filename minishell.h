@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 15:38:25 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:00:35 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,24 @@
 
 /* data_structures */
 
-typedef struct s_minsh
-{
-	pid_t	pid;
-	int		infile;
-	int		outfile;
-	int		*pipe;
-	int		idx;
-	int		cmd_nbrs;
-	int		here_doc;
-	int		pipe_nbrs;
-	char	*cmd;
-	char	*env_paths;
-	char	**cmd_args;
-	char	**cmd_paths;
-}				t_minsh;
+// typedef struct s_minsh
+// {
+// 	pid_t	pid;
+// 	int		infile;
+// 	int		outfile;
+// 	int		*pipe;
+// 	int		idx;
+// 	int		cmd_nbrs;
+// 	int		here_doc;
+// 	int		pipe_nbrs;
+// 	char	*cmd;
+// 	char	*env_paths;
+// 	char	**cmd_args;
+// 	char	**cmd_paths;
+// }				t_minsh;
+
+typedef struct	data_s {
+	char *promt;
+}				data_t;
 
 #endif
