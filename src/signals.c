@@ -9,7 +9,7 @@ void	handle_signal(void)
 	sigemptyset(&sa.sa_mask);
 	rl_catch_signals = 0;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGTSTP, &sa, NULL);
 }
 
 void	handle_c(int signo)
@@ -21,6 +21,12 @@ void	handle_c(int signo)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	if (signo == SIGTSTP)
+	{
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+
 }
 
 void	handle_d(void)
