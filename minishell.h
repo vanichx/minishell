@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/12 14:11:39 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/12 14:19:54 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,5 @@ void 	free_data(data_t *data);
 void	handle_d(void);
 void	handle_c(int signo);
 void	handle_signal(void);
+void    handle_input(data_t *data);
 #endif

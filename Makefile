@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 14:17:53 by eseferi          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # SETUP OF THE PROGRAM
 NAME      = minishell
 CC        = gcc
@@ -24,6 +12,7 @@ LEAKS	  = leaks --atExit --
 
 # FILES AND PATH
 SRCS      = main.c utils.c signals.c\
+			handle_input.c
 
 SRCS_F    = src/
 OBJS_F    = obj/
