@@ -33,14 +33,19 @@ int main(void) {
     sigaction(SIGINT, &sa, NULL);
     sigaction(SIGTERM, &sa, NULL);
 
-    while (1) {
+    while (1) 
+	{
         char *input;
         input = readline(data->promt);
-		 if (input == NULL)
-		 {
-			free_data(data);
-			return(printf("exit"), 0);
-		 }
+		if (input == NULL)
+		{
+		
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+			write(1, "exit\n", 5);
+			exit(0);
+		}
         if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
             exit(0);
     }
