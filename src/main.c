@@ -2,10 +2,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	init_data(data_t *data)
-{
-	data->promt = "minishell>> ";
-}
 
 
 
@@ -22,7 +18,7 @@ int	main(void)
 			handle_d();
 		else
 		{
-            if (strlen(input) > 0)
+            if (ft_strlen(input) > 0)
                 add_history(input);
 			if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
 				exit(0);

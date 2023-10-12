@@ -26,7 +26,6 @@ void	handle_c(int signo)
 void	handle_d(void)
 {
 	rl_on_new_line();
-	rl_replace_line("", 0);
 	rl_redisplay();
 	write(1, "exit\n", 5);
 	exit(0);
