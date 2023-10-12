@@ -45,6 +45,6 @@ int main(void) {
             exit(0);
     }
 
-    free(data);
+    free_data(data);
     return 0;
 }
