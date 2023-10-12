@@ -6,13 +6,12 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:24:04 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/09/25 16:57:47 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:24:00 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
-
-char	*ft_strjoin(char const*s1, char const *s2)
+#include "../includes/pipex_bonus.h"
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*j_str;
 	size_t	i;

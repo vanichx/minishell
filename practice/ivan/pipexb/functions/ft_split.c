@@ -6,11 +6,11 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 10:12:48 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/09/25 16:39:20 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:22:12 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
 static size_t	words_count(char *s, char c)
 {

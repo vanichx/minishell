@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 09:51:33 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 14:52:16 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:28:44 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	here_doc(char *delemiter, t_pipexbonus *ppxb)
 		msg_error(ERR_HEREDOC);
 	while (1)
 	{
-		write(1, "minishell> ", 12);
+		write(1, "here_doc>>", 11);
 		if (get_next_line(0, &buf) < 0)
 			exit(1);
 		if (!ft_strncmp(delemiter, buf, ft_strlen(delemiter) + 1))

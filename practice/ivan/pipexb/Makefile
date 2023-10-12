@@ -6,7 +6,7 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/04 11:06:38 by ipetruni          #+#    #+#              #
-#    Updated: 2023/09/26 14:50:11 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/12 17:25:45 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,6 @@ RM = rm -rf
 HEARER_SRCS  = pipex.h
 HEARER_DIR	 = includes/
 HEADER		 = $(addprefix $(HEARER_DIR), $(HEARER_SRCS))
-
-MPATH_SRCS 	= pipex.c pipex_error.c pipex_childs.c pipex_free.c
-MPATH_DIR	= mandatory/
-MPATH 		= $(addprefix $(MPATH_DIR), $(MPATH_SRCS))
-OBJ_M 		= $(MPATH:.c=.o)
 
 BPATH_SRCS  = pipex_bonus.c pipex_bonus_childs.c pipex_bonus_error.c pipex_bonus_free.c \
 				pipex_bonus_files.c here_doc_bonus.c 
@@ -45,22 +40,13 @@ OBJ_F		= $(FUNC:.c=.o)
 %.o: %.c $(HEADER) Makefile
 	@$(CC) $(FLAGS) -c $< -o $@
 
-$(NAME): $(OBJ_F) $(OBJ_M)
-	@$(CC) $(OBJ_F) $(OBJ_M) -o $(NAME)
-	@echo -e "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+$(NAME): $(OBJ_F) $(OBJ_B)
+	@$(CC) $(OBJ_F) $(OBJ_B) -o $(NAME)
+	@echo -e "$(GREEN)$(NAME) bonus was successfully created!$(DEFAULT)"
 
-all:	$(NAME)
-
-bonus: $(OBJ_F) $(OBJ_B)
-		@if [ ! -f $(NAME) ]; then \
-			$(CC) $(OBJ_F) $(OBJ_B) -o $(NAME); \
-			echo -e "$(GREEN)$(NAME) bonus was successfully created!$(DEFAULT)"; \
-		else \
-			echo -e "$(GREEN)$(NAME) bonus is already up to date!$(DEFAULT)"; \
-		fi
+all:	bonus
 
 clean:
-		@$(RM) $(OBJ_M)
 		@$(RM) $(OBJ_F)
 		@$(RM) $(OBJ_B)
 		@echo -e "$(YELLOW)object files deleted!$(DEFAULT)"
@@ -69,9 +55,9 @@ fclean:	clean
 		@$(RM) $(NAME)
 		@echo -e "$(RED)all deleted!$(DEFAULT)"
 
-re:	fclean all
+re:	fclean bonus
 
-.PHONY:	all clean fclean bonus re
+.PHONY:	bonus clean fclean re
 
 # COLORS DEFENITION
 

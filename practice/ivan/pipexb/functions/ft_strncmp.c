@@ -6,13 +6,13 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 10:15:22 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/09/25 16:57:36 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:23:44 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../includes/pipex_bonus.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(char *s1, char *s2, size_t n)
 {
 	while ((*s1 || *s2) && (n > 0))
 	{
