@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/12 12:12:05 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:54:04 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ typedef struct	data_s {
 }				data_t;
 
 // utils
-void free_data(data_t *data);
+void 	init_data(data_t *data);
+void 	free_data(data_t *data);
 
+
+
+/* signals.c */
+void	handle_d(void);
+void	handle_c(int signo);
+void	handle_signal(void);
 #endif

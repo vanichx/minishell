@@ -20,8 +20,14 @@ int	main(void)
 		input = readline(data->promt);
 		if (input == NULL)
 			handle_d();
-		if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
-			exit(0);
+		else
+		{
+            if (strlen(input) > 0)
+                add_history(input);
+			if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
+				exit(0);
+		}
+		free(input);
 	}
 	free_data(data);
 	return 0;

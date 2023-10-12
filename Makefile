@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 12:56:26 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/12 13:38:47 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all
 LEAKS	  = leaks --atExit --
 
 # FILES AND PATH
-SRCS      = main.c utils.c
+SRCS      = main.c utils.c signals.c\
+
 SRCS_F    = src/
 OBJS_F    = obj/
 LIBFT     = inc/libft
