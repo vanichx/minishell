@@ -41,10 +41,10 @@
 # include <unistd.h>
 
 /* libft */
-# include "inc/libft/libft.h"
+# include	"inc/libft/libft.h"
 
 /* error-defenitions */
-# define ERR_MINISHELL "minishell"
+# define ERR_MINISHELL	"minishell"
 
 /* data_structures */
 
@@ -63,20 +63,23 @@
 // 	char	**cmd_args;
 // 	char	**cmd_paths;
 // }				t_minsh;
+extern int	shell_level;
 
 typedef struct	data_s {
 	char *promt;
 }				data_t;
 
 /* utils.c */
-void 	init_data(data_t *data);
-void 	free_data(data_t *data);
-
+void	init_data(data_t *data);
+void	free_data(data_t *data);
+char	*ignore_spaces(char *input);
 
 
 /* signals.c */
-void	handle_d(void);
-void	handle_c(int signo);
-void	handle_signal(void);
-void    handle_input(data_t *data);
+void		handle_d(void);
+void		handle_c(int signo);
+void		handle_signal(void);
+void		handle_input(data_t *data);
+
+
 #endif
