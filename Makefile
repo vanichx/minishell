@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 13:38:47 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/12 14:17:53 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,14 +55,14 @@ fclean: clean
 re: fclean all
 
 # Valgrind testing
-valgrind_test: $(NAME)
+valgrind: $(NAME)
 	$(VALGRIND) ./$(NAME)
 
 # Leaks at exit testing
-leaks_at_exit: $(NAME)
+leaks: $(NAME)
 	$(LEAKS) ./$(NAME)
 
-.PHONY: all clean fclean re valgrind_test
+.PHONY: all clean fclean re valgrind leaks
 
 # COLORS DEFINITION
 RED     = \033[1;31m
