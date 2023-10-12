@@ -3,38 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 00:20:20 by alappas          ###   ########.fr        #
+#    Updated: 2023/10/12 12:27:10 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # SETUP OF THE PROGRAM
+NAME      = minishell
+CC        = gcc
+FLAGS     = -Wall -Wextra -Werror
+RM        = rm -rf
+MAKE_LIB  = make --no-print-directory -C
+RL_PREFIX = $(HOME)/.local/pkg/readline
+RL_CFLAGS = -I $(RL_PREFIX)/include
+RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
+VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all
+LEAKS	  = leaks --atExit --
 
-NAME		= minishell
-CC			= gcc
-FLAGS		= -Wall -Wextra -Werror
-RM			= rm -rf
-MAKE_LIB	= make --no-print-directory -C
-RL_PREFIX	= $(HOME)/.local/pkg/readline
-RL_CFLAGS   = -I $(RL_PREFIX)/include
-RL_LIBS     = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
 # FILES AND PATH
-
-SRCS		= main.c
-SRCS_F		= src/
-OBJS_F		= obj/
-
-LIBFT = inc/libft
-
-OBJS		=	$(SRCS:.c=.o)
-OBJS_P		=	$(addprefix $(OBJS_F), $(OBJS))
+SRCS      = main.c utils.c
+SRCS_F    = src/
+OBJS_F    = obj/
+LIBFT     = inc/libft
+OBJS      = $(SRCS:.c=.o)
+OBJS_P    = $(addprefix $(OBJS_F), $(OBJS))
 
 # COMMANDS
-
 $(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
-	@mkdir -p $(OBJS_F) 
+	@mkdir -p $(OBJS_F)
 	@$(CC) $(FLAGS) $(RL_CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_P)
@@ -46,21 +44,28 @@ all: $(NAME)
 
 clean:
 	@$(RM) $(OBJS_F)
-	@$(MAKE) fclean -C $(LIBFT) 
+	@$(MAKE) fclean -C $(LIBFT)
 	@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
 
-fclean:	clean
+fclean: clean
 	@$(RM) $(NAME)
 	@echo "$(RED)$(NAME) program deleted!$(DEFAULT)"
 
 re: fclean all
 
-.PHONY:	all clean fclean re
+# Valgrind testing
+valgrind_test: $(NAME)
+	$(VALGRIND) ./$(NAME)
 
-# COLORS DEFENITION
+# Leaks at exit testing
+leaks_at_exit: $(NAME)
+	$(LEAKS) ./$(NAME)
 
-RED = \033[1;31m
+.PHONY: all clean fclean re valgrind_test
+
+# COLORS DEFINITION
+RED     = \033[1;31m
 DEFAULT = \033[0m
-GREEN = \033[1;32m
-BOLD = \033[1m
-YELLOW = \033[1;33m
+GREEN   = \033[1;32m
+BOLD    = \033[1m
+YELLOW  = \033[1;33m

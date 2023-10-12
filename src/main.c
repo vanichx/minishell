@@ -10,12 +10,12 @@ void handle_signal(int signo) {
     if (signo == SIGINT) {
         write(1, "\n", 1);
         rl_on_new_line();
-        rl_replace_line("", 0);  // Clear the current input line
+		rl_replace_line("", 0);
         rl_redisplay();
     }
-    if (signo == SIGTERM) {
-        write(1, "\nexit", 5);
-    }
+    // if (signo == SIGQUIT) {
+    //     write(1, "\nexit", 5);
+    // }
 }
 
 int main(void) {
@@ -27,7 +27,7 @@ int main(void) {
 
     struct sigaction sa;
     sa.sa_handler = handle_signal;
-    sa.sa_flags = SA_RESTART;
+    sa.sa_flags = SA_RESTART | SA_SIGINFO;
     sigemptyset(&sa.sa_mask);
 
     sigaction(SIGINT, &sa, NULL);
@@ -36,10 +36,15 @@ int main(void) {
     while (1) {
         char *input;
         input = readline(data->promt);
+		 if (input == NULL)
+		 {
+			free_data(data);
+			return(printf("exit"), 0);
+		 }
         if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
             exit(0);
     }
 
-    free(data->promt);
+    free(data);
     return 0;
 }

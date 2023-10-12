@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:55:43 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 18:00:35 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:12:05 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@
 typedef struct	data_s {
 	char *promt;
 }				data_t;
+
+// utils
+void free_data(data_t *data);
 
 #endif
