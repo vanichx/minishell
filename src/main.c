@@ -1,9 +1,4 @@
 #include "../minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
-
 
 int	main(void)
 {
@@ -12,19 +7,8 @@ int	main(void)
 	handle_signal();
 	while (1) 
 	{
-		char *input;
-		input = readline(data->promt);
-		if (input == NULL)
-			handle_d();
-		else
-		{
-            if (ft_strlen(input) > 0)
-                add_history(input);
-			if (!ft_strncmp("exit", input, ft_strlen("exit") + 1))
-				exit(0);
-		}
-		free(input);
+		handle_input(data);
 	}
 	free_data(data);
-	return 0;
+	return (0);
 }

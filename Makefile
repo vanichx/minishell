@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/11 17:18:47 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 13:38:47 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/12 14:19:41 by alappas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LEAKS	  = leaks --atExit --
 
 # FILES AND PATH
 SRCS      = main.c utils.c signals.c\
+			handle_input.c
 
 SRCS_F    = src/
 OBJS_F    = obj/
