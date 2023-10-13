@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/04 11:06:38 by ipetruni          #+#    #+#              #
-#    Updated: 2023/10/12 17:25:45 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/12 20:17:58 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ RM = rm -rf
 HEARER_SRCS  = pipex.h
 HEARER_DIR	 = includes/
 HEADER		 = $(addprefix $(HEARER_DIR), $(HEARER_SRCS))
+VALGRIND	= valgrind --leak-check=full #--show-leak-kinds=all
+LEAKS	 	 = leaks --atExit --
 
 BPATH_SRCS  = pipex_bonus.c pipex_bonus_childs.c pipex_bonus_error.c pipex_bonus_free.c \
 				pipex_bonus_files.c here_doc_bonus.c 
@@ -46,6 +48,14 @@ $(NAME): $(OBJ_F) $(OBJ_B)
 
 all:	bonus
 
+# Valgrind testing
+valgrind: $(NAME)
+	$(VALGRIND) ./$(NAME)
+
+# Leaks at exit testing
+leaks: $(NAME)
+	$(LEAKS) ./$(NAME)
+
 clean:
 		@$(RM) $(OBJ_F)
 		@$(RM) $(OBJ_B)
@@ -57,7 +67,7 @@ fclean:	clean
 
 re:	fclean bonus
 
-.PHONY:	bonus clean fclean re
+.PHONY:	bonus clean fclean re valgrind leaks
 
 # COLORS DEFENITION
 

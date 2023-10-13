@@ -73,13 +73,20 @@ typedef struct	data_s {
 void	init_data(data_t *data);
 void	free_data(data_t *data);
 char	*ignore_spaces(char *input);
+void    check_exit(char *input)
 
 
 /* signals.c */
 void		handle_d(void);
 void		handle_c(int signo);
 void		handle_signal(void);
-void		handle_input(data_t *data);
+void		start_loop(data_t *data);
 
+/* parsing */
+char	*parse_input(char *input);
+
+
+/* executing */
+int execute_command(char *command);
 
 #endif
