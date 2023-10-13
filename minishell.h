@@ -73,7 +73,7 @@ typedef struct	data_s {
 void	init_data(data_t *data);
 void	free_data(data_t *data);
 char	*ignore_spaces(char *input);
-void    check_exit(char *input)
+void    check_exit(char *input);
 
 
 /* signals.c */
