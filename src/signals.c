@@ -30,10 +30,11 @@ void	handle_c(int signo)
 
 }
 
-void	handle_d(void)
+void	handle_d(t_data *data)
 {
 	rl_on_new_line();
 	rl_redisplay();
 	write(1, "exit\n", 5);
+	free_data(data);
 	exit(0);
 }

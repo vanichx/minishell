@@ -16,7 +16,7 @@ void    start_loop(t_data *data)
 		char *input;
 		input = readline(data->promt);
 		if (input == NULL)
-			handle_d();
+			handle_d(data);
 		if (ft_strlen(input) > 0)
             add_history(input);
 		check_exit(input);
@@ -41,13 +41,13 @@ void    start_loop(t_data *data)
 					execve(command, argv, NULL); // Use NULL as the envp
 					// handle errors if execve fails
 					perror("execve");
-					free(input);
+					// free(input);
 					exit(1);
 				}
 				else
 				{
 					// handle error in command execution
-					free(input);
+					// free(input);
 					exit(1);
 
 				}
@@ -63,7 +63,7 @@ void    start_loop(t_data *data)
 		char *command = parse_input(input);
 		if (command != NULL)
 			execute_command(command);
-		free(input);
+		// free(input);
 	}
 }
 

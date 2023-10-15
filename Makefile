@@ -1,14 +1,15 @@
 # SETUP OF THE PROGRAM
 NAME      = minishell
 CC        = gcc
-FLAGS     = -Wall -Wextra -Werror
+FLAGS     = -g -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined
 RM        = rm -rf
 MAKE_LIB  = make --no-print-directory -C
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --leak-check=full --show-leak-kinds=all #--show-leak-kinds=all
+VALGRIND  = valgrind --leak-check=full --show-leak-kinds=all -s
 LEAKS	  = leaks --atExit --
+FSANITISE = -fsanitize=address -fsanitize=undefined
 
 # FILES AND PATH
 SRCS      = main.c utils.c signals.c\
@@ -50,6 +51,9 @@ valgrind: $(NAME)
 # Leaks at exit testing
 leaks: $(NAME)
 	$(LEAKS) ./$(NAME)
+
+fsanitise: $(NAME)
+	$(FSANITISE) ./$(NAME)
 
 .PHONY: all clean fclean re valgrind leaks
 

@@ -72,7 +72,7 @@ typedef struct s_envir{
 } t_envir;
 
 typedef struct	s_data {
-	t_envir env;
+	t_envir *env;
 	char *promt;
 }				t_data;
 
@@ -84,7 +84,7 @@ void    check_exit(char *input);
 
 
 /* signals.c */
-void		handle_d(void);
+void		handle_d(t_data *data);
 void		handle_c(int signo);
 void		handle_signal(void);
 void		start_loop(t_data *data);
@@ -99,5 +99,6 @@ int execute_command(char *command);
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);
 void	free_envir(t_envir *env);
+void	init_env_vars(t_envir *env);
 
 #endif
