@@ -46,6 +46,8 @@
 /* error-defenitions */
 # define ERR_MINISHELL	"minishell"
 
+# define MAX_ENV_VARS 100
+
 /* data_structures */
 
 // typedef struct s_minsh
@@ -63,15 +65,20 @@
 // 	char	**cmd_args;
 // 	char	**cmd_paths;
 // }				t_minsh;
-extern int	shell_level;
 
-typedef struct	data_s {
+typedef struct s_envir{
+    char *env_vars[MAX_ENV_VARS];
+    int count;
+} t_envir;
+
+typedef struct	s_data {
+	t_envir env;
 	char *promt;
-}				data_t;
+}				t_data;
 
 /* utils.c */
-void	init_data(data_t *data);
-void	free_data(data_t *data);
+t_data	*init_data(char *envp[]);
+void	free_data(t_data *data);
 char	*ignore_spaces(char *input);
 void    check_exit(char *input);
 
@@ -80,7 +87,7 @@ void    check_exit(char *input);
 void		handle_d(void);
 void		handle_c(int signo);
 void		handle_signal(void);
-void		start_loop(data_t *data);
+void		start_loop(t_data *data);
 
 /* parsing */
 char	*parse_input(char *input);
@@ -88,5 +95,9 @@ char	*parse_input(char *input);
 
 /* executing */
 int execute_command(char *command);
+
+/* enviroment */
+t_envir *get_env_vars(char *envp[]);
+void	free_envir(t_envir *env);
 
 #endif

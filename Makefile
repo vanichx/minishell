@@ -7,12 +7,12 @@ MAKE_LIB  = make --no-print-directory -C
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all
+VALGRIND  = valgrind --leak-check=full --show-leak-kinds=all #--show-leak-kinds=all
 LEAKS	  = leaks --atExit --
 
 # FILES AND PATH
 SRCS      = main.c utils.c signals.c\
-			handle_input.c
+			handle_input.c environment.c
 
 SRCS_F    = src/
 OBJS_F    = obj/
