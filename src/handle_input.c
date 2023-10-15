@@ -36,6 +36,7 @@ void    start_loop(t_data *data)
 			{
 				// We are in the child process
 				printf("Entering a new 'minishell' level\n");
+				incr_shell_lv(data->env);
 				start_loop(data);
 				// incr_shell_lv(data->env);
 				char *command = parse_input(input);

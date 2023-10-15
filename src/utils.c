@@ -42,23 +42,27 @@ void print_env_vars(t_envir *env)
 
 void 	incr_shell_lv(t_envir *env) 
 {
-	int i;
+	int		i;
+	int		j;
+	int		k;
+	char	*str;
+	int		level;
 
-	i = 6;
-	int j = 0;
-    char *shell_level = env->env_vars[16] + 6;  // Start from the 6th index
-    int lvl = atoi(shell_level);  // Convert the shell level to an integer
-
-    // Increment the shell level
-    lvl++;
-	shell_level = ft_itoa(lvl);
-    // Convert the updated level back to a string and store it in the environment variable
-	while (env->env_vars[16] + i != NULL && shell_level == NULL)
-	{
-		env->env_vars[16][i] = shell_level[j];
-		i++;
+	i = 0;
+	j = 0;
+	k = 0;
+	while (ft_strncmp(env->env_vars[j], "SHLVL=", ft_strlen("SHLVL=")))
 		j++;
+	while (env->env_vars[j][i] != '=')
+		i++;
+	i++;
+	level = ft_atoi(env->env_vars[j] + i);
+	level++;
+	str = ft_itoa(level);
+	while (str[k])
+	{
+		env->env_vars[j][i] = str[k];
+		i++;
+		k++;
 	}
-	// env->env_vars[16][i] = '\0';
-	
 }
