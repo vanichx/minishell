@@ -21,17 +21,17 @@ void free_data(t_data *data) {
     free(data);
 }
 
-char *ignore_spaces(char *input)
+char	*ignore_spaces(char *input)
 {
 	while (*input == ' ' || (*input >= 9 && *input <= 13))
 		input++;
 	return (input);
 }
 
-void print_env_vars(t_envir *env) 
+void	print_env_vars(t_envir *env)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < env->count)
 	{
@@ -40,7 +40,7 @@ void print_env_vars(t_envir *env)
 	}
 }
 
-void 	incr_shell_lv(t_envir *env) 
+void	incr_shell_lv(t_envir *env)
 {
 	int		i;
 	int		j;
