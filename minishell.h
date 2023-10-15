@@ -66,7 +66,7 @@
 // 	char	**cmd_paths;
 // }				t_minsh;
 
-typedef struct s_envir{
+typedef struct s_envir {
     char *env_vars[MAX_ENV_VARS];
     int count;
 } t_envir;
@@ -81,6 +81,7 @@ t_data	*init_data(char *envp[]);
 void	free_data(t_data *data);
 char	*ignore_spaces(char *input);
 void    check_exit(char *input);
+void	print_env_vars(t_envir *env);
 
 
 /* signals.c */
@@ -100,5 +101,6 @@ int execute_command(char *command);
 t_envir *get_env_vars(char *envp[]);
 void	free_envir(t_envir *env);
 void	init_env_vars(t_envir *env);
+void	incr_shell_lv(t_envir *env);
 
 #endif

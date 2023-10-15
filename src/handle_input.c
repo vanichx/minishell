@@ -21,6 +21,8 @@ void    start_loop(t_data *data)
             add_history(input);
 		check_exit(input);
 		// Parse the inpute and execute the command
+		if (!ft_strncmp("env", ignore_spaces(input), ft_strlen("env")))
+			print_env_vars(data->env);
 		if (!ft_strncmp("minishell", ignore_spaces(input), ft_strlen("minishell")))
 		{
 			// Fork a child process to create a new "minshell" level
@@ -35,6 +37,7 @@ void    start_loop(t_data *data)
 				// We are in the child process
 				printf("Entering a new 'minishell' level\n");
 				start_loop(data);
+				incr_shell_lv(data->env);
 				char *command = parse_input(input);
 				if (command != NULL)
 				{

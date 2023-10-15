@@ -1,7 +1,7 @@
 # SETUP OF THE PROGRAM
 NAME      = minishell
 CC        = gcc
-FLAGS     = -g -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined
+FLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address -fsanitize=undefined
 RM        = rm -rf
 MAKE_LIB  = make --no-print-directory -C
 RL_PREFIX = $(HOME)/.local/pkg/readline
