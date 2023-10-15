@@ -65,4 +65,5 @@ void	incr_shell_lv(t_envir *env)
 		i++;
 		k++;
 	}
+	free(str);
 }
