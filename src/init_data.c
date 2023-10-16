@@ -23,11 +23,8 @@ t_data	*init_data(char *envp[])
 
 t_flags	*init_flags(void)
 {
-	t_flags	*flags = ft_calloc(sizeof(t_flags), 1);
-	if (flags == NULL)
-	{
-		free(flags);
-		return (NULL);
-	}
-	return (flags);
+    t_flags *flags = ft_calloc(1, sizeof(t_flags));
+    if (flags == NULL)
+        return (NULL); // Memory allocation failed
+    return (flags);
 }

@@ -9,7 +9,7 @@ void    check_exit(char *input)
 	}
 }
 
-void    start_loop(t_data *data)
+void    start_loop(t_data *data, char *envp[])
 {
 	char *input;
 	char **command;
@@ -19,9 +19,9 @@ void    start_loop(t_data *data)
 		input = readline(data->promt);
 		parse_flags(data, input);
 		command = take_commands(input);
-		parse_commands();
+		// parse_commands();
 		
-		execute_command(command, args);
+		execute_command(command, envp);
 		
 		if (input == NULL)
 			handle_d(data);
@@ -45,13 +45,13 @@ void    start_loop(t_data *data)
 				// We are in the child process
 				printf("Entering a new 'minishell' level\n");
 				incr_shell_lvl(data->env);
-				start_loop(data);
+				start_loop(data, envp);
 				// incr_shell_lv(data->env);
-				command = parse_input(input);
+				command = take_commands(input);
 				if (command != NULL)
 				{
-					char *const args[] = {command, NULL};
-					execve(command, args, NULL); // Use NULL as the envp
+					char *const args[] = {*command, NULL};
+					execve(*command, args, NULL); // Use NULL as the envp
 					// handle errors if execve fails
 					perror("execve");
 					// free(input);
@@ -64,7 +64,7 @@ void    start_loop(t_data *data)
 					exit(1);
 
 				}
-				start_loop(data); // Allow the child to handle its input
+				start_loop(data, envp); // Allow the child to handle its input
 				exit(0);
 			}
 			else
@@ -80,9 +80,9 @@ void    start_loop(t_data *data)
 	}
 }
 
-int execute_command(char *command, char *args[])
+int execute_command(char **command, char *args[])
 {
-    if (execve(command, args, NULL) == -1) {
+    if (execve(*command, args, NULL) == -1) {
         perror("execve");
         return -1;
     }

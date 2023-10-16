@@ -1,0 +1,14 @@
+buitins.c
+environment.c
+export.c
+handle_input.c
+init_data.c
+input1.txt
+input2.txt
+input3.txt
+main.c
+parsing.c
+shlvl.c
+signals.c
+steps.txt
+utils.c

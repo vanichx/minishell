@@ -48,30 +48,41 @@
 
 # define MAX_ENV_VARS 100
 
+/* errors */
+
+#define NEW_LINE_ERR "syntax error near unexpected token `newline'"
+#define PIPE_ERR "syntax error near unexpected token `||'"
+#define DEL_ERR "syntax error near unexpected token `<<'"
+
 /* data_structures */
 
-typedef struct s_envir
-{
+typedef struct s_envir {
     char *env_vars[MAX_ENV_VARS];
     int count;
 } t_envir;
 
-typedef struct s_flags
-{
-	int pipe;
-	int single_quote;
-	int double_quote;
-	int dollar;
+typedef struct s_delim {
+	int i;
+	char *delim;
+}			t_delim;
+
+
+typedef struct s_flags {
+	int pipe[2];
+	int single_quote[2];
+	int double_quote[2];
+	int dollar[2];
 	int red_inp;
 	int red_out;
-	int delimiter;
+	t_delim delimiter;
 	int append;
-	int question;
-	int or;
+	int wildcard;
+	int exit_status;
+	int or[2];
+	int and[2];
 }				t_flags;
 
-typedef struct	s_data
-{
+typedef struct	s_data {
 	t_envir	*env;
 	char	*promt;
 	t_flags	*flags;
@@ -91,16 +102,18 @@ t_flags	*init_flags(void);
 void	handle_d(t_data *data);
 void	handle_c(int signo);
 void	handle_signal(void);
-void	start_loop(t_data *data);
+void	start_loop(t_data *data, char *envp[]);
 
-/* parsing */
-char	*take_commands(char *input);
-void	print_parsed_input(char *command);
+/* parsing.c */
+char	**take_commands(char *input);
 void	parse_flags(t_data *data, char *input);
+void 	check_pipe(t_data *data, char *input);
+void	check_quotes(t_data *data, char *input);
+void 	check_last(t_data *data, char *input);
 
 
 /* executing */
-int execute_command(char *command, char *args[]);
+int execute_command(char **command, char *args[]);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);

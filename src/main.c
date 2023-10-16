@@ -6,7 +6,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		t_data *data = init_data(envp);
 		handle_signal();
-		start_loop(data);
+		start_loop(data, envp);
 		free_data(data);
 	}
 	else
