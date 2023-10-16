@@ -23,20 +23,11 @@ t_data	*init_data(char *envp[])
 
 t_flags	*init_flags(void)
 {
-	t_flags	*flags = malloc(sizeof(t_flags));
+	t_flags	*flags = ft_calloc(sizeof(t_flags), 1);
 	if (flags == NULL)
 	{
 		free(flags);
 		return (NULL);
 	}
-	flags->pipe = 0;
-	flags->single_quote = 0;
-	flags->double_quote = 0;
-	flags->dollar = 0;
-	flags->red_inp = 0;
-	flags->red_out = 0;
-	flags->delimiter = 0;
-	flags->append = 0;
-	flags->question = 0;
 	return (flags);
 }

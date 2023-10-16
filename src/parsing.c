@@ -1,26 +1,53 @@
 #include "../minishell.h"
 
-char *parse_input(char *input)
+char *take_commands(char *input)
 {
 	int i;
-	char **tokens;
-	char *command;
+	char **command;
 
-	command = NULL;
 	i = 0;
-	tokens = ft_split(input, ' ');
-	if (tokens != NULL && tokens[0] != NULL)
+	command = ft_split(input, ' ');
+	return (command);
+}
+
+void parse_flags(t_data *data, char *input)
+{
+	check_pipe(data, input);
+	check_sq(data, input);
+	check_dq(data, input);
+	check_dollar(data, input);
+	check_redinp(data, input);
+	check_redout(data, input);
+	check_del(data, input);
+	check_append(data, input);
+	check_question(data, input);
+}
+
+void check_pipe(t_data *data, char *input)
+{
+	int i;
+	
+	i = 0;
+	while (input[i])
 	{
-		// copy the first token (the command int a new string)
-		command = strdup(tokens[0]);
-		// construct an array of arguments for execve
-		while (tokens[i])
+		if (input[i] == '|' && input[i + 1] != '|')
+			data->flags->pipe++;
+		else if (input[i] == '|' && input[i + 1] == '|' && input[i + 2] != '|')
 		{
-			free(tokens[i]);
-			i++;
+			data->flags->or++;
+			i += 2;
 		}
-		free(tokens);
-		return (command);
+		else if (input[i] == '|' && input[i + 1] == '|' && input[i + 2] == '|')
+		{
+			perror("syntax error near unexpected token `|'");
+			exit(1);
+		}
+		i++;
 	}
-	return (NULL);
+	// think about the pipe in the end
+}
+
+void check_pipe(t_data *data, char *input)
+{
+
 }

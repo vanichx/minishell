@@ -11,14 +11,17 @@ void    check_exit(char *input)
 
 void    start_loop(t_data *data)
 {
+	char *input;
+	char **command;
+
 	while (1)
 	{
-		char *input;
 		input = readline(data->promt);
-		char *command = parse_input(input);
-		print_parsed_input(command);
-		char *argv[] = {command, NULL};
-		execute_command(command, argv);
+		parse_flags(data, input);
+		command = take_commands(input);
+		parse_commands();
+		
+		execute_command(command, args);
 		
 		if (input == NULL)
 			handle_d(data);
@@ -45,11 +48,10 @@ void    start_loop(t_data *data)
 				start_loop(data);
 				// incr_shell_lv(data->env);
 				command = parse_input(input);
-				print_parsed_input(command); // Print the parsed input
 				if (command != NULL)
 				{
-					char *const argv[] = {command, NULL};
-					execve(command, argv, NULL); // Use NULL as the envp
+					char *const args[] = {command, NULL};
+					execve(command, args, NULL); // Use NULL as the envp
 					// handle errors if execve fails
 					perror("execve");
 					// free(input);
@@ -73,7 +75,7 @@ void    start_loop(t_data *data)
 		}
 		// command = parse_input(input);
 		// if (command != NULL)
-		// 	execute_command(command, argv);
+		// 	execute_command(command, args);
 		// free(input);
 	}
 }

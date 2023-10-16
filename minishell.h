@@ -67,6 +67,7 @@ typedef struct s_flags
 	int delimiter;
 	int append;
 	int question;
+	int or;
 }				t_flags;
 
 typedef struct	s_data
@@ -93,8 +94,9 @@ void	handle_signal(void);
 void	start_loop(t_data *data);
 
 /* parsing */
-char	*parse_input(char *input);
+char	*take_commands(char *input);
 void	print_parsed_input(char *command);
+void	parse_flags(t_data *data, char *input);
 
 
 /* executing */
