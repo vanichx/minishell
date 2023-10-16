@@ -82,7 +82,7 @@ char	*ignore_spaces(char *input);
 void    check_exit(char *input);
 void	print_env_vars(t_envir *env);
 
-/* Data initialisation */
+/* init_data.c */
 t_data	*init_data(char *envp[]);
 t_flags	*init_flags(void);
 
@@ -110,4 +110,8 @@ void	incr_shell_lvl(t_envir *env);
 int		find_shlvl_index(char **env_vars);
 void	update_shlvl(char **env_vars, int *i, int *j, int level);
 int		get_current_shlvl_value(char **env_vars, int *i, int *j);
+
+/* builtins.c */
+
+
 #endif
