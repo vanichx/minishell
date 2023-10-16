@@ -51,19 +51,35 @@ void	incr_shell_lv(t_envir *env)
 	i = 0;
 	j = 0;
 	k = 0;
+	str = NULL;
 	while (ft_strncmp(env->env_vars[j], "SHLVL=", ft_strlen("SHLVL=")))
 		j++;
 	while (env->env_vars[j][i] != '=')
 		i++;
 	i++;
-	level = ft_atoi(env->env_vars[j] + i);
-	level++;
-	str = ft_itoa(level);
-	while (str[k])
+	if (env->env_vars[j][i] == '\n')
+		level = 1;
+	else
 	{
-		env->env_vars[j][i] = str[k];
-		i++;
-		k++;
+		level = ft_atoi(env->env_vars[j] + i);
+		level++;
+	}
+	if (level <= 999)
+	{
+		str = ft_itoa(level);
+		while (str[k])
+		{
+			env->env_vars[j][i] = str[k];
+			i++;
+			k++;
+		}
+	}
+	else if (level == 1000)
+		env->env_vars[j][k] = '\n';
+	else
+	{
+		level = 1;
+		env->env_vars[j][k] = 1;
 	}
 	free(str);
 }
