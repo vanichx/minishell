@@ -72,10 +72,10 @@ typedef struct s_flags {
 	int single_quote[2];
 	int double_quote[2];
 	int dollar[2];
-	int red_inp;
-	int red_out;
+	int red_inp[2];
+	int red_out[2];
 	t_delim delimiter;
-	int append;
+	int append[2];
 	int wildcard;
 	int exit_status;
 	int or[2];

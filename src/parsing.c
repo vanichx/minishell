@@ -14,10 +14,9 @@ void parse_flags(t_data *data, char *input)
 {
 	check_pipe(data, input);
 	check_quotes(data, input);
+	check_redirect(data, input);
+	check_del(data, input);
 	// check_dollar(data, input);
-	// check_redinp(data, input);
-	// check_redout(data, input);
-	// check_del(data, input);
 	// check_append(data, input);
 	// check_question(data, input);
 }
@@ -44,6 +43,44 @@ void check_pipe(t_data *data, char *input)
 	}
 }
 
+void check_del(t_data *data, char *input)
+{
+	while (*input)
+	{
+		if (*input == '<' && *(input + 1) == '<' && *(input + 2) != ) // to be continued
+	}
+}
+
+void check_redirect(t_data *data, char *input)
+{
+	while (*input)
+	{
+		if (*input == '>' && *(input + 1) != '>')
+		{
+			data->flags->red_out[1] = 1;
+			data->flags->red_inp[1] = 0;
+			data->flags->append[1] = 0;
+			data->flags->red_out[0] += 1;
+		}
+		else if (*input == '<' && *(input + 1) != '<')
+		{
+			data->flags->red_out[1] = 0;
+			data->flags->append[1] = 0;
+			data->flags->red_inp[1] = 1;
+			data->flags->red_inp[0] += 1;
+		}
+		else if (*input == '>' && *(input + 1) == '>' && *(input + 2) != '>')
+		{
+			data->flags->append[1] = 1;
+			data->flags->red_inp[1] = 0;
+			data->flags->red_out[1] = 0;
+			data->flags->append[0] += 1;
+			input++;
+		}
+		input++;
+	}
+}
+
 void check_quotes(t_data *data, char *input)
 {
 	while(*input)
@@ -59,6 +96,8 @@ void check_quotes(t_data *data, char *input)
 		input++;
 	}
 }
+
+
 
 void check_last(t_data *data, char *input)
 {
