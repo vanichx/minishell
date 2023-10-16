@@ -87,6 +87,10 @@ int		execute_command(char *command);
 t_envir *get_env_vars(char *envp[]);
 void	free_envir(t_envir *env);
 void	init_env_vars(t_envir *env);
-void	incr_shell_lv(t_envir *env);
 
+/* shlvl.c */
+void	incr_shell_lvl(t_envir *env);
+int		find_shlvl_index(char **env_vars);
+void	update_shlvl(char **env_vars, int *i, int *j, int level);
+int		get_current_shlvl_value(char **env_vars, int *i, int *j);
 #endif
