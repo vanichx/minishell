@@ -94,10 +94,10 @@ void check_delimiter(t_data *data, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (data->flags->red_inp[0] == 1)
+		// if (data->flags->red_inp == 1)
 
 		if ((input[i] == '<' && input[i + 1] != '<') && input[i + 1] != '\n')
-			data->flags->red_inp[0]++;
+			data->flags->red_inp++;
 		else if (input[i] == '<' && input[i + 1] == '\n')
 		{
 			perror("syntax error near unexpected token `newline'");
@@ -105,7 +105,7 @@ void check_delimiter(t_data *data, char *input)
 		}
 		else if ((input[i] == '<' && input[i + 1] == '<') && input[i + 2] != '<')
 		{
-			data->flags->red_out[0]++;
+			data->flags->red_out++;
 			// should be given a delimiter, then read the input until a line containing the delimiter is seen.
 			// However, it doesn’t have to update the history!
 			i += 2;
@@ -117,4 +117,18 @@ void check_delimiter(t_data *data, char *input)
 		}
 		i++;
 	}
+}
+
+char	*find_dollar(t_data *data, char *input)
+
+{
+	int	i;
+
+	i = 0;
+	while (!ft_strcmp(data->env->env_vars[i], input, ft_strlen(input)))
+		i++;
+	if (ft_strcmp(data->env->env_vars[i], input, ft_strlen(input)))
+		return (data->env->env_vars[i]);
+	else
+		write (1, "\n", 1);
 }
