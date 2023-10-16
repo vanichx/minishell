@@ -17,7 +17,7 @@ void    start_loop(t_data *data, char *envp[])
 	while (1)
 	{
 		input = readline(data->promt);
-		parse_flags(data, input);
+		// parse_flags(data, input);
 		command = take_commands(input);
 		// parse_commands();
 		
