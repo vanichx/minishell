@@ -50,28 +50,14 @@
 
 /* data_structures */
 
-// typedef struct s_minsh
-// {
-// 	pid_t	pid;
-// 	int		infile;
-// 	int		outfile;
-// 	int		*pipe;
-// 	int		idx;
-// 	int		cmd_nbrs;
-// 	int		here_doc;
-// 	int		pipe_nbrs;
-// 	char	*cmd;
-// 	char	*env_paths;
-// 	char	**cmd_args;
-// 	char	**cmd_paths;
-// }				t_minsh;
-
-typedef struct s_envir {
+typedef struct s_envir
+{
     char *env_vars[MAX_ENV_VARS];
     int count;
 } t_envir;
 
-typedef struct	s_data {
+typedef struct	s_data
+{
 	t_envir *env;
 	char *promt;
 }				t_data;
@@ -85,17 +71,17 @@ void	print_env_vars(t_envir *env);
 
 
 /* signals.c */
-void		handle_d(t_data *data);
-void		handle_c(int signo);
-void		handle_signal(void);
-void		start_loop(t_data *data);
+void	handle_d(t_data *data);
+void	handle_c(int signo);
+void	handle_signal(void);
+void	start_loop(t_data *data);
 
 /* parsing */
 char	*parse_input(char *input);
 
 
 /* executing */
-int execute_command(char *command);
+int		execute_command(char *command);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);
