@@ -94,10 +94,11 @@ void	start_loop(t_data *data);
 
 /* parsing */
 char	*parse_input(char *input);
+void	print_parsed_input(char *command);
 
 
 /* executing */
-int		execute_command(char *command);
+int execute_command(char *command, char *args[]);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);

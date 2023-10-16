@@ -15,6 +15,11 @@ void    start_loop(t_data *data)
 	{
 		char *input;
 		input = readline(data->promt);
+		char *command = parse_input(input);
+		print_parsed_input(command);
+		char *argv[] = {command, NULL};
+		execute_command(command, argv);
+		
 		if (input == NULL)
 			handle_d(data);
 		if (ft_strlen(input) > 0)
@@ -39,7 +44,8 @@ void    start_loop(t_data *data)
 				incr_shell_lvl(data->env);
 				start_loop(data);
 				// incr_shell_lv(data->env);
-				char *command = parse_input(input);
+				command = parse_input(input);
+				print_parsed_input(command); // Print the parsed input
 				if (command != NULL)
 				{
 					char *const argv[] = {command, NULL};
@@ -65,22 +71,26 @@ void    start_loop(t_data *data)
 				wait(NULL);
 			}
 		}
-		char *command = parse_input(input);
-		if (command != NULL)
-			execute_command(command);
+		// command = parse_input(input);
+		// if (command != NULL)
+		// 	execute_command(command, argv);
 		// free(input);
 	}
 }
 
-char	*parse_input(char *input)
+int execute_command(char *command, char *args[])
 {
-	input = NULL;
-	return (input);
+    if (execve(command, args, NULL) == -1) {
+        perror("execve");
+        return -1;
+    }
+    return 0;
 }
 
-int execute_command(char *command)
-{
-	if (command == NULL)
-		return (-1);
-	return(0);
+void print_parsed_input(char *command) {
+    if (command != NULL) {
+        printf("Command: %s\n", command);
+    } else {
+        printf("Failed to parse the input.\n");
+    }
 }
