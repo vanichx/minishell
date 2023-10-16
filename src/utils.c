@@ -26,3 +26,5 @@ void	print_env_vars(t_envir *env)
 			printf("%s\n", env->env_vars[i++]);
 	}
 }
+
+hez im ivan
