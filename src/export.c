@@ -22,15 +22,13 @@ int custom_setenv(char **env, const char *name, const char *value, int overwrite
 					env[i] = var;
 				}
 				return 0;  // Success
-			} else {
-				return 0;  // Variable exists, and overwrite is not allowed
 			}
+			else
+				return 0;  // Variable exists, and overwrite is not allowed
 		}
 		i++;
 	}
-
-	// Variable doesn't exist, create a new one
-	char *var = malloc(strlen(name) + strlen(value) + 2);
+	*var = malloc(strlen(name) + strlen(value) + 2);
 	if (var != NULL) {
 		sprintf(var, "%s=%s", name, value);
 		// Find the last NULL pointer in the environ array
