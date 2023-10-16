@@ -21,26 +21,30 @@ int custom_setenv(char **env, const char *name, const char *value, int overwrite
 					sprintf(var, "%s=%s", name, value);
 					env[i] = var;
 				}
-				return 0;  // Success
+				return (0);
 			}
 			else
-				return 0;  // Variable exists, and overwrite is not allowed
+				return (0);
 		}
 		i++;
 	}
 	*var = malloc(strlen(name) + strlen(value) + 2);
-	if (var != NULL) {
+	if (var != NULL)
+	{
+		i = 0;
 		sprintf(var, "%s=%s", name, value);
-		// Find the last NULL pointer in the environ array
-		for (int i = 0; env[i] != NULL; i++) {
-			if (env[i + 1] == NULL) {
+		while (env[i] != NULL)
+		{
+			if (env[i + 1] == NULL)
+			{
 				env[i + 1] = var;
 				env[i + 2] = NULL;
-				return 0;  // Success
+				return (0);
 			}
+			i++;
 		}
 	}
-	return -1;  // Error
+	return (-1);
 }
 
 void builtin_export(char **env, char *args[])
@@ -59,5 +63,3 @@ void builtin_export(char **env, char *args[])
 		printf("Usage: export VAR_NAME VAR_VALUE\n");
 	}
 }
-
-// Handle the export command to set environment variables
