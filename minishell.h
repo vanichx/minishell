@@ -56,19 +56,35 @@ typedef struct s_envir
     int count;
 } t_envir;
 
+typedef struct s_flags
+{
+	int pipe;
+	int single_quote;
+	int double_quote;
+	int dollar;
+	int red_inp;
+	int red_out;
+	int delimiter;
+	int append;
+	int question;
+}				t_flags;
+
 typedef struct	s_data
 {
-	t_envir *env;
-	char *promt;
+	t_envir	*env;
+	char	*promt;
+	t_flags	*flags;
 }				t_data;
 
 /* utils.c */
-t_data	*init_data(char *envp[]);
 void	free_data(t_data *data);
 char	*ignore_spaces(char *input);
 void    check_exit(char *input);
 void	print_env_vars(t_envir *env);
 
+/* Data initialisation */
+t_data	*init_data(char *envp[]);
+t_flags	*init_flags(void);
 
 /* signals.c */
 void	handle_d(t_data *data);
