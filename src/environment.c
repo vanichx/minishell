@@ -26,18 +26,3 @@ t_envir *get_env_vars(char *envp[])
 	}
 	return(env); // Return the allocated env structure
 }
-
-void	free_envir(t_envir *env)
-{
-	int i;
-
-	i = 0;
-	while (i < env->count)
-    {
-        free(env->env_vars[i]);
-        env->env_vars[i] = NULL; // Set the pointer to NULL after freeing
-        i++;
-    }
-	env->count = 0;
-	free(env); // Free the memory allocated for env itself
-}

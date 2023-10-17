@@ -65,38 +65,37 @@ typedef struct s_delim {
 }				t_delim;
 
 typedef struct s_flags {
-	int pipe[2];
-	int single_quote[2];
-	int double_quote[2];
-	int dollar;
-	int red_inp[2];
-	int red_out[2];
-	t_delim delimiter;
-	int append[2];
-	int wildcard;
-	int or[2];
-	int and[2];
-	int p_id;
-	int exit_status;
+	int		pipe[2];
+	int		single_quote[2];
+	int		double_quote[2];
+	int		dollar;
+	int		red_inp[2];
+	int		red_out[2];
+	t_delim	delimiter;
+	int		append[2];
+	int		wildcard;
+	int		or[2];
+	int		and[2];
+	int		p_id;
+	int		exit_status;
 }				t_flags;
 
-typedef struct	s_pipex {
+typedef struct	s_cmdexe {
 	char	*path;
 	char	**cmd_paths;
 	char	**cmd_args;
 	char	*cmd;
 	int		cmd_nbrs;
 	int		idx;
-}				t_pipex;
+}				t_cmdexe;
 
 typedef struct	s_data {
-	t_envir	*env;
-	char	*promt;
-	t_flags	*flags;
-	char 	**commands;
-	int		pid;
-	t_pipex	pipex;
-	
+	t_envir		*env;
+	char		*promt;
+	t_flags		*flags;
+	char		**commands;
+	int			pid;
+	t_cmdexe	*cmdexe;
 }				t_data;
 
 /* utils.c */
@@ -108,6 +107,7 @@ void	print_env_vars(t_envir *env);
 /* init_data.c */
 t_data	*init_data(char *envp[]);
 t_flags	*init_flags(void);
+t_cmdexe *init_cmdexe(void);
 
 /* signals.c */
 void	handle_d(t_data *data);
@@ -133,7 +133,7 @@ char	*apply_command(char **paths, char *cmd);
 char	*find_path(char **env);
 
 /* enviroment */
-t_envir *get_env_vars(char *envp[]);
+t_envir	*get_env_vars(char *envp[]);
 void	free_envir(t_envir *env);
 void	init_env_vars(t_envir *env);
 
@@ -145,5 +145,10 @@ int		get_current_shlvl_value(char **env_vars, int *i, int *j);
 
 /* builtins.c */
 void  reset_flags(t_flags *flags);
+
+
+/* free.c */
+void	free_data(t_data *data);
+void	free_cmdexe(t_cmdexe *cmdexe);
 
 #endif

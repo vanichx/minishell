@@ -1,7 +1,7 @@
 # SETUP OF THE PROGRAM
 NAME      = minishell
 CC        = gcc
-FLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address -fsanitize=undefined
+FLAGS     = -g -Wall -Wextra -Werror -fsanitize=address -fsanitize=undefined
 RM        = rm -rf
 MAKE_LIB  = make --no-print-directory -C
 RL_PREFIX = $(HOME)/.local/pkg/readline
@@ -17,7 +17,7 @@ FSANITISE = -fsanitize=address -fsanitize=undefined
 SRCS      = main.c utils.c signals.c\
 			handle_input.c environment.c \
 			shlvl.c init_data.c parsing_flags.c\
-			parsing_commands.c
+			parsing_commands.c free.c 
 
 SRCS_F    = src/
 OBJS_F    = obj/

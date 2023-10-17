@@ -11,7 +11,8 @@ t_data	*init_data(char *envp[])
 		exit(1);
 	}
 	data->flags = init_flags();
-	if (data->flags == NULL)
+	data->cmdexe = init_cmdexe();
+	if (data->flags == NULL || data->cmdexe == NULL)
 	{
 		free_data(data);
 		exit(1);
@@ -27,6 +28,14 @@ t_flags	*init_flags(void)
     if (flags == NULL)
         return (NULL); // Memory allocation failed
     return (flags);
+}
+
+t_cmdexe *init_cmdexe(void)
+{
+	t_cmdexe *cmdexe = ft_calloc(1, sizeof(t_cmdexe));
+	if (cmdexe == NULL)
+		return (NULL);
+	return (cmdexe);
 }
 
 void  reset_flags(t_flags *flags)

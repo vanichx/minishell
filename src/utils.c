@@ -1,15 +1,5 @@
 #include "../minishell.h"
 
-
-
-void	free_data(t_data *data)
-{
-	if (data->flags)
-		free(data->flags);
-	free_envir(data->env);  // Free the environment variables
-	free(data);
-}
-
 char	*ignore_spaces(char *input)
 {
 	while (*input == ' ' || (*input >= 9 && *input <= 13))
