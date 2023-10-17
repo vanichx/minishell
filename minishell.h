@@ -80,12 +80,23 @@ typedef struct s_flags {
 	int exit_status;
 }				t_flags;
 
+typedef struct	s_pipex {
+	char	*path;
+	char	**cmd_paths;
+	char	**cmd_args;
+	char	*cmd;
+	int		cmd_nbrs;
+	int		idx;
+}				t_pipex;
+
 typedef struct	s_data {
 	t_envir	*env;
 	char	*promt;
 	t_flags	*flags;
 	char 	**commands;
 	int		pid;
+	t_pipex	pipex;
+	
 }				t_data;
 
 /* utils.c */
@@ -116,7 +127,10 @@ void    parse_commands(t_data *data, char *input);
 
 
 /* executing */
-int     execute_command(char **command);
+int     	execute_command(t_data *data);
+void		child(t_data *data);
+char	*apply_command(char **paths, char *cmd);
+char	*find_path(char **env);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);

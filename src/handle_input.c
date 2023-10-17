@@ -19,9 +19,9 @@ void    start_loop(t_data *data, char *envp[])
 		input = readline(data->promt);
 		// parse_flags(data, input);
 		parse_commands(data, input);
-		
-		// execute_command(data->commands);
-		
+		// data->pipex.path = find_path(data->env->env_vars);
+		execute_command(data);
+		get_env_vars(envp);
 		if (input == NULL)
 			handle_d(data);
 		if (ft_strlen(input) > 0)
