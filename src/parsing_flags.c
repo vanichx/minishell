@@ -4,11 +4,11 @@
 void parse_flags(t_data *data, char *input)
 {
 	check_pipe(data, input);
-	check_quotes(data, input);
-	check_redirect(data, input);
-	check_delimiter(data, input);
-	check_dollar(data, input);
-	check_last(data, input);
+	// check_quotes(data, input);
+	// check_redirect(data, input);
+	// check_delimiter(data, input);
+	// check_dollar(data, input);
+	// check_last(data, input);
 }
 
 // This will check for the pipe symbol
@@ -17,6 +17,8 @@ void check_pipe(t_data *data, char *input)
 	int i;
 	
 	i = -1;
+	if (input == NULL)
+		return ;
 	while (input[++i + 1])
 	{
 		if (input[i] == '|' && input[i + 1] != '|')
@@ -38,6 +40,8 @@ void check_pipe(t_data *data, char *input)
 void check_delimiter(t_data *data, char *input)
 {
 	int content_len;
+	if (input == NULL)
+		return ;
 	while (*input)
 	{
 		if (*input == '<' && *(input + 1) == '<' &&  *(input + 1) != '<')
@@ -67,6 +71,8 @@ void check_delimiter(t_data *data, char *input)
 // this will check for the redirection symbols
 void check_redirect(t_data *data, char *input)
 {
+	if (input == NULL)
+		return ;
 	while (*input)
 	{
 		if (*input == '>' && *(input + 1) != '>')
@@ -98,6 +104,8 @@ void check_redirect(t_data *data, char *input)
 // this will check for the quotes
 void check_quotes(t_data *data, char *input)
 {
+	if (input == NULL)
+		return ;
 	while(*input)
 	{
 		if (*input == '\'' && data->flags->double_quote[1] != 1)
@@ -115,6 +123,8 @@ void check_quotes(t_data *data, char *input)
 // or to open a specific prompt or do a specific action
 void check_last(t_data *data, char *input)
 {
+	if (input == NULL)
+		return ;
 	while (*input)
 		input++;
 	while (!ft_isprint(*input))
@@ -138,6 +148,8 @@ void check_last(t_data *data, char *input)
 // this will check for the dollar symbol and the exit status
 void	check_dollar(t_data *data, char *input)
 {
+	if (input == NULL)
+		return ;
 	while(*input)
 	{
         if (*input == '$' && *(input + 1) != '$' && *(input + 1) != '?')

@@ -116,7 +116,7 @@ void    parse_commands(t_data *data, char *input);
 
 
 /* executing */
-int     execute_command(t_data *data, char **command,  char *envp[], char *input);
+int     execute_command(char **command);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);
