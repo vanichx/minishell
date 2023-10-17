@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+# include <stdint.h>
 
 void	*ft_calloc(size_t count, size_t size)
 
 {
-	size_t	i;
 	char	*array;
 
-	i = 0;
 	array = malloc(count * size);
 	if (count * size > SIZE_MAX)
 		return (NULL);

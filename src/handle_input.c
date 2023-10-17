@@ -12,16 +12,15 @@ void    check_exit(char *input)
 void    start_loop(t_data *data, char *envp[])
 {
 	char *input;
-	char **command;
 
 	while (1)
 	{
+		reset_flags(data->flags);
 		input = readline(data->promt);
-		// parse_flags(data, input);
-		command = take_commands(input);
-		// parse_commands();
+		parse_flags(data, input);
+		parse_commands(data, input);
 		
-		execute_command(command, envp);
+		execute_command(data, data->commands, envp, input);
 		
 		if (input == NULL)
 			handle_d(data);
@@ -47,11 +46,11 @@ void    start_loop(t_data *data, char *envp[])
 				incr_shell_lvl(data->env);
 				start_loop(data, envp);
 				// incr_shell_lv(data->env);
-				command = take_commands(input);
-				if (command != NULL)
+				parse_commands(data, input);
+				if (data->commands != NULL)
 				{
-					char *const args[] = {*command, NULL};
-					execve(*command, args, NULL); // Use NULL as the envp
+					char *const* args = (char *const*)data->commands;
+                    execve(data->commands[0], args, NULL); // Cast args to char *const*
 					// handle errors if execve fails
 					perror("execve");
 					// free(input);
@@ -80,14 +79,14 @@ void    start_loop(t_data *data, char *envp[])
 	}
 }
 
-int execute_command(char **command, char *args[])
-{
-    if (execve(*command, args, NULL) == -1) {
-        perror("execve");
-        return -1;
-    }
-    return 0;
-}
+// int execute_command(char **command, char *args[])
+// {
+//     if (execve(*command, args, NULL) == -1) {
+//         perror("execve");
+//         return -1;
+//     }
+//     return 0;
+// }
 
 void print_parsed_input(char *command) {
     if (command != NULL) {

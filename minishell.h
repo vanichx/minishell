@@ -39,7 +39,7 @@
 
 /*	write, access, close, fork,	getcwd, chdir, unlink, execve, dup, dup2, pipe, isatty, ttyname, ttyslot */
 # include <unistd.h>
-
+# include <stdint.h>
 /* libft */
 # include	"inc/libft/libft.h"
 
@@ -54,8 +54,6 @@
 #define PIPE_ERR "syntax error near unexpected token `||'"
 #define DEL_ERR "syntax error near unexpected token `<<'"
 
-/* data_structures */
-
 typedef struct s_envir {
 	char *env_vars[MAX_ENV_VARS];
 	int count;
@@ -66,30 +64,28 @@ typedef struct s_delim {
 	char	*content;
 }				t_delim;
 
-typedef struct s_dollar {
-    char value[MAX_DOLLAR_VALUE_LEN];
-    int recognized;
-} t_dollar;
-
 typedef struct s_flags {
 	int pipe[2];
 	int single_quote[2];
 	int double_quote[2];
-	t_dollar dollar;
+	int dollar;
 	int red_inp[2];
 	int red_out[2];
 	t_delim delimiter;
 	int append[2];
 	int wildcard;
-	int exit_status;
 	int or[2];
 	int and[2];
+	int p_id;
+	int exit_status;
 }				t_flags;
 
 typedef struct	s_data {
 	t_envir	*env;
 	char	*promt;
 	t_flags	*flags;
+	char 	**commands;
+	int		pid;
 }				t_data;
 
 /* utils.c */
@@ -109,15 +105,18 @@ void	handle_signal(void);
 void	start_loop(t_data *data, char *envp[]);
 
 /* parsing.c */
-char	**take_commands(char *input);
 void	parse_flags(t_data *data, char *input);
 void 	check_pipe(t_data *data, char *input);
 void	check_quotes(t_data *data, char *input);
 void 	check_last(t_data *data, char *input);
+void 	check_redirect(t_data *data, char *input);
+void	check_dollar(t_data *data, char *input);
+void 	check_delimiter(t_data *data, char *input);
+void    parse_commands(t_data *data, char *input);
 
 
 /* executing */
-int		execute_command(char **command, char *args[]);
+int     execute_command(t_data *data, char **command,  char *envp[], char *input);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);
@@ -131,6 +130,6 @@ void	update_shlvl(char **env_vars, int *i, int *j, int level);
 int		get_current_shlvl_value(char **env_vars, int *i, int *j);
 
 /* builtins.c */
-
+void  reset_flags(t_flags *flags);
 
 #endif

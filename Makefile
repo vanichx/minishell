@@ -16,7 +16,8 @@ FSANITISE = -fsanitize=address -fsanitize=undefined
 # FILES AND PATH
 SRCS      = main.c utils.c signals.c\
 			handle_input.c environment.c \
-			shlvl.c init_data.c parsing.c
+			shlvl.c init_data.c parsing_flags.c\
+			parsing_commands.c
 
 SRCS_F    = src/
 OBJS_F    = obj/
