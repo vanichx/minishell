@@ -47,7 +47,7 @@
 # define ERR_MINISHELL	"minishell"
 
 # define MAX_ENV_VARS 100
-
+# define MAX_DOLLAR_VALUE_LEN 100
 /* errors */
 
 #define NEW_LINE_ERR "syntax error near unexpected token `newline'"
@@ -57,21 +57,25 @@
 /* data_structures */
 
 typedef struct s_envir {
-    char *env_vars[MAX_ENV_VARS];
-    int count;
-} t_envir;
+	char *env_vars[MAX_ENV_VARS];
+	int count;
+}				t_envir;
 
 typedef struct s_delim {
-	int i;
-	char *delim;
-}			t_delim;
+	int		delim_found;
+	char	*content;
+}				t_delim;
 
+typedef struct s_dollar {
+    char value[MAX_DOLLAR_VALUE_LEN];
+    int recognized;
+} t_dollar;
 
 typedef struct s_flags {
 	int pipe[2];
 	int single_quote[2];
 	int double_quote[2];
-	int dollar[2];
+	t_dollar dollar;
 	int red_inp[2];
 	int red_out[2];
 	t_delim delimiter;
@@ -91,7 +95,7 @@ typedef struct	s_data {
 /* utils.c */
 void	free_data(t_data *data);
 char	*ignore_spaces(char *input);
-void    check_exit(char *input);
+void	check_exit(char *input);
 void	print_env_vars(t_envir *env);
 
 /* init_data.c */
@@ -113,7 +117,7 @@ void 	check_last(t_data *data, char *input);
 
 
 /* executing */
-int execute_command(char **command, char *args[]);
+int		execute_command(char **command, char *args[]);
 
 /* enviroment */
 t_envir *get_env_vars(char *envp[]);

@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 12:43:36 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/10/11 12:43:39 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:54:29 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+int		ft_isspace(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isascii(int c);

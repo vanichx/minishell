@@ -45,9 +45,31 @@ void check_pipe(t_data *data, char *input)
 
 void check_del(t_data *data, char *input)
 {
+	int content_len;
 	while (*input)
 	{
-		if (*input == '<' && *(input + 1) == '<' && *(input + 2) != ) // to be continued
+		if (*input == '<' && *(input + 1) == '<' &&  *(input + 1) != '<')
+		{
+			while (*input && !ft_isspace(*input) && *input == '<')
+				input++;
+			while (*input && ft_isspace(*input))
+				input++;
+			content_len = 0;
+			while (*input && !ft_isspace(*input)) 
+			{
+				data->flags->delimiter.content[content_len++] = *input;
+				input++;
+			}
+			data->flags->delimiter.content[content_len] = '\0';
+			data->flags->delimiter.delim_found = 1;
+			/// maybe some condition 
+		}
+		else 
+		{
+			perror(NEW_LINE_ERR);
+			exit(1);
+		}
+		input++;
 	}
 }
 
@@ -136,7 +158,7 @@ void check_delimiter(t_data *data, char *input)
 		// if (data->flags->red_inp == 1)
 
 		if ((input[i] == '<' && input[i + 1] != '<') && input[i + 1] != '\n')
-			data->flags->red_inp++;
+			data->flags->red_inp[0]++;
 		else if (input[i] == '<' && input[i + 1] == '\n')
 		{
 			perror("syntax error near unexpected token `newline'");
@@ -144,7 +166,7 @@ void check_delimiter(t_data *data, char *input)
 		}
 		else if ((input[i] == '<' && input[i + 1] == '<') && input[i + 2] != '<')
 		{
-			data->flags->red_out++;
+			data->flags->red_out[0]++;
 			// should be given a delimiter, then read the input until a line containing the delimiter is seen.
 			// However, it doesn’t have to update the history!
 			i += 2;
@@ -158,16 +180,24 @@ void check_delimiter(t_data *data, char *input)
 	}
 }
 
-char	*find_dollar(t_data *data, char *input)
-
+void	check_dollar(t_data *data, char *input)
 {
-	int	i;
+	int		value_len;
 
-	i = 0;
-	while (!ft_strcmp(data->env->env_vars[i], input, ft_strlen(input)))
-		i++;
-	if (ft_strcmp(data->env->env_vars[i], input, ft_strlen(input)))
-		return (data->env->env_vars[i]);
-	else
-		write (1, "\n", 1);
+	while(*input)
+	{
+        if (*input == '$' && *(input + 1) != '$')
+		{
+            input++;
+            value_len = 0;
+            while (*input && !ft_isspace(*input)) {
+                data->flags->dollar.value[value_len] = *input;
+                value_len++;
+                input++;
+            }
+            data->flags->dollar.value[value_len] = '\0';
+            data->flags->dollar.recognized = 1; // Set a recognized flag that dollar was found
+        }
+        input++;
+    }
 }
