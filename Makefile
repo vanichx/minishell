@@ -1,52 +1,92 @@
-# SETUP OF THE PROGRAM
-NAME      = minishell
-CC        = gcc
-FLAGS     = -g -Wall -Wextra -Werror #-fsanitize=address -fsanitize=undefined
-RM        = rm -rf
-MAKE_LIB  = make --no-print-directory -C
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
+#    Updated: 2023/10/18 15:26:41 by eseferi          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# Variables
+CC					=	gcc
+CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 #-g -fsanitize=address -fno-omit-frame-pointer
+
+RM					=	rm -rf
+BONUS				=	bonus
+MINISHELL			=   minishell
+NAME				=	$(MINISHELL) $(BONUS)
+
+# readline, leaks, valgrind
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
 VALGRIND  = valgrind --leak-check=full --show-leak-kinds=all -s
 LEAKS	  = leaks --atExit --
-FSANITISE = -fsanitize=address -fsanitize=undefined
 
+# Libraries
+LIBFT				=	libft.a
+LIBFT_DIR			=	lib/libft
+LIBFT_FILE			=	$(LIBFT_DIR)/$(LIBFT)
+CFLAGS				+=	-I $(LIBFT_DIR)/include
 
+MAKE_LIB			=	make --no-print-directory -C
 
-# FILES AND PATH
-SRCS      = main.c utils.c signals.c\
-			handle_input.c environment.c \
-			shlvl.c init_data.c parsing_flags.c\
-			parsing_commands.c free.c 
+# Source and Object Files
+VPATH				=	src:src/minishell:src/bonus:include
+MINISHELL_INC		=	minishell.h
+MINISHELL_SRC		=	environment.c handle_input.c free.c \
+						init_data.c main.c parsing_flags.c  parsing_commands.c shlvl.c \
+						signals.c utils.c
 
-SRCS_F    = src/
-OBJS_F    = obj/
-LIBFT     = inc/libft
-OBJS      = $(SRCS:.c=.o)
-OBJS_P    = $(addprefix $(OBJS_F), $(OBJS))
+BONUS_INC			=	bonus.h
+BONUS_SRC			=	bonus.c
+# Rules
+all:				$(NAME)
 
-# COMMANDS
-$(OBJS_F)%.o: $(SRCS_F)%.c Makefile minishell.h
-	@mkdir -p $(OBJS_F)
-	@$(CC) $(FLAGS) $(RL_CFLAGS) -c $< -o $@
+obj:
+					mkdir -p obj
 
-$(NAME): $(OBJS_P)
-	@$(MAKE) -C $(LIBFT)
-	@$(CC) $(FLAGS) $(LIBFT)/libft.a -o $(NAME) $(OBJS_P) $(RL_LIBS)
-	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+LIB					=	$(LIBFT_FILE)
+MINISHELL_OBJ		=	$(MINISHELL_SRC:%.c=obj/minishell/%.o)
+BONUS_OBJ			= 	$(BONUS_SRC:%.c=obj/bonus/%.o)
 
-all: $(NAME)
+$(MINISHELL_OBJ):	obj/minishell/%.o: %.c $(MINISHELL_INC)
+					@mkdir -p $(dir $@)
+					@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
 
-clean:
-	@$(RM) $(OBJS_F)
-	@$(MAKE) fclean -C $(LIBFT)
-	@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
+$(BONUS_OBJ):		obj/bonus/%.o: %.c $(BONUS_INC)
+					@mkdir -p $(dir $@)
+					@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
 
-fclean: clean
-	@$(RM) $(NAME)
-	@echo "$(RED)$(NAME) program deleted!$(DEFAULT)"
+$(LIBFT_FILE):
+					$(MAKE_LIB) $(LIBFT_DIR)
 
-re: fclean all
+$(MINISHELL):		$(LIB) $(MINISHELL_OBJ)
+					@$(CC) $(CFLAGS) $(LIB) $(MINISHELL_OBJ) $(RL_LIBS) -o  $@
+					@echo "$(GREEN)$(MINISHELL) was successfully created!$(DEFAULT)"
+
+$(BONUS):			$(LIB) $(BONUS_OBJ)
+					@$(CC) $(CFLAGS) $(LIB) $(BONUS_OBJ) $(RL_LIBS) -o $@
+					@echo "$(GREEN)$(BONUS) was successfully created!$(DEFAULT)"
+
+lib_clean:
+					$(MAKE_LIB) $(LIBFT_DIR) clean
+
+lib_fclean:
+					$(MAKE_LIB) $(LIBFT_DIR) fclean
+
+clean:				lib_clean
+					$(RM) obj
+					@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
+
+fclean:				clean lib_fclean
+					$(RM) $(NAME)
+					@echo "$(RED)$(NAME) program deleted!$(DEFAULT)"
+					
+re:					fclean all
 
 # Valgrind testing
 valgrind: $(NAME)
@@ -56,14 +96,13 @@ valgrind: $(NAME)
 leaks: $(NAME)
 	$(LEAKS) ./$(NAME)
 
-fsanitise: $(NAME)
-	$(FSANITISE) ./$(NAME)
+.SILENT:
 
-.PHONY: all clean fclean re valgrind leaks
+.PHONY:				all lib_clean lib_fclean clean fclean re
 
 # COLORS DEFINITION
-RED     = \033[1;31m
-DEFAULT = \033[0m
-GREEN   = \033[1;32m
-BOLD    = \033[1m
-YELLOW  = \033[1;33m
+RED				= \033[1;31m
+DEFAULT			= \033[0m
+GREEN			= \033[1;32m
+BOLD			= \033[1m
+YELLOW			= \033[1;33m
