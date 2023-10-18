@@ -22,19 +22,11 @@ void	start_loop(t_data *data, char *envp[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
-
-	if (argc == 1 && !ft_strncmp("./minishell", ignore_spaces(argv[0]), 12))
-	{
-		t_data *data = init_data(envp);
-		handle_signal();
-		start_loop(data, envp);
-		free_data(data);
-	}
-	else
-	{
-		printf("invalid argumens\n");
-		exit(0);
-	}
-	
+	(void)argc;
+	(void)argv;
+	t_data *data = init_data(envp);
+	handle_signal();
+	start_loop(data, envp);
+	free_data(data);
 	return 0;
 }
