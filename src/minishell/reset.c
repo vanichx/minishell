@@ -2,6 +2,8 @@
 
 void reset_data(t_data *data)
 {
+	if (!data || !data->flags || !data->cmdexe)
+        return;
 	reset_flags(data->flags);
 	reset_cmdexe(data->cmdexe);
 }
