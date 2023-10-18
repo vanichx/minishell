@@ -4,64 +4,94 @@ void	free_data(t_data *data)
 {
     if (!data)
         return ;
-	while (data->env)
-	{
-   		free_envir((t_envir *)data->env);
-		data->env = data->env->next;
-	}
-    free(data->promt);
+	ft_lstclear(&data->env, free_envir);
+	data->env = NULL;
     free_flags(data->flags);
-    free_2darray(data->commands);
+	data->flags = NULL;
     free_cmdexe(data->cmdexe);
+	data->cmdexe = NULL;
     free(data);
+	data = NULL;
 }
 
 void	free_flags(t_flags *flags)
 {
     if (!flags)
         return ;
-    free(flags->delimiter.content);
+	free_delimiter(&flags->delimiter);
     free(flags);
+	flags = NULL;
 }
 
-void	free_envir(t_envir *env)
+void	free_delimiter(t_delim *delimiter)
 {
-    int	i;
+	if (!delimiter)
+		return ;
+	// if (delimiter->content)
+	// {
+	// 	free(delimiter->content);
+	// 	delimiter->content = NULL;
+	// }
+	// if (delimiter->delim_found)
+	// 	delimiter->delim_found = 0;
+	// free(delimiter);
+	delimiter = NULL;
+}
 
-    if (!env)
+void	free_envir(void *envir)
+{
+    t_envir	*tmp;
+
+    if (!envir)
         return ;
-    i = 0;
-    while (env[i].var_name)
-    {
-        free(env[i].var_name);
-        free(env[i].var_value);
-        i++;
-    }
-    free(env);
+    tmp = (t_envir *)envir;
+	if (tmp->var_name)
+	{
+		free(tmp->var_name);
+		tmp->var_name = NULL;
+	}
+	if (tmp->var_value)
+	{
+		free(tmp->var_value);
+		tmp->var_value = NULL;
+	}
+    free(tmp);
+	tmp = NULL;
 }
 
 void	free_cmdexe(t_cmdexe *cmdexe)
 {
     if (!cmdexe)
         return ;
-    free(cmdexe->path);
     free_2darray(cmdexe->cmd_paths);
+	cmdexe->cmd_paths = NULL;
     free_2darray(cmdexe->cmd_args);
-    free(cmdexe->cmd);
+	cmdexe->cmd_args = NULL;
+	if (cmdexe->cmd)
+	{
+		free(cmdexe->cmd);
+		cmdexe->cmd = NULL;
+	}
+	if (cmdexe->path)
+	{
+		free(cmdexe->path);
+		cmdexe->path = NULL;
+	}
     free(cmdexe);
 }
 
 void	free_2darray(char **array)
 {
-	int	i;
+    int	i;
 
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
+    if (!array)
+        return ;
+    i = 0;
+    while (array[i] != NULL)
+    {
+        free(array[i]);
+        array[i] = NULL;
+        i++;
+    }
+    free(array);
 }

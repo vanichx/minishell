@@ -109,7 +109,6 @@ char	*apply_command(char **paths, char *cmd);
 char	*find_path(t_list *env);
 
 /* enviroment */
-void	free_envir(t_envir *env);
 t_envir	*parse_envir(char *env_str);
 void	ft_lstadd_back_env(t_list **lst, t_envir *envir);
 t_envir	*find_envir(t_list *env, char *var_name);
@@ -128,10 +127,11 @@ void	reset_cmdexe(t_cmdexe *cmdexe);
 void	free_data(t_data *data);
 void	free_cmdexe(t_cmdexe *cmdexe);
 void	free_2darray(char **array);
-void	free_envir(t_envir *env);
+void	free_envir(void *envir);
 void	free_flags(t_flags *flags);
+void	free_delimiter(t_delim *delimiter);
 
 /* exit */
-void	exit_shell(char *message, int exit_code);
+void	exit_shell(char *message, int exit_code, t_data *data);
 
 #endif

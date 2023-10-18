@@ -34,7 +34,5 @@ void	handle_d(t_data *data)
 {
 	rl_on_new_line();
 	rl_redisplay();
-	write(1, "exit\n", 5);
-	free_data(data);
-	exit(0);
+	exit_shell("exit", 0, data);
 }

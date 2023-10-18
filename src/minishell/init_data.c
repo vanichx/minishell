@@ -14,7 +14,7 @@ void	init_data(t_data **data, char *envp[])
     (*data)->pid = getpid();
     (*data)->cmdexe = init_cmdexe();
     if (!(*data)->flags || !(*data)->cmdexe)
-        exit_shell("malloc error", 1);
+        exit_shell("malloc error", 1, *data);
     reset_data(*data);
     while (*envp)
     {
