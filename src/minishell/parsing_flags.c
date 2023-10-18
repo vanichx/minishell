@@ -19,16 +19,16 @@ void check_pipe(t_data *data, char *input)
     i = -1;
     if (input == NULL || data->flags == NULL)
         return ;
-    while (input[++i + 1])
+    while (input[++i + 1] != '\0')
     {
         if (input[i] == '|' && input[i + 1] != '|')
             data->flags->pipe[0]++;
-        else if (input[i] == '|' && input[i + 1] == '|' && input[i + 2] != '|')
+        else if (input[i] == '|' && input[i + 1] == '|' && input[i + 2] != '\0' && input[i + 2] != '|')
         {
             data->flags->or[0] += 1;
             i += 2;
         }
-        else if (input[i] == '|' && input[i + 1] == '|' && input[i + 2] == '|')
+        else if (input[i] == '|' && input[i + 1] == '|' && (input[i + 2] == '\0' || input[i + 2] == '|'))
         {
             perror("syntax error near unexpected token `||'");
             exit(1);

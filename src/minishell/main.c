@@ -6,9 +6,9 @@ void	start_loop(t_data *data)
 
 	while (1)
 	{
-		input = readline(data->promt);
 		reset_data(data);
-		parse_flags(data, input);
+		input = readline(data->promt);
+		//parse_flags(data, input);
 		parse_commands(data, input);
 		execute_command(data);
 		if (input == NULL)
