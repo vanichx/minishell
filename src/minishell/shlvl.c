@@ -1,66 +1,40 @@
 #include "minishell.h"
 
-int	find_shlvl_index(char **env_vars)
+void	incr_shell_lvl(t_data **data)
 {
-	int	j;
+    t_envir	*envir = NULL;
+    int level = 0;
 
-	j = 0;
-	while (ft_strncmp(env_vars[j], "SHLVL=", ft_strlen("SHLVL=")))
-	{
-		j++;
-	}
-	return (j);
+    envir = find_envir((*data)->env, "SHLVL");
+    if (envir)
+    {
+        level = ft_atoi(envir->var_value);
+        level++;
+        free(envir->var_value);
+        if (level <= 999)
+            envir->var_value = ft_itoa(level);
+        else if (level == 1000)
+            envir->var_value = ft_strdup("\n");
+        else
+        {
+            level = 1;
+            envir->var_value = ft_strdup("1");
+        }
+        envir->count = ft_strlen(envir->var_value);
+    }
+    else
+        export(&(*data)->env, "SHLVL", "1");
 }
 
-int	get_current_shlvl_value(char **env_vars, int *i, int *j)
+void	export(t_list **env_list, char *var_name, char *var_value)
 {
-	int	level;
+    t_envir	*new_envir;
 
-	while (env_vars[*j][*i] != '=')
-		(*i)++;
-	(*i)++;
-	if (env_vars[*j][*i] == '\n')
-		level = 1;
-	else
-	{
-		level = ft_atoi(env_vars[*j] + *i);
-		level++;
-	}
-	return (level);
-}
-
-void	update_shlvl(char **env_vars, int *i, int *j, int level)
-{
-	int		k;
-	char	*str;
-
-	k = 0;
-	str = ft_itoa(level);
-	while (str[k])
-	{
-		env_vars[*j][*i] = str[k];
-		k++;
-		(*i)++;
-	}
-	free(str);
-}
-
-void	incr_shell_lvl(t_envir *env)
-{
-	int	i;
-	int	j;
-	int	level;
-
-	i = 0;
-	j = find_shlvl_index(env->env_vars);
-	level = get_current_shlvl_value(env->env_vars, &i, &j);
-	if (level <= 999)
-		update_shlvl(env->env_vars, &i, &j, level);
-	else if (level == 1000)
-		env->env_vars[i][j] = '\n';
-	else
-	{
-		level = 1;
-		env->env_vars[i][j] = '1';
-	}
+    new_envir = (t_envir *)malloc(sizeof(t_envir));
+    if (!new_envir)
+        return ;
+    new_envir->var_name = ft_strdup(var_name);
+    new_envir->var_value = ft_strdup(var_value);
+    new_envir->count = ft_strlen(var_value);
+    ft_lstadd_back(env_list, ft_lstnew(new_envir));
 }

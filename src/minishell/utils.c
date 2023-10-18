@@ -7,14 +7,28 @@ char	*ignore_spaces(char *input)
 	return (input);
 }
 
-void	print_env_vars(t_envir *env)
+char **dup_2darray(char **array)
 {
-	int	i;
+	int		i;
+	char	**dup;
 
 	i = 0;
-	while (i < env->count)
+	while (array[i] != NULL)
+		i++;
+	dup = (char **)malloc(sizeof(char *) * (i + 1));
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (array[i] != NULL)
 	{
-		if (env->env_vars[i] != NULL)
-			printf("%s\n", env->env_vars[i++]);
+		dup[i] = ft_strdup(array[i]);
+		if (dup[i] == NULL)
+		{
+			free_2darray(dup);
+			return (NULL);
+		}
+		i++;
 	}
+	dup[i] = NULL;
+	return (dup);
 }

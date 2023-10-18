@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/18 15:26:41 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/18 18:15:17 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ VPATH				=	src:src/minishell:src/bonus:include
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	environment.c handle_input.c free.c \
 						init_data.c main.c parsing_flags.c  parsing_commands.c shlvl.c \
-						signals.c utils.c
+						signals.c utils.c reset.c exit.c
 
 BONUS_INC			=	bonus.h
 BONUS_SRC			=	bonus.c

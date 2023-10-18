@@ -1,14 +1,13 @@
 #include "minishell.h"
 
-void	start_loop(t_data *data, char *envp[])
+void	start_loop(t_data *data)
 {
 	char *input;
 
 	while (1)
 	{
-		reset_data(data);
 		input = readline(data->promt);
-		get_env_vars(envp);
+		reset_data(data);
 		parse_flags(data, input);
 		parse_commands(data, input);
 		execute_command(data);
@@ -22,11 +21,13 @@ void	start_loop(t_data *data, char *envp[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_data	*data;
+
 	(void)argc;
 	(void)argv;
-	t_data *data = init_data(envp);
+	init_data(&(data), envp);
 	handle_signal();
-	start_loop(data, envp);
+	start_loop(data);
 	free_data(data);
 	return 0;
 }

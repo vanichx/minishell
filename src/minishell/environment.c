@@ -1,28 +1,54 @@
 #include "minishell.h"
 
-t_envir *get_env_vars(char *envp[])
+void	ft_lstadd_back_env(t_list **lst, t_envir *envir)
 {
-	t_envir *env;
+	t_list	*new;
+	t_list	*tmp;
 
-	env = malloc(sizeof(t_envir));
-	if (env == NULL)
+	if (!lst || !envir)
+		return ;
+	new = ft_lstnew(envir);
+	if (!new)
+		return ;
+	if (!*lst)
 	{
-		free(env);
-		perror("Memory allocation failde for env\n");
-		exit(1);
+		*lst = new;
+		return ;
 	}
-	ft_memset(env->env_vars, 0, sizeof(env->env_vars));  // Initialize the array with NULL values
-	env->count = 0;
-	while (envp[env->count] != NULL && env->count < MAX_ENV_VARS)
-	{
-		env->env_vars[env->count] = ft_strdup(envp[env->count]);
-		if (env->env_vars[env->count] == NULL)
-		{
-			perror("ft_strdup");
-			free_envir(env);
-			return(NULL);  //Return NULl to indicate an error
-		}
-		env->count++;
-	}
-	return(env); // Return the allocated env structure
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->prev = tmp;
+}
+
+t_envir	*parse_envir(char *env_str)
+{
+    t_envir	*envir;
+    char	*eq_pos;
+
+    eq_pos = ft_strchr(env_str, '=');
+    if (!eq_pos)
+        return (NULL);
+    envir = malloc(sizeof(t_envir));
+    if (!envir)
+        return (NULL);
+    envir->var_name = ft_substr(env_str, 0, eq_pos - env_str);
+    envir->var_value = ft_strdup(eq_pos + 1);
+    envir->count = ft_strlen(envir->var_value);
+    return (envir);
+}
+
+t_envir	*find_envir(t_list *env, char *var_name)
+{
+    t_envir	*envir;
+
+    while (env)
+    {
+        envir = (t_envir *)env->content;
+        if (ft_strcmp(envir->var_name, var_name) == 0)
+            return (envir);
+        env = env->next;
+    }
+    return (NULL);
 }

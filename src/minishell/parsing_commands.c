@@ -21,22 +21,29 @@ void	parse_commands(t_data *data, char *input)
 	}
 }
 
-char	*find_path(char **env)
+char	*find_path(t_list *env)
 {
-	while (ft_strncmp("PATH", *env, 4))
-		env++;
-	return (*env + 5);
+    t_envir	*envir;
+
+    while (env)
+    {
+        envir = (t_envir *)env->content;
+        if (ft_strcmp(envir->var_name, "PATH") == 0)
+            return (envir->var_value);
+        env = env->next;
+    }
+    return (NULL);
 }
 
 int		execute_command(t_data *data)
 {
-	data->cmdexe->path = find_path(data->env->env_vars);
-	data->cmdexe->cmd_paths = ft_split(data->cmdexe->path, ':');
-	data->cmdexe->idx = -1;
-	while (++data->cmdexe->idx < data->cmdexe->cmd_nbrs)
-		child(data);
-	waitpid(-1, NULL, 0);
-	return (0);
+    data->cmdexe->path = find_path(data->env);
+    data->cmdexe->cmd_paths = ft_split(data->cmdexe->path, ':');
+    data->cmdexe->idx = -1;
+    while (++data->cmdexe->idx < data->cmdexe->cmd_nbrs)
+        child(data);
+    waitpid(-1, NULL, 0);
+    return (0);
 }
 
 void	child(t_data *data)
