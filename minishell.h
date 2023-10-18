@@ -145,6 +145,8 @@ int		get_current_shlvl_value(char **env_vars, int *i, int *j);
 
 /* builtins.c */
 void  reset_flags(t_flags *flags);
+void reset_data(t_data *data);
+void  reset_cmdexe(t_cmdexe *cmdexe);
 
 
 /* free.c */

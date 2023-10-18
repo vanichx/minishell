@@ -25,26 +25,42 @@ void	free_envir(t_envir *env)
 	}
 	env->count = 0;
 	free(env); // Free the memory allocated for env itself
+	env = NULL; // Set the pointer to NULL after freeing
 }
 
 void	free_cmdexe(t_cmdexe *cmdexe)
 {
-	int	i;
+    int	i;
 
-	i = -1;
-	if (cmdexe)
-	{
-		free(cmdexe->path);
-		if (cmdexe->cmd_paths)
-			while (cmdexe->cmd_paths[++i])
-				free(cmdexe->cmd_paths[i]);
-		free(cmdexe->cmd_paths);
-		i = -1;
-		if (cmdexe->cmd_args)
-			while (cmdexe->cmd_args[++i])
-				free(cmdexe->cmd_args[i]);
-		free(cmdexe->cmd_args);
-		free(cmdexe->cmd);
-		free(cmdexe);
-	}
+    if (cmdexe)
+    {
+        cmdexe->path = NULL;
+        if (cmdexe->cmd_paths)
+        {
+            i = 0;
+            while (cmdexe->cmd_paths[i])
+            {
+                free(cmdexe->cmd_paths[i]);
+                cmdexe->cmd_paths[i] = NULL;
+                i++;
+            }
+            free(cmdexe->cmd_paths);
+            cmdexe->cmd_paths = NULL;
+        }
+        if (cmdexe->cmd_args)
+        {
+            i = 0;
+            while (cmdexe->cmd_args[i])
+            {
+                free(cmdexe->cmd_args[i]);
+                cmdexe->cmd_args[i] = NULL;
+                i++;
+            }
+            free(cmdexe->cmd_args);
+            cmdexe->cmd_args = NULL;
+        }
+        cmdexe->cmd = NULL;
+        free(cmdexe);
+        cmdexe = NULL;
+    }
 }

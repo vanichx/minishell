@@ -38,6 +38,22 @@ t_cmdexe *init_cmdexe(void)
 	return (cmdexe);
 }
 
+void reset_data(t_data *data)
+{
+	reset_flags(data->flags);
+	reset_cmdexe(data->cmdexe);
+}
+
+void reset_cmdexe(t_cmdexe *cmdexe)
+{
+	cmdexe->cmd = NULL;
+	cmdexe->cmd_args = NULL;
+	cmdexe->cmd_paths = NULL;
+	cmdexe->idx = 0;
+	cmdexe->path = NULL;
+	cmdexe->cmd_nbrs = 0;
+}
+
 void  reset_flags(t_flags *flags)
 {
 	flags->pipe[0] = 0;
