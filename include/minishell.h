@@ -75,6 +75,21 @@ typedef struct	s_data {
 	t_cmdexe	*cmdexe;
 }				t_data;
 
+/* builtins.c */
+
+void	builtin_echo(char **args);
+void	builtin_pwd(void);
+void	builtin_unset(t_list **head, char *var_name);
+void	builtin_env(t_list *head);
+void	builtin_cd(t_data *data, char *path);
+void	builtin_exit(t_data *data);
+char	*get_curr_dir(void);
+char	*get_home_dir(void);
+void	builtin_export(t_data *data);
+void	handle_builtins(t_data *data);
+int		ft_is_builtin(char *cmd);
+
+
 /* init_data.c */
 void	init_data(t_data **data, char *envp[]);
 t_flags	*init_flags(void);
@@ -112,11 +127,7 @@ t_envir	*find_envir(t_list *env, char *var_name);
 void	incr_shell_lvl(t_data **data);
 void	export(t_list **env, char *var_name, char *var_value);
 
-/* builtins.c */
-void	reset_flags(t_flags *flags);
-void	reset_data(t_data *data);
-void	reset_cmdexe(t_cmdexe *cmdexe);
-void	builtin_env(t_list *head);
+
 
 
 /* free.c */
@@ -134,7 +145,12 @@ void	check_exit(char *input);
 void	print_env_vars(t_envir *env);
 char	**dup_2darray(char **array);
 char	*get_curr_dir(void);
-void	handle_builtins(t_data *data)
+void	handle_builtins(t_data *data);
+
+/* reset.c */
+void	reset_flags(t_flags *flags);
+void	reset_data(t_data *data);
+void	reset_cmdexe(t_cmdexe *cmdexe);
 
 /* exit */
 void	exit_shell(char *message, int exit_code, t_data *data);

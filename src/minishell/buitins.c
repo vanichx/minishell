@@ -8,24 +8,24 @@ void builtin_echo(char *args[])
 	i = 1;
 	no_newline = 0;
 
-	if (args[i] != '\0' && ft_strncmp(args[i], "-n", 2) == 0)
+	if (args[i] != (void *)0 && ft_strncmp(args[i], "-n", 2) == 0)
 	{
 		no_newline = 1;
 		i++;
 	}
 
-	while (args[i] != '\0')
+	while (args[i] !=  (void *)0)
 	{
 		printf("%s", args[i]);
 		i++;
-		if (args[i] != '\0')
+		if (args[i] !=  (void *)0)
 			printf(" ");
 	}
 	if (!no_newline)
 		printf("\n");
 }
 
-void	builtin_pwd()
+void	builtin_pwd(void)
 {
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -59,16 +59,18 @@ void	builtin_unset(t_list **head, char *var_name)
 
 void	builtin_env(t_list *head)
 {
+	t_envir *env;
+
 	while (head != NULL)
 	{
-		t_envir *env = (t_envir *)head->content;
+		env = (t_envir *)head->content;
 		printf("%s=%s\n", env->var_name, env->var_value);
 		printf("\n");
 		head = head->next;
 	}
 }
 
-void builtin_exit(char *cmd)
+void builtin_exit(t_data *data)
 {
 	exit_shell("exit", 0, data);
 }
@@ -82,29 +84,32 @@ void builtin_exit(char *cmd)
 
 
 
-void builtin_cd(char *path)
+void builtin_cd(t_data *data, char *path)
 {
-	const char	*home_dir;
-	char		*cwd;
-	t_envir		*pwd_env;
+	char *cwd;
+	t_envir *pwd_env;
 
-	if (path == NULL)
-		get_home_dir(path);
-	if (path[0] != '/' && path[0] != '.' && path[0] != '~')
+	if (!path) 
 	{
-		perror("minishell: cd: %s: No such file or directory\n", path);
-		return;
+		path = get_home_dir();
+		if (!path)
+		{
+			printf("minishell: cd: HOME not set\n");
+			return;
+		}
 	}
-	if (chdir(path) != 0)
-	{
-		perror("minishell: cd: Cant change the directory\n");
+	if (chdir(path) != 0) {
+		printf("minishell: cd: %s: No such file or directory\n", path);
 		return;
 	}
 	cwd = get_curr_dir();
+	if (!cwd) {
+		printf("minishell: error getting current directory\n");
+		return;
+	}
 	pwd_env = find_envir(data->env, "PWD");
-	if (pwd_env == NULL)
-	{
-		perror("minishell: PWD environment variable not found\n");
+	if (!pwd_env) {
+		printf("minishell: PWD environment variable not found\n");
 		free(cwd);
 		return;
 	}
@@ -117,11 +122,11 @@ char *get_curr_dir(void)
 {
 	char *cwd;
 
-	*cwd; = malloc(PATH_MAX);
+	cwd = malloc(PATH_MAX);
 	if (!cwd)
 	{
 		perror("minishell: cd: Cant get the current directory\n");
-		return NULL
+		return NULL;
 	}
 	if (!getcwd(cwd, PATH_MAX))
 	{
@@ -131,22 +136,20 @@ char *get_curr_dir(void)
 	return cwd;
 }
 
-char	*get_home_dir(char *path)
+char *get_home_dir(void)
 {
-	const char	*home_dir;
-
-	*home_dir = getenv("HOME");
-	if(home_dir == NULL)
-	{
+	const char *home_dir = getenv("HOME");
+	if (!home_dir) {
 		perror("minishell: cd: HOME not set\n");
-		return (NULL);
+		return NULL;
 	}
-	path = (char *)home_dir;
-	return (path);
+	return strdup(home_dir);
 }
 
-void	builtin_export(char **cmd_args)
+void	builtin_export(t_data *data)
 {
+
+	////NEED TO FINISH BECAUSE WE CANT USE EXPORT FUNTION LIKE THIS ITS PROHIBITED BY SUBJECT
 	export(&data->env, data->cmdexe->cmd_args[1], data->cmdexe->cmd_args[2]);
 }
 
@@ -155,7 +158,7 @@ void	handle_builtins(t_data *data)
 	if (ft_strcmp(data->cmdexe->cmd, "echo") == 0)
 		builtin_echo(data->cmdexe->cmd_args);
 	else if (ft_strcmp(data->cmdexe->cmd, "cd") == 0)
-		builtin_cd(data->cmdexe->path);
+		builtin_cd(data, data->cmdexe->cmd_args[1]);
 	else if (ft_strcmp(data->cmdexe->cmd, "pwd") == 0)
 		builtin_pwd();
 	else if (ft_strcmp(data->cmdexe->cmd, "unset") == 0)
@@ -163,9 +166,9 @@ void	handle_builtins(t_data *data)
 	else if (ft_strcmp(data->cmdexe->cmd, "env") == 0)
 		builtin_env(data->env);
 	else if (ft_strcmp(data->cmdexe->cmd, "exit") == 0)
-		builtin_exit(data->cmdexe->cmd);
+		builtin_exit(data);
 	else if (ft_strcmp(data->cmdexe->cmd, "export") == 0)
-		builtin_export(data->cmdexe->cmd_args);
+		builtin_export(data);
 }
 
 int	ft_is_builtin(char *cmd)
