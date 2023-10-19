@@ -46,24 +46,96 @@ void	builtin_pwd()
 }
 
 
-
-void builtin_unset(char *args[]) {
-    // Implement the logic to unset environment variables
-}
-
-void builtin_env()
+void	builtin_unset(t_list **head, char *var_name)
 {
-    char **env = environ;
-    while (*env) {
-        printf("%s\n", *env);
-        env++;
+    t_list *curr = *head;
+    t_list *prev = NULL;
+
+    while (curr != NULL)
+    {
+        t_envir *env = (t_envir *)curr->content;
+        if (ft_strcmp(env->var_name, var_name) == 0)
+        {
+            if (prev == NULL)
+                *head = curr->next;
+            else
+                prev->next = curr->next;
+            ft_lstdelone(curr, &free);
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
     }
 }
 
-void builtin_exit()
+void	builtin_env(t_list *head)
 {
-    // Optionally, handle cleanup tasks here
-    exit(0);
+    while (head != NULL)
+    {
+        t_envir *env = (t_envir *)head->content;
+        printf("%s=%s\n", env->var_name, env->var_value);
+		printf("\n");
+        head = head->next;
+    }
 }
 
+void builtin_exit(char *cmd)
+{
+    exit_shell("exit", 0, data);
+}
 
+void builtin_cd(char *path)
+{
+    if (path == NULL)
+    {
+        const char *home_dir = getenv("HOME");
+        if (home_dir == NULL)
+        {
+            perror("minishell: cd: HOME not set\n");
+            return;
+        }
+        path = (char *)home_dir;
+    }
+    if (path[0] != '/' && path[0] != '.' && path[0] != '~')
+    {
+        perror("minishell: cd: %s: No such file or directory\n", path);
+        return;
+    }
+    if (chdir(path) != 0)
+    {
+        perror("minishell");
+        return;
+    }
+	char *cwd = get_curr_dir();
+    if (cwd == NULL)
+    {
+        perror("minishell");
+        return;
+    }
+    t_envir *pwd_env = find_envir(data->env, "PWD");
+    if (pwd_env == NULL)
+    {
+        perror("minishell: PWD environment variable not found\n");
+        free(cwd);
+        return;
+    }
+    free(pwd_env->var_value);
+    pwd_env->var_value = cwd;
+    free(cwd);
+}
+
+void check_builtins(t_data *data)
+{
+	if (ft_strcmp(data->cmdexe->cmd, "echo") == 0)
+		builtin_echo(data->cmdexe->cmd_args);
+	else if (ft_strcmp(data->cmdexe->cmd, "cd") == 0)
+		builtin_cd(data->cmdexe->cmd_args);
+	else if (ft_strcmp(data->cmdexe->cmd, "pwd") == 0)
+		builtin_pwd();
+	else if (ft_strcmp(data->cmdexe->cmd, "unset") == 0)
+		builtin_unset(&data->env, data->cmdexe->cmd_args[1]);
+	else if (ft_strcmp(data->cmdexe->cmd, "env") == 0)
+		builtin_env(data->env);
+	else if (ft_strcmp(data->cmdexe->cmd, "exit") == 0)
+		builtin_exit(data->cmdexe->cmd);
+}

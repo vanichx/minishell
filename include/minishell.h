@@ -69,16 +69,10 @@ typedef struct	s_data {
 	char		*promt;
 	t_flags		*flags;
 	char		**commands;
+	char		*curr_dir;
 	int			pid;
 	t_cmdexe	*cmdexe;
 }				t_data;
-
-/* utils.c */
-void	free_data(t_data *data);
-char	*ignore_spaces(char *input);
-void	check_exit(char *input);
-void	print_env_vars(t_envir *env);
-char	**dup_2darray(char **array);
 
 /* init_data.c */
 void	init_data(t_data **data, char *envp[]);
@@ -121,6 +115,7 @@ void	export(t_list **env, char *var_name, char *var_value);
 void	reset_flags(t_flags *flags);
 void	reset_data(t_data *data);
 void	reset_cmdexe(t_cmdexe *cmdexe);
+void	builtin_env(t_list *head);
 
 
 /* free.c */
@@ -130,6 +125,14 @@ void	free_2darray(char **array);
 void	free_envir(void *envir);
 void	free_flags(t_flags *flags);
 void	free_delimiter(t_delim *delimiter);
+
+/* utils.c */
+void	free_data(t_data *data);
+char	*ignore_spaces(char *input);
+void	check_exit(char *input);
+void	print_env_vars(t_envir *env);
+char	**dup_2darray(char **array);
+char	*get_curr_dir(void);
 
 /* exit */
 void	exit_shell(char *message, int exit_code, t_data *data);

@@ -25,8 +25,8 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
-	init_data(&(data), envp);
 	handle_signal();
+	init_data(&(data), envp);
 	start_loop(data);
 	free_data(data);
 	return 0;

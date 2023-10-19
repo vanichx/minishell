@@ -6,6 +6,7 @@ void reset_data(t_data *data)
         return;
 	reset_flags(data->flags);
 	reset_cmdexe(data->cmdexe);
+	data->curr_dir = getcwd(NULL, 0);
 }
 
 void reset_cmdexe(t_cmdexe *cmdexe)
