@@ -2,8 +2,6 @@
 
 void	free_data(t_data *data)
 {
-    if (!data)
-        return ;
 	ft_lstclear(&data->env, free_envir);
 	data->env = NULL;
     ft_lstclear(&data->commands, free_command);
@@ -18,8 +16,6 @@ void	free_data(t_data *data)
 
 void	free_flags(t_flags *flags)
 {
-    if (!flags)
-        return ;
 	free_delimiter(flags->delimiter);
 	reset_flags(flags);
     free(flags);
@@ -30,13 +26,12 @@ void	free_delimiter(t_delim *delimiter)
 {
 	if (!delimiter)
 		return ;
-	if (delimiter->content && delimiter->content[0] != '\0')
+	if (delimiter->content)
 	{
 		free(delimiter->content);
 		delimiter->content = NULL;
 	}
-	if (delimiter->delim_found)
-		delimiter->delim_found = 0;
+	free(delimiter);
 	delimiter = NULL;
 }
 
@@ -47,12 +42,12 @@ void	free_envir(void *envir)
     if (!envir)
         return ;
     tmp = (t_envir *)envir;
-	if (tmp->var_name && tmp->var_name[0] != '\0')
+	if (tmp->var_name)
 	{
 		free(tmp->var_name);
 		tmp->var_name = NULL;
 	}
-	if (tmp->var_value && tmp->var_value[0] != '\0')
+	if (tmp->var_value)
 	{
 		free(tmp->var_value);
 		tmp->var_value = NULL;
@@ -67,20 +62,20 @@ void	free_command(void *command)
 	tmp = (t_cmdexe *)command;
 	if (!command || !tmp)
 		return ;
-	if (tmp->path && tmp->path[0] != '\0')
+	if (tmp->path)
 	{
 		free(tmp->path);
 		tmp->path = NULL;
 	}
-	if (tmp->cmd && tmp->cmd[0] != '\0')
+	if (tmp->cmd)
 	{
 		free(tmp->cmd);
 		tmp->cmd = NULL;
 	}
-	if (tmp->flags && tmp->flags->pipe[0] != 0 && tmp->flags->pipe[1] != 0)
+	if (tmp->flags)
 		free_flags(tmp->flags);
-	tmp->idx = 0;
 	free(tmp);
+	tmp = NULL;
 }
 
 void	free_2darray(char **array)

@@ -7,8 +7,10 @@ void	init_data(t_data **data, char **envp)
         exit(EXIT_FAILURE);
     (*data)->env = NULL;
 	(*data)->commands = NULL;
-    (*data)->promt = "minishell>> ";
-    (*data)->commands = NULL;
+    (*data)->promt = malloc(sizeof(char) * 12);
+	if (!(*data)->promt)
+		exit(EXIT_FAILURE);
+	(*data)->promt = "minishell>> ";
     (*data)->pid = getpid();
 	create_env(data, envp);
     incr_shell_lvl(data);

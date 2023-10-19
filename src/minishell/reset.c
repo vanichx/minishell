@@ -2,10 +2,8 @@
 
 void reset_data(t_data *data)
 {
-	if (!data) // || !data->cmdexe
-        return;
 	ft_lstclear(&data->commands, free_command);
-	//data->curr_dir = getcwd(NULL, 0);
+	data->curr_dir = getcwd(NULL, 0);
 }
 
 void  reset_flags(t_flags *flags)

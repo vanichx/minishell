@@ -32,7 +32,6 @@ void	parse_commands(t_data *data, char *input)
 		command++;
 		i++;
 	}
-	// free_2darray(command);
 }
 
 char	*find_path(t_list *env)
