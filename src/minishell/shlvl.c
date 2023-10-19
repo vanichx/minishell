@@ -37,4 +37,5 @@ void	export(t_list **env_list, char *var_name, char *var_value)
     new_envir->var_value = ft_strdup(var_value);
     new_envir->count = ft_strlen(var_value);
     ft_lstadd_back(env_list, ft_lstnew(new_envir));
+	free(new_envir);
 }

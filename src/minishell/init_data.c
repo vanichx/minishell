@@ -3,6 +3,7 @@
 void	init_data(t_data **data, char *envp[])
 {
     t_envir	*envir;
+    t_envir	*temp;
 
     *data = malloc(sizeof(t_data));
     if (!*data)
@@ -20,6 +21,7 @@ void	init_data(t_data **data, char *envp[])
     {
         envir = parse_envir(*envp);
         ft_lstadd_back_env(&(*data)->env, envir);
+        temp = envir;
         envp++;
     }
     incr_shell_lvl(data);
@@ -33,19 +35,6 @@ t_cmdexe *init_cmdexe(void)
     if (!cmdexe)
         return (NULL);
     cmdexe->path = NULL;
-    cmdexe->cmd_paths = malloc(sizeof(char *) * 2);
-    if (!cmdexe->cmd_paths)
-    {
-        free(cmdexe);
-        return (NULL);
-    }
-    cmdexe->cmd_args = malloc(sizeof(char *) * 2);
-    if (!cmdexe->cmd_args)
-    {
-        free(cmdexe->cmd_paths);
-        free(cmdexe);
-        return (NULL);
-    }
     cmdexe->cmd = NULL;
     cmdexe->cmd_nbrs = 0;
     cmdexe->idx = 0;

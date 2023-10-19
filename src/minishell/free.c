@@ -27,14 +27,13 @@ void	free_delimiter(t_delim *delimiter)
 {
 	if (!delimiter)
 		return ;
-	// if (delimiter->content)
-	// {
-	// 	free(delimiter->content);
-	// 	delimiter->content = NULL;
-	// }
-	// if (delimiter->delim_found)
-	// 	delimiter->delim_found = 0;
-	// free(delimiter);
+	if (delimiter->content)
+	{
+		free(delimiter->content);
+		delimiter->content = NULL;
+	}
+	if (delimiter->delim_found)
+		delimiter->delim_found = 0;
 	delimiter = NULL;
 }
 
@@ -56,28 +55,27 @@ void	free_envir(void *envir)
 		tmp->var_value = NULL;
 	}
     free(tmp);
-	tmp = NULL;
 }
 
 void	free_cmdexe(t_cmdexe *cmdexe)
 {
     if (!cmdexe)
         return ;
-    free_2darray(cmdexe->cmd_paths);
-	cmdexe->cmd_paths = NULL;
-    free_2darray(cmdexe->cmd_args);
-	cmdexe->cmd_args = NULL;
+	if (cmdexe->cmd_paths)
+   		free_2darray(cmdexe->cmd_paths);
+	if (cmdexe->cmd_args)
+    	free_2darray(cmdexe->cmd_args);
 	if (cmdexe->cmd)
 	{
 		free(cmdexe->cmd);
 		cmdexe->cmd = NULL;
 	}
-	if (cmdexe->path)
-	{
-		free(cmdexe->path);
-		cmdexe->path = NULL;
-	}
-    free(cmdexe);
+	// if (cmdexe->path)
+	// {
+	// 	free(cmdexe->path);
+	// 	cmdexe->path = NULL;
+	// }
+	free(cmdexe);
 }
 
 void	free_2darray(char **array)
@@ -94,4 +92,5 @@ void	free_2darray(char **array)
         i++;
     }
     free(array);
+	array = NULL;
 }

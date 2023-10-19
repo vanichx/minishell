@@ -6,13 +6,13 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/18 19:22:00 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/18 21:00:32 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 #-g -fsanitize=address -fno-omit-frame-pointer
+CFLAGS				=	-Wall -Wextra -Iinclude -Isrc #-O3 -g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
 BONUS				=	bonus
@@ -23,7 +23,7 @@ NAME				=	$(MINISHELL) $(BONUS)
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --leak-check=full --show-leak-kinds=all -s
+VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all #-s
 LEAKS	  = leaks --atExit --
 
 # Libraries
