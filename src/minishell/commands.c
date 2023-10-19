@@ -25,6 +25,7 @@ void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd)
 void print_cmdexe_list(t_list *lst)
 {
     t_list *tmp = lst;
+
     int i = 0;
     while (tmp) {
         t_cmdexe *cmd = (t_cmdexe *)tmp->content;
@@ -35,4 +36,5 @@ void print_cmdexe_list(t_list *lst)
         tmp = tmp->next;
         i++;
     }
+
 }

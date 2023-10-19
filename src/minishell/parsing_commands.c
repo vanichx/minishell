@@ -9,6 +9,9 @@ void	parse_commands(t_data *data, char *input)
 
 	command = ft_split(input, ' ');
 	i = 1;
+
+	if (!command)
+		return ;
 	while (*command)
 	{
 		comm = (t_cmdexe *)malloc(sizeof(t_cmdexe));

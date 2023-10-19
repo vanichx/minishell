@@ -117,6 +117,7 @@ void	child(t_data *data);
 char	*apply_command(char **paths, char *cmd);
 void	create_commands(t_data *data, char **cmd);
 void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
+void	reset_commands(void *command);
 
 /* parsing_flags.c */
 void	parse_flags(t_data *data, char *input);
