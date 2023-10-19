@@ -1,31 +1,16 @@
 #include "minishell.h"
 
-void	init_data(t_data **data, char *envp[])
+void	init_data(t_data **data, char **envp)
 {
-    t_envir	*envir;
-    t_envir	*temp;
-
     *data = malloc(sizeof(t_data));
     if (!*data)
         exit(EXIT_FAILURE);
     (*data)->env = NULL;
+	(*data)->commands = NULL;
     (*data)->promt = "minishell>> ";
-    (*data)->flags = init_flags();
     (*data)->commands = NULL;
     (*data)->pid = getpid();
-    (*data)->cmdexe = init_cmdexe();
-    if (!(*data)->flags || !(*data)->cmdexe)
-        exit_shell("malloc error", 1, *data);
-	// Why do we need to reset the data after initialization?
-    reset_data(*data);
-	///////////////////////////
-    while (*envp)
-    {
-        envir = parse_envir(*envp);
-        ft_lstadd_back_env(&(*data)->env, envir);
-        temp = envir;
-        envp++;
-    }
+	create_env(data, envp);
     incr_shell_lvl(data);
 }
 
@@ -38,7 +23,6 @@ t_cmdexe *init_cmdexe(void)
         return (NULL);
     cmdexe->path = NULL;
     cmdexe->cmd = NULL;
-    cmdexe->cmd_nbrs = 0;
     cmdexe->idx = 0;
     return (cmdexe);
 }
@@ -73,4 +57,19 @@ t_flags *init_flags(void)
     flags->p_id = 0;
     flags->exit_status = 0;
     return (flags);
+}
+
+void create_commands(t_data *data, char **cmd)
+{
+	t_cmdexe *cmdexe;
+	t_cmdexe *temp;
+	
+	while(*cmd)
+	{
+		cmdexe = init_cmdexe();
+		cmdexe->cmd = ft_strdup(*cmd);
+		ft_lstadd_back_cmd(&data->commands, cmdexe);
+		temp = cmdexe;
+		cmd++;
+	}
 }

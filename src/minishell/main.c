@@ -8,11 +8,11 @@ void	start_loop(t_data *data)
 	{
 		reset_data(data);
 		input = readline(data->promt);
-		//parse_flags(data, input);
 		parse_commands(data, input);
+		//parse_flags(data, input);
 		// ft_is_builtin(data->commands[0]);
-		handle_builtins(data);
-		// execute_command(data);
+		
+		execute_command(data);
 		if (input == NULL)
 			handle_d(data);
 		if (ft_strlen(input) > 0)

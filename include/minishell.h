@@ -55,21 +55,18 @@ typedef struct s_flags {
 
 typedef struct	s_cmdexe {
 	char	*path;
-	char	**cmd_paths;
-	char	**cmd_args;
 	char	*cmd;
-	int		cmd_nbrs;
-	int		idx;
+	t_flags	*flags;
+	int		idx;// the number of the command that we are executing
 }				t_cmdexe;
 
 typedef struct	s_data {
 	t_list		*env;
+	t_list		*commands;
+	int			cmd_nbrs;
 	char		*promt;
-	t_flags		*flags;
-	char		**commands;
 	char		*curr_dir;
 	int			pid;
-	t_cmdexe	*cmdexe;
 }				t_data;
 
 /* builtins.c */
@@ -81,7 +78,7 @@ void	builtin_cd(t_data *data, char *path);
 void	builtin_exit(t_data *data);
 char	*get_curr_dir(void);
 char	*get_home_dir(void);
-void	builtin_export(t_data *data);
+void	builtin_export(t_envir *env);
 void	handle_builtins(t_data *data);
 int		ft_is_builtin(char *cmd);
 
@@ -89,6 +86,7 @@ int		ft_is_builtin(char *cmd);
 void	ft_lstadd_back_env(t_list **lst, t_envir *envir);
 t_envir	*parse_envir(char *env_str);
 t_envir	*find_envir(t_list *env, char *var_name);
+void create_env(t_data **data, char **envp);
 
 /* exit.c */
 void	exit_shell(char *message, int exit_code, t_data *data);
@@ -98,7 +96,7 @@ void	free_data(t_data *data);
 void	free_flags(t_flags *flags);
 void	free_delimiter(t_delim *delimiter);
 void	free_envir(void *envir);
-void	free_cmdexe(t_cmdexe *cmdexe);
+void	free_command(void *command);
 void	free_2darray(char **array);
 
 /* handle_input.c */
@@ -106,16 +104,19 @@ void	check_exit(char *input);
 void	print_parsed_input(char *command);
 
 /* init_data.c */
-void	init_data(t_data **data, char *envp[]);
+void	init_data(t_data **data, char **envp);
 t_cmdexe *init_cmdexe(void);
 t_flags	*init_flags(void);
 
 /* parsing_commads.c */
+void	print_cmdexe_list(t_list *lst);
 void	parse_commands(t_data *data, char *input);
 char	*find_path(t_list *env);
 int		execute_command(t_data *data);
 void	child(t_data *data);
 char	*apply_command(char **paths, char *cmd);
+void	create_commands(t_data *data, char **cmd);
+void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
 
 /* parsing_flags.c */
 void	parse_flags(t_data *data, char *input);
@@ -127,8 +128,7 @@ void	check_last(t_data *data, char *input);
 void	check_dollar(t_data *data, char *input);
 
 /* reset.c */
-void	reset_data(t_data *data);
-void	reset_cmdexe(t_cmdexe *cmdexe);
+void	reset_data(t_data *data);;
 void	reset_flags(t_flags *flags);
 
 /* signals.c */

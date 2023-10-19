@@ -2,21 +2,10 @@
 
 void reset_data(t_data *data)
 {
-	if (!data || !data->flags || !data->cmdexe)
+	if (!data || !data->commands) // || !data->cmdexe
         return;
-	reset_flags(data->flags);
-	reset_cmdexe(data->cmdexe);
+	ft_lstclear(&data->commands, free_command);
 	data->curr_dir = getcwd(NULL, 0);
-}
-
-void reset_cmdexe(t_cmdexe *cmdexe)
-{
-	cmdexe->cmd = NULL;
-	cmdexe->cmd_args = NULL;
-	cmdexe->cmd_paths = NULL;
-	cmdexe->idx = 0;
-	cmdexe->path = NULL;
-	cmdexe->cmd_nbrs = 0;
 }
 
 void  reset_flags(t_flags *flags)
@@ -44,3 +33,4 @@ void  reset_flags(t_flags *flags)
 	flags->p_id = 0;
 	flags->exit_status = 0;
 }
+

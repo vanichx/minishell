@@ -6,10 +6,8 @@ void	free_data(t_data *data)
         return ;
 	ft_lstclear(&data->env, free_envir);
 	data->env = NULL;
-    free_flags(data->flags);
-	data->flags = NULL;
-    free_cmdexe(data->cmdexe);
-	data->cmdexe = NULL;
+    ft_lstclear(&data->commands, free_command);
+	data->commands = NULL;
     free(data);
 	data = NULL;
 }
@@ -57,25 +55,26 @@ void	free_envir(void *envir)
     free(tmp);
 }
 
-void	free_cmdexe(t_cmdexe *cmdexe)
+void	free_command(void *command)
 {
-    if (!cmdexe)
-        return ;
-	if (cmdexe->cmd_paths)
-   		free_2darray(cmdexe->cmd_paths);
-	if (cmdexe->cmd_args)
-    	free_2darray(cmdexe->cmd_args);
-	if (cmdexe->cmd)
+    t_cmdexe *tmp;
+
+	tmp = (t_cmdexe *)command;
+	if (!command)
+		return ;
+	if (tmp->path)
 	{
-		free(cmdexe->cmd);
-		cmdexe->cmd = NULL;
+		free(tmp->path);
+		tmp->path = NULL;
 	}
-	// if (cmdexe->path)
-	// {
-	// 	free(cmdexe->path);
-	// 	cmdexe->path = NULL;
-	// }
-	free(cmdexe);
+	if (tmp->cmd)
+	{
+		free(tmp->cmd);
+		tmp->cmd = NULL;
+	}
+	if (tmp->flags)
+		free_flags(tmp->flags);
+	tmp->idx = 0;
 }
 
 void	free_2darray(char **array)
