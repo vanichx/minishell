@@ -48,81 +48,124 @@ void	builtin_pwd()
 
 void	builtin_unset(t_list **head, char *var_name)
 {
-    t_list *curr = *head;
-    t_list *prev = NULL;
+	t_list *curr = *head;
+	t_list *prev = NULL;
 
-    while (curr != NULL)
-    {
-        t_envir *env = (t_envir *)curr->content;
-        if (ft_strcmp(env->var_name, var_name) == 0)
-        {
-            if (prev == NULL)
-                *head = curr->next;
-            else
-                prev->next = curr->next;
-            ft_lstdelone(curr, &free);
-            return;
-        }
-        prev = curr;
-        curr = curr->next;
-    }
+	while (curr != NULL)
+	{
+		t_envir *env = (t_envir *)curr->content;
+		if (ft_strcmp(env->var_name, var_name) == 0)
+		{
+			if (prev == NULL)
+				*head = curr->next;
+			else
+				prev->next = curr->next;
+			ft_lstdelone(curr, &free);
+			return;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
 }
 
 void	builtin_env(t_list *head)
 {
-    while (head != NULL)
-    {
-        t_envir *env = (t_envir *)head->content;
-        printf("%s=%s\n", env->var_name, env->var_value);
+	while (head != NULL)
+	{
+		t_envir *env = (t_envir *)head->content;
+		printf("%s=%s\n", env->var_name, env->var_value);
 		printf("\n");
-        head = head->next;
-    }
+		head = head->next;
+	}
 }
 
 void builtin_exit(char *cmd)
 {
-    exit_shell("exit", 0, data);
+	exit_shell("exit", 0, data);
 }
+
+
+
+
+
+
+
+
+
 
 void builtin_cd(char *path)
 {
-    if (path == NULL)
-    {
-        const char *home_dir = getenv("HOME");
-        if (home_dir == NULL)
-        {
-            perror("minishell: cd: HOME not set\n");
-            return;
-        }
-        path = (char *)home_dir;
-    }
-    if (path[0] != '/' && path[0] != '.' && path[0] != '~')
-    {
-        perror("minishell: cd: %s: No such file or directory\n", path);
-        return;
-    }
-    if (chdir(path) != 0)
-    {
-        perror("minishell");
-        return;
-    }
-	char *cwd = get_curr_dir();
-    if (cwd == NULL)
-    {
-        perror("minishell");
-        return;
-    }
-    t_envir *pwd_env = find_envir(data->env, "PWD");
-    if (pwd_env == NULL)
-    {
-        perror("minishell: PWD environment variable not found\n");
-        free(cwd);
-        return;
-    }
-    free(pwd_env->var_value);
-    pwd_env->var_value = cwd;
-    free(cwd);
+	const char	*home_dir;
+	char		*cwd;
+	t_envir		*pwd_env;
+
+	if (path == NULL)
+		get_home_dir(path);
+	if (path[0] != '/' && path[0] != '.' && path[0] != '~')
+	{
+		perror("minishell: cd: %s: No such file or directory\n", path);
+		return;
+	}
+	if (chdir(path) != 0)
+	{
+		perror("minishell: cd: Cant change the directory\n");
+		return;
+	}
+	cwd = get_curr_dir();
+	pwd_env = find_envir(data->env, "PWD");
+	if (pwd_env == NULL)
+	{
+		perror("minishell: PWD environment variable not found\n");
+		free(cwd);
+		return;
+	}
+	free(pwd_env->var_value);
+	pwd_env->var_value = cwd;
+	free(cwd);
 }
+
+char *get_curr_dir(void)
+{
+	char *cwd;
+
+	*cwd; = malloc(PATH_MAX);
+	if (!cwd)
+	{
+		perror("minishell: cd: Cant get the current directory\n");
+		return NULL
+	}
+	if (!getcwd(cwd, PATH_MAX))
+	{
+		free(cwd);
+		return NULL;
+	}
+	return cwd;
+}
+
+char	*get_home_dir(char *path)
+{
+	const char	*home_dir;
+
+	*home_dir = getenv("HOME");
+	if(home_dir == NULL)
+	{
+		perror("minishell: cd: HOME not set\n");
+		return (NULL);
+	}
+	path = (char *)home_dir;
+	return (path);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 void check_builtins(t_data *data)
 {

@@ -15,6 +15,7 @@
 # include <termcap.h>
 # include <unistd.h>
 # include <stdint.h>
+# include <limits.h>
 # include	"libft.h"
 
 /* error-defenitions */
