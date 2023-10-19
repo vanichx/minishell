@@ -134,6 +134,7 @@ void	check_exit(char *input);
 void	print_env_vars(t_envir *env);
 char	**dup_2darray(char **array);
 char	*get_curr_dir(void);
+void	handle_builtins(t_data *data)
 
 /* exit */
 void	exit_shell(char *message, int exit_code, t_data *data);

@@ -25,17 +25,6 @@ void builtin_echo(char *args[])
 		printf("\n");
 }
 
-void	builtin_cd(char *args[])
-{
-	if (args[1] != NULL)
-	{
-		if (chdir(args[1]) != 0)
-			perror("cd");
-		else
-			chdir(getenv("HOME"));
-	}
-}
-
 void	builtin_pwd()
 {
 	char cwd[PATH_MAX];
@@ -156,23 +145,17 @@ char	*get_home_dir(char *path)
 	return (path);
 }
 
+void	builtin_export(char **cmd_args)
+{
+	export(&data->env, data->cmdexe->cmd_args[1], data->cmdexe->cmd_args[2]);
+}
 
-
-
-
-
-
-
-
-
-
-
-void check_builtins(t_data *data)
+void	handle_builtins(t_data *data)
 {
 	if (ft_strcmp(data->cmdexe->cmd, "echo") == 0)
 		builtin_echo(data->cmdexe->cmd_args);
 	else if (ft_strcmp(data->cmdexe->cmd, "cd") == 0)
-		builtin_cd(data->cmdexe->cmd_args);
+		builtin_cd(data->cmdexe->path);
 	else if (ft_strcmp(data->cmdexe->cmd, "pwd") == 0)
 		builtin_pwd();
 	else if (ft_strcmp(data->cmdexe->cmd, "unset") == 0)
@@ -181,4 +164,25 @@ void check_builtins(t_data *data)
 		builtin_env(data->env);
 	else if (ft_strcmp(data->cmdexe->cmd, "exit") == 0)
 		builtin_exit(data->cmdexe->cmd);
+	else if (ft_strcmp(data->cmdexe->cmd, "export") == 0)
+		builtin_export(data->cmdexe->cmd_args);
+}
+
+int	ft_is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
 }
