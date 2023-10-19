@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:23 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/18 15:21:08 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/19 10:46:43 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RM				=	rm -rf
 
 # Paths and Files
 VPATH			=	src:src/conversion:src/list:src/memory:src/output:src/string
-SRCS			=	ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c  ft_isspace.c\
+SRCS			=	ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_isspace.c\
 					ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 					ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_bzero.c ft_calloc.c \
 					ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
