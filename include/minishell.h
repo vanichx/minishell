@@ -18,9 +18,6 @@
 # include <limits.h>
 # include	"libft.h"
 
-/* error-defenitions */
-# define ERR_MINISHELL	"minishell"
-
 # define MAX_ENV_VARS 100
 # define MAX_DOLLAR_VALUE_LEN 100
 /* errors */
@@ -76,7 +73,6 @@ typedef struct	s_data {
 }				t_data;
 
 /* builtins.c */
-
 void	builtin_echo(char **args);
 void	builtin_pwd(void);
 void	builtin_unset(t_list **head, char *var_name);
@@ -89,11 +85,51 @@ void	builtin_export(t_data *data);
 void	handle_builtins(t_data *data);
 int		ft_is_builtin(char *cmd);
 
+/* enviroment.c */
+void	ft_lstadd_back_env(t_list **lst, t_envir *envir);
+t_envir	*parse_envir(char *env_str);
+t_envir	*find_envir(t_list *env, char *var_name);
+
+/* exit.c */
+void	exit_shell(char *message, int exit_code, t_data *data);
+
+/* free.c */
+void	free_data(t_data *data);
+void	free_flags(t_flags *flags);
+void	free_delimiter(t_delim *delimiter);
+void	free_envir(void *envir);
+void	free_cmdexe(t_cmdexe *cmdexe);
+void	free_2darray(char **array);
+
+/* handle_input.c */
+void	check_exit(char *input);
+void	print_parsed_input(char *command);
 
 /* init_data.c */
 void	init_data(t_data **data, char *envp[]);
-t_flags	*init_flags(void);
 t_cmdexe *init_cmdexe(void);
+t_flags	*init_flags(void);
+
+/* parsing_commads.c */
+void	parse_commands(t_data *data, char *input);
+char	*find_path(t_list *env);
+int		execute_command(t_data *data);
+void	child(t_data *data);
+char	*apply_command(char **paths, char *cmd);
+
+/* parsing_flags.c */
+void	parse_flags(t_data *data, char *input);
+void	check_pipe(t_data *data, char *input);
+void	check_delimiter(t_data *data, char *input);
+void	check_redirect(t_data *data, char *input);
+void	check_quotes(t_data *data, char *input);
+void	check_last(t_data *data, char *input);
+void	check_dollar(t_data *data, char *input);
+
+/* reset.c */
+void	reset_data(t_data *data);
+void	reset_cmdexe(t_cmdexe *cmdexe);
+void	reset_flags(t_flags *flags);
 
 /* signals.c */
 void	handle_d(t_data *data);
@@ -101,54 +137,12 @@ void	handle_c(int signo);
 void	handle_signal(void);
 void	start_loop(t_data *data);
 
-/* parsing.c */
-void	parse_flags(t_data *data, char *input);
-void 	check_pipe(t_data *data, char *input);
-void	check_quotes(t_data *data, char *input);
-void 	check_last(t_data *data, char *input);
-void 	check_redirect(t_data *data, char *input);
-void	check_dollar(t_data *data, char *input);
-void 	check_delimiter(t_data *data, char *input);
-void    parse_commands(t_data *data, char *input);
-
-/* executing */
-int     execute_command(t_data *data);
-void	child(t_data *data);
-char	*apply_command(char **paths, char *cmd);
-char	*find_path(t_list *env);
-
-/* enviroment */
-t_envir	*parse_envir(char *env_str);
-void	ft_lstadd_back_env(t_list **lst, t_envir *envir);
-t_envir	*find_envir(t_list *env, char *var_name);
-
 /* shlvl.c */
 void	incr_shell_lvl(t_data **data);
 void	export(t_list **env, char *var_name, char *var_value);
 
-/* free.c */
-void	free_data(t_data *data);
-void	free_cmdexe(t_cmdexe *cmdexe);
-void	free_2darray(char **array);
-void	free_envir(void *envir);
-void	free_flags(t_flags *flags);
-void	free_delimiter(t_delim *delimiter);
-
 /* utils.c */
-void	free_data(t_data *data);
 char	*ignore_spaces(char *input);
-void	check_exit(char *input);
-void	print_env_vars(t_envir *env);
 char	**dup_2darray(char **array);
-char	*get_curr_dir(void);
-void	handle_builtins(t_data *data);
-
-/* reset.c */
-void	reset_flags(t_flags *flags);
-void	reset_data(t_data *data);
-void	reset_cmdexe(t_cmdexe *cmdexe);
-
-/* exit */
-void	exit_shell(char *message, int exit_code, t_data *data);
 
 #endif
