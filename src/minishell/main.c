@@ -11,8 +11,8 @@ void	start_loop(t_data *data)
 		//parse_flags(data, input);
 		parse_commands(data, input);
 		// ft_is_builtin(data->commands[0]);
-		// handle_builtins(data);
-		execute_command(data);
+		handle_builtins(data);
+		// execute_command(data);
 		if (input == NULL)
 			handle_d(data);
 		if (ft_strlen(input) > 0)

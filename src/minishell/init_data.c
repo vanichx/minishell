@@ -16,7 +16,9 @@ void	init_data(t_data **data, char *envp[])
     (*data)->cmdexe = init_cmdexe();
     if (!(*data)->flags || !(*data)->cmdexe)
         exit_shell("malloc error", 1, *data);
+	// Why do we need to reset the data after initialization?
     reset_data(*data);
+	///////////////////////////
     while (*envp)
     {
         envir = parse_envir(*envp);

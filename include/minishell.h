@@ -111,7 +111,6 @@ void	check_dollar(t_data *data, char *input);
 void 	check_delimiter(t_data *data, char *input);
 void    parse_commands(t_data *data, char *input);
 
-
 /* executing */
 int     execute_command(t_data *data);
 void	child(t_data *data);
@@ -126,9 +125,6 @@ t_envir	*find_envir(t_list *env, char *var_name);
 /* shlvl.c */
 void	incr_shell_lvl(t_data **data);
 void	export(t_list **env, char *var_name, char *var_value);
-
-
-
 
 /* free.c */
 void	free_data(t_data *data);

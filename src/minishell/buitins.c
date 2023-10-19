@@ -1,5 +1,42 @@
 #include "minishell.h"
 
+void	handle_builtins(t_data *data)
+{
+	if (ft_strcmp(data->cmdexe->cmd, "echo") == 0)
+		builtin_echo(data->cmdexe->cmd_args);
+	else if (ft_strcmp(data->cmdexe->cmd, "cd") == 0)
+		builtin_cd(data, data->cmdexe->cmd_args[1]);
+	else if (ft_strcmp(data->cmdexe->cmd, "pwd") == 0)
+		builtin_pwd();
+	else if (ft_strcmp(data->cmdexe->cmd, "unset") == 0)
+		builtin_unset(&data->env, data->cmdexe->cmd_args[1]);
+	else if (ft_strcmp(data->cmdexe->cmd, "env") == 0)
+		builtin_env(data->env);
+	else if (ft_strcmp(data->cmdexe->cmd, "exit") == 0)
+		builtin_exit(data);
+	else if (ft_strcmp(data->cmdexe->cmd, "export") == 0)
+		builtin_export(data);
+}
+
+int	ft_is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
+}
+
 void builtin_echo(char *args[])
 {
 	int i;
@@ -151,41 +188,4 @@ void	builtin_export(t_data *data)
 
 	////NEED TO FINISH BECAUSE WE CANT USE EXPORT FUNTION LIKE THIS ITS PROHIBITED BY SUBJECT
 	export(&data->env, data->cmdexe->cmd_args[1], data->cmdexe->cmd_args[2]);
-}
-
-void	handle_builtins(t_data *data)
-{
-	if (ft_strcmp(data->cmdexe->cmd, "echo") == 0)
-		builtin_echo(data->cmdexe->cmd_args);
-	else if (ft_strcmp(data->cmdexe->cmd, "cd") == 0)
-		builtin_cd(data, data->cmdexe->cmd_args[1]);
-	else if (ft_strcmp(data->cmdexe->cmd, "pwd") == 0)
-		builtin_pwd();
-	else if (ft_strcmp(data->cmdexe->cmd, "unset") == 0)
-		builtin_unset(&data->env, data->cmdexe->cmd_args[1]);
-	else if (ft_strcmp(data->cmdexe->cmd, "env") == 0)
-		builtin_env(data->env);
-	else if (ft_strcmp(data->cmdexe->cmd, "exit") == 0)
-		builtin_exit(data);
-	else if (ft_strcmp(data->cmdexe->cmd, "export") == 0)
-		builtin_export(data);
-}
-
-int	ft_is_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	return (0);
 }
