@@ -42,10 +42,7 @@ void	reset_commands(void *command)
 	if (!tmp)
 		return ;
 	if (tmp->path)
-	{
-		// free(tmp->path);
 		tmp->path = NULL;
-	}
 	if (tmp->cmd)
 	{
 		free(tmp->cmd);
