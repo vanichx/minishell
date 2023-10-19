@@ -55,14 +55,12 @@ t_envir	*find_envir(t_list *env, char *var_name)
 
 void create_env(t_data **data, char **envp)
 {
-	t_envir	*temp;
 	t_envir	*envir;
 
 	while (*envp)
 	{
 		envir = parse_envir(*envp);
 		ft_lstadd_back_env(&(*data)->env, envir);
-		temp = envir;
 		envp++;
 	}
 }

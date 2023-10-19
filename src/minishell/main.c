@@ -4,6 +4,7 @@ void	start_loop(t_data *data)
 {
 	char *input;
 
+	input = NULL;
 	while (1)
 	{
 		reset_data(data);
@@ -17,11 +18,12 @@ void	start_loop(t_data *data)
 			handle_d(data);
 		if (ft_strlen(input) > 0)
 			add_history(input);
+		// free_command(data->commands);
 		check_exit(input);
 	}
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 

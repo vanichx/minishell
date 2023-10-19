@@ -6,17 +6,23 @@ void	parse_commands(t_data *data, char *input)
 	char	**command;
 	int		i;
 
-
+	if (!input || !input[0])
+		return ;
 	command = ft_split(input, ' ');
 	i = 1;
-
 	if (!command)
+	{
+		free_2darray(command);
 		return ;
+	}
 	while (*command)
 	{
 		comm = (t_cmdexe *)malloc(sizeof(t_cmdexe));
 		if (!comm)
+		{
+			free_command(comm);
 			return ;
+		}
 		comm->cmd = *command;
 		comm->path = find_path(data->env);
 		comm->idx = i;
@@ -26,6 +32,7 @@ void	parse_commands(t_data *data, char *input)
 		command++;
 		i++;
 	}
+	// free_2darray(command);
 }
 
 char	*find_path(t_list *env)
@@ -54,6 +61,7 @@ int		execute_command(t_data *data)
     // while (++data->cmdexe->idx < data->cmdexe->cmd_nbrs)
     //     child(data);
     // waitpid(-1, NULL, 0);
+	// free_data(data);
     return (0);
 }
 

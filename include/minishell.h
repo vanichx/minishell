@@ -27,30 +27,30 @@
 #define DEL_ERR "syntax error near unexpected token `<<'"
 
 typedef struct s_envir {
-	char	*var_name;
-	char	*var_value;
-	int		count;
+	char		*var_name;
+	char		*var_value;
+	int			count;
 }				t_envir;
 
 typedef struct s_delim {
-	int		delim_found;
-	char	*content;
+	int			delim_found;
+	char		*content;
 }				t_delim;
 
 typedef struct s_flags {
-	int		pipe[2];
-	int		single_quote[2];
-	int		double_quote[2];
-	int		dollar;
-	int		red_inp[2];
-	int		red_out[2];
-	t_delim	delimiter;
-	int		append[2];
-	int		wildcard;
-	int		or[2];
-	int		and[2];
-	int		p_id;
-	int		exit_status;
+	t_delim		*delimiter;
+	int			pipe[2];
+	int			single_quote[2];
+	int			double_quote[2];
+	int			dollar;
+	int			red_inp[2];
+	int			red_out[2];
+	int			append[2];
+	int			wildcard;
+	int			or[2];
+	int			and[2];
+	int			p_id;
+	int			exit_status;
 }				t_flags;
 
 typedef struct	s_cmdexe {
