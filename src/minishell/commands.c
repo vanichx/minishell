@@ -36,5 +36,5 @@ void print_cmdexe_list(t_list *lst)
         tmp = tmp->next;
         i++;
     }
-
+	
 }

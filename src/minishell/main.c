@@ -11,14 +11,13 @@ void	start_loop(t_data *data)
 		reset_data(data);
 		parse_commands(data, input);
 		//parse_flags(data, input);
-		// ft_is_builtin(data->commands[0]);
 		
 		execute_command(data);
 		if (input == NULL)
 			handle_d(data);
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		// free_command(data->commands);
+		// free_cmdexe(data->commands);
 		check_exit(input);
 	}
 }

@@ -96,7 +96,7 @@ void	free_data(t_data *data);
 void	free_flags(t_flags *flags);
 void	free_delimiter(t_delim *delimiter);
 void	free_envir(void *envir);
-void	free_command(void *command);
+void	free_cmdexe(void *command);
 void	free_2darray(char **array);
 
 /* handle_input.c */

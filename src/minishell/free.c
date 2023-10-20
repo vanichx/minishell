@@ -4,7 +4,7 @@ void	free_data(t_data *data)
 {
 	ft_lstclear(&data->env, free_envir);
 	data->env = NULL;
-	ft_lstclear(&data->commands, free_command);
+	ft_lstclear(&data->commands, free_cmdexe);
 	data->commands = NULL;
 	if (data->curr_dir && data->curr_dir[0] != '\0')
 		free(data->curr_dir);
@@ -38,7 +38,7 @@ void	free_delimiter(t_delim *delimiter)
 	delimiter = NULL;
 }
 
-void	free_command(void *command)
+void	free_cmdexe(void *command)
 {
 	t_cmdexe *tmp;
 
@@ -48,10 +48,7 @@ void	free_command(void *command)
 	if (tmp->flags)
 		free_flags(tmp->flags);
 	if (tmp->path)
-	{
-		// free(tmp->path);
 		tmp->path = NULL;
-	}
 	if (tmp->cmd)
 	{
 		free(tmp->cmd);

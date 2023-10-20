@@ -20,7 +20,7 @@ void	parse_commands(t_data *data, char *input)
 		comm = (t_cmdexe *)malloc(sizeof(t_cmdexe));
 		if (!comm)
 		{
-			free_command(comm);
+			free_cmdexe(comm);
 			return ;
 		}
 		comm->cmd = *command;
