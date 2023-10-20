@@ -61,6 +61,8 @@ int		execute_command(t_data *data)
     //     child(data);
     // waitpid(-1, NULL, 0);
 	// free_data(data);
+	if (data->curr_dir)
+		free(data->curr_dir);
     return (0);
 }
 

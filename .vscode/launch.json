@@ -1,13 +1,16 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "cppdbg",
-            "request": "launch",
-            "name": "Run Minishell",
-            "program": "${workspaceFolder}/minishell",
-            "args": ["./minishell"],
-            "cwd": "${workspaceFolder}",
-        }
-    ]
+	"configurations": [
+		{
+			"name": "(lldb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/Users/eseferi/42/git_minishell/minishell",
+			"args": ["s", "a"], 
+			"stopAtEntry": false,
+			"cwd": "/Users/eseferi/42/git_minishell",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "lldb"
+		},
+	]
 }
