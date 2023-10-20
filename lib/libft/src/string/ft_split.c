@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:45:10 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/19 21:35:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/20 10:08:13 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,14 @@ static void	*free_strs(char **strs)
 	int	i;
 
 	i = 0;
+	if (!strs)
+		return (NULL);
 	while (strs[i])
-		free(strs[i++]);
+	{
+		free(strs[i]);
+		strs[i] = NULL;
+		i++;
+	}
 	free(strs);
 	return (NULL);
 }
@@ -73,9 +79,13 @@ char	**ft_split(char const *s, char c)
 		if (*s != c)
 		{
 			strs[i] = ft_substr(s, 0, ft_wordlen(s, c));
-			if (!strs[i++])
-				return (free_strs(strs));
+			if (!strs[i])
+			{
+				free_strs(strs);
+				return (NULL);
+			}
 			s += ft_wordlen(s, c);
+			i++;
 		}
 		else
 			s++;
