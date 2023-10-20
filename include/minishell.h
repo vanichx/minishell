@@ -100,7 +100,7 @@ void	free_command(void *command);
 void	free_2darray(char **array);
 
 /* handle_input.c */
-void	check_exit(char *input);
+void	check_exit(t_data *data, char *input);
 void	print_parsed_input(char *command);
 
 /* init_data.c */

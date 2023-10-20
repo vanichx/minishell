@@ -19,7 +19,7 @@ void	start_loop(t_data *data)
 		if (ft_strlen(input) > 0)
 			add_history(input);
 		// free_command(data->commands);
-		check_exit(input);
+		check_exit(data, input);
 	}
 }
 

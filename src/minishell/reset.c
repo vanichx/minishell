@@ -19,8 +19,6 @@ void  reset_flags(t_flags *flags)
 	flags->red_inp[1] = 0;
 	flags->red_out[0] = 0;
 	flags->red_out[1] = 0;
-	// flags->delimiter->delim_found = 0;
-	// flags->delimiter->content = NULL;
 	flags->append[0] = 0;
 	flags->append[1] = 0;
 	flags->wildcard = 0;

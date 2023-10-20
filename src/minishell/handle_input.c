@@ -1,12 +1,9 @@
 #include "minishell.h"
 
-void	check_exit(char *input)
+void	check_exit(t_data *data, char *input)
 {
 	if (!ft_strncmp("exit", ignore_spaces(input), ft_strlen("exit")))
-	{
-		free(input);
-		exit(0);
-	}
+		exit_shell("exit", 0, data);
 }
 
 
