@@ -27,7 +27,7 @@ void	parse_commands(t_data *data, char *input)
 		comm->path = find_path(data->env);
 		comm->idx = i;
 		comm->flags = init_flags();
-		//parse_flags(data, *command);
+		// parse_flags(data, *command);
 		ft_lstadd_back_cmd(&data->commands, comm);
 		command++;
 		i++;
