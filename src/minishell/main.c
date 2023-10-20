@@ -11,8 +11,6 @@ void	start_loop(t_data *data)
 		input = readline(data->promt);
 		parse_commands(data, input);
 		//parse_flags(data, input);
-		// ft_is_builtin(data->commands[0]);
-		
 		execute_command(data);
 		if (input == NULL)
 			handle_d(data);
