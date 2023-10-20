@@ -7,8 +7,8 @@ void	start_loop(t_data *data)
 	input = NULL;
 	while (1)
 	{
-		reset_data(data);
 		input = readline(data->promt);
+		reset_data(data);
 		parse_commands(data, input);
 		//parse_flags(data, input);
 		// ft_is_builtin(data->commands[0]);
