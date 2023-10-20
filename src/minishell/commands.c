@@ -1,40 +1,13 @@
 #include "minishell.h"
 
-void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd)
+void	print_cmdexe_list(t_cmdexe *cmdexe_list)
 {
-	t_list *new;
-	t_list *tmp;
-
-	if (!lst || !cmd)
-		return ;
-	new = ft_lstnew(cmd);
-	if (!new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	new->prev = tmp;
+    ft_cmditer(cmdexe_list, &print_cmdexe);
 }
 
-void print_cmdexe_list(t_list *lst)
+void	print_cmdexe(void *cmdexe_node)
 {
-    t_list *tmp = lst;
+    t_cmdexe	*cmdexe = (t_cmdexe *)cmdexe_node;
 
-    int i = 0;
-    while (tmp) {
-        t_cmdexe *cmd = (t_cmdexe *)tmp->content;
-        printf("Command %d:\n", i);
-        printf("  path: %s\n", cmd->path);
-        printf("  cmd: %s\n", cmd->cmd);
-        printf("  idx: %d\n", cmd->idx);
-        tmp = tmp->next;
-        i++;
-    }
-	
+    printf("path: %s\n cmd: %s\n idx: %d\n", cmdexe->path, cmdexe->cmd, cmdexe->idx);
 }

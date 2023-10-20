@@ -13,6 +13,7 @@ void	init_data(t_data **data, char **envp)
 	(*data)->promt = "minishell>> ";
     (*data)->pid = getpid();
 	create_env(data, envp);
+	// ft_enviter((*data)->env, print_env_node);
     incr_shell_lvl(data);
 }
 
@@ -69,7 +70,7 @@ void create_commands(t_data *data, char **cmd)
 	{
 		cmdexe = init_cmdexe();
 		cmdexe->cmd = ft_strdup(*cmd);
-		ft_lstadd_back_cmd(&data->commands, cmdexe);
+		ft_cmdadd_back(&data->commands, cmdexe);
 		temp = cmdexe;
 		cmd++;
 	}

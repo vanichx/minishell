@@ -4,21 +4,22 @@ void	start_loop(t_data *data)
 {
 	char *input;
 
-	input = NULL;
 	while (1)
 	{
 		input = readline(data->promt);
+		// input = "echo hello world";
+		if (input == NULL)
+			handle_d(data);
+		check_exit(input);
+		if (ft_strlen(input) > 0)
+			add_history(input);
 		reset_data(data);
 		parse_commands(data, input);
 		//parse_flags(data, input);
-		
+
 		execute_command(data);
-		if (input == NULL)
-			handle_d(data);
-		if (ft_strlen(input) > 0)
-			add_history(input);
 		// free_cmdexe(data->commands);
-		check_exit(input);
+
 	}
 }
 

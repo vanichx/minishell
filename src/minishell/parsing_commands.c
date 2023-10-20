@@ -9,85 +9,86 @@ void	parse_commands(t_data *data, char *input)
 	if (!input || !input[0])
 		return ;
 	command = ft_split(input, ' ');
-	i = 1;
+	i = 0;
 	if (!command)
-	{
-		free_2darray(command);
 		return ;
-	}
-	while (*command)
+	while (command[i])
 	{
-		comm = (t_cmdexe *)malloc(sizeof(t_cmdexe));
+		comm = malloc(sizeof(t_cmdexe));
 		if (!comm)
 		{
 			free_cmdexe(comm);
-			return ;
+			exit(1);
 		}
-		comm->cmd = *command;
+		comm->cmd = command[i];
 		comm->path = find_path(data->env);
 		comm->idx = i;
+		data->cmd_nbrs = comm->idx + 1;
 		comm->flags = init_flags();
 		// parse_flags(data, *command);
-		ft_lstadd_back_cmd(&data->commands, comm);
-		command++;
+		ft_cmdadd_back(&data->commands, comm);
 		i++;
 	}
+	// if (command)
+	// 	free_2darray(command);
 }
 
-char	*find_path(t_list *env)
+char	*find_path(t_envir *env)
 {
-    t_envir	*envir;
-
     while (env)
     {
-        envir = (t_envir *)env->content;
-        if (ft_strcmp(envir->var_name, "PATH") == 0)
-            return (envir->var_value);
+        if (ft_strcmp(env->var_name, "PATH") == 0)
+            return (env->var_value);
         env = env->next;
     }
     return (NULL);
 }
 
-int		execute_command(t_data *data)
+void	execute_command(t_data *data)
 {
 	if (data->commands == NULL)
-		return (0);
-	// else if (ft_is_builtin(data->commands[0]))
-	handle_builtins(data);
-    // data->cmdexe->path = find_path(data->env);
-    // data->cmdexe->cmd_paths = ft_split(data->cmdexe->path, ':');
-    // data->cmdexe->idx = -1;
-    // while (++data->cmdexe->idx < data->cmdexe->cmd_nbrs)
-    //     child(data);
-    // waitpid(-1, NULL, 0);
-	// free_data(data);
+		return ;
+	while (data->commands->next)
+	{
+		if (ft_is_builtin(data->commands->cmd))
+			handle_builtins(data);
+		else
+		{
+			free_data(data);
+			perror("command not found");
+		}
+		data->commands = data->commands->next;
+		// else
+			// exit(0);
+			//child(data);
+	}
 	if (data->curr_dir)
 		free(data->curr_dir);
-    return (0);
+    return ;
 }
 
-// void	child(t_data *data)
+// void	child(t_cmdexe *cmdexe)
 // {
-// 	int i = 0;
-// 	// int j = 0;
-// 	data->pid = fork();
-// 	// while (data->cmdexe->cmd_args[j])
-// 	// {
-// 	//	 printf("%s\n", data->cmdexe->cmd_args[j]);
-// 	//	 j++;
-// 	// }
-// 	if (!data->pid)
-// 	{
-// 		while (data->commands[i])
-// 		{
-// 			data->cmdexe->cmd = apply_command(data->cmdexe->cmd_paths, data->commands[i]);
-// 			execve(data->cmdexe->cmd, data->commands, data->cmdexe->cmd_paths);
-// 			// printf("%s\n", data->cmdexe.path);
-// 			i++;
-// 		}
-// 	}
-// 	else
-// 		wait(NULL);
+//     int i = 0;
+//     int j = 0;
+//     pid_t pid = fork();
+//     while (cmdexe->cmd_args[j])
+//     {
+//          printf("%s\n", cmdexe->cmd_args[j]);
+//          j++;
+//     }
+//     if (!pid)
+//     {
+//         while (cmdexe->path[i])
+//         {
+//             cmdexe->cmd = apply_command(cmdexe->cmd_path, cmdexe->cmd_args[0]);
+//             execve(cmdexe->cmd, cmdexe->cmd_args, cmdexe->cmd_paths);
+//             printf("%s\n", cmdexe->path);
+//             i++;
+//         }
+//     }
+//     else
+//         wait(NULL);
 // }
 
 char	*apply_command(char **paths, char *cmd)

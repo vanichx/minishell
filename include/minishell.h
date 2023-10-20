@@ -30,6 +30,8 @@ typedef struct s_envir {
 	char		*var_name;
 	char		*var_value;
 	int			count;
+	struct	s_envir	*next;
+	struct	s_envir	*prev;
 }				t_envir;
 
 typedef struct s_delim {
@@ -58,11 +60,13 @@ typedef struct	s_cmdexe {
 	char	*cmd;
 	t_flags	*flags;
 	int		idx;// the number of the command that we are executing
+	struct	s_cmdexe	*next;
+	struct	s_cmdexe	*prev;
 }				t_cmdexe;
 
 typedef struct	s_data {
-	t_list		*env;
-	t_list		*commands;
+	t_envir		*env;
+	t_cmdexe	*commands;
 	int			cmd_nbrs;
 	char		*promt;
 	char		*curr_dir;
@@ -83,10 +87,10 @@ void	handle_builtins(t_data *data);
 int		ft_is_builtin(char *cmd);
 
 /* enviroment.c */
-void	ft_lstadd_back_env(t_list **lst, t_envir *envir);
 t_envir	*parse_envir(char *env_str);
-t_envir	*find_envir(t_list *env, char *var_name);
-void create_env(t_data **data, char **envp);
+t_envir	*find_envir(t_envir *env, char *var_name);
+void 	create_env(t_data **data, char **envp);
+void	print_env_node(void *env_node);
 
 /* exit.c */
 void	exit_shell(char *message, int exit_code, t_data *data);
@@ -95,7 +99,7 @@ void	exit_shell(char *message, int exit_code, t_data *data);
 void	free_data(t_data *data);
 void	free_flags(t_flags *flags);
 void	free_delimiter(t_delim *delimiter);
-void	free_envir(void *envir);
+void	free_envir(t_envir *envir);
 void	free_cmdexe(void *command);
 void	free_2darray(char **array);
 
@@ -109,10 +113,9 @@ t_cmdexe *init_cmdexe(void);
 t_flags	*init_flags(void);
 
 /* parsing_commads.c */
-void	print_cmdexe_list(t_list *lst);
 void	parse_commands(t_data *data, char *input);
-char	*find_path(t_list *env);
-int		execute_command(t_data *data);
+char	*find_path(t_envir *env);
+void	execute_command(t_data *data);
 void	child(t_data *data);
 char	*apply_command(char **paths, char *cmd);
 void	create_commands(t_data *data, char **cmd);
@@ -140,10 +143,32 @@ void	start_loop(t_data *data);
 
 /* shlvl.c */
 void	incr_shell_lvl(t_data **data);
-void	export(t_list **env, char *var_name, char *var_value);
+void	export(t_envir **env_list, char *var_name, char *var_value);
 
 /* utils.c */
 char	*ignore_spaces(char *input);
 char	**dup_2darray(char **array);
+
+/* Environment lists functions */
+void	ft_envadd_back(t_envir **lst, t_envir *new);
+void	ft_envadd_front(t_envir **lst, t_envir *new);
+void	ft_envclear(t_envir **lst, void (*del)(void *));
+void	ft_envdelone(t_envir *lst, void (*del)(void *));
+void	ft_enviter(t_envir *lst, void (*f)(void *));
+t_envir	*ft_envlast(t_envir *lst);
+t_envir	*ft_envnew(char *var_name, char *var_value);
+int		ft_envsize(t_envir *lst);
+
+/* Commands lists functions */
+void	ft_cmdadd_back(t_cmdexe **lst, t_cmdexe *new);
+void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new);
+void	ft_cmdclear(t_cmdexe **lst, void (*del)(void *));
+void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *));
+void	ft_cmditer(t_cmdexe *lst, void (*f)(void *));
+t_cmdexe	*ft_cmdlast(t_cmdexe *lst);
+t_cmdexe	*ft_cmdnew(char *path, char *cmd, t_flags *flags, int idx);
+int		ft_cmdsize(t_cmdexe *lst);
+void	print_cmdexe_list(t_cmdexe *cmdexe_list);
+void	print_cmdexe(void *cmdexe_node);
 
 #endif

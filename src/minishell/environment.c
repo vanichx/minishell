@@ -1,27 +1,5 @@
 #include "minishell.h"
 
-void	ft_lstadd_back_env(t_list **lst, t_envir *envir)
-{
-	t_list	*new;
-	t_list	*tmp;
-
-	if (!lst || !envir)
-		return ;
-	new = ft_lstnew(envir);
-	if (!new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	new->prev = tmp;
-}
-
 t_envir	*parse_envir(char *env_str)
 {
     t_envir	*envir;
@@ -39,15 +17,12 @@ t_envir	*parse_envir(char *env_str)
     return (envir);
 }
 
-t_envir	*find_envir(t_list *env, char *var_name)
+t_envir	*find_envir(t_envir *env, char *var_name)
 {
-    t_envir	*envir;
-
     while (env)
     {
-        envir = (t_envir *)env->content;
-        if (ft_strcmp(envir->var_name, var_name) == 0)
-            return (envir);
+        if (ft_strcmp(env->var_name, var_name) == 0)
+            return (env);
         env = env->next;
     }
     return (NULL);
@@ -61,7 +36,14 @@ void create_env(t_data **data, char **envp)
 	while (*envp)
 	{
 		envir = parse_envir(*envp);
-		ft_lstadd_back_env(&(*data)->env, envir);
+		ft_envadd_back(&(*data)->env, envir);
 		envp++;
 	}
+}
+
+void	print_env_node(void *env_node)
+{
+    t_envir	*env = (t_envir *)env_node;
+
+    printf("%s=%s\n", env->var_name, env->var_value);
 }

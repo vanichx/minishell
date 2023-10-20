@@ -2,7 +2,7 @@
 
 void reset_data(t_data *data)
 {
-	ft_lstclear(&data->commands, free_cmdexe);
+	ft_cmdclear(&data->commands, free_cmdexe);
 	data->curr_dir = getcwd(NULL, 0);
 }
 

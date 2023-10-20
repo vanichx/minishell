@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/20 11:29:18 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/20 19:33:48 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g #-fsanitize=address -fno-omit-frame-pointer
+CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
 BONUS				=	bonus
@@ -39,7 +39,8 @@ VPATH				=	src:src/minishell:src/bonus:include
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	environment.c handle_input.c free.c \
 						init_data.c main.c parsing_flags.c  parsing_commands.c shlvl.c \
-						signals.c utils.c reset.c exit.c buitins.c commands.c
+						signals.c utils.c reset.c exit.c buitins.c commands.c envirlists.c \
+						commandslists.c
 
 BONUS_INC			=	bonus.h
 BONUS_SRC			=	bonus.c

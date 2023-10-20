@@ -2,12 +2,12 @@
 
 void	free_data(t_data *data)
 {
-	ft_lstclear(&data->env, free_envir);
+	ft_envclear(&data->env, free_envir);
 	data->env = NULL;
-	ft_lstclear(&data->commands, free_cmdexe);
+	ft_cmdclear(&data->commands, free_cmdexe);
 	data->commands = NULL;
-	if (data->curr_dir && data->curr_dir[0] != '\0')
-		free(data->curr_dir);
+	// if (data->curr_dir && data->curr_dir[0] != '\0')
+	// 	free(data->curr_dir);
 	// if (data->promt && data->promt[0] != '\0')
 	// 	free(data->promt);
 	free(data);
@@ -58,13 +58,13 @@ void	free_cmdexe(void *command)
 	tmp = NULL;
 }
 
-void	free_envir(void *envir)
+void	free_envir(t_envir *envir)
 {
 	t_envir	*tmp;
 
 	if (!envir)
 		return ;
-	tmp = (t_envir *)envir;
+	tmp = envir;
 	if (tmp->var_name)
 	{
 		free(tmp->var_name);
@@ -81,16 +81,12 @@ void	free_envir(void *envir)
 
 void	free_2darray(char **array)
 {
-	int	i;
-
 	if (!array)
 		return ;
-	i = 0;
-	while (array[i] != NULL)
+	while (*array)
 	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
+		free(*array);
+		array++;
 	}
 	free(array);
 	array = NULL;
