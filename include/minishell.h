@@ -116,7 +116,7 @@ t_flags	*init_flags(void);
 void	parse_commands(t_data *data, char *input);
 char	*find_path(t_envir *env);
 void	execute_command(t_data *data);
-void	child(t_data *data);
+void	child(t_cmdexe *cmdexe);
 char	*apply_command(char **paths, char *cmd);
 void	create_commands(t_data *data, char **cmd);
 void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
@@ -152,7 +152,7 @@ char	**dup_2darray(char **array);
 /* Environment lists functions */
 void	ft_envadd_back(t_envir **lst, t_envir *new);
 void	ft_envadd_front(t_envir **lst, t_envir *new);
-void	ft_envclear(t_envir **lst, void (*del)(void *));
+void	ft_envclear(t_envir **lst);
 void	ft_envdelone(t_envir *lst, void (*del)(void *));
 void	ft_enviter(t_envir *lst, void (*f)(void *));
 t_envir	*ft_envlast(t_envir *lst);
@@ -162,7 +162,7 @@ int		ft_envsize(t_envir *lst);
 /* Commands lists functions */
 void	ft_cmdadd_back(t_cmdexe **lst, t_cmdexe *new);
 void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new);
-void	ft_cmdclear(t_cmdexe **lst, void (*del)(void *));
+void	ft_cmdclear(t_cmdexe **lst);
 void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *));
 void	ft_cmditer(t_cmdexe *lst, void (*f)(void *));
 t_cmdexe	*ft_cmdlast(t_cmdexe *lst);

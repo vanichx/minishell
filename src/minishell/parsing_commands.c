@@ -52,44 +52,36 @@ void	execute_command(t_data *data)
 	{
 		if (ft_is_builtin(data->commands->cmd))
 			handle_builtins(data);
-		else
-		{
-			free_data(data);
-			perror("command not found");
-		}
-		data->commands = data->commands->next;
 		// else
-			// exit(0);
-			//child(data);
+		// {
+		// 	free_data(data);
+		// 	perror("command not found");
+		// }
+		// data->commands = data->commands->next;
+		else
+			child(data->commands);
 	}
 	if (data->curr_dir)
 		free(data->curr_dir);
     return ;
 }
 
-// void	child(t_cmdexe *cmdexe)
-// {
-//     int i = 0;
-//     int j = 0;
-//     pid_t pid = fork();
-//     while (cmdexe->cmd_args[j])
-//     {
-//          printf("%s\n", cmdexe->cmd_args[j]);
-//          j++;
-//     }
-//     if (!pid)
-//     {
-//         while (cmdexe->path[i])
-//         {
-//             cmdexe->cmd = apply_command(cmdexe->cmd_path, cmdexe->cmd_args[0]);
-//             execve(cmdexe->cmd, cmdexe->cmd_args, cmdexe->cmd_paths);
-//             printf("%s\n", cmdexe->path);
-//             i++;
-//         }
-//     }
-//     else
-//         wait(NULL);
-// }
+void	child(t_cmdexe *cmdexe)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        while (cmdexe)
+        {
+			printf("%s\n", cmdexe->cmd);
+            execve(NULL, &cmdexe->cmd, &cmdexe->path);
+            printf("%s\n", cmdexe->path);
+			cmdexe = cmdexe->next;
+        }
+    }
+    else
+        wait(NULL);
+}
 
 char	*apply_command(char **paths, char *cmd)
 {

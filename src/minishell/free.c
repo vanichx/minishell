@@ -2,9 +2,9 @@
 
 void	free_data(t_data *data)
 {
-	ft_envclear(&data->env, free_envir);
+	ft_envclear(&data->env);
 	data->env = NULL;
-	ft_cmdclear(&data->commands, free_cmdexe);
+	ft_cmdclear(&data->commands);
 	data->commands = NULL;
 	// if (data->curr_dir && data->curr_dir[0] != '\0')
 	// 	free(data->curr_dir);

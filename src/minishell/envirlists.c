@@ -27,22 +27,16 @@ void	ft_envadd_front(t_envir **lst, t_envir *new)
     *lst = new;
 }
 
-void	ft_envclear(t_envir **lst, void (*del)(void *))
+void	ft_envclear(t_envir **lst)
 {
-    t_envir	*current;
-    t_envir	*next;
+	t_envir  *head;
 
-    if (!lst || !*lst || !del)
-        return ;
-    current = *lst;
-    while (current)
-    {
-		if (current->next)
-        	next = current->next;
-        ft_envdelone(current, del);
-        current = next;
-    }
-    *lst = NULL;
+	while (*lst)
+	{
+		head = (*lst)->next;
+		free(*lst);
+		(*lst) = head;
+	}
 }
 
 void	ft_envdelone(t_envir *lst, void (*del)(void *))

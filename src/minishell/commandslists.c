@@ -27,18 +27,16 @@ void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new)
     *lst = new;
 }
 
-void	ft_cmdclear(t_cmdexe **lst, void (*del)(void *))
+void	ft_cmdclear(t_cmdexe **lst)
 {
-    t_cmdexe	*buffer;
+    t_cmdexe  *head;
 
-    if (!lst || !*lst || !del)
-        return ;
-    while (*lst)
-    {
-        buffer = (*lst)->next;
-        ft_cmddelone(*lst, del);
-        *lst = buffer;
-    }
+	while (*lst)
+	{
+		head = (*lst)->next;
+		free(*lst);
+		(*lst) = head;
+	}
 }
 
 void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *))
