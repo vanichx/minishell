@@ -16,62 +16,79 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
+# include <errno.h>
 # include	"libft.h"
 
 # define MAX_ENV_VARS 100
 # define MAX_DOLLAR_VALUE_LEN 100
-/* errors */
+# define MAX_PATH_LEN 100
+# define MAX_CMD_LEN 100
 
-#define NEW_LINE_ERR "syntax error near unexpected token `newline'"
-#define PIPE_ERR "syntax error near unexpected token `||'"
-#define DEL_ERR "syntax error near unexpected token `<<'"
+#define NEW_LINE_ERR	"syntax error near unexpected token `newline'"
+#define PIPE_ERR		"syntax error near unexpected token `||'"
+#define DEL_ERR			"syntax error near unexpected token `<<'"
+
+typedef enum e_token_type {
+	T_WORD = 1,
+	T_REDIRECT,
+	T_PIPE,
+	T_SEP,
+	T_NEWLINE,
+	T_ENV,
+	T_AND,
+	T_OR,
+	T_PAR_OPEN,
+	T_PAR_CLOSE
+} t_token_type;
 
 typedef struct s_envir {
-	char		*var_name;
-	char		*var_value;
+	char		**var_name;
+	char		**var_value;
 	int			count;
-	struct	s_envir	*next;
-	struct	s_envir	*prev;
 }				t_envir;
 
-typedef struct s_delim {
-	int			delim_found;
-	char		*content;
-}				t_delim;
-
-typedef struct s_flags {
-	t_delim		*delimiter;
-	int			pipe[2];
-	int			single_quote[2];
-	int			double_quote[2];
-	int			dollar;
-	int			red_inp[2];
-	int			red_out[2];
-	int			append[2];
-	int			wildcard;
-	int			or[2];
-	int			and[2];
-	int			p_id;
-	int			exit_status;
-}				t_flags;
-
 typedef struct	s_cmdexe {
-	char	*path;
-	char	*cmd;
-	t_flags	*flags;
-	int		idx;// the number of the command that we are executing
+	struct s_token		*args;
+	t_list				*env_list;
+	char				**args_array;
+	char				*path;
+	char				*cmd;
+	int					scope;
+	int					forked;
+	int					in;
+	int					out;
+	int					pipe[2];
+	int					cmd_type;
 	struct	s_cmdexe	*next;
 	struct	s_cmdexe	*prev;
 }				t_cmdexe;
 
 typedef struct	s_data {
-	t_envir		*env;
-	t_cmdexe	*commands;
-	int			cmd_nbrs;
-	char		*promt;
-	char		*curr_dir;
-	int			pid;
+	struct s_cmdexe	*cmd_list;
+	struct s_token *token_list;
+	t_envir			*env_list;
+	t_list			*sorted_env_list;
+	long int		exit_status;
+	int				cmd_nbrs;
+	char			*input_line;
+	char			*curr_dir;
+	int				pid;
+	int				arg_nums;
+	int 			parenthesis_scope;
+	int				forked;
+	char			*exit_str;
+	char 			**env_array;
+	char 			**cmd_array;
+	char 			**path;
 }				t_data;
+
+typedef struct s_token
+{
+	char *word;
+	t_token_type type;
+	struct s_token *next;
+	struct s_token *prev;
+}			t_token;
 
 /* builtins.c */
 void	builtin_echo(char **args);
@@ -86,19 +103,20 @@ void	builtin_export(t_envir *env);
 void	handle_builtins(t_data *data);
 int		ft_is_builtin(char *cmd);
 
-/* enviroment.c */
-t_envir	*parse_envir(char *env_str);
-t_envir	*find_envir(t_envir *env, char *var_name);
-void 	create_env(t_data **data, char **envp);
+/* environment.c */
+void	save_envir(t_data *data, char **env_str);
+char	*find_envir_variable(t_data *data, char *var_name, int len);
 void	print_env_node(void *env_node);
+int		find_envir_line(t_envir *env, char *var_name);
+void	free_envir_array(char **env_array);
 
 /* exit.c */
 void	exit_shell(char *message, int exit_code, t_data *data);
 
 /* free.c */
 void	free_data(t_data *data);
-void	free_flags(t_flags *flags);
-void	free_delimiter(t_delim *delimiter);
+// void	free_flags(t_flags *flags);
+// void	free_delimiter(t_delim *delimiter);
 void	free_envir(t_envir *envir);
 void	free_cmdexe(void *command);
 void	free_2darray(char **array);
@@ -110,14 +128,14 @@ void	print_parsed_input(char *command);
 /* init_data.c */
 void	init_data(t_data **data, char **envp);
 t_cmdexe *init_cmdexe(void);
-t_flags	*init_flags(void);
+// t_flags	*init_flags(void);
 
 /* parsing_commads.c */
 void	parse_commands(t_data *data, char *input);
-char	*find_path(t_envir *env);
+char	*find_path(t_data *data);
 void	execute_command(t_data *data);
-void	child(t_cmdexe *cmdexe);
-char	*apply_command(char **paths, char *cmd);
+void	child(t_data *data);
+// static char	*find_executable_path(char **paths, char *cmd);
 void	create_commands(t_data *data, char **cmd);
 void	ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
 void	reset_commands(void *command);
@@ -133,7 +151,7 @@ void	check_dollar(t_data *data, char *input);
 
 /* reset.c */
 void	reset_data(t_data *data);;
-void	reset_flags(t_flags *flags);
+// void	reset_flags(t_flags *flags);
 
 /* signals.c */
 void	handle_d(t_data *data);
@@ -142,7 +160,7 @@ void	handle_signal(void);
 void	start_loop(t_data *data);
 
 /* shlvl.c */
-void	incr_shell_lvl(t_data **data);
+void	incr_shell_lvl(t_data *data);
 void	export(t_envir **env_list, char *var_name, char *var_value);
 
 /* utils.c */
@@ -166,9 +184,10 @@ void	ft_cmdclear(t_cmdexe **lst);
 void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *));
 void	ft_cmditer(t_cmdexe *lst, void (*f)(void *));
 t_cmdexe	*ft_cmdlast(t_cmdexe *lst);
-t_cmdexe	*ft_cmdnew(char *path, char *cmd, t_flags *flags, int idx);
+t_cmdexe	*ft_cmdnew(char *cmd);
 int		ft_cmdsize(t_cmdexe *lst);
 void	print_cmdexe_list(t_cmdexe *cmdexe_list);
 void	print_cmdexe(void *cmdexe_node);
+void 	ft_cmd_clear(t_cmdexe **cmd_list);
 
 #endif

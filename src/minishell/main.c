@@ -6,19 +6,17 @@ void	start_loop(t_data *data)
 
 	while (1)
 	{
-		input = readline(data->promt);
+		input = readline(data->input_line);
 		// input = "echo hello world";
 		if (input == NULL)
 			handle_d(data);
 		check_exit(input);
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		reset_data(data);
 		parse_commands(data, input);
-		//parse_flags(data, input);
-
 		execute_command(data);
-		// free_cmdexe(data->commands);
+		reset_data(data);
+		free(input);
 
 	}
 }
@@ -26,11 +24,17 @@ void	start_loop(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
+	int fd;
 
 	(void)argc;
 	(void)argv;
-	handle_signal();
+	if (read(0, NULL, 0) == -1)
+		return (0);
+	if ((fd = dup(0)) == -1)
+		return (0);
+	close(fd);
 	init_data(&(data), envp);
+	handle_signal();
 	start_loop(data);
 	free_data(data);
 	return 0;

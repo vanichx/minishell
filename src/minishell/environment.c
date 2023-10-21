@@ -1,49 +1,58 @@
 #include "minishell.h"
 
-t_envir	*parse_envir(char *env_str)
+void	save_envir(t_data *data, char **env_str)
+
 {
-    t_envir	*envir;
-    char	*eq_pos;
+	int	i;
+	int	j;
 
-    eq_pos = ft_strchr(env_str, '=');
-    if (!eq_pos)
-        return (NULL);
-    envir = malloc(sizeof(t_envir));
-    if (!envir)
-        return (NULL);
-    envir->var_name = ft_substr(env_str, 0, eq_pos - env_str);
-    envir->var_value = ft_strdup(eq_pos + 1);
-    envir->count = ft_strlen(envir->var_value);
-    return (envir);
-}
-
-t_envir	*find_envir(t_envir *env, char *var_name)
-{
-    while (env)
-    {
-        if (ft_strcmp(env->var_name, var_name) == 0)
-            return (env);
-        env = env->next;
-    }
-    return (NULL);
-}
-
-
-void create_env(t_data **data, char **envp)
-{
-	t_envir	*envir;
-
-	while (*envp)
+	i = 0;
+	j = 0;
+	while (env_str[j])
+		j++;
+	data->env_array = malloc(sizeof(char *) * (j + 1));
+	while (env_str[i])
 	{
-		envir = parse_envir(*envp);
-		ft_envadd_back(&(*data)->env, envir);
-		envp++;
+		data->env_array[i] = ft_strdup(env_str[i]);
+		i++;
 	}
+	data->env_array[i] = NULL;
+}
+
+
+
+int	find_envir_line(t_envir *env, char *var_name)
+{
+	int i = 0;
+    while (var_name[i])
+    {
+        if (ft_strcmp(env->var_name[i], var_name) == 0)
+            return (i);
+        i++;
+    }
+    return (0);
 }
 
 void	print_env_node(void *env_node)
 {
-    t_envir	*env = (t_envir *)env_node;
+	t_envir	*env = (t_envir *)env_node;
 
-    printf("%s=%s\n", env->var_name, env->var_value);
+	int i = 0;
+	while (env->var_name[i])
+	{
+		printf("%s=%s\n", env->var_name[i], env->var_value[i]);
+		i++;
+	}
+}
+
+void	free_envir_array(char **env_array)
+{
+	int	i = 0;
+	while (env_array[i])
+	{
+		free(env_array[i]);
+		i++;
+	}
+	free(env_array);
+	env_array = NULL;
 }

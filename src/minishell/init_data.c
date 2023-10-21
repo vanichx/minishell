@@ -5,16 +5,16 @@ void	init_data(t_data **data, char **envp)
     *data = malloc(sizeof(t_data));
     if (!*data)
         exit(EXIT_FAILURE);
-    (*data)->env = NULL;
-	(*data)->commands = NULL;
+    (*data)->env_list = NULL;
+	(*data)->cmd_list = NULL;
     // (*data)->promt = malloc(sizeof(char) * 12);
 	// if (!(*data)->promt)
 	// 	exit(EXIT_FAILURE);
-	(*data)->promt = "minishell>> ";
+	(*data)->input_line = "minishell>> ";
     (*data)->pid = getpid();
-	create_env(data, envp);
+	save_envir((*data), envp);
 	// ft_enviter((*data)->env, print_env_node);
-    incr_shell_lvl(data);
+    incr_shell_lvl(*data);
 }
 
 t_cmdexe *init_cmdexe(void)
@@ -24,42 +24,23 @@ t_cmdexe *init_cmdexe(void)
     cmdexe = malloc(sizeof(t_cmdexe));
     if (!cmdexe)
         return (NULL);
+    cmdexe->args = NULL;
+    cmdexe->env_list = NULL;
+    cmdexe->args_array = NULL;
     cmdexe->path = NULL;
     cmdexe->cmd = NULL;
-    cmdexe->idx = 0;
+    cmdexe->scope = 0;
+    cmdexe->forked = 0;
+    cmdexe->in = 0;
+    cmdexe->out = 0;
+    cmdexe->pipe[0] = 0;
+    cmdexe->pipe[1] = 0;
+    cmdexe->cmd_type = 0;
+    cmdexe->next = NULL;
+    cmdexe->prev = NULL;
     return (cmdexe);
 }
 
-t_flags *init_flags(void)
-{
-    t_flags *flags;
-
-    flags = malloc(sizeof(t_flags));
-    if (!flags)
-        return (NULL);
-	flags->delimiter = NULL;
-    flags->pipe[0] = 0;
-    flags->pipe[1] = 0;
-    flags->single_quote[0] = 0;
-    flags->single_quote[1] = 0;
-    flags->double_quote[0] = 0;
-    flags->double_quote[1] = 0;
-    flags->dollar = 0;
-    flags->red_inp[0] = 0;
-    flags->red_inp[1] = 0;
-    flags->red_out[0] = 0;
-    flags->red_out[1] = 0;
-    flags->append[0] = 0;
-    flags->append[1] = 0;
-    flags->wildcard = 0;
-    flags->or[0] = 0;
-    flags->or[1] = 0;
-    flags->and[0] = 0;
-    flags->and[1] = 0;
-    flags->p_id = 0;
-    flags->exit_status = 0;
-    return (flags);
-}
 
 void create_commands(t_data *data, char **cmd)
 {
@@ -70,7 +51,7 @@ void create_commands(t_data *data, char **cmd)
 	{
 		cmdexe = init_cmdexe();
 		cmdexe->cmd = ft_strdup(*cmd);
-		ft_cmdadd_back(&data->commands, cmdexe);
+		ft_cmdadd_back(&data->cmd_list, cmdexe);
 		temp = cmdexe;
 		cmd++;
 	}

@@ -2,105 +2,93 @@
 
 void	ft_cmdadd_back(t_cmdexe **lst, t_cmdexe *new)
 {
-    t_cmdexe	*tmp;
+	t_cmdexe *head;
 
-    if (!*lst)
-        *lst = new;
-    else
-    {
-        tmp = ft_cmdlast(*lst);
-		if (tmp)
-		{
-        	tmp->next = new;
-        	new->prev = tmp;
-		}
-		else
-			ft_cmdadd_front(lst, new);
-    }
-}
-
-void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new)
-{
-    new->next = *lst;
-    if (*lst != NULL)
-        (*lst)->prev = new;
-    *lst = new;
-}
-
-void	ft_cmdclear(t_cmdexe **lst)
-{
-    t_cmdexe  *head;
-
-	while (*lst)
+	head = (*lst);
+	if (!lst)
+		return ;
+	if (lst)
 	{
-		head = (*lst)->next;
-		free(*lst);
-		(*lst) = head;
+		if (*lst)
+		{
+			ft_cmdlast(*lst)->next = new;
+			return ;
+		}
 	}
-}
-
-void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *))
-{
-    if (!lst || !del)
-        return ;
-    if (lst->path)
-        free(lst->path);
-    if (lst->cmd)
-        free(lst->cmd);
-    if (lst->flags)
-        free(lst->flags);
-    free(lst);
-}
-
-void	ft_cmditer(t_cmdexe *lst, void (*f)(void *))
-{
-    if (!f)
-        return ;
-    while (lst)
-    {
-        f(lst);
-        lst = lst->next;
-    }
+	*lst = new;
 }
 
 t_cmdexe	*ft_cmdlast(t_cmdexe *lst)
 {
-    t_cmdexe	*node;
+	t_cmdexe	*node;
 	
 	node = lst;
-    while (node != NULL)
+	if (node != NULL)
 	{
 		while (node->next != NULL)
 			node = node->next;
 	}
-    return (node);
+	return (node);
 }
 
-t_cmdexe	*ft_cmdnew(char *path, char *cmd, t_flags *flags, int idx)
+void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new)
 {
-    t_cmdexe	*head;
+	new->next = *lst;
+	if (*lst != NULL)
+		(*lst)->prev = new;
+	*lst = new;
+}
 
-    head = malloc(sizeof(t_cmdexe));
-    if (!head)
-        return (NULL);
-    head->path = path;
-    head->cmd = cmd;
-    head->flags = flags;
-    head->idx = idx;
-    head->next = NULL;
-    head->prev = NULL;
-    return (head);
+// void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *))
+// {
+// 	if (!lst || !del)
+// 		return ;
+// 	if (lst->path)
+// 		free(lst->path);
+// 	if (lst->cmd)
+// 		free(lst->cmd);
+// 	free(lst);
+// }
+
+void  ft_cmdclear(t_cmdexe **cmd_list)
+
+{
+  t_cmdexe  *head;
+
+  while (*cmd_list)
+  {
+    head = (*cmd_list)->next;
+	free((*cmd_list)->cmd);
+	(*cmd_list)->cmd = NULL;
+	free((*cmd_list)->path);
+	(*cmd_list)->path = NULL;
+    free(*cmd_list);
+    (*cmd_list) = head;
+  }
+}
+
+t_cmdexe	*ft_cmdnew(char *cmd)
+{
+	t_cmdexe	*head;
+
+	head = (t_cmdexe *)malloc(sizeof(t_cmdexe));
+	if (!head)
+		return (NULL);
+	head->cmd = ft_strdup(cmd);
+	head->next = NULL;
+	head->prev = NULL;
+	return (head);
 }
 
 int	ft_cmdsize(t_cmdexe *lst)
 {
-    int	size;
+	int	size;
 
-    size = 0;
-    while (lst)
-    {
-        size++;
-        lst = lst->next;
-    }
-    return (size);
+	size = 0;
+	while (lst)
+	{
+		size++;
+		lst = lst->next;
+	}
+	return (size);
 }
