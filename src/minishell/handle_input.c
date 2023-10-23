@@ -27,3 +27,57 @@ void print_parsed_input(char *command) {
 		printf("Failed to parse the input.\n");
 	}
 }
+
+int		is_valid_env(char *str)
+{
+	int i;
+	int eq_sign;
+
+	i = 0;
+	eq_sign = 0;
+	while (str[i])
+	{
+		if (i == 0 && (ft_isdigit(str[i] || str[i] == '=')))
+			return (0);
+		if (!ft_isalnum(str[i] && str[i] != '_' && str[i] != '=')
+			&& str[i] != '+' && str[i] != '\'' && str[i] != '\"')
+			return (0);
+		if ((str[i] == '\'' || str[i] == '\"') && eq_sign < 1)
+			return (0);
+		if (str[i] == '=')
+			eq_sign++;
+		i++;
+	}
+	if (eq_sign)
+		return (1);
+	return (0);	
+}
+
+int		is_valid_env2(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i == 0 && ft_isdigit(str[i]))
+			return (0);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}	
+	return (1);
+}
+
+int	check_error(t_token *token)
+{
+	if ((token->type == T_PIPE || token->type == T_SEP) && !token->prev)
+		return (0);
+	if (token->type == T_REDIRECT && token->prev && token->prev->type == T_REDIRECT)
+		return (0);
+	if (token->type == T_NEWLINE && token->prev && token->prev->type == T_PIPE)
+		return (0);
+	if (token->type == T_PIPE || token->prev->type == T_SEP || token->prev->type == T_REDIRECT)
+		return (0);
+	return (1);
+}

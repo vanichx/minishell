@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:45:14 by eseferi           #+#    #+#             */
-/*   Updated: 2023/08/08 16:45:16 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/23 18:54:29 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s || !c)
+		return (NULL);
 	while (*s && *s != (char)c)
 		s++;
 	if (*s == (char)c || !c)

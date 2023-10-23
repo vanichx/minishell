@@ -6,7 +6,7 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/23 14:34:46 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/23 16:07:46 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	environment.c handle_input.c free.c \
 						init_data.c main.c parsing_flags.c  parsing_commands.c shlvl.c \
 						signals.c utils.c reset.c exit.c buitins.c commands.c envirlists.c \
-						commandslists.c quotes.c
+						commandslists.c quotes.c parse_tokens.c token_lists.c \
 
 BONUS_INC			=	bonus.h
 BONUS_SRC			=	bonus.c

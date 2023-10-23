@@ -15,6 +15,7 @@
 		"algorithm": "c",
 		"complex": "c",
 		"new": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"sstream": "c"
 	}
 }

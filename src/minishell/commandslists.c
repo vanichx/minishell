@@ -51,20 +51,19 @@ void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new)
 // }
 
 void  ft_cmdclear(t_cmdexe **cmd_list)
-
 {
-  t_cmdexe  *head;
+	t_cmdexe  *head;
 
-  while (*cmd_list)
-  {
-    head = (*cmd_list)->next;
-	free((*cmd_list)->cmd);
-	(*cmd_list)->cmd = NULL;
-	free((*cmd_list)->path);
-	(*cmd_list)->path = NULL;
-    free(*cmd_list);
-    (*cmd_list) = head;
-  }
+	while (*cmd_list)
+	{
+		head = (*cmd_list)->next;
+		free((*cmd_list)->cmd);
+		(*cmd_list)->cmd = NULL;
+		free((*cmd_list)->path);
+		(*cmd_list)->path = NULL;
+		free(*cmd_list);
+		(*cmd_list) = head;
+	}
 }
 
 t_cmdexe	*ft_cmdnew(char *cmd)

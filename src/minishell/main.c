@@ -11,10 +11,14 @@ void	start_loop(t_data *data)
 		check_exit(data->input_line);
 		if (ft_strlen(data->input_line) > 0)
 			add_history(data->input_line);
+		data->single_quit = 0;
+		data->double_quit = 0;
+		data->forked = 0;
 		while (data->single_quit == 0 && odd_quote(data->input_line, 1))
 			next_quote(data);
 		parse_input(data, data->input_line);
-		execute_command(data);
+		print_tokens(data);////Debug
+		// execute_command(data);
 		reset_data(data);
 		free(data->input_line);
 

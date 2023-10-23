@@ -1,48 +1,33 @@
 #include "minishell.h"
 
-static char	*find_executable_path(char **paths, char *cmd)
-{
-	char	*tmp;
-	char	*command;
-	
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		command = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(command, F_OK) == 0)
-            return (command);
-		free(command);
-		paths++;
-	}
-	return (NULL);
-}
+
 void	parse_input(t_data *data, char *input)
 {
 	int			i;
+	char	*error_token;
+	t_token	*tmp;
 
 	i = 0;
 	if (!input || !input[0])
 		return ;
-	data->cmd_array = ft_split(input, ' ');
-	if (!data->cmd_array)
-		return ;
-	while (data->cmd_array[i])
+	if (!is_only_ascii(input))
 	{
-		if (!data->cmd_list)
-		{
-			data->cmd_list = ft_cmdnew(data->cmd_array[i]);
-			data->cmd_list->path = find_path(data);
-		}
-		else if (data->cmd_list)
-		{
-			ft_cmdadd_back(&data->cmd_list, ft_cmdnew(data->cmd_array[i]));
-			data->cmd_list->path = find_path(data);
-		}
-		i++;
+		ft_putstr_fd("minishell>> ", 2);
+		ft_putstr_fd("invalid ascii characters found in string\n", 2);
+		return ;
 	}
-	// if (data->cmd_array)
-	// 	free_2darray(data->cmd_array);
+	split_tokens(data, input);
+	error_token = iter_tokens(data);
+	if (error_token)
+	{
+		ft_putstr_fd("minishell>> ", 2);
+		ft_putstr_fd("syntax error near unexpected token `\n", 2);
+		ft_putstr_fd(error_token, 2);
+		return ;
+	}
+	tmp = data->token_list;
+	while (tmp)
+		token_to_cmd(data, &tmp);
 }
 
 char	*find_path(t_data *data)
@@ -110,4 +95,23 @@ void	child(t_data *data)
     }
 	else
 		wait(NULL);
+}
+
+
+char	*find_executable_path(char **paths, char *cmd)
+{
+	char	*tmp;
+	char	*command;
+	
+	while (*paths)
+	{
+		tmp = ft_strjoin(*paths, "/");
+		command = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(command, F_OK) == 0)
+			return (command);
+		free(command);
+		paths++;
+	}
+	return (NULL);
 }

@@ -102,9 +102,7 @@ void next_quote(t_data *data)
 	
 	if (tmp)		
 	{
-		printf("I am here first\n");
 		data->input_line = ft_strjoin_free(data->input_line, "\n");
-		printf("I am here second\n");
 		data->input_line = ft_strjoin_free(data->input_line, tmp);
 		free(tmp);
 	}
