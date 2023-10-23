@@ -229,6 +229,7 @@ t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 char		*iter_tokens(t_data *data);
 void		clear_token(t_token **token, void (*del)(void*));
 int			tokens_len(t_token **head);
+void		free_tokens(void *tokens);
 
 
 

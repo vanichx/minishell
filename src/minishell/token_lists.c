@@ -50,6 +50,8 @@ t_token	*create_token(t_data *data, int i)
 {
 	t_token *new;
 
+	new = NULL;
+	data->token_list = new;
 	if (!data->count)
 		return (NULL);
 	if (!(new = malloc(sizeof(t_token))))

@@ -21,7 +21,6 @@ void	start_loop(t_data *data)
 		// execute_command(data);
 		reset_data(data);
 		free(data->input_line);
-
 	}
 }
 

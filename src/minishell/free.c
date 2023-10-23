@@ -13,6 +13,24 @@ void	free_data(t_data *data)
 }
 
 
+void	free_tokens(void *token)
+{
+	t_token *tmp;
+
+	tmp = (t_token *)token;
+	if (!token || !tmp)
+		return ;
+	if (tmp->word)
+	{
+		free(tmp->word);
+		tmp->word = NULL;
+	}
+	if (tmp->type)
+		free((void *)tmp->type);
+	free(tmp);
+	tmp = NULL;
+}
+
 void	free_cmdexe(void *command)
 {
 	t_cmdexe *tmp;

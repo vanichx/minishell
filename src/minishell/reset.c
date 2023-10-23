@@ -2,10 +2,12 @@
 
 void reset_data(t_data *data)
 {
-	ft_cmdclear(&data->cmd_list);
-	// ft_cmdclear(&data->token_list);
-	free_2darray(data->cmd_array);
-	free_2darray(data->path);
+	// ft_cmdclear(&data->cmd_list);
+
+	// free_2darray(data->cmd_array);
+	// free_2darray(data->path);
+	if (data->curr_dir)
+		free(data->curr_dir);
 	data->curr_dir = getcwd(NULL, 0);
 }
 
