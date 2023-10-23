@@ -13,10 +13,10 @@ int	odd_quote(char *str, int ret_arg)
 	{
 		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1))\
 			&& double_quote % 2 == 0)
-			single_quote++;
+			double_quote++;
 		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1))\
 			&& single_quote % 2 == 0)
-			double_quote++;
+			single_quote++;
 		i++;
 	}
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
@@ -32,7 +32,7 @@ int	closed_quote(char *str, int pos)
 	int n;
 
 	n = 0;
-	while (pos >= 0 && str[pos] == "\\")
+	while (pos >= 0 && str[pos] == '\\')
 	{
 		n++;
 		pos--;
@@ -42,7 +42,7 @@ int	closed_quote(char *str, int pos)
 
 int	last_pipe(char *str, int pos)
 {
-	while (pos > 0 && str[pos] == ' ' || str[pos] == '\n')
+	while (pos > 0 && (str[pos] == ' ' || str[pos] == '\n'))
 		pos--;
 	if (pos > 0 && str[pos] == '|' && !closed_quote(str, pos - 1))
 	{
@@ -102,8 +102,8 @@ void next_quote(t_data *data)
     if (tmp)
     {
         data->input_line = ft_strjoin_free(data->input_line, "\n");
+		// printf("I am here\n");
         data->input_line = ft_strjoin_free(data->input_line, tmp);
-        free(tmp);
     }
     if (data->single_quit == 2)
     {
@@ -111,4 +111,5 @@ void next_quote(t_data *data)
         data->input_line = ft_strjoin("", "");
         data->single_quit = 1;
     }
+	free(tmp);
 }

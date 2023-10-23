@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 22:29:35 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/22 22:29:39 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/10/23 11:58:22 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
