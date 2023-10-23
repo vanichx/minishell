@@ -17,7 +17,7 @@ static char	*find_executable_path(char **paths, char *cmd)
 	}
 	return (NULL);
 }
-void	parse_commands(t_data *data, char *input)
+void	parse_input(t_data *data, char *input)
 {
 	int			i;
 

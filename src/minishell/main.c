@@ -13,7 +13,9 @@ void	start_loop(t_data *data)
 		check_exit(input);
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		parse_commands(data, input);
+		while (data->single_quit == 0 && odd_quote(input, 1))
+			next_quote(data);
+		parse_input(data, input);
 		execute_command(data);
 		reset_data(data);
 		free(input);

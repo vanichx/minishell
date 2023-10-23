@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:23 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/19 10:46:43 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/23 11:46:53 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRCS			=	ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_isspace.c\
 					ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 					ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c ft_striteri.c \
 					ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-					ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c
+					ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
+					ft_strjoin_free.c ft_strjoin_double_free.c ft_strdel.c ft_strcat.c  ft_strcpy.c\
 							
 OBJS			=	$(addprefix obj/,$(SRCS:.c=.o))
 

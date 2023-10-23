@@ -68,6 +68,8 @@ typedef struct	s_data {
 	struct s_token *token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
+	int				single_quit;
+	int				double_quit;
 	long int		exit_status;
 	int				cmd_nbrs;
 	char			*input_line;
@@ -131,7 +133,7 @@ t_cmdexe *init_cmdexe(void);
 // t_flags	*init_flags(void);
 
 /* parsing_commads.c */
-void	parse_commands(t_data *data, char *input);
+void	parse_input(t_data *data, char *input);
 char	*find_path(t_data *data);
 void	execute_command(t_data *data);
 void	child(t_data *data);
@@ -189,5 +191,13 @@ int		ft_cmdsize(t_cmdexe *lst);
 void	print_cmdexe_list(t_cmdexe *cmdexe_list);
 void	print_cmdexe(void *cmdexe_node);
 void 	ft_cmd_clear(t_cmdexe **cmd_list);
+
+/* Quotes functions */
+int	odd_quote(char *str, int ret_arg);
+int	closed_quote(char *str, int pos);
+int	last_pipe(char *str, int pos);
+int	inside_paired_quotes(char *str, int pos);
+void	next_quote(t_data *data);
+
 
 #endif
