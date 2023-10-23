@@ -2,6 +2,8 @@
 
 void	free_data(t_data *data)
 {
+	if (!data)
+		return ;
 	ft_cmdclear(&data->cmd_list);
 	free_2darray(data->env_array);
 	if (data->curr_dir && data->curr_dir[0] != '\0')

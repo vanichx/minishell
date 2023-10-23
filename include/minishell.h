@@ -72,6 +72,7 @@ typedef struct	s_data {
 	int				double_quit;
 	long int		exit_status;
 	int				cmd_nbrs;
+	char			*input_minishell;
 	char			*input_line;
 	char			*curr_dir;
 	int				pid;

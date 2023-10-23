@@ -32,7 +32,7 @@ int	closed_quote(char *str, int pos)
 	int n;
 
 	n = 0;
-	while (pos >= 0 && str[pos] == "\\")
+	while (pos >= 0 && str[pos] == '\\')
 	{
 		n++;
 		pos--;
@@ -42,7 +42,7 @@ int	closed_quote(char *str, int pos)
 
 int	last_pipe(char *str, int pos)
 {
-	while (pos > 0 && str[pos] == ' ' || str[pos] == '\n')
+	while (pos > 0 && (str[pos] == ' ' || str[pos] == '\n'))
 		pos--;
 	if (pos > 0 && str[pos] == '|' && !closed_quote(str, pos - 1))
 	{
@@ -95,20 +95,23 @@ int	inside_paired_quotes(char *str, int pos)
 
 void next_quote(t_data *data)
 {
-    char *tmp;
+	char *tmp;
 
-    data->double_quit = 0;
-    tmp = readline("> ");
-    if (tmp)
-    {
-        data->input_line = ft_strjoin_free(data->input_line, "\n");
-        data->input_line = ft_strjoin_free(data->input_line, tmp);
-        free(tmp);
-    }
-    if (data->single_quit == 2)
-    {
-        ft_strdel(&data->input_line);
-        data->input_line = ft_strjoin("", "");
-        data->single_quit = 1;
-    }
+	data->double_quit = 0;
+	tmp = readline("> ");
+	
+	if (tmp)		
+	{
+		printf("I am here first\n");
+		data->input_line = ft_strjoin_free(data->input_line, "\n");
+		printf("I am here second\n");
+		data->input_line = ft_strjoin_free(data->input_line, tmp);
+		free(tmp);
+	}
+	if (data->single_quit == 2)
+	{
+		ft_strdel(&data->input_line);
+		data->input_line = ft_strjoin("", "");
+		data->single_quit = 1;
+	}
 }

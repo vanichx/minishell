@@ -10,7 +10,7 @@ void	init_data(t_data **data, char **envp)
     // (*data)->promt = malloc(sizeof(char) * 12);
 	// if (!(*data)->promt)
 	// 	exit(EXIT_FAILURE);
-	(*data)->input_line = "minishell>> ";
+	(*data)->input_minishell = "minishell>> ";
     (*data)->pid = getpid();
 	save_envir((*data), envp);
 	// ft_enviter((*data)->env, print_env_node);

@@ -2,23 +2,21 @@
 
 void	start_loop(t_data *data)
 {
-	char *input;
-
 	while (1)
 	{
-		input = readline(data->input_line);
+		data->input_line = readline(data->input_minishell);
 		// input = "echo hello world";
-		if (input == NULL)
+		if (data->input_line == NULL)
 			handle_d(data);
-		check_exit(input);
-		if (ft_strlen(input) > 0)
-			add_history(input);
-		while (data->single_quit == 0 && odd_quote(input, 1))
+		check_exit(data->input_line);
+		if (ft_strlen(data->input_line) > 0)
+			add_history(data->input_line);
+		while (data->single_quit == 0 && odd_quote(data->input_line, 1))
 			next_quote(data);
-		parse_input(data, input);
+		parse_input(data, data->input_line);
 		execute_command(data);
 		reset_data(data);
-		free(input);
+		free(data->input_line);
 
 	}
 }
