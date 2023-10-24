@@ -5,34 +5,48 @@ void	free_data(t_data *data)
 	if (!data)
 		return ;
 	ft_cmdclear(&data->cmd_list);
+
 	free_2darray(data->env_array);
+
 	if (data->curr_dir && data->curr_dir[0] != '\0')
 		free(data->curr_dir);
+	
+	free_tokens(&data->token_list);
+
+	// while (data->token_list)
+	// {
+	// 	free(data->token_list->word);
+	// 	data->token_list->word = NULL;
+	// 	data->token_list = data->token_list->next;
+	// }
+	// if (data->curr_dir)
+	// 	free(data->curr_dir);
+	if (data->input_line)
+		free(data->input_line);
 	free(data);
 	data = NULL;
 }
 
 void	free_tokens(t_token **token)
 {
-	t_token *tmp;
+    t_token *tmp;
 
-	tmp = (t_token *)token;
-	if (!token || !tmp)
-		return ;
-	while (*token)
-	{
-		tmp = (*token)->next;
-		if ((*token)->word)
-		{
-			free((*token)->word);
-			(*token)->word = NULL;
-		}
-		free(*token);
-		(*token) = tmp;
-	}
-	// free(tmp);
-	tmp = NULL;
+    if (!token || !*token)
+        return ;
+    while (*token)
+    {
+        printf("free tokens function clear %s token\n", (*token)->word);
+        tmp = (*token)->next;
+        if ((*token)->word)
+        {
+            free((*token)->word);
+            (*token)->word = NULL;
+        }
+        free(*token);
+        *token = tmp;
+    }
 }
+
 
 void	free_cmdexe(void *command)
 {

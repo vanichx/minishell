@@ -18,6 +18,7 @@ void	start_loop(t_data *data)
 			next_quote(data);
 		printf("I am the first culprit\n");
 		parse_input(data, data->input_line);
+
 		// print_tokens(data);////Debug
 		// execute_command(data);
 		reset_data(data);

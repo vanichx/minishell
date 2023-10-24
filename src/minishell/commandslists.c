@@ -60,6 +60,7 @@ t_cmdexe	*ft_cmdnew(char *cmd)
 	t_cmdexe	*head;
 
 	head = (t_cmdexe *)malloc(sizeof(t_cmdexe));
+	printf("Hello im in ft_cmdnew malloc success\n");//Debug
 	if (!head)
 		return (NULL);
 	head->cmd = ft_strdup(cmd);

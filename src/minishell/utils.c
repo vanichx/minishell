@@ -16,6 +16,7 @@ char **dup_2darray(char **array)
 	while (array[i] != NULL)
 		i++;
 	dup = (char **)malloc(sizeof(char *) * (i + 1));
+	printf("dup_2darray malloc success\n");
 	if (dup == NULL)
 		return (NULL);
 	i = 0;
@@ -66,6 +67,7 @@ char	*trim_newlines(char *src)
 	j = 0;
 	if (!(dst = ft_calloc(1, ft_strlen(src))))
 		exit_shell("Error: malloc failed\n", 1, NULL);
+	printf("Hello im in trim_newlines ft_calloc success\n");
 	while (src[i])
 	{
 		if (src[i] != '\n')

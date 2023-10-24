@@ -22,6 +22,7 @@ t_cmdexe *init_cmdexe(void)
     t_cmdexe *cmdexe;
 
     cmdexe = malloc(sizeof(t_cmdexe));
+	printf("init cmdexe malloc success\n");
     if (!cmdexe)
         return (NULL);
     cmdexe->args = NULL;

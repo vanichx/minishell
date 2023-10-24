@@ -11,6 +11,7 @@ void	save_envir(t_data *data, char **env_str)
 	while (env_str[j])
 		j++;
 	data->env_array = malloc(sizeof(char *) * (j + 1));
+	printf("save envir malloc success\n");
 	while (env_str[i])
 	{
 		data->env_array[i] = ft_strdup(env_str[i]);

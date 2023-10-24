@@ -2,6 +2,7 @@
 
 void	evaluate_args(t_data *data, t_cmdexe *cmd)
 {
+	printf("I am in evaluate_args\n");//Debug
 	t_token	*tmp;
 	char	**split;
 	int 	env;
@@ -29,6 +30,7 @@ void	evaluate_args(t_data *data, t_cmdexe *cmd)
 
 void	process_args(t_cmdexe *cmd, t_data *data)
 {
+	printf("I am in process_args\n");//Debug
 	int		env;
 	char	**split;
 
@@ -50,6 +52,7 @@ void	process_args(t_cmdexe *cmd, t_data *data)
 
 void	add_more_args(t_cmdexe *cmd, t_token **token,  char **split, t_data *data)
 {
+	printf("I am in add_more_args\n");//Debug
 	int		i;
 	char	*tmp;
 
@@ -66,11 +69,12 @@ void	add_more_args(t_cmdexe *cmd, t_token **token,  char **split, t_data *data)
 
 t_token 	*add_args(t_cmdexe *cmd, t_token **token, char **split, t_data *data)
 {
+	printf("I am in add_args\n");//Debug
 	t_token *new;
 	t_token *end_new;
 	t_token *next;
 	
-	new = split_tokens_to_list(split, data);
+	new = split_tokens_to_list(split, data); /////////////////////////////////
 	end_new = new;
 	while (end_new->next)
 		end_new = end_new->next;
@@ -95,6 +99,7 @@ t_token 	*add_args(t_cmdexe *cmd, t_token **token, char **split, t_data *data)
 
 char	**join_args(t_cmdexe *cmd)
 {
+	printf("I am in join_args\n");//Debug
 	char	**args;
 	t_token	*tmp;
 	int		i;
@@ -105,6 +110,7 @@ char	**join_args(t_cmdexe *cmd)
 	if (!(args = (char **)ft_calloc(1, sizeof(char *) *
 		(tokens_len(&cmd->args) + 2))))
 		exit_shell("Error: malloc failed\n", 1, NULL);
+	printf("Hello im in join args ft_calloc success\n");//Debug
 	args[0] = ft_strdup(cmd->cmd);
 	tmp = cmd->args;
 	while (tmp)

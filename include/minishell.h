@@ -155,15 +155,6 @@ void		create_commands(t_data *data, char **cmd);
 void		ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
 void		reset_commands(void *command);
 
-/* parsing_flags.c */
-void		parse_flags(t_data *data, char *input);
-void		check_pipe(t_data *data, char *input);
-void		check_delimiter(t_data *data, char *input);
-void		check_redirect(t_data *data, char *input);
-void		check_quotes(t_data *data, char *input);
-void		check_last(t_data *data, char *input);
-void		check_dollar(t_data *data, char *input);
-
 /* reset.c */
 void		reset_data(t_data *data);;
 // void		reset_flags(t_flags *flags);
