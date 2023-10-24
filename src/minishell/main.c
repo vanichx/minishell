@@ -19,8 +19,8 @@ void	start_loop(t_data *data)
 		parse_input(data, data->input_line);
 		// print_tokens(data);////Debug
 		// execute_command(data);
-		// reset_data(data);
-		free(data->input_line);
+		reset_data(data);
+		// free(data->input_line);
 	}
 }
 
