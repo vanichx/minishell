@@ -20,7 +20,7 @@ void	start_loop(t_data *data)
 		print_tokens(data);////Debug
 		// execute_command(data);
 		reset_data(data);
-		free(data->input_line);
+		// free(data->input_line);
 	}
 }
 

@@ -13,10 +13,10 @@ int	odd_quote(char *str, int ret_arg)
 	{
 		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1))\
 			&& double_quote % 2 == 0)
-			double_quote++;
+			single_quote++;
 		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1))\
 			&& single_quote % 2 == 0)
-			single_quote++;
+			double_quote++;
 		i++;
 	}
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
@@ -97,19 +97,21 @@ void next_quote(t_data *data)
 {
 	char *tmp;
 
-    data->double_quit = 0;
-    tmp = readline("> ");
-    if (tmp)
-    {
-        data->input_line = ft_strjoin_free(data->input_line, "\n");
-		// printf("I am here\n");
-        data->input_line = ft_strjoin_free(data->input_line, tmp);
+	data->double_quit = 0;
+	tmp = readline("> ");
+	
+	if (tmp)		
+	{
+		// printf("I am here first\n");
+		data->input_line = ft_strjoin_free(data->input_line, "\n");
+		// printf("I am here second\n");
+		data->input_line = ft_strjoin_free(data->input_line, tmp);
 		free(tmp);
-    }
-    if (data->single_quit == 2)
-    {
-        ft_strdel(&data->input_line);
-        data->input_line = ft_strjoin("", "");
-        data->single_quit = 1;
-    }
+	}
+	if (data->single_quit == 2)
+	{
+		ft_strdel(&data->input_line);
+		data->input_line = ft_strjoin("", "");
+		data->single_quit = 1;
+	}
 }
