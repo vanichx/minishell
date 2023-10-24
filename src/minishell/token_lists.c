@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 23:35:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/24 13:12:01 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:52:22 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ t_token	*create_token(t_data *data, int i)
 
 	new = NULL;
 	data->token_list = new;
-	if (!data->count)
-		return (NULL);
 	if (!(new = malloc(sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
 	new->word = ft_substr(data->input_line, 
@@ -66,11 +64,13 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 {
 	t_token *new;
 
+	new = NULL;
+	data->token_list = new;
 	if (!(new = ft_calloc(1, sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
 	new->word = ft_strdup(word);
 	new->type = type;
-	// return (new);
+	return (new);
 }
 
 char	*iter_tokens(t_data *data)

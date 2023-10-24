@@ -6,7 +6,7 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:23 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/23 11:46:53 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/24 13:25:27 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS			=	ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_isspace.c\
 					ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
 					ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 					ft_strjoin_free.c ft_strjoin_double_free.c ft_strdel.c ft_strcat.c  ft_strcpy.c\
+					ft_ssplit.c ft_split_n.c
 							
 OBJS			=	$(addprefix obj/,$(SRCS:.c=.o))
 

@@ -13,11 +13,9 @@ void	split_tokens(t_data *data, char *str)
 		if (!parse_tokens(data, str, &i, &head))
 			continue ;
 		data->count++;
-		printf("count: %d\n", data->count);//Debug
 		if (is_split_char(i, str, "|;", 2) || is_split_char(i, str, ">", 1)
 			|| is_split_char(i, str, "<", 1))
 			{
-			printf("The problem is here\n");
 			add_token(&head, create_token(data, i + 1));
 			}
 		else if (is_split_char(i, str, ">", 0) || is_split_char(i, str, "<", 0))
@@ -31,6 +29,7 @@ void	split_tokens(t_data *data, char *str)
 	{
 		add_token(&data->token_list, create_token(data, i));
 		add_token(&data->token_list, create_arg_token(data, "newline", T_NEWLINE));
+		printf("I am the third culprit\n");
 	}
 }
 int is_split_char(int i, char *str, char *splt, int sign)
@@ -38,7 +37,6 @@ int is_split_char(int i, char *str, char *splt, int sign)
     if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1])
         && !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
 		{
-		printf("Sign = 1\n");
 		printf("> or <\n");
         return (1);
 		}
@@ -46,20 +44,17 @@ int is_split_char(int i, char *str, char *splt, int sign)
         && ft_strchr(splt, str[i + 1]) && !inside_paired_quotes(str, i)
         && !closed_quote(str, i - 1))
 		{
-		printf("Sign = 0\n");
 		printf(">> or <<\n");
         return (1);
 		}
     else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]) 
 		&& !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
 		{
-		printf("Sign = 2\n");
         return (1);
 		}
     else if (sign == 3 && ft_strchr(splt, str[i]) && !inside_paired_quotes(str, i)
         && !closed_quote(str, i - 1))
 		{
-		printf("Sign = 3\n");
         return (1);
 		}
     return (0);
@@ -67,16 +62,24 @@ int is_split_char(int i, char *str, char *splt, int sign)
 
 int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 {
+	t_token *tmp;
+
 	if (ft_strchr(" \t", str[*i]) && !inside_paired_quotes(str, *i)
 		&& !closed_quote(str, *i - 1))
 	{
-		add_token(head, create_token(data, *i));
+		tmp = create_token(data, *i);
+		add_token(head, tmp);
 		(*i)++;
 		return (0);
 	}
 	if (ft_strchr("|;<>", str[*i]) && !inside_paired_quotes(str, *i)
 		&& !closed_quote(str, *i - 1) && *i > 0 && !ft_strchr("<>", str[*i - 1]))
-		add_token(head, create_token(data, *i));
+	{
+		tmp = create_token(data, *i);
+		add_token(head, tmp);
+		(*i)++;
+		return (0);
+	}
 	return (1);
 }
 
@@ -96,7 +99,6 @@ t_token	*split_tokens_to_list(char **split, t_data *data)
 	{
 		tmp = create_arg_token(data, split[i], T_WORD);
 		add_token(&new, tmp);
-		printf("split[%d]: %s\n", i, split[i]);//Debug
 		i++;
 	}
 	return (new);

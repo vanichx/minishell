@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:42:09 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/23 13:59:58 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:25:06 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
+char				**ft_ssplit(char const *s, char *set);
+char				**ft_split_n(char const *s, char c, int n);
 char				*ft_itoa(int n);
 void				ft_strdel(char **s);
 char				*ft_strcat(char *dst, const char *src);

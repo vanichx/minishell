@@ -39,17 +39,6 @@ void	ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new)
 	*lst = new;
 }
 
-// void	ft_cmddelone(t_cmdexe *lst, void (*del)(void *))
-// {
-// 	if (!lst || !del)
-// 		return ;
-// 	if (lst->path)
-// 		free(lst->path);
-// 	if (lst->cmd)
-// 		free(lst->cmd);
-// 	free(lst);
-// }
-
 void  ft_cmdclear(t_cmdexe **cmd_list)
 {
 	t_cmdexe  *head;
