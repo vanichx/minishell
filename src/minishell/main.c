@@ -14,12 +14,12 @@ void	start_loop(t_data *data)
 		data->single_quit = 0;
 		data->double_quit = 0;
 		data->forked = 0;
-		while (data->single_quit == 0 && odd_quote(data->input_line, 1))
-			next_quote(data);
+		// while (data->single_quit == 0 && odd_quote(data->input_line, 1))
+		// 	next_quote(data);
 		parse_input(data, data->input_line);
-		print_tokens(data);////Debug
+		// print_tokens(data);////Debug
 		// execute_command(data);
-		reset_data(data);
+		// reset_data(data);
 		free(data->input_line);
 	}
 }

@@ -78,13 +78,9 @@ int	inside_paired_quotes(char *str, int pos)
 	i = 0;
 	while (i <= pos)
 	{
-		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1))\
-			&& double_quote % 2 == 0)
-			single_quote
-	++;
-		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1))\
-			&& single_quote
-	 % 2 == 0)
+		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1)) && double_quote % 2 == 0)
+			single_quote++;
+		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1)) && single_quote % 2 == 0)
 			double_quote++;
 		i++;
 	}

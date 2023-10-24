@@ -4,13 +4,13 @@
 void	split_tokens(t_data *data, char *str)
 {
 	int	i;
-	t_token **head;
+	t_token *head;
 
 	i = 0;
-	head = &data->token_list;
+	head = data->token_list;
 	while (str[i])
 	{
-		if (!parse_tokens(data, str, &i, head))
+		if (!parse_tokens(data, str, &i, &head))
 			continue ;
 		data->count++;
 		printf("count: %d\n", data->count);//Debug
@@ -18,11 +18,11 @@ void	split_tokens(t_data *data, char *str)
 			|| is_split_char(i, str, "<", 1))
 			{
 			printf("The problem is here\n");
-			add_token(head, create_token(data, i + 1));
+			add_token(&head, create_token(data, i + 1));
 			}
 		else if (is_split_char(i, str, ">", 0) || is_split_char(i, str, "<", 0))
 		{
-			add_token(head, create_token(data, i + 1));
+			add_token(&head, create_token(data, i + 1));
 			i++;
 		}
 		i++;
@@ -85,6 +85,7 @@ int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 t_token	*split_tokens_to_list(char **split, t_data *data)
 {
 	t_token		*new;
+	t_token		*tmp;
 	int			i;
 	int			count;
 	
@@ -93,7 +94,8 @@ t_token	*split_tokens_to_list(char **split, t_data *data)
 	new = NULL;
 	while (i < count)
 	{
-		add_token(&new, create_arg_token(data, split[i], T_WORD));
+		tmp = create_arg_token(data, split[i], T_WORD);
+		add_token(&new, tmp);
 		printf("split[%d]: %s\n", i, split[i]);//Debug
 		i++;
 	}
@@ -103,6 +105,7 @@ t_token	*split_tokens_to_list(char **split, t_data *data)
 void	token_to_cmd(t_data *data, t_token **tmp)
 {
 	t_cmdexe *cmd;
+	t_token *head;
 	
 	if ((*tmp)->type == T_NEWLINE)
 	{
@@ -116,7 +119,10 @@ void	token_to_cmd(t_data *data, t_token **tmp)
 		if (!evaluate_tokens(data, tmp, cmd))
 			break ;
 		if ((*tmp)->type == T_ENV && cmd->cmd)
-			add_token(&cmd->args, create_arg_token(data, (*tmp)->word, (*tmp)->type));
+		{
+			head = create_arg_token(data, (*tmp)->word, (*tmp)->type);
+			add_token(&cmd->args, head);
+		}
 		*tmp = (*tmp)->next;
 	}
 	add_cmd(&data->cmd_list, cmd);
