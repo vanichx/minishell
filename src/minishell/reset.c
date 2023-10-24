@@ -6,8 +6,12 @@ void reset_data(t_data *data)
 	
 	// free_2darray(data->cmd_array);
 	// free_2darray(data->path);
+	free_tokens(&data->token_list);
+	ft_cmdclear(&data->cmd_list);
 	if (data->curr_dir)
 		free(data->curr_dir);
+	if (data->input_line)
+		free(data->input_line);
 	// data->curr_dir = getcwd(NULL, 0);
 }
 

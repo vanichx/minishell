@@ -12,22 +12,25 @@ void	free_data(t_data *data)
 	data = NULL;
 }
 
-
-void	free_tokens(void *token)
+void	free_tokens(t_token **token)
 {
 	t_token *tmp;
 
 	tmp = (t_token *)token;
 	if (!token || !tmp)
 		return ;
-	if (tmp->word)
+	while (*token)
 	{
-		free(tmp->word);
-		tmp->word = NULL;
+		tmp = (*token)->next;
+		if ((*token)->word)
+		{
+			free((*token)->word);
+			(*token)->word = NULL;
+		}
+		free(*token);
+		(*token) = tmp;
 	}
-	if (tmp->type)
-		free((void *)tmp->type);
-	free(tmp);
+	// free(tmp);
 	tmp = NULL;
 }
 
