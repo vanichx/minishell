@@ -3,7 +3,7 @@
 
 void	split_tokens(t_data *data, char *str)
 {
-	printf("I'm in split_tokens\n");//Debug
+	printf("split_tokens\n");//Debug
 	int	i;
 	t_token *head;
 
@@ -36,7 +36,7 @@ void	split_tokens(t_data *data, char *str)
 
 int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 {
-	printf("I'm in parse_tokens\n");//Debug
+	printf("parse_tokens\n");//Debug
 	t_token *tmp;
 
 	if (ft_strchr(" \t", str[*i]) && !inside_paired_quotes(str, *i)
@@ -60,31 +60,31 @@ int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 
 int is_split_char(int i, char *str, char *splt, int sign)
 {
-	printf("I'm in is_split_char\n");//Debug
-    if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1])
-        && !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
-		{
-		printf("> or <\n");
-        return (1);
-		}
-    else if (sign == 0 && ft_strchr(splt, str[i])
-        && ft_strchr(splt, str[i + 1]) && !inside_paired_quotes(str, i)
-        && !closed_quote(str, i - 1))
-		{
-		printf(">> or <<\n");
-        return (1);
-		}
-    else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]) 
+	printf("is_split_char\n");//Debug
+	if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1])
 		&& !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
 		{
-        return (1);
+			printf("> or <\n");
+			return (1);
 		}
-    else if (sign == 3 && ft_strchr(splt, str[i]) && !inside_paired_quotes(str, i)
-        && !closed_quote(str, i - 1))
+	else if (sign == 0 && ft_strchr(splt, str[i])
+		&& ft_strchr(splt, str[i + 1]) && !inside_paired_quotes(str, i)
+		&& !closed_quote(str, i - 1))
 		{
-        return (1);
+			printf(">> or <<\n");
+			return (1);
 		}
-    return (0);
+	else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]) 
+		&& !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
+		{
+			return (1);
+		}
+	else if (sign == 3 && ft_strchr(splt, str[i]) && !inside_paired_quotes(str, i)
+		&& !closed_quote(str, i - 1))
+		{
+	   		return (1);
+		}
+	return (0);
 }
 
 
@@ -92,7 +92,7 @@ int is_split_char(int i, char *str, char *splt, int sign)
 
 t_token	*split_tokens_to_list(char **split, t_data *data)
 {
-	printf("I'm in split_tokens_to_list\n");
+	printf("split_tokens_to_list\n");
 	t_token		*new;
 	t_token		*tmp;
 	int			i;
@@ -112,7 +112,7 @@ t_token	*split_tokens_to_list(char **split, t_data *data)
 
 void	token_to_cmd(t_data *data, t_token **tmp)
 {
-	printf("I'm in token_to_cmd\n");
+	printf("token_to_cmd\n");
 	t_cmdexe *cmd;
 	t_token *head;
 	
@@ -139,7 +139,7 @@ void	token_to_cmd(t_data *data, t_token **tmp)
 
 int	evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd)
 {
-	printf("I'm in evaluete tokens\n");//Debug
+	printf("evaluete tokens\n");//Debug
 	if ((*tmp)->type == T_WORD && (cmd->cmd || ((*tmp)->prev && (*tmp)->prev->type == T_REDIRECT)))
 		add_token(&cmd->args, create_arg_token(data, (*tmp)->word, (*tmp)->type));
 	if ((*tmp)->type == T_WORD && !cmd->cmd && (((*tmp)->prev && (*tmp)->prev->type != T_REDIRECT) || !(*tmp)->prev))

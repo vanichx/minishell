@@ -9,6 +9,7 @@ void	print_cmdexe(void *cmdexe_node)
 
 void   add_cmd(t_cmdexe **head, t_cmdexe *new)
 {
+	printf("add_cmd\n");//Debug
 	t_cmdexe *tmp;
 
 	if (!new || !head)

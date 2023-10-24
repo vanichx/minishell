@@ -3,6 +3,7 @@
 
 void	parse_input(t_data *data, char *input)
 {
+	printf("parse_input\n");
 	char	*error_token;
 	t_token	*tmp;
 
@@ -14,10 +15,9 @@ void	parse_input(t_data *data, char *input)
 		ft_putstr_fd("invalid ascii characters found in string\n", 2);
 		return ;
 	}
-	printf("I am the second culprit\n");
 	split_tokens(data, input);
-	error_token = iter_tokens(data);
-	if (error_token == NULL)
+	error_token = set_token_types(data);
+	if (!error_token)
 	{
 		ft_putstr_fd("minishell>> ", 2);
 		ft_putstr_fd("syntax error near unexpected token `\n", 2);
