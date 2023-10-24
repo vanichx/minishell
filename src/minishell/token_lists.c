@@ -6,22 +6,26 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 23:35:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/24 16:39:18 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:31:45 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_token(t_token **head, t_token *new)
+void	add_token(t_token **token, t_token *new)
 {
 	printf("add_token\n");//Debug
 	t_token	*tmp;
+	t_token *head;
 
-	if (!new || !head)
+	// 
+	if (!new || !token)
 		return ;
-	if (*head)
+	head = *token;
+	tmp = NULL;
+	if (*token)
 	{
-		tmp = *head;
+		tmp = (*token);
 		while (tmp->next)
 		{
 			tmp->next->prev = tmp;
@@ -30,9 +34,14 @@ void	add_token(t_token **head, t_token *new)
 		tmp->next = new;
 		new->prev = tmp;
 		new->next = NULL;
+		printf("CREATED INNER NODE = %s\n", (*token)->word);
 	}
 	else
-		*head = new;
+	{
+		*token = new;
+		printf("CREATED HEAD NODE = %s\n", (*token)->word);
+	}
+	new->prev = tmp;
 }
 
 void	add_token_front(t_token **head, t_token *new)
@@ -53,14 +62,12 @@ t_token	*create_token(t_data *data, int i)
 	printf("create_token\n");//Debug
 	t_token *new;
 
-	new = NULL;
-	data->token_list = new;
 	if (!(new = malloc(sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
-	printf("create_token malloc success\n");
+	// printf("create_token malloc success\n");
 	new->word = ft_substr(data->input_line, 
 	i - data->count, data->count);
-	printf("create_token strdup success\n");
+	// printf("create_token strdup success\n");
 	printf("%s\t, %d\t, %d\n", new->word, i - data->count, data->count);
 	data->count = 0;
 	return (new);
@@ -71,13 +78,15 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 	printf("create_arg_token\n");//Debug
 	t_token *new;
 
-	new = NULL;
-	data->token_list = new;
+	// new = NULL;
+	// data->token_list = new;
+	printf("WORD!!! +++%s\n", word);
 	if (!(new = ft_calloc(1, sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
-	printf("create_arg_token malloc success\n");
+	// printf("create_arg_token malloc success\n");
 	new->word = ft_strdup(word);
-	printf("create_arg_token strdup success\n");
+	// printf("WORD2222%s\n", data->token_list->word);
+	// printf("create_arg_token strdup success\n");
 	printf("Value of new->word = %s\n", new->word);
 	new->type = type;
 	return (new);
@@ -85,11 +94,19 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 
 char	*set_token_types(t_data *data)
 {
+	t_token *head;
+
+	head = data->token_list;
 	printf("set_token_types\n");
-	while (data->token_list->next)
+	printf("I AM HERE\n");
+	while (data->token_list)
 	{
-		if (ft_strchr(data->token_list->word, '>') || ft_strchr(data->token_list->word, '<') || !ft_strcmp(data->token_list->word, ">>") || !ft_strcmp(data->token_list->word, "<<"))
+		if (ft_strchr(data->token_list->word, '>') || ft_strchr(data->token_list->word, '<'))
 			data->token_list->type = T_REDIRECT;
+		else if (!ft_strcmp(data->token_list->word, ">>"))
+			data->token_list->type = T_APPEND;
+		else if (!ft_strcmp(data->token_list->word, "<<"))
+			data->token_list->type = T_DELIM;
 		else if (ft_strchr(data->token_list->word, '|'))
 			data->token_list->type = T_PIPE;
 		else if (ft_strchr(data->token_list->word, ';'))
@@ -100,22 +117,19 @@ char	*set_token_types(t_data *data)
 			data->token_list->type = T_ENV;
 		else
 		{
-			printf("set_token_types , in ELSE\n");
+			// printf("set_token_types , in ELSE\n");
 			data->token_list->type = T_WORD;
 		}
 		// if (!check_error(data->token_list) && (data->exit_status = 258))
 		// {
-		// 	printf("I am before check_error\n");
 		// 	return (data->token_list->word);
-		// 	printf("I am after check_error\n");
 		// }
-		// printf("I am here\n");
-		if (data->token_list->word)
-			return (data->token_list->word);
-		printf("Type = %d\n", data->token_list->type);
+		// if (data->token_list->word)
+		// 	return (data->token_list->word);
 		data->token_list = data->token_list->next;
 	}
-	printf("set_token_types finished and return 0\n");
+	data->token_list = head;
+	// printf("set_token_types finished and return 0\n");
 	return (NULL);
 }
 

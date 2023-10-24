@@ -85,3 +85,32 @@ int is_char_in_str(char c, char *str)
 			return (1);
 	return (0);
 }
+
+void  ft_listadd_back(t_token **lst, t_token *next)
+{
+  if (!lst)
+    return ;
+  if (lst)
+  {
+    if (*lst)
+    {
+    	ft_lilast(*lst)->next = next;
+    	return ;
+    }
+  }
+  *lst = next;
+}
+
+t_token  *ft_lilast(t_token *lst)
+
+{
+  t_token  *node;
+
+  node = lst;
+  if (node != NULL)
+  {
+    while (node->next != NULL)
+      node = node->next;
+  }
+  return (node);
+}

@@ -30,9 +30,12 @@
 
 typedef enum e_token_type {
 	T_WORD = 1,
+	T_DELIM,
+	T_APPEND,
 	T_REDIRECT,
 	T_PIPE,
 	T_SEP,
+	T_DOLLAR,
 	T_NEWLINE,
 	T_ENV,
 	T_AND,
@@ -213,7 +216,7 @@ int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
 int			parse_tokens(t_data *data, char *str, int *i, t_token **head);
 int			is_split_char(int i, char *str, char *splt, int sign);
 t_token		*split_tokens_to_list(char **split, t_data *data);
-void		add_token(t_token **head, t_token *new);
+void		add_token(t_token **token, t_token *new);
 void		add_token_front(t_token **head, t_token *new);
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
@@ -234,4 +237,7 @@ void		clear_cmd(t_cmdexe *cmd);
 char	*find_executable_path(char **paths, char *cmd);
 void	 print_tokens(t_data *data);
 int		is_char_in_str(char c, char *str);
+
+void  ft_listadd_back(t_token **lst, t_token *next);
+t_token  *ft_lilast(t_token *lst);
 #endif
