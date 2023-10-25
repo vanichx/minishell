@@ -202,13 +202,13 @@ void		print_cmdexe_list(t_cmdexe *cmdexe_list);
 void		print_cmdexe(void *cmdexe_node);
 void 		ft_cmd_clear(t_cmdexe **cmd_list);
 
-/* Quotes functions */
+/* quotes.c */
 int			odd_quote(char *str, t_data *data);
-int			special_chars(char *str);
 char 		first_quote(char *str);
+int			special_chars(char *str);
 int 		closed_singlequotes(char *str);
 int 		closed_doublequotes(char *str);
-int			last_pipe(char *str, int pos);
+int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
 /* Token functions */
 void		tokenise(t_data *data, char *str);

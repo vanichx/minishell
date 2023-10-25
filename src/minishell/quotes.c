@@ -1,16 +1,5 @@
 #include "minishell.h"
 
-char first_quote(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\'' || *str == '\"')
-			return (*str);
-		str++;
-	}
-	return (0);
-}
-
 int	odd_quote(char *str, t_data *data)
 {
 	char first_q;
@@ -33,6 +22,17 @@ int	odd_quote(char *str, t_data *data)
 	{
 		write(2, "We should not handle unclosed quotes\n", 37);
 		return (1);
+	}
+	return (0);
+}
+
+char first_quote(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+			return (*str);
+		str++;
 	}
 	return (0);
 }
