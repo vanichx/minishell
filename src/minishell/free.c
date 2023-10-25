@@ -11,7 +11,7 @@ void	free_data(t_data *data)
 	if (data->curr_dir && data->curr_dir[0] != '\0')
 		free(data->curr_dir);
 	
-	free_tokens(&data->token_list);
+	free_tokens(&data->token_list, free);
 
 	// while (data->token_list)
 	// {
@@ -27,24 +27,22 @@ void	free_data(t_data *data)
 	data = NULL;
 }
 
-void	free_tokens(t_token **token)
+void	free_tokens(t_token **begin, void (*del)(void *))
 {
     t_token *tmp;
+	t_token *tmp2;
 
-    if (!token || !*token)
-		return ;
-    while (*token)
-    {
-		printf("free tokens function clear %s token\n", (*token)->word);
-		tmp = (*token)->next;
-		if ((*token)->word)
-		{
-		    free((*token)->word);
-		    (*token)->word = NULL;
-		}
-		free(*token);
-		*token = tmp;
+    if (!begin || !del)
+        return ;
+	tmp = *begin;
+    while (tmp)
+	{
+        ft_strdel(&tmp->word);
+		tmp2 = tmp->next;
+        free(tmp);
+		tmp = tmp2;
     }
+	*begin = NULL;
 }
 
 

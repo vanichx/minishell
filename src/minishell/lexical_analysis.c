@@ -25,8 +25,8 @@ void	lexical_analysis(t_data *data, char *input)
 		return ;
 	}
 	tmp = data->token_list;
-	while (tmp)
-		token_to_cmd(data, &tmp);
+	// while (tmp)
+	// 	token_to_cmd(data, &tmp);
 }
 
 char	*find_path(t_data *data)

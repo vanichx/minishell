@@ -1,34 +1,24 @@
 #include "minishell.h"
 
-void	add_token(t_token **token, t_token *new)
+void add_token(t_token **token, t_token *new)
 {
-	printf("add_token\n");//Debug
-	t_token	*tmp;
-	t_token *head;
- 
-	if (!new || !token)
-		return;
-	head = *token;
-	tmp = NULL;
-	if (*token)
+    printf("add_token\n"); // Debug
+    if (!new || !token || !*token)
 	{
-		tmp = (*token);
-		while (tmp->next)
-		{
-			tmp->next->prev = tmp;
-			tmp = tmp->next;
-		}
-		tmp->next = new;
-		new->prev = tmp;
-		new->next = NULL;
-		printf("CREATED INNER NODE = %s\n", (*token)->word);
-	}
-	else
+        return;
+    }
+
+    t_token *tmp = *token;
+    while (tmp->next)
 	{
-		*token = new;
-		printf("CREATED HEAD NODE = %s\n", (*token)->word);
-	}
-	new->prev = tmp;
+        tmp->next->prev = tmp;
+        tmp = tmp->next;
+    }
+
+    tmp->next = new;
+    new->prev = tmp;
+    new->next = NULL;
+    printf("CREATED INNER NODE = %s\n", new->word);
 }
 
 void	add_token_front(t_token **head, t_token *new)
@@ -51,10 +41,8 @@ t_token	*create_token(t_data *data, int i)
 
 	if (!(new = malloc(sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
-	// printf("create_token malloc success\n");
-	new->word = ft_substr(data->input_line, 
-	i - data->count, data->count);
-	// printf("create_token strdup success\n");
+	new->word = ft_substr(data->input_line, i - data->count, data->count);
+
 	printf("%s\t, %d\t, %d\n", new->word, i - data->count, data->count);
 	data->count = 0;
 	return (new);
@@ -81,10 +69,10 @@ char	*set_token_types(t_data *data)
 
 	head = data->token_list;
 	printf("set_token_types\n");
-	printf("I AM HERE\n");
+
 	while (data->token_list)
 	{
-		if (!ft_strcmp(data->token_list->word, ">") || !ft_strcmp(data->token_list->word, ">"))
+		if (ft_strchr(data->token_list->word, '>') || ft_strchr(data->token_list->word, '<'))
 			data->token_list->type = T_REDIRECT;
 		else if (!ft_strcmp(data->token_list->word, ">>"))
 			data->token_list->type = T_APPEND;

@@ -17,16 +17,6 @@ void	tokenise(t_data *data, char *str)
 			printf("I entered here first\n");
 			continue ;
 		}
-		if (is_split_char(i, str, "|", 2) || is_split_char(i, str, ">", 1)
-			|| is_split_char(i, str, "<", 1))
-		{
-			add_token(head, create_token(data, i + 1));
-		}
-		else if (is_split_char(i, str, ">", 0) || is_split_char(i, str, "<", 0))
-		{
-			add_token(head, create_token(data, i + 1));
-			i++;
-		}
 		data->count++;
 		i++;
 	}
@@ -36,7 +26,7 @@ void	tokenise(t_data *data, char *str)
 		add_token(head, create_token(data, i));
 		add_token(head, create_arg_token(data, "newline", T_NEWLINE));
 	}
-	printf("WORD ADDRESS= %s\n", data->token_list->word);
+	// printf("WORD ADDRESS= %s\n", data->token_list->word);
 }
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)

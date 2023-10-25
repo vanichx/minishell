@@ -5,11 +5,12 @@ void reset_data(t_data *data)
 	data->single_quote = 0;
 	data->double_quote = 0;
 	data->forked = 0;
-	if (data->curr_dir)
-		free(data->curr_dir);
+	// if (data->curr_dir)
+	// 	free(data->curr_dir);
 	if (data->input_line)
 		free(data->input_line);
-	free_tokens(&data->token_list);
+	// data->input_line = NULL;
+	free_tokens(&data->token_list, free);
 	
 	// ft_cmdclear(&data->cmd_list); // need for th future 
 	// free_2darray(data->cmd_array);
