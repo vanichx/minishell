@@ -16,7 +16,7 @@ void	tokenise(t_data *data, char *str)
 			printf("I entered here first\n");
 			continue ;
 		}
-		if (is_split_char(i, str, "|;", 2) || is_split_char(i, str, ">", 1)
+		if (is_split_char(i, str, "|", 2) || is_split_char(i, str, ">", 1)
 			|| is_split_char(i, str, "<", 1))
 		{
 			add_token(head, create_token(data, i + 1));
@@ -70,7 +70,7 @@ int is_split_char(int i, char *str, char *splt, int sign)
 			printf("> or <\n");
 			return (1);
 		}
-	else if (sign == 0 && ft_strchr(splt, str[i])
+	else if (sign == 0 && ft_strchr(splt, str[i] && ft_strchr(splt, str[i + 1]))
 		&& ft_strchr(splt, str[i + 1]))
 		{
 			printf(">> or <<\n");
