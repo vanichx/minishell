@@ -76,6 +76,47 @@ int closed_doublequotes(char *str)
 	return (double_quote % 2 == 0);
 }
 
+int inside_quotes(int i, char *str, t_data *data)
+{
+	int j = 0;
+	int k = 0;
+	if (data->single_quote)
+	{
+		while (str[j] != '\'' && str[j] != '\0')
+			j++;
+		if (str[j] == '\0')
+			return (0);
+		k = j + 1;
+		if (str[k] == '\0')
+			return (0);
+		while (str[k] != '\'')
+			k++;
+		if (str[k] == '\0')
+			return (0);
+		if (i < k && i > j)
+			return (1);
+		return (1);
+	}
+	else if(data->double_quote)
+	{
+		while (str[j] != '\"' && str[j] != '\0')
+			j++;
+		if (str[j] == '\0')
+			return (0);
+		k = j + 1;
+		if (str[k] == '\0')
+			return (0);
+		while (str[k] != '\"')
+			k++;
+		if (str[k] == '\0')
+			return (0);
+		if (i < k && i > j)
+			return (1);
+		return (1);
+	}
+	return (0);
+}
+
 // int	last_pipe(char *str, int pos)
 // {
 // 	while (pos > 0 && (str[pos] == ' ' || str[pos] == '\n'))

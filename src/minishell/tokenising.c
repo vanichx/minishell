@@ -11,7 +11,7 @@ void	tokenise(t_data *data, char *str)
 	head = &data->token_list;
 	while (str[i])
 	{
-		if (find_tokens(data, str, &i, head) == 0)
+		if (find_token(data, str, &i, head))
 		{
 			printf("I entered here first\n");
 			continue ;
@@ -31,35 +31,39 @@ void	tokenise(t_data *data, char *str)
 	}
 	if (i > 0)
 	{
-		printf("I am the first creation\n");
+		// printf("I am the first creation\n");
 		add_token(head, create_token(data, i));
 		add_token(head, create_arg_token(data, "newline", T_NEWLINE));
 	}
 	printf("WORD ADDRESS= %s\n", data->token_list->word);
 }
 
-int	find_tokens(t_data *data, char *str, int *i, t_token **head)
+int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
-	printf("find_tokens\n");//Debug
-	t_token *tmp;
+    t_token *tmp;
+    
+	if (ft_strchr(" \t<>|&", str[*i]))
+	{
+	    if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>')
+	        || (str[*i] == '|' && str[*i + 1] == '|') ||( str[*i] == '&' && str[*i + 1] == '&'))
+	    {
+	        tmp = create_token(data, *i);
+	        add_token(head, tmp);
+	        data->count += 2;
+	        (*i) += 2;
+	        return (1);
+	    }
+	    else 
+	    {
+	        tmp = create_token(data, *i);
+	        add_token(head, tmp);
+	        (*i)++;
+	        data->count++;
+	        return (1);
+	    }
+	}
 
-	if (ft_strchr(" \t", str[*i]))
-	{
-		printf("I am the second creation\n");
-		tmp = create_token(data, *i);
-		add_token(head, tmp);
-		(*i)++;
-		return (0);
-	}
-	if (ft_strchr("|;<>", str[*i]) && *i > 0 && !ft_strchr("<>", str[*i - 1]))
-	{
-		printf("I AM STUPID\n");
-		tmp = create_token(data, *i);
-		add_token(head, tmp);
-		(*i)++;
-		return (0);
-	}
-	return (1);
+return (0);
 }
 
 int is_split_char(int i, char *str, char *splt, int sign)

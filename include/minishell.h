@@ -40,8 +40,6 @@ typedef enum e_token_type {
 	T_ENV,
 	T_AND,
 	T_OR,
-	T_PAR_OPEN,
-	T_PAR_CLOSE
 } t_token_type;
 
 typedef struct s_envir {
@@ -208,13 +206,14 @@ char 		first_quote(char *str);
 int			special_chars(char *str);
 int 		closed_singlequotes(char *str);
 int 		closed_doublequotes(char *str);
+int 		inside_quotes(int i, char *str, t_data *data);
 int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
 /* Token functions */
 void		tokenise(t_data *data, char *str);
 void		token_to_cmd(t_data *data, t_token **tmp);
 int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
-int			find_tokens(t_data *data, char *str, int *i, t_token **head);
+int			find_token(t_data *data, char *str, int *i, t_token **head);
 int			is_split_char(int i, char *str, char *splt, int sign);
 t_token		*split_tokens_to_list(char **split, t_data *data);
 void		add_token(t_token **token, t_token *new);
