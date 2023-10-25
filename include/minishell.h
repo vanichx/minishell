@@ -236,7 +236,7 @@ void		clear_cmd(t_cmdexe *cmd);
 
 char	*find_executable_path(char **paths, char *cmd);
 void	 print_tokens(t_data *data);
-int		is_char_in_str(char c, char *str);
+
 
 void  ft_listadd_back(t_token **lst, t_token *next);
 t_token  *ft_lilast(t_token *lst);

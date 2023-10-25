@@ -63,6 +63,9 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 	return (new);
 }
 
+
+
+
 char	*set_token_types(t_data *data)
 {
 	t_token *head;
@@ -86,7 +89,7 @@ char	*set_token_types(t_data *data)
 			data->token_list->type = T_PIPE;
 		else if (ft_strchr(data->token_list->word, ';'))
 			data->token_list->type = T_SEP;
-		else if (!ft_strchr(data->token_list->word, '\n') && !data->token_list->next)
+		else if (ft_strchr(data->token_list->word, '\n') && !data->token_list->next)
 			data->token_list->type = T_NEWLINE;
 		else if (is_valid_env(data->token_list->word))
 			data->token_list->type = T_ENV;
