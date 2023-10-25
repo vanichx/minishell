@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/24 14:17:42 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/25 11:21:17 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,9 @@ MAKE_LIB			=	make --no-print-directory -C
 VPATH				=	src:src/minishell:src/bonus:include
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	environment.c handle_input.c free.c \
-						init_data.c main.c parsing_commands.c shlvl.c \
+						init_data.c main.c lexical_analysis.c shlvl.c \
 						signals.c utils.c reset.c exit.c buitins.c commands.c envirlists.c \
-						commandslists.c quotes.c parse_tokens.c token_lists.c \
+						commandslists.c quotes.c tokenising.c token_lists.c \
 
 BONUS_INC			=	bonus.h
 BONUS_SRC			=	bonus.c

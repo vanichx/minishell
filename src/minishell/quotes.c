@@ -1,113 +1,104 @@
 #include "minishell.h"
 
-int	odd_quote(char *str, int ret_arg)
+char first_quote(char *str)
 {
-	int	single_quote;
-	int	double_quote;
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+			return (*str);
+		str++;
+	}
+	return (0);
+}
+
+int	odd_quote(char *str, t_data *data)
+{
+	char first_q;
 	int	i;
 
-	single_quote = 0;
-	double_quote = 0;
 	i = 0;
-	while (str[i])
+	first_q = first_quote(str);
+	if (special_chars(str))
 	{
-		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1))\
-			&& double_quote % 2 == 0)
-			single_quote++;
-		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1))\
-			&& single_quote % 2 == 0)
-			double_quote++;
-		i++;
-	}
-	if (single_quote % 2 != 0 || double_quote % 2 != 0)
+		write(2, "We should not handle \\ and ;\n", 29);
 		return (1);
-	if (ret_arg)
-		return (last_pipe(str, i - 1));
-	else
-		return (0);
-}
-
-int	closed_quote(char *str, int pos)
-{
-	int n;
-
-	n = 0;
-	while (pos >= 0 && str[pos] == '\\')
-	{
-		n++;
-		pos--;
 	}
-	return (n % 2);
-}
-
-int	last_pipe(char *str, int pos)
-{
-	while (pos > 0 && (str[pos] == ' ' || str[pos] == '\n'))
-		pos--;
-	if (pos > 0 && str[pos] == '|' && !closed_quote(str, pos - 1))
+	if (first_q == '\'' && closed_singlequotes(str))
+		data->single_quote = 1;
+	else if (first_q == '\"' && closed_doublequotes(str))
+		data->double_quote = 1;
+	else if (first_q == '\0')
+		return (0);
+	else 
 	{
-		pos = 0;
-		while (str[pos] && (str[pos] != ' ' || str[pos] == '\n'))
-			pos++;
-		if (str[pos] != '|')
-		{
-			while (str[pos] && (str[pos] != '|' || !closed_quote(str, pos) ||
-				inside_paired_quotes(str, pos)))
-				pos++;
-			if (!str[pos] && str[pos + 1])
-				return (1);
-			else
-				pos++;
-			while (str[pos] && (str[pos] == ' ' || str[pos] == '\n'))
-				pos++;
-			if (str[pos] != '|')
-				return (1);
-		}
+		write(2, "We should not handle unclosed quotes\n", 37);
+		return (1);
 	}
 	return (0);
 }
 
-int	inside_paired_quotes(char *str, int pos)
+int	special_chars(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\\' || *str == ';')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int closed_singlequotes(char *str)
 {
 	int single_quote;
-	int double_quote;
-	int i;
 
 	single_quote = 0;
-	double_quote = 0;
-	i = 0;
-	while (i <= pos)
+	while (*str)
 	{
-		if (str[i] == '\"' && (i == 0 || !closed_quote(str, i - 1)) && double_quote % 2 == 0)
+		if (*str == '\'')
 			single_quote++;
-		if (str[i] == '\'' && (i == 0 || !closed_quote(str, i - 1)) && single_quote % 2 == 0)
-			double_quote++;
-		i++;
+		str++;
 	}
-	if (single_quote % 2 != 0 || double_quote % 2 != 0)
-		return (1);
-	return (0);
+	return (single_quote % 2 == 0);
 }
 
-void next_quote(t_data *data)
+int closed_doublequotes(char *str)
 {
-	char *tmp;
+	int double_quote;
 
-	data->double_quit = 0;
-	tmp = readline("> ");
-	
-	if (tmp)		
+	double_quote = 0;
+	while (*str)
 	{
-		// printf("I am here first\n");
-		data->input_line = ft_strjoin_free(data->input_line, "\n");
-		// printf("I am here second\n");
-		data->input_line = ft_strjoin_free(data->input_line, tmp);
-		free(tmp);
+		if (*str == '\"')
+			double_quote++;
+		str++;
 	}
-	if (data->single_quit == 2)
-	{
-		ft_strdel(&data->input_line);
-		data->input_line = ft_strjoin("", "");
-		data->single_quit = 1;
-	}
+	return (double_quote % 2 == 0);
 }
+
+// int	last_pipe(char *str, int pos)
+// {
+// 	while (pos > 0 && (str[pos] == ' ' || str[pos] == '\n'))
+// 		pos--;
+// 	if (pos > 0 && str[pos] == '|' && !special_chars(str))
+// 	{
+// 		pos = 0;
+// 		while (str[pos] && (str[pos] != ' ' || str[pos] == '\n'))
+// 			pos++;
+// 		if (str[pos] != '|')
+// 		{
+// 			while (str[pos] && (str[pos] != '|' || !special_chars(str) ||
+// 				inside_paired_quotes(str, pos)))
+// 				pos++;
+// 			if (!str[pos] && str[pos + 1])
+// 				return (1);
+// 			else
+// 				pos++;
+// 			while (str[pos] && (str[pos] == ' ' || str[pos] == '\n'))
+// 				pos++;
+// 			if (str[pos] != '|')
+// 				return (1);
+// 		}
+// 	}
+// 	return (0);
+// }

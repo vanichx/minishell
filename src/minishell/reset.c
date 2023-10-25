@@ -2,6 +2,7 @@
 
 void reset_data(t_data *data)
 {
+	
 	// ft_cmdclear(&data->cmd_list);
 	
 	// free_2darray(data->cmd_array);
@@ -13,6 +14,9 @@ void reset_data(t_data *data)
 		free(data->curr_dir);
 	if (data->input_line)
 		free(data->input_line);
+	data->single_quote = 0;
+	data->double_quote = 0;
+	data->forked = 0;
 	// data->curr_dir = getcwd(NULL, 0);
 }
 

@@ -1,9 +1,9 @@
 #include "minishell.h"
 
 
-void	parse_input(t_data *data, char *input)
+void	lexical_analysis(t_data *data, char *input)
 {
-	printf("parse_input\n");
+	printf("lexical analysis\n");
 	char	*error_token;
 	t_token	*tmp;
 
@@ -15,7 +15,7 @@ void	parse_input(t_data *data, char *input)
 		ft_putstr_fd("invalid ascii characters found in string\n", 2);
 		return ;
 	}
-	split_tokens(data, input);
+	tokenise(data, input);
 	error_token = set_token_types(data);
 	if (!error_token)
 	{

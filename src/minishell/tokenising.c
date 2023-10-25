@@ -1,9 +1,9 @@
 #include "minishell.h"
 
 
-void	split_tokens(t_data *data, char *str)
+void	tokenise(t_data *data, char *str)
 {
-	printf("split_tokens\n");//Debug
+	printf("tokenising\n");//Debug
 	int	i;
 	t_token **head;
 
@@ -11,7 +11,7 @@ void	split_tokens(t_data *data, char *str)
 	head = &data->token_list;
 	while (str[i])
 	{
-		if (parse_tokens(data, str, &i, head) == 0)
+		if (find_tokens(data, str, &i, head) == 0)
 		{
 			printf("I entered here first\n");
 			continue ;
@@ -38,13 +38,12 @@ void	split_tokens(t_data *data, char *str)
 	printf("WORD ADDRESS= %s\n", data->token_list->word);
 }
 
-int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
+int	find_tokens(t_data *data, char *str, int *i, t_token **head)
 {
-	printf("parse_tokens\n");//Debug
+	printf("find_tokens\n");//Debug
 	t_token *tmp;
 
-	if (ft_strchr(" \t", str[*i]) && !inside_paired_quotes(str, *i)
-		&& !closed_quote(str, *i - 1))
+	if (ft_strchr(" \t", str[*i]))
 	{
 		printf("I am the second creation\n");
 		tmp = create_token(data, *i);
@@ -52,8 +51,7 @@ int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 		(*i)++;
 		return (0);
 	}
-	if (ft_strchr("|;<>", str[*i]) && !inside_paired_quotes(str, *i)
-		&& !closed_quote(str, *i - 1) && *i > 0 && !ft_strchr("<>", str[*i - 1]))
+	if (ft_strchr("|;<>", str[*i]) && *i > 0 && !ft_strchr("<>", str[*i - 1]))
 	{
 		printf("I AM STUPID\n");
 		tmp = create_token(data, *i);
@@ -67,26 +65,22 @@ int	parse_tokens(t_data *data, char *str, int *i, t_token **head)
 int is_split_char(int i, char *str, char *splt, int sign)
 {
 	// printf("is_split_char\n");//Debug
-	if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1])
-		&& !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
+	if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1]))
 		{
 			printf("> or <\n");
 			return (1);
 		}
 	else if (sign == 0 && ft_strchr(splt, str[i])
-		&& ft_strchr(splt, str[i + 1]) && !inside_paired_quotes(str, i)
-		&& !closed_quote(str, i - 1))
+		&& ft_strchr(splt, str[i + 1]))
 		{
 			printf(">> or <<\n");
 			return (1);
 		}
-	else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]) 
-		&& !inside_paired_quotes(str, i) && !closed_quote(str, i - 1))
+	else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]))
 		{
 			return (1);
 		}
-	else if (sign == 3 && ft_strchr(splt, str[i]) && !inside_paired_quotes(str, i)
-		&& !closed_quote(str, i - 1))
+	else if (sign == 3 && ft_strchr(splt, str[i]))
 		{
 			return (1);
 		}

@@ -71,18 +71,18 @@ typedef struct	s_data {
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
-	int				single_quit;
-	int				double_quit;
+	int				single_quote;
+	int				double_quote;
 	long int		exit_status;
 	int				cmd_nbrs;
-	char			*input_minishell;
-	char			*input_line;
-	char			*curr_dir;
 	int				pid;
 	int 			count;
 	int				arg_nums;
 	int 			parenthesis_scope;
 	int				forked;
+	char			*input_minishell;
+	char			*input_line;
+	char			*curr_dir;
 	char			*exit_str;
 	char 			**env_array;
 	char 			**cmd_array;
@@ -149,7 +149,7 @@ t_cmdexe 	*init_cmdexe(void);
 // t_flags			*init_flags(void);
 
 /* parsing_commads.c */
-void		parse_input(t_data *data, char *input);
+void		lexical_analysis(t_data *data, char *input);
 char		*find_path(t_data *data);
 void		execute_command(t_data *data);
 void		child(t_data *data);
@@ -203,17 +203,18 @@ void		print_cmdexe(void *cmdexe_node);
 void 		ft_cmd_clear(t_cmdexe **cmd_list);
 
 /* Quotes functions */
-int			odd_quote(char *str, int ret_arg);
-int			closed_quote(char *str, int pos);
+int			odd_quote(char *str, t_data *data);
+int			special_chars(char *str);
+char 		first_quote(char *str);
+int 		closed_singlequotes(char *str);
+int 		closed_doublequotes(char *str);
 int			last_pipe(char *str, int pos);
-int			inside_paired_quotes(char *str, int pos);
-void		next_quote(t_data *data);
 
 /* Token functions */
-void		split_tokens(t_data *data, char *str);
+void		tokenise(t_data *data, char *str);
 void		token_to_cmd(t_data *data, t_token **tmp);
 int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
-int			parse_tokens(t_data *data, char *str, int *i, t_token **head);
+int			find_tokens(t_data *data, char *str, int *i, t_token **head);
 int			is_split_char(int i, char *str, char *splt, int sign);
 t_token		*split_tokens_to_list(char **split, t_data *data);
 void		add_token(t_token **token, t_token *new);
