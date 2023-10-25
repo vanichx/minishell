@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token_lists.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 23:35:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/25 15:10:08 by eseferi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	add_token(t_token **token, t_token *new)
@@ -17,10 +5,9 @@ void	add_token(t_token **token, t_token *new)
 	printf("add_token\n");//Debug
 	t_token	*tmp;
 	t_token *head;
-
-	// 
+ 
 	if (!new || !token)
-		return ;
+		return;
 	head = *token;
 	tmp = NULL;
 	if (*token)
@@ -80,13 +67,9 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 
 	// new = NULL;
 	// data->token_list = new;
-	printf("WORD!!! +++%s\n", word);
 	if (!(new = ft_calloc(1, sizeof(t_token))))
 		exit_shell("Error: malloc failed\n", 1, data);
-	// printf("create_arg_token malloc success\n");
 	new->word = ft_strdup(word);
-	// printf("WORD2222%s\n", data->token_list->word);
-	// printf("create_arg_token strdup success\n");
 	printf("Value of new->word = %s\n", new->word);
 	new->type = type;
 	return (new);
@@ -101,12 +84,16 @@ char	*set_token_types(t_data *data)
 	printf("I AM HERE\n");
 	while (data->token_list)
 	{
-		if (ft_strchr(data->token_list->word, '>') || ft_strchr(data->token_list->word, '<'))
+		if (!ft_strcmp(data->token_list->word, ">") || !ft_strcmp(data->token_list->word, ">"))
 			data->token_list->type = T_REDIRECT;
 		else if (!ft_strcmp(data->token_list->word, ">>"))
 			data->token_list->type = T_APPEND;
 		else if (!ft_strcmp(data->token_list->word, "<<"))
 			data->token_list->type = T_DELIM;
+		else if (!ft_strcmp(data->token_list->word, "&&"))
+			data->token_list->type = T_AND;
+		else if (!ft_strcmp(data->token_list->word, "||"))
+			data->token_list->type = T_OR;
 		else if (ft_strchr(data->token_list->word, '|'))
 			data->token_list->type = T_PIPE;
 		else if (ft_strchr(data->token_list->word, ';'))

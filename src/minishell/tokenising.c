@@ -3,12 +3,13 @@
 
 void	tokenise(t_data *data, char *str)
 {
-	printf("tokenising\n");//Debug
+	printf("tokenise\n");//Debug
 	int	i;
 	t_token **head;
 
 	i = 0;
 	head = &data->token_list;
+	data->count = 0;
 	while (str[i])
 	{
 		if (find_token(data, str, &i, head))
@@ -40,30 +41,29 @@ void	tokenise(t_data *data, char *str)
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
-    t_token *tmp;
-    
+	t_token *tmp;
+		
 	if (ft_strchr(" \t<>|&", str[*i]))
 	{
-	    if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>')
-	        || (str[*i] == '|' && str[*i + 1] == '|') ||( str[*i] == '&' && str[*i + 1] == '&'))
-	    {
-	        tmp = create_token(data, *i);
-	        add_token(head, tmp);
-	        data->count += 2;
-	        (*i) += 2;
-	        return (1);
-	    }
-	    else 
-	    {
-	        tmp = create_token(data, *i);
-	        add_token(head, tmp);
-	        (*i)++;
-	        data->count++;
-	        return (1);
-	    }
+		if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>')
+			|| (str[*i] == '|' && str[*i + 1] == '|') || ( str[*i] == '&' && str[*i + 1] == '&'))
+		{
+			tmp = create_token(data, *i);
+			add_token(head, tmp);
+			data->count += 2;
+			(*i) += 2;
+			return (1);
+		}
+		else
+		{
+			tmp = create_token(data, *i);
+			add_token(head, tmp);
+			(*i)++;
+			data->count++;
+			return (1);
+		}
 	}
-
-return (0);
+	return (0);
 }
 
 int is_split_char(int i, char *str, char *splt, int sign)

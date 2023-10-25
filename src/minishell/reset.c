@@ -2,21 +2,18 @@
 
 void reset_data(t_data *data)
 {
-	
-	// ft_cmdclear(&data->cmd_list);
-	
-	// free_2darray(data->cmd_array);
-	// free_2darray(data->path);
-	free_tokens(&data->token_list);
-	
-	ft_cmdclear(&data->cmd_list);
+	data->single_quote = 0;
+	data->double_quote = 0;
+	data->forked = 0;
 	if (data->curr_dir)
 		free(data->curr_dir);
 	if (data->input_line)
 		free(data->input_line);
-	data->single_quote = 0;
-	data->double_quote = 0;
-	data->forked = 0;
+	free_tokens(&data->token_list);
+	
+	// ft_cmdclear(&data->cmd_list); // need for th future 
+	// free_2darray(data->cmd_array);
+	// free_2darray(data->path);
 	// data->curr_dir = getcwd(NULL, 0);
 }
 

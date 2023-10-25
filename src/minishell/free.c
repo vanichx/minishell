@@ -32,18 +32,18 @@ void	free_tokens(t_token **token)
     t_token *tmp;
 
     if (!token || !*token)
-        return ;
+		return ;
     while (*token)
     {
-        printf("free tokens function clear %s token\n", (*token)->word);
-        tmp = (*token)->next;
-        if ((*token)->word)
-        {
-            free((*token)->word);
-            (*token)->word = NULL;
-        }
-        free(*token);
-        *token = tmp;
+		printf("free tokens function clear %s token\n", (*token)->word);
+		tmp = (*token)->next;
+		if ((*token)->word)
+		{
+		    free((*token)->word);
+		    (*token)->word = NULL;
+		}
+		free(*token);
+		*token = tmp;
     }
 }
 

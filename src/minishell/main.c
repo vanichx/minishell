@@ -13,6 +13,7 @@ void	start_loop(t_data *data)
 			add_history(data->input_line);
 		if (odd_quote(data->input_line, data))
 			continue;
+		
 		lexical_analysis(data, data->input_line);
 		print_tokens(data);////Debug
 		// execute_command(data);

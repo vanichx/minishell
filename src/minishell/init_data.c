@@ -7,6 +7,7 @@ void	init_data(t_data **data, char **envp)
         exit(EXIT_FAILURE);
     (*data)->env_list = NULL;
 	(*data)->cmd_list = NULL;
+	(*data)->token_list = NULL;
     // (*data)->promt = malloc(sizeof(char) * 12);
 	// if (!(*data)->promt)
 	// 	exit(EXIT_FAILURE);
