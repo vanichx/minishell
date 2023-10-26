@@ -4,23 +4,31 @@ void add_token(t_token **head, t_token *new)
 {
     printf("add_token\n"); // Debug
     t_token *tmp;
-   if (!new || !head || !*head)
+    
+    if (!new || !head)
         return;
-	if (*head)
-	{
-		tmp = *head;
-		while (tmp->next)
-		{
-			if (tmp->next)
-                tmp->next->prev = tmp;
-			tmp = tmp->next;
-		}
-		tmp->next = new;
-		new->prev = tmp;
-		new->next = NULL;
-	}
-	else
-		*head = new;
+    
+    if (*head)
+    {
+        tmp = *head;
+        while (tmp->next)
+        {
+        	tmp->next->prev = tmp;
+            tmp = tmp->next;
+        }
+        tmp->next = new;
+        new->prev = tmp;
+        new->next = NULL;
+    }
+    else
+    {
+        // If the head is not present, create it
+        *head = new;
+        new->prev = NULL;
+        new->next = NULL;
+		printf("CREATED HEAD NODE \n");
+    }
+    
     printf("CREATED INNER NODE = %s\n", new->word);
 }
 
