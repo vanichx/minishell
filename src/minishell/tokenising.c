@@ -33,7 +33,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
 	t_token *tmp;
 		
-	if (ft_strchr(" \t<>|&", str[*i]))
+	if (ft_chr_in_str(" \t<>|&", str[*i]))
 	{
 		if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>')
 			|| (str[*i] == '|' && str[*i + 1] == '|') || ( str[*i] == '&' && str[*i + 1] == '&'))
@@ -42,7 +42,6 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 			add_token(head, tmp);
 			data->count += 2;
 			(*i) += 2;
-			return (1);
 		}
 		else
 		{
@@ -50,8 +49,8 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 			add_token(head, tmp);
 			(*i)++;
 			data->count++;
-			return (1);
 		}
+		return (1);
 	}
 	return (0);
 }
@@ -59,22 +58,22 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 int is_split_char(int i, char *str, char *splt, int sign)
 {
 	// printf("is_split_char\n");//Debug
-	if (sign == 1 && ft_strchr(splt, str[i]) && !ft_strchr(splt, str[i + 1]))
+	if (sign == 1 && ft_chr_in_str(splt, str[i]) && !ft_chr_in_str(splt, str[i + 1]))
 		{
 			printf("> or <\n");
 			return (1);
 		}
-	else if (sign == 0 && ft_strchr(splt, str[i] && ft_strchr(splt, str[i + 1]))
-		&& ft_strchr(splt, str[i + 1]))
+	else if (sign == 0 && ft_chr_in_str(splt, str[i] && ft_chr_in_str(splt, str[i + 1]))
+		&& ft_chr_in_str(splt, str[i + 1]))
 		{
 			printf(">> or <<\n");
 			return (1);
 		}
-	else if (sign == 2 && ft_strchr(splt, str[i]) && i > 0 && ft_strchr(splt, str[i - 1]))
+	else if (sign == 2 && ft_chr_in_str(splt, str[i]) && i > 0 && ft_chr_in_str(splt, str[i - 1]))
 		{
 			return (1);
 		}
-	else if (sign == 3 && ft_strchr(splt, str[i]))
+	else if (sign == 3 && ft_chr_in_str(splt, str[i]))
 		{
 			return (1);
 		}

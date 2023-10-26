@@ -5,7 +5,7 @@ void	start_loop(t_data *data)
 	while (1)
 	{
 		data->input_line = readline(data->input_minishell);
-		// input = "echo hello world";
+		// data->input_line = "echo hello world";
 		if (data->input_line == NULL)
 			handle_d(data);
 		check_exit(data->input_line);
@@ -15,7 +15,7 @@ void	start_loop(t_data *data)
 			continue;
 		
 		lexical_analysis(data, data->input_line);
-		print_tokens(data);////Debug
+		// print_tokens(data);////Debug
 		// execute_command(data);
 		reset_data(data);
 		// free(data->input_line);

@@ -1,23 +1,26 @@
 #include "minishell.h"
 
-void add_token(t_token **token, t_token *new)
+void add_token(t_token **head, t_token *new)
 {
     printf("add_token\n"); // Debug
-    if (!new || !token || !*token)
-	{
+    t_token *tmp;
+   if (!new || !head || !*head)
         return;
-    }
-
-    t_token *tmp = *token;
-    while (tmp->next)
+	if (*head)
 	{
-        tmp->next->prev = tmp;
-        tmp = tmp->next;
-    }
-
-    tmp->next = new;
-    new->prev = tmp;
-    new->next = NULL;
+		tmp = *head;
+		while (tmp->next)
+		{
+			if (tmp->next)
+                tmp->next->prev = tmp;
+			tmp = tmp->next;
+		}
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = NULL;
+	}
+	else
+		*head = new;
     printf("CREATED INNER NODE = %s\n", new->word);
 }
 
@@ -72,7 +75,6 @@ char	*set_token_types(t_data *data)
 
 	head = data->token_list;
 	printf("set_token_types\n");
-
 	while (data->token_list)
 	{
 		if (ft_strchr(data->token_list->word, '>') || ft_strchr(data->token_list->word, '<'))
@@ -89,15 +91,12 @@ char	*set_token_types(t_data *data)
 			data->token_list->type = T_PIPE;
 		else if (ft_strchr(data->token_list->word, ';'))
 			data->token_list->type = T_SEP;
-		else if (ft_strchr(data->token_list->word, '\n') && !data->token_list->next)
-			data->token_list->type = T_NEWLINE;
+		else if ((data->token_list->type == T_NEWLINE || ft_strchr(data->token_list->word, '\n')) && !data->token_list->next)
+            data->token_list->type = T_NEWLINE;
 		else if (is_valid_env(data->token_list->word))
 			data->token_list->type = T_ENV;
 		else
-		{
-			// printf("set_token_types , in ELSE\n");
 			data->token_list->type = T_WORD;
-		}
 		// if (!check_error(data->token_list) && (data->exit_status = 258))
 		// {
 		// 	return (data->token_list->word);
@@ -128,12 +127,12 @@ int	tokens_len(t_token **head)
 	return (i);
 }
 
-void print_tokens(t_data *data)
+void print_tokens(t_token **head)
 {
 	printf("print_tokens\n");//Debug
 	t_token *tmp;
 
-	tmp = data->token_list;
+	tmp = *head;
 	while (tmp)
 	{
 		printf("\nword: %s, type: %d\n", tmp->word, tmp->type);

@@ -8,8 +8,8 @@ void	free_data(t_data *data)
 
 	free_2darray(data->env_array);
 
-	if (data->curr_dir && data->curr_dir[0] != '\0')
-		free(data->curr_dir);
+	// if (data->curr_dir && data->curr_dir[0] != '\0')
+	// 	free(data->curr_dir);
 	
 	free_tokens(&data->token_list, free);
 

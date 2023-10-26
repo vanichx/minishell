@@ -7,6 +7,7 @@ void	lexical_analysis(t_data *data, char *input)
 	char	*error_token;
 	t_token	*tmp;
 
+	tmp = NULL;
 	if (!input || !input[0])
 		return ;
 	if (!is_only_ascii(input))
