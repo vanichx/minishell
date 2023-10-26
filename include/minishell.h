@@ -30,16 +30,18 @@
 
 typedef enum e_token_type {
 	T_WORD = 1,
-	T_DELIM,
-	T_APPEND,
-	T_REDIRECT,
-	T_PIPE,
-	T_SEP,
-	T_DOLLAR,
-	T_NEWLINE,
-	T_ENV,
-	T_AND,
 	T_OR,
+	T_AND,
+	T_ENV,
+	T_SEP,
+	T_PIPE,
+	T_DELIM,
+	T_SPACE,
+	T_DOLLAR,
+	T_APPEND,
+	T_NEWLINE,
+	T_RED_INP,
+	T_RED_OUT,
 } t_token_type;
 
 typedef struct s_envir {
@@ -209,21 +211,32 @@ int 		closed_doublequotes(char *str);
 int 		inside_quotes(int i, char *str, t_data *data);
 int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
-/* Token functions */
+/* tokenising.c */
+int			ft_is_in_stri(char c, char *str);
+int			is_chr_str(char c, char *str);
+int			is_escaped(char *s, int pos);
+int			in_bracket(char *s, int pos);
 void		tokenise(t_data *data, char *str);
-void		token_to_cmd(t_data *data, t_token **tmp);
-int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
+int			find_token2(int i, char *str, char *splt, int sign);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
-int			is_split_char(int i, char *str, char *splt, int sign);
-t_token		*split_tokens_to_list(char **split, t_data *data);
+void		free_tokens(t_token **begin, void (*del)(void *));
+
+/* token_lists.c*/
 void		add_token(t_token **token, t_token *new);
-void		add_token_front(t_token **head, t_token *new);
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 void		set_token_types(t_data *data);
+void		set_token_type(t_token *token);
+
+
+
+
+void		token_to_cmd(t_data *data, t_token **tmp);
+int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
+t_token		*split_tokens_to_list(char **split, t_data *data);
+void		add_token_front(t_token **head, t_token *new);
 // void		clear_token(t_token **token, void (*del)(void*));
 int			tokens_len(t_token **head);
-void		free_tokens(t_token **begin, void (*del)(void *));
 
 
 

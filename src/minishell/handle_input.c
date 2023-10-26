@@ -9,16 +9,18 @@ void	check_exit(char *input)
 	}
 }
 
-
-
-// int execute_command(char **command, char *args[])
-// {
-//	 if (execve(*command, args, NULL) == -1) {
-//		 perror("execve");
-//		 return -1;
-//	 }
-//	 return 0;
-// }
+int	check_error(t_token *token)
+{
+	if (token->type == T_PIPE && !token->prev)
+		return (0);
+	if (token->type == T_RED_INP || token->type == T_RED_OUT || token->type == T_APPEND || token->type == T_DELIM)
+		return (0);
+	if (token->type == T_NEWLINE && token->prev && token->prev->type == T_PIPE)
+		return (0);
+	if (token->type == T_PIPE || token->prev->type == T_SEP || token->prev->type == T_RED_INP || token->type == T_RED_OUT)
+		return (0);
+	return (1);
+}
 
 void print_parsed_input(char *command) {
 	if (command != NULL) {
@@ -69,15 +71,11 @@ int		is_valid_env2(char *str)
 	return (1);
 }
 
-int	check_error(t_token *token)
-{
-	if (token->type == T_PIPE && !token->prev)
-		return (0);
-	if (token->type == T_REDIRECT || token->type == T_APPEND || token->type == T_DELIM)
-		return (0);
-	if (token->type == T_NEWLINE && token->prev && token->prev->type == T_PIPE)
-		return (0);
-	if (token->type == T_PIPE || token->prev->type == T_SEP || token->prev->type == T_REDIRECT)
-		return (0);
-	return (1);
-}
+// int execute_command(char **command, char *args[])
+// {
+//	 if (execve(*command, args, NULL) == -1) {
+//		 perror("execve");
+//		 return -1;
+//	 }
+//	 return 0;
+// }

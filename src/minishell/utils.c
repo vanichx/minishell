@@ -114,3 +114,46 @@ t_token  *ft_lilast(t_token *lst)
   }
   return (node);
 }
+
+
+
+void print_tokens(t_data *data)
+{
+	printf("print_tokens\n");//Debug
+	t_token *tmp = data->token_list;
+
+	while (tmp)
+	{
+		printf("\nword:%s, type: %d\n", tmp->word, tmp->type);
+		tmp = tmp->next;
+	}
+}
+
+void	add_token_front(t_token **head, t_token *new)
+{
+	printf("add_token_front\n");
+	if (*head)
+	{
+		new->next = *head;
+		(*head)->prev = new;
+		*head = new;
+	}
+	else
+		*head = new;
+}
+
+int	tokens_len(t_token **head)
+{
+	printf("tokens_len\n");
+	t_token *tmp;
+	int		i;
+
+	i = 0;
+	tmp = *head;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
