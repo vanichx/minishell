@@ -7,9 +7,8 @@ void reset_data(t_data *data)
 	data->forked = 0;
 	// if (data->curr_dir)
 	// 	free(data->curr_dir);
-	// if (data->input_line)
-	// 	free(data->input_line);
-	// data->input_line = NULL;
+	if (data->input_line)
+		free(data->input_line);
 	free_tokens(&data->token_list, free);
 	
 	// ft_cmdclear(&data->cmd_list); // need for th future 

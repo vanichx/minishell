@@ -8,6 +8,7 @@ void	init_data(t_data **data, char **envp)
     (*data)->env_list = NULL;
 	(*data)->cmd_list = NULL;
 	(*data)->token_list = NULL;
+	(*data)->input_line = NULL;
     // (*data)->promt = malloc(sizeof(char) * 12);
 	// if (!(*data)->promt)
 	// 	exit(EXIT_FAILURE);
