@@ -33,7 +33,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
 	t_token *tmp;
 		
-	if (ft_chr_in_str(" \t<>|&", str[*i]))
+	if (ft_chr_in_str(" \t<>|&$", str[*i]))
 	{
 		if ((str[*i] == '<' && str[*i + 1] == '<') || (str[*i] == '>' && str[*i + 1] == '>')
 			|| (str[*i] == '|' && str[*i + 1] == '|') || ( str[*i] == '&' && str[*i + 1] == '&'))

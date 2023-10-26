@@ -220,7 +220,7 @@ void		add_token(t_token **token, t_token *new);
 void		add_token_front(t_token **head, t_token *new);
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
-char		*set_token_types(t_data *data);
+void		set_token_types(t_data *data);
 // void		clear_token(t_token **token, void (*del)(void*));
 int			tokens_len(t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
@@ -235,7 +235,7 @@ void		clear_cmd(t_cmdexe *cmd);
 
 
 char	*find_executable_path(char **paths, char *cmd);
-void 	print_tokens(t_token **head);
+void 	print_tokens(t_data *data);
 
 
 void  ft_listadd_back(t_token **lst, t_token *next);

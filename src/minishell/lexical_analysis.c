@@ -4,7 +4,6 @@
 void	lexical_analysis(t_data *data, char *input)
 {
 	printf("lexical analysis\n");
-	char	*error_token;
 	t_token	*tmp;
 
 	tmp = NULL;
@@ -17,14 +16,15 @@ void	lexical_analysis(t_data *data, char *input)
 		return ;
 	}
 	tokenise(data, input);
-	error_token = set_token_types(data);
-	if (!error_token)
-	{
-		ft_putstr_fd("minishell>> ", 2);
-		ft_putstr_fd("syntax error near unexpected token `\n", 2);
-		ft_putstr_fd(error_token, 2);
-		return ;
-	}
+	set_token_types(data);
+	print_tokens(data);
+	// if (!error_token)
+	// {
+	// 	ft_putstr_fd("minishell>> ", 2);
+	// 	ft_putstr_fd("syntax error near unexpected token `\n", 2);
+	// 	ft_putstr_fd(error_token, 2);
+	// 	return ;
+	// }
 	tmp = data->token_list;
 	// while (tmp)
 	// 	token_to_cmd(data, &tmp);

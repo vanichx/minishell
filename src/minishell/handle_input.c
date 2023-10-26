@@ -71,9 +71,9 @@ int		is_valid_env2(char *str)
 
 int	check_error(t_token *token)
 {
-	if ((token->type == T_PIPE || token->type == T_SEP) && !token->prev)
+	if (token->type == T_PIPE && !token->prev)
 		return (0);
-	if (token->type == T_REDIRECT && token->prev && token->prev->type == T_REDIRECT)
+	if (token->type == T_REDIRECT || token->type == T_APPEND || token->type == T_DELIM)
 		return (0);
 	if (token->type == T_NEWLINE && token->prev && token->prev->type == T_PIPE)
 		return (0);
