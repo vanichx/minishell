@@ -2,7 +2,6 @@
 
 void	tokenise(t_data *data, char *str)
 {
-	printf("tokenise\n");//Debug
 	int	i;
 	t_token **head;
 
@@ -14,14 +13,10 @@ void	tokenise(t_data *data, char *str)
 		if (!find_token(data, str, &i, head))
 			continue ;
 		data->count++;
-		if (find_token2(i, str, "|", 1) ||
-			find_token2(i, str, "|", 0) ||
-			find_token2(i, str, ">", 1) ||
-			find_token2(i, str, ">", 0) ||
-			find_token2(i, str, "<", 1) ||
-			find_token2(i, str, "<", 0) ||
-			find_token2(i, str, "&", 1) ||
-			find_token2(i, str, "&", 0))
+		if (find_token2(i, str, "|", 1) || find_token2(i, str, "|", 0)
+			|| find_token2(i, str, ">", 1) || find_token2(i, str, ">", 0) 
+			|| find_token2(i, str, "<", 1) || find_token2(i, str, "<", 0)
+			|| find_token2(i, str, "&", 1) || find_token2(i, str, "&", 0))
 			add_token(head, create_token(data, i + 1));
 		i++;
 	}
@@ -30,7 +25,6 @@ void	tokenise(t_data *data, char *str)
 		add_token(head, create_token(data, i));
 		add_token(head, create_arg_token(data, "newline", T_NEWLINE));
 	}
-	// printf("WORD ADDRESS= %s\n", data->token_list->word);
 }
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
@@ -177,28 +171,37 @@ int		in_quotes(char *s, int pos)
 // 	add_cmd(&data->cmd_list, cmd);
 // }
 
-// int	evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd)
-// {
-// 	printf("evaluete tokens\n");//Debug
-// 	if ((*tmp)->type == T_WORD && (cmd->cmd || ((*tmp)->prev && (*tmp)->prev->type == T_REDIRECT)))
-// 		add_token(&cmd->args, create_arg_token(data, (*tmp)->word, (*tmp)->type));
-// 	if ((*tmp)->type == T_WORD && !cmd->cmd && (((*tmp)->prev && (*tmp)->prev->type != T_REDIRECT) || !(*tmp)->prev))
-// 		cmd->cmd = ft_strdup((*tmp)->word);
-// 	if ((*tmp)->type == T_REDIRECT)
-// 		add_token(&cmd->args, create_arg_token(data, (*tmp)->word, (*tmp)->type));
-// 	if ((*tmp)->type == T_ENV && !cmd->cmd)
-// 		ft_lstadd_back(&cmd->env_list, ft_lstnew(ft_strdup((*tmp)->word)));
-// 	if ((*tmp)->type == T_PIPE)
-// 	{
-// 		cmd->cmd_type = T_PIPE;
-// 		*tmp = (*tmp)->next;
-// 		return (0);
-// 	}
-// 	if ((*tmp)->type == T_SEP)
-// 	{
-// 		cmd->cmd_type = T_SEP;
-// 		*tmp = (*tmp)->next;
-// 		return (0);
-// 	}
-// 	return (1);
-// }
+int	evaluate_tokens(t_data *data)
+{
+	while (data->token_list->next)
+	{
+		if (data->token_list->type >= 9 && data->token_list->next->type != T_WORD)
+			return (0);
+	}
+	return (1);
+}
+
+void clean_token_spaces(t_data *data) 
+{
+    t_token *tmp;
+    t_token *current = data->token_list;
+
+    if (data == NULL || data->token_list == NULL)
+        return;
+    while (current)
+    {
+        if (current->type == T_SPACE)
+        {
+            tmp = current;
+            if (tmp->prev)
+                tmp->prev->next = tmp->next;
+            if (tmp->next)
+                tmp->next->prev = tmp->prev;
+			else
+				tmp->next->prev = NULL;
+			if (tmp)
+            	free(tmp);
+        }
+        current = current->next;
+    }
+}

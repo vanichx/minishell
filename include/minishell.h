@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include <limits.h>
 # include <errno.h>
-# include	"libft.h"
+# include "libft.h"
 
 # define MAX_ENV_VARS 100
 # define MAX_DOLLAR_VALUE_LEN 100
@@ -30,18 +30,17 @@
 
 typedef enum e_token_type {
 	T_WORD = 1,
-	T_OR,
-	T_AND,
-	T_ENV,
-	T_SEP,
-	T_PIPE,
-	T_DELIM,
+	T_NEWLINE,
 	T_SPACE,
 	T_DOLLAR,
-	T_APPEND,
-	T_NEWLINE,
+	T_ENV,
 	T_RED_INP,
 	T_RED_OUT,
+	T_APPEND,
+	T_PIPE,
+	T_OR,
+	T_AND,
+	T_DELIM,
 } t_token_type;
 
 typedef struct s_envir {
@@ -226,12 +225,13 @@ t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 void		set_token_types(t_data *data);
 void		set_token_type(t_token *token);
+void		clean_token_spaces(t_data *data);
 
 
 
 
 void		token_to_cmd(t_data *data, t_token **tmp);
-int			evaluate_tokens(t_data *data, t_token **tmp, t_cmdexe *cmd);
+int			evaluate_tokens(t_data *data);
 t_token		*split_tokens_to_list(char **split, t_data *data);
 void		add_token_front(t_token **head, t_token *new);
 // void		clear_token(t_token **token, void (*del)(void*));
