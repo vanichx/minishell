@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// ingores all whitespaces before the first character
 char	*ignore_spaces(char *input)
 {
 	while (*input == ' ' || (*input >= 9 && *input <= 13))
@@ -7,6 +8,7 @@ char	*ignore_spaces(char *input)
 	return (input);
 }
 
+// duplicates a 2d array
 char **dup_2darray(char **array)
 {
 	int		i;
@@ -34,6 +36,7 @@ char **dup_2darray(char **array)
 	return (dup);
 }
 
+// checks if the string contains only ascii characters
 int		is_only_ascii(char *str)
 {
 	while (*str)
@@ -42,7 +45,7 @@ int		is_only_ascii(char *str)
 	return (1);
 }
 
-
+// counts the length of a 2d array
 int	len_2darray(char **array)
 {
 	int i;
@@ -53,6 +56,7 @@ int	len_2darray(char **array)
 	return (i);
 }
 
+// for what is this 
 char	*trim_newlines(char *src)
 {
 	int i;
@@ -78,6 +82,7 @@ char	*trim_newlines(char *src)
 	return (dst);
 }
 
+// turnes true if the character is in the string
 int is_char_in_str(char c, char *str)
 {
 	while (*str)
@@ -86,6 +91,7 @@ int is_char_in_str(char c, char *str)
 	return (0);
 }
 
+// for what we need this when we hav ft_lstadd_back
 void  ft_listadd_back(t_token **lst, t_token *next)
 {
   if (!lst)
@@ -101,6 +107,7 @@ void  ft_listadd_back(t_token **lst, t_token *next)
   *lst = next;
 }
 
+// for what we need also this ?
 t_token  *ft_lilast(t_token *lst)
 
 {
@@ -127,6 +134,7 @@ void print_tokens(t_data *data)
 	}
 }
 
+// adds a token in the front of the list
 void	add_token_front(t_token **head, t_token *new)
 {
 	printf("add_token_front\n");
@@ -140,6 +148,7 @@ void	add_token_front(t_token **head, t_token *new)
 		*head = new;
 }
 
+// caunts the len of the tokens list
 int	tokens_len(t_token **head)
 {
 	printf("tokens_len\n");
@@ -156,6 +165,7 @@ int	tokens_len(t_token **head)
 	return (i);
 }
 
+// takes the input and trims the spaces and tabs of every word outside the quotes
 char *trim_input(char *input)
 {
 	if (!input || !*input)
