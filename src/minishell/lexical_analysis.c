@@ -16,7 +16,7 @@ void	lexical_analysis(t_data *data, char *input)
 	}
 	tokenise(data, input);
 	set_token_types(data);
-	clean_token_spaces(data);
+	clean_token_spaces(&data->token_list);
 	print_tokens(data);
 	// evaluate_tokens(data);
 	tmp = data->token_list;

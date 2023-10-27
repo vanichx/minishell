@@ -1,42 +1,9 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/eseferi/42/main_minishell'
 mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/environment.c -o obj/minishell/environment.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/handle_input.c -o obj/minishell/handle_input.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/free.c -o obj/minishell/free.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/init_data.c -o obj/minishell/init_data.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/main.c -o obj/minishell/main.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/lexical_analysis.c -o obj/minishell/lexical_analysis.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/shlvl.c -o obj/minishell/shlvl.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/signals.c -o obj/minishell/signals.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/utils.c -o obj/minishell/utils.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/reset.c -o obj/minishell/reset.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/exit.c -o obj/minishell/exit.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/buitins.c -o obj/minishell/buitins.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/commands.c -o obj/minishell/commands.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/envirlists.c -o obj/minishell/envirlists.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/commandslists.c -o obj/minishell/commandslists.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/quotes.c -o obj/minishell/quotes.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/tokenising.c -o obj/minishell/tokenising.o
-mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/token_lists.c -o obj/minishell/token_lists.o
-gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include lib/libft/libft.a obj/minishell/environment.o obj/minishell/handle_input.o obj/minishell/free.o obj/minishell/init_data.o obj/minishell/main.o obj/minishell/lexical_analysis.o obj/minishell/shlvl.o obj/minishell/signals.o obj/minishell/utils.o obj/minishell/reset.o obj/minishell/exit.o obj/minishell/buitins.o obj/minishell/commands.o obj/minishell/envirlists.o obj/minishell/commandslists.o obj/minishell/quotes.o obj/minishell/tokenising.o obj/minishell/token_lists.o -L /Users/eseferi/.local/pkg/readline/lib -lreadline -lhistory -lcurses -o  minishell
+gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/tokenising.c -o obj/minishell/tokenising.o
+ 
+gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include lib/libft/libft.a obj/minishell/environment.o obj/minishell/handle_input.o obj/minishell/free.o obj/minishell/init_data.o obj/minishell/main.o obj/minishell/lexical_analysis.o obj/minishell/shlvl.o obj/minishell/signals.o obj/minishell/utils.o obj/minishell/reset.o obj/minishell/exit.o obj/minishell/buitins.o obj/minishell/commands.o obj/minishell/envirlists.o obj/minishell/commandslists.o obj/minishell/quotes.o obj/minishell/tokenising.o obj/minishell/token_lists.o -L /Users/eseferi/.local/pkg/readline/lib -lreadline -lhistory -lcurses -o  minishell
 echo "\033[1;32mminishell was successfully created!\033[0m"
 make: Leaving directory `/Users/eseferi/42/main_minishell'
  

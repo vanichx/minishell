@@ -121,7 +121,6 @@ void print_tokens(t_data *data)
 {
 	printf("print_tokens\n");//Debug
 	t_token *tmp = data->token_list;
-
 	while (tmp)
 	{
 		printf("\nword:%s, type: %d\n", tmp->word, tmp->type);

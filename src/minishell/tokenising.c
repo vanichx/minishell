@@ -181,27 +181,31 @@ int	evaluate_tokens(t_data *data)
 	return (1);
 }
 
-void clean_token_spaces(t_data *data) 
+void clean_token_spaces(t_token **head)
 {
-    t_token *tmp;
-    t_token *current = data->token_list;
+	// t_token *tmp;
+	printf("clean_token_spaces\n");
+	t_token *current = *head;
 
-    if (data == NULL || data->token_list == NULL)
-        return;
-    while (current)
-    {
-        if (current->type == T_SPACE)
-        {
-            tmp = current;
-            if (tmp->prev)
-                tmp->prev->next = tmp->next;
-            if (tmp->next)
-                tmp->next->prev = tmp->prev;
-			else
-				tmp->next->prev = NULL;
-			if (tmp)
-            	free(tmp);
-        }
-        current = current->next;
-    }
+	while (current)
+	{
+		if (current->type == T_SPACE)
+		{
+			if (current->next != NULL && current->prev != NULL)
+			{
+				current->prev->next = current->next;
+				current->next->prev = current->prev;
+			}
+			else if (current->next != NULL && current->prev == NULL)
+			{
+				current->next->prev = NULL;
+				*head = current->next;
+			}
+			else if (current->next == NULL && current->prev != NULL)
+			{
+				current->prev->next = NULL;
+			}
+		}
+		current = current->next;
+	}
 }

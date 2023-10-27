@@ -5,7 +5,7 @@ void	start_loop(t_data *data)
 	while (1)
 	{
 		data->input_line = readline(data->input_minishell);
-		// data->input_line = ";";
+		// data->input_line = " erik";
 		if (data->input_line == NULL)
 			handle_d(data);
 		check_exit(data->input_line);
