@@ -208,7 +208,7 @@ char 		first_quote(char *str);
 int			special_chars(char *str);
 int 		closed_singlequotes(char *str);
 int 		closed_doublequotes(char *str);
-int 		inside_quotes(int i, char *str, t_data *data);
+int 		inside_quotes(int i, char *str);
 int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
 /* tokenising.c */

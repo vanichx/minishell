@@ -14,11 +14,14 @@ void	tokenise(t_data *data, char *str)
 		if (!find_token(data, str, &i, head))
 			continue ;
 		data->count++;
-		if (find_token2(i, str, "|", 3) || 
+		if (find_token2(i, str, "|", 1) ||
+			find_token2(i, str, "|", 0) ||
 			find_token2(i, str, ">", 1) ||
 			find_token2(i, str, ">", 0) ||
 			find_token2(i, str, "<", 1) ||
-			find_token2(i, str, "<", 0))
+			find_token2(i, str, "<", 0) ||
+			find_token2(i, str, "&", 1) ||
+			find_token2(i, str, "&", 0))
 			add_token(head, create_token(data, i + 1));
 		i++;
 	}
@@ -41,7 +44,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 	}
 	if (is_chr_str(str[*i], "|<>") && !in_bracket(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
-		&& !is_chr_str(str[*i - 1], "<>"))
+		&& !is_chr_str(str[*i - 1], "|<>"))
 		add_token(head, create_token(data, *i));
 	return (1);
 }
@@ -85,7 +88,6 @@ int		is_chr_str(char c, char *str)
 		return (1);
 	return (0);
 }
-
 
 
 

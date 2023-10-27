@@ -5,7 +5,7 @@ void	start_loop(t_data *data)
 	while (1)
 	{
 		data->input_line = readline(data->input_minishell);
-		// data->input_line = "echo hello world";
+		// data->input_line = ";";
 		if (data->input_line == NULL)
 			handle_d(data);
 		check_exit(data->input_line);
@@ -13,7 +13,8 @@ void	start_loop(t_data *data)
 			add_history(data->input_line);
 		if (odd_quote(data->input_line, data))
 			continue;
-		
+		if (special_chars(data->input_line))
+			continue;
 		lexical_analysis(data, data->input_line);
 		// print_tokens(data);////Debug
 		// execute_command(data);

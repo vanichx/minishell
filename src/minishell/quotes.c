@@ -7,11 +7,6 @@ int	odd_quote(char *str, t_data *data)
 
 	i = 0;
 	first_q = first_quote(str);
-	if (special_chars(str))
-	{
-		write(2, "We should not handle \\ and ;\n", 29);
-		return (1);
-	}
 	if (first_q == '\'' && closed_singlequotes(str))
 		data->single_quote = 1;
 	else if (first_q == '\"' && closed_doublequotes(str))
@@ -39,11 +34,16 @@ char first_quote(char *str)
 
 int	special_chars(char *str)
 {
-	while (*str)
+	int i;
+	i = 0;
+	while (str[i])
 	{
-		if (*str == '\\' || *str == ';')
+		if ((str[i] == '\\' || str[i] == ';') && !in_bracket(str, i))
+		{
+			printf("minishell: we should not handle `%c'\n", str[i]);
 			return (1);
-		str++;
+		}
+		i++;
 	}
 	return (0);
 }
@@ -76,45 +76,30 @@ int closed_doublequotes(char *str)
 	return (double_quote % 2 == 0);
 }
 
-int inside_quotes(int i, char *str, t_data *data)
+int inside_quotes(int i, char *str)
 {
-	int j = 0;
-	int k = 0;
-	if (data->single_quote)
-	{
-		while (str[j] != '\'' && str[j] != '\0')
-			j++;
-		if (str[j] == '\0')
-			return (0);
-		k = j + 1;
-		if (str[k] == '\0')
-			return (0);
-		while (str[k] != '\'')
-			k++;
-		if (str[k] == '\0')
-			return (0);
-		if (i < k && i > j)
-			return (1);
-		return (1);
-	}
-	else if(data->double_quote)
-	{
-		while (str[j] != '\"' && str[j] != '\0')
-			j++;
-		if (str[j] == '\0')
-			return (0);
-		k = j + 1;
-		if (str[k] == '\0')
-			return (0);
-		while (str[k] != '\"')
-			k++;
-		if (str[k] == '\0')
-			return (0);
-		if (i < k && i > j)
-			return (1);
-		return (1);
-	}
-	return (0);
+    int j;
+    int k;
+
+	j = 0;
+	k = 0;
+    char quote;
+    if (closed_singlequotes(str))
+        quote = '\'';
+    else if (closed_doublequotes(str))
+        quote = '\"';
+    else
+        return (0);
+    while (str[j] && str[j] != quote)
+        j++;
+    if (str[j] != quote)
+        return (0);
+    k = j + 1;
+    while (str[k] && str[k] != quote)
+        k++;
+    if (str[k] != quote)
+        return (0);
+    return (i < k && i > j);
 }
 
 // int	last_pipe(char *str, int pos)
