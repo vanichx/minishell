@@ -34,7 +34,6 @@ typedef enum e_token_type {
 	T_NEWLINE,
 	T_SPACE,
 	T_DOLLAR,
-	T_ENV,
 	T_RED_INP,
 	T_RED_OUT,
 	T_APPEND,

@@ -180,16 +180,52 @@ int print_error(char *str)
 
 int	evaluate_tokens(t_data *data)
 {
-	while (data->token_list->next)
+	while (data->token_list)
 	{
-		if (data->token_list->type >= 9 && data->token_list->next != NULL && data->token_list->prev != NULL)
+		if (data->token_list->type >= 9 && data->token_list->next->type == T_NEWLINE && data->token_list->prev == NULL)
 			return (print_error(data->token_list->word));
-		else if ()
-		
-		data->token_list = data->token_list->next;
+
 	}
 	return (1);
 }
+
+void	check_pipe_tokens(t_token *lst)
+{
+	if (lst->type == T_OR && lst->next->type == T_OR)
+		return (print_error("||"));
+	else if ((lst->type == T_PIPE && lst->next->type == T_OR) 
+		|| (lst->type == T_OR && lst->next->type == T_PIPE))
+	{
+		if (!lst->prev)
+			return (print_error("||"));
+		else
+			return (print_error("|"));
+	}
+	else if (lst->type == T_PIPE && lst->next->type == T_AND)
+		return (print_error("&&"));
+	else if (lst->type == T_PIPE && lst->next->type == T_AMPERSAND)
+		return (print_error("&"));
+	else if (lst->type == T_PIPE && lst->next->type != T_WORD && lst->prev->type != T_WORD)
+		return (print_error("|"));
+	
+}
+
+void	check_redir_tokens(t_token *lst)
+{
+
+}
+
+void	check_delim_tokens(t_token *lst)
+{
+
+}
+
+void	check_and_tokens(t_token *lst)
+{
+
+}
+
+
 
 void clean_token_spaces(t_token **head)
 {
