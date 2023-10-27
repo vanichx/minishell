@@ -171,10 +171,10 @@ int		in_quotes(char *s, int pos)
 // 	add_cmd(&data->cmd_list, cmd);
 // }
 
-int print_error(t_token *token)
+int print_error(char *str)
 {
-	if (token->type)
-		printf("minishell: syntax error near unexpected token %s\n", token->type);
+	if (str)
+		printf("minishell: syntax error near unexpected token %s\n", str);
 	return (0);
 }
 
@@ -182,39 +182,36 @@ int	evaluate_tokens(t_data *data)
 {
 	while (data->token_list->next)
 	{
-		if (data->token_list->type >= 9 && data->token_list->next->type != T_WORD)
-			return (print_error(data->token_list->type));
+		if (data->token_list->type >= 9 && data->token_list->next != NULL && data->token_list->prev != NULL)
+			return (print_error(data->token_list->word));
+		else if ()
 		
-
+		data->token_list = data->token_list->next;
 	}
 	return (1);
 }
 
 void clean_token_spaces(t_token **head)
 {
-	// t_token *tmp;
-	printf("clean_token_spaces\n");
-	t_token *current = *head;
+    t_token *current = *head;
+    t_token *tmp;
 
-	while (current)
-	{
-		if (current->type == T_SPACE)
-		{
-			if (current->next != NULL && current->prev != NULL)
-			{
-				current->prev->next = current->next;
-				current->next->prev = current->prev;
-			}
-			else if (current->next != NULL && current->prev == NULL)
-			{
-				current->next->prev = NULL;
-				*head = current->next;
-			}
-			else if (current->next == NULL && current->prev != NULL)
-			{
-				current->prev->next = NULL;
-			}
-		}
-		current = current->next;
-	}
+    while (current != NULL)
+    {
+        tmp = current;
+        if (tmp->type == T_SPACE)
+        {
+            if (tmp->prev != NULL)
+                tmp->prev->next = tmp->next;
+            else
+                *head = tmp->next;
+            if (tmp->next != NULL)
+                tmp->next->prev = tmp->prev;
+            current = tmp->next;
+            free(tmp->word);
+            free(tmp);
+        }
+        else
+            current = current->next;
+    }
 }
