@@ -171,12 +171,21 @@ int		in_quotes(char *s, int pos)
 // 	add_cmd(&data->cmd_list, cmd);
 // }
 
+int print_error(t_token *token)
+{
+	if (token->type)
+		printf("minishell: syntax error near unexpected token %s\n", token->type);
+	return (0);
+}
+
 int	evaluate_tokens(t_data *data)
 {
 	while (data->token_list->next)
 	{
 		if (data->token_list->type >= 9 && data->token_list->next->type != T_WORD)
-			return (0);
+			return (print_error(data->token_list->type));
+		
+
 	}
 	return (1);
 }

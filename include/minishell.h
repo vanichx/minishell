@@ -25,7 +25,8 @@
 # define MAX_CMD_LEN 100
 
 #define NEW_LINE_ERR	"syntax error near unexpected token `newline'"
-#define PIPE_ERR		"syntax error near unexpected token `||'"
+#define SINGLE_PIPE_ERR		"syntax error near unexpected token `|'"
+#define DOUBLE_PIPE_ERR		"syntax error near unexpected token `||'"
 #define DEL_ERR			"syntax error near unexpected token `<<'"
 
 typedef enum e_token_type {
