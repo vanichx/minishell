@@ -38,7 +38,7 @@ int	special_chars(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] == '\\' || str[i] == ';') && !in_bracket(str, i))
+		if ((str[i] == '\\' || str[i] == ';') && !in_quotes(str, i))
 		{
 			printf("minishell: we should not handle `%c'\n", str[i]);
 			return (1);
@@ -74,32 +74,6 @@ int closed_doublequotes(char *str)
 		str++;
 	}
 	return (double_quote % 2 == 0);
-}
-
-int inside_quotes(int i, char *str)
-{
-    int j;
-    int k;
-
-	j = 0;
-	k = 0;
-    char quote;
-    if (closed_singlequotes(str))
-        quote = '\'';
-    else if (closed_doublequotes(str))
-        quote = '\"';
-    else
-        return (0);
-    while (str[j] && str[j] != quote)
-        j++;
-    if (str[j] != quote)
-        return (0);
-    k = j + 1;
-    while (str[k] && str[k] != quote)
-        k++;
-    if (str[k] != quote)
-        return (0);
-    return (i < k && i > j);
 }
 
 // int	last_pipe(char *str, int pos)

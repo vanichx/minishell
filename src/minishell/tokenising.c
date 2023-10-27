@@ -35,14 +35,14 @@ void	tokenise(t_data *data, char *str)
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
-	if (is_chr_str(str[*i], " \t") && !in_bracket(str, *i)
+	if (is_chr_str(str[*i], " \t") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1))
 	{
 		add_token(head, create_token(data, *i));
 		(*i)++;
 		return (0);
 	}
-	if (is_chr_str(str[*i], "|<>") && !in_bracket(str, *i)
+	if (is_chr_str(str[*i], "|<>") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
 		&& !is_chr_str(str[*i - 1], "|<>"))
 		add_token(head, create_token(data, *i));
@@ -52,17 +52,17 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 int		find_token2(int i, char *str, char *splt, int sign)
 {
 	if (sign == 1 && is_chr_str(str[i], splt) && !is_chr_str(str[i + 1], splt)
-		&& !in_bracket(str, i) && !is_escaped(str, i - 1))
+		&& !in_quotes(str, i) && !is_escaped(str, i - 1))
 		return (1);
 	else if (!sign && is_chr_str(str[i], splt) && i > 0
-		&& is_chr_str(str[i - 1], splt) && !in_bracket(str, i)
+		&& is_chr_str(str[i - 1], splt) && !in_quotes(str, i)
 		&& !is_escaped(str, i - 1))
 		return (1);
 	else if (sign == 2 && is_chr_str(str[i], splt)
-		&& i > 0 && is_chr_str(str[i - 1], splt) && !in_bracket(str, i)
+		&& i > 0 && is_chr_str(str[i - 1], splt) && !in_quotes(str, i)
 		&& !is_escaped(str, i - 1))
 		return (1);
-	else if (sign == 3 && is_chr_str(str[i], splt) && !in_bracket(str, i)
+	else if (sign == 3 && is_chr_str(str[i], splt) && !in_quotes(str, i)
 		&& !is_escaped(str, i - 1))
 		return (1);
 	return (0);
@@ -105,26 +105,26 @@ int		is_escaped(char *s, int pos)
 	return (n % 2);
 }
 
-int		in_bracket(char *s, int pos)
+int		in_quotes(char *s, int pos)
 {
-	int	bracket1;
-	int	bracket2;
+	int	quotes1;
+	int	quotes2;
 	int	i;
 
-	bracket1 = 0;
-	bracket2 = 0;
+	quotes1 = 0;
+	quotes2 = 0;
 	i = 0;
 	while (i <= pos)
 	{
 		if (s[i] == 34 && (i == 0 || !is_escaped(s, i - 1))
-			&& bracket2 % 2 == 0)
-			bracket1++;
-		if (s[i] == 39 && (i == 0 || bracket2 % 2 != 0 || !is_escaped(s, i - 1))
-			&& bracket1 % 2 == 0)
-			bracket2++;
+			&& quotes2 % 2 == 0)
+			quotes1++;
+		if (s[i] == 39 && (i == 0 || quotes2 % 2 != 0 || !is_escaped(s, i - 1))
+			&& quotes1 % 2 == 0)
+			quotes2++;
 		i++;
 	}
-	if (bracket1 % 2 != 0 || bracket2 % 2 != 0)
+	if (quotes1 % 2 != 0 || quotes2 % 2 != 0)
 		return (1);
 	return (0);
 }

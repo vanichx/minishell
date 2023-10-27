@@ -208,14 +208,13 @@ char 		first_quote(char *str);
 int			special_chars(char *str);
 int 		closed_singlequotes(char *str);
 int 		closed_doublequotes(char *str);
-int 		inside_quotes(int i, char *str);
+int			is_escaped(char *s, int pos);
+int			in_quotes(char *s, int pos);
 int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
 /* tokenising.c */
 int			ft_is_in_stri(char c, char *str);
 int			is_chr_str(char c, char *str);
-int			is_escaped(char *s, int pos);
-int			in_bracket(char *s, int pos);
 void		tokenise(t_data *data, char *str);
 int			find_token2(int i, char *str, char *splt, int sign);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
