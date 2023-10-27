@@ -34,12 +34,19 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 	{
 		add_token(head, create_token(data, *i));
 		(*i)++;
+		add_token(head, create_arg_token(data, "space", T_SPACE));
+		data->count = 0;
+		printf("im inside first condition\n");
 		return (0);
 	}
-	if (is_chr_str(str[*i], "|<>") && !in_quotes(str, *i)
+	else if (is_chr_str(str[*i], "|<>") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
 		&& !is_chr_str(str[*i - 1], "|<>"))
+	{
+		printf("im inside second condition\n");
 		add_token(head, create_token(data, *i));
+	}
+
 	return (1);
 }
 
@@ -171,63 +178,62 @@ int		in_quotes(char *s, int pos)
 // 	add_cmd(&data->cmd_list, cmd);
 // }
 
-int print_error(char *str)
-{
-	if (str)
-		printf("minishell: syntax error near unexpected token %s\n", str);
-	return (0);
-}
+// int print_error(char *str)
+// {
+// 	if (str)
+// 		printf("minishell: syntax error near unexpected token %s\n", str);
+// 	return (0);
+// }
 
-int	evaluate_tokens(t_data *data)
-{
-	while (data->token_list)
-	{
-		if (data->token_list->type >= 9 && data->token_list->next->type == T_NEWLINE && data->token_list->prev == NULL)
-			return (print_error(data->token_list->word));
+// int	evaluate_tokens(t_data *data)
+// {
+// 	while (data->token_list)
+// 	{
+// 		if (data->token_list->type >= 8 && data->token_list->next->type == T_NEWLINE && data->token_list->prev == NULL)
+// 			return (print_error(data->token_list->word));
 
-	}
-	return (1);
-}
+// 	}
+// 	return (1);
+// }
 
-void	check_pipe_tokens(t_token *lst)
-{
-	if (lst->type == T_OR && lst->next->type == T_OR)
-		return (print_error("||"));
-	else if ((lst->type == T_PIPE && lst->next->type == T_OR) 
-		|| (lst->type == T_OR && lst->next->type == T_PIPE))
-	{
-		if (!lst->prev)
-			return (print_error("||"));
-		else
-			return (print_error("|"));
-	}
-	else if (lst->type == T_PIPE && lst->next->type == T_AND)
-		return (print_error("&&"));
-	else if (lst->type == T_PIPE && lst->next->type == T_AMPERSAND)
-		return (print_error("&"));
-	else if (lst->type == T_PIPE && lst->next->type != T_WORD && lst->prev->type != T_WORD)
-		return (print_error("|"));
+// void	check_pipe_tokens(t_token *lst)
+// {
+// 	if (lst->type == T_OR && lst->next->type == T_PIPE && lst->next->next->type == T_PIPE)
+// 		return (print_error("||"));
+// 	else if (lst->type == T_OR && lst->next->type == T_PIPE && lst->next->next-type != T_PIPE)
+// 	{
+// 		if (!lst->prev)
+// 			return (print_error("||"));
+// 		else
+// 			return (print_error("|"));
+// 	}
+// 	else if (lst->type == T_PIPE && lst->next->type == T_AND)
+// 		return (print_error("&&"));
+// 	else if (lst->type == T_PIPE && lst->next->type == T_AMPERSAND)
+// 		return (print_error("&"));
+// 	else if (lst->type == T_PIPE && lst->next->type != T_WORD && lst->prev->type != T_WORD)
+// 		return (print_error("|"));
 	
-}
+// }
 
-void	check_redir_tokens(t_token *lst)
-{
+// void	check_redir_tokens(t_token *lst)
+// {
 
-}
+// }
 
-void	check_delim_tokens(t_token *lst)
-{
+// void	check_delim_tokens(t_token *lst)
+// {
 
-}
+// }
 
-void	check_and_tokens(t_token *lst)
-{
+// void	check_and_tokens(t_token *lst)
+// {
 
-}
+// }
 
 
 
-void clean_token_spaces(t_token **head)
+void clean_null_tokens(t_token **head)
 {
     t_token *current = *head;
     t_token *tmp;
@@ -235,7 +241,7 @@ void clean_token_spaces(t_token **head)
     while (current != NULL)
     {
         tmp = current;
-        if (tmp->type == T_SPACE)
+        if (ft_strlen(tmp->word) == 0)
         {
             if (tmp->prev != NULL)
                 tmp->prev->next = tmp->next;
@@ -244,7 +250,6 @@ void clean_token_spaces(t_token **head)
             if (tmp->next != NULL)
                 tmp->next->prev = tmp->prev;
             current = tmp->next;
-            free(tmp->word);
             free(tmp);
         }
         else

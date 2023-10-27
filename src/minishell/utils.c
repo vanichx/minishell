@@ -123,7 +123,7 @@ void print_tokens(t_data *data)
 	t_token *tmp = data->token_list;
 	while (tmp)
 	{
-		printf("\nword:%s, type: %d\n", tmp->word, tmp->type);
+		printf("\nword:%s:type:%d\n", tmp->word, tmp->type);
 		tmp = tmp->next;
 	}
 }
@@ -155,4 +155,33 @@ int	tokens_len(t_token **head)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+char *trim_input(char *input)
+{
+	if (!input || !*input)
+        return (NULL);
+	char *str;
+	int	i;
+	int j;
+
+	if (!(str = ft_calloc(1, ft_strlen(input) + 1)))
+		exit_shell("Error: malloc failed\n", 1, NULL);
+	i = 0;
+	j = 0;
+	while ((input[i] == ' ' || input[i] == '\t') && input[i])
+		i++;
+	while (input[i])
+	{
+		while ((input[i] == ' ' || input[i] == '\t') && (input[i + 1] == ' ' || input[i + 1] == '\t'))
+            i++;
+		while (in_quotes(input, i) && input[i])
+			str[j++] = input[i++];
+		str[j++] = input[i++];
+	}
+	i = ft_strlen(str) - 1;
+	while (str[i] == ' ' || str[i] == '\t')
+		str[i] = '\0';
+	str[j] = '\0';
+	return (str);
 }

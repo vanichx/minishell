@@ -2,10 +2,15 @@
 
 void	start_loop(t_data *data)
 {
+	char *line;
 	while (1)
 	{
-		data->input_line = readline(data->input_minishell);
-		// data->input_line = " erik";
+		line = readline(data->input_minishell);
+		data->input_line = trim_input(line);
+		ft_strdel(&line);
+		printf(":%s:\n", data->input_line);
+		// data->input_line = "erik seferi | | |";
+		// line = trim_input(data->input_line);
 		if (data->input_line == NULL)
 			handle_d(data);
 		check_exit(data->input_line);

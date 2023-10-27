@@ -84,10 +84,10 @@ void	set_token_type(t_token *token)
 	else if ((token->type == T_NEWLINE
 			|| !ft_strcmp(token->word, "\n")) && !token->next)
 		token->type = T_NEWLINE;
-	else if (is_valid_env(token->word))
-		token->type = T_ENV;
-	else if (!ft_strcmp(token->word, "\0"))
+	else if (!ft_strcmp(token->word, "space"))
 		token->type = T_SPACE;
+	// else if (is_valid_env(token->word))
+	// 	token->type = T_ENV;
 	else
 		token->type = T_WORD;
 }
