@@ -116,10 +116,9 @@ t_token  *ft_lilast(t_token *lst)
 }
 
 
-
+// printing the tokens to debug
 void print_tokens(t_data *data)
 {
-	printf("print_tokens\n");//Debug
 	t_token *tmp = data->token_list;
 	while (tmp)
 	{

@@ -8,7 +8,6 @@ void	start_loop(t_data *data)
 		line = readline(data->input_minishell);
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		printf(":%s:\n", data->input_line);
 		// data->input_line = "erik seferi | | |";
 		// line = trim_input(data->input_line);
 		if (data->input_line == NULL)

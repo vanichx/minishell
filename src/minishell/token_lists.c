@@ -61,6 +61,7 @@ void	set_token_types(t_data *data)
 		data->token_list = data->token_list->next;
 	}
 	data->token_list = head;
+	clean_null_tokens(&data->token_list);
 }
 
 void	set_token_type(t_token *token)

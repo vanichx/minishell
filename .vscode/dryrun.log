@@ -1,9 +1,10 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/eseferi/42/main_minishell'
 mkdir -p obj/minishell/
-gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/tokenising.c -o obj/minishell/tokenising.o
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/main.c -o obj/minishell/main.o
  
-gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include lib/libft/libft.a obj/minishell/environment.o obj/minishell/handle_input.o obj/minishell/free.o obj/minishell/init_data.o obj/minishell/main.o obj/minishell/lexical_analysis.o obj/minishell/shlvl.o obj/minishell/signals.o obj/minishell/utils.o obj/minishell/reset.o obj/minishell/exit.o obj/minishell/buitins.o obj/minishell/commands.o obj/minishell/envirlists.o obj/minishell/commandslists.o obj/minishell/quotes.o obj/minishell/tokenising.o obj/minishell/token_lists.o -L /Users/eseferi/.local/pkg/readline/lib -lreadline -lhistory -lcurses -o  minishell
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include lib/libft/libft.a obj/minishell/environment.o obj/minishell/handle_input.o obj/minishell/free.o obj/minishell/init_data.o obj/minishell/main.o obj/minishell/lexical_analysis.o obj/minishell/shlvl.o obj/minishell/signals.o obj/minishell/utils.o obj/minishell/reset.o obj/minishell/exit.o obj/minishell/buitins.o obj/minishell/commands.o obj/minishell/envirlists.o obj/minishell/commandslists.o obj/minishell/quotes.o obj/minishell/tokenising.o obj/minishell/token_lists.o -L /Users/eseferi/.local/pkg/readline/lib -lreadline -lhistory -lcurses -o  minishell
 echo "\033[1;32mminishell was successfully created!\033[0m"
+ 
 make: Leaving directory `/Users/eseferi/42/main_minishell'
  

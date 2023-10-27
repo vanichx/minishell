@@ -36,17 +36,12 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 		(*i)++;
 		add_token(head, create_arg_token(data, "space", T_SPACE));
 		data->count = 0;
-		printf("im inside first condition\n");
 		return (0);
 	}
 	else if (is_chr_str(str[*i], "|<>") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
 		&& !is_chr_str(str[*i - 1], "|<>"))
-	{
-		printf("im inside second condition\n");
 		add_token(head, create_token(data, *i));
-	}
-
 	return (1);
 }
 
@@ -250,6 +245,7 @@ void clean_null_tokens(t_token **head)
             if (tmp->next != NULL)
                 tmp->next->prev = tmp->prev;
             current = tmp->next;
+			ft_strdel(&tmp->word);
             free(tmp);
         }
         else
