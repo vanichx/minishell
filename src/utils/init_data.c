@@ -14,6 +14,7 @@ void	init_data(t_data **data, char **envp)
 	// 	exit(EXIT_FAILURE);
 	(*data)->input_minishell = "minishell>> ";
     (*data)->pid = getpid();
+	(*data)->curr_dir = getcwd(NULL, 0);
 	save_envir((*data), envp);
 	// ft_enviter((*data)->env, print_env_node);
     incr_shell_lvl(*data);
