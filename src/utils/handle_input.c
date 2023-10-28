@@ -9,19 +9,6 @@ void	check_exit(char *input)
 	}
 }
 
-// int	check_error(t_token *token)
-// {
-// 	if (token->type == T_PIPE && !token->prev)
-// 		return (0);
-// 	if (token->type == T_RED_INP || token->type == T_RED_OUT || token->type == T_APPEND || token->type == T_DELIM)
-// 		return (0);
-// 	if (token->type == T_NEWLINE && token->prev && token->prev->type == T_PIPE)
-// 		return (0);
-// 	if (token->type == T_PIPE || token->prev->type == T_SEP || token->prev->type == T_RED_INP || token->type == T_RED_OUT)
-// 		return (0);
-// 	return (1);
-// }
-
 void print_parsed_input(char *command) {
 	if (command != NULL) {
 		printf("Command: %s\n", command);

@@ -34,6 +34,8 @@ typedef enum e_token_type {
 	T_NEWLINE,
 	T_SPACE,
 	T_DOLLAR,
+	T_STAR,
+	T_AMPER,
 	T_RED_INP,
 	T_RED_OUT,
 	T_APPEND,
@@ -139,15 +141,14 @@ void		check_exit(char *input);
 void		print_parsed_input(char *command);
 int			is_valid_env(char *str);
 int			is_valid_env2(char *str);
-int			check_error(t_token *token);
 
 /* init_data.c */
-void		init_data(t_data **data, char **envp);
 t_cmdexe 	*init_cmdexe(void);
+void		init_data(t_data **data, char **envp);
 // t_flags			*init_flags(void);
 
 /* parsing_commads.c */
-void		lexical_analysis(t_data *data, char *input);
+int			lexical_analysis(t_data *data, char *input);
 char		*find_path(t_data *data);
 void		execute_command(t_data *data);
 void		child(t_data *data);
@@ -210,31 +211,28 @@ int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
 int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 
-/* tokenising.c */
+/* tokens */
 int			ft_is_in_stri(char c, char *str);
 int			is_chr_str(char c, char *str);
 void		tokenise(t_data *data, char *str);
 int			find_token2(int i, char *str, char *splt, int sign);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
-
-/* token_lists.c*/
-void		add_token(t_token **token, t_token *new);
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
-void		set_token_types(t_data *data);
-void		set_token_type(t_token *token);
+t_token  	*last_token(t_token *lst);
+void		add_token(t_token **token, t_token *new);
+int			set_token_type(t_data *data);
+void		set_token_type2(t_token *token);
 void 		clean_null_tokens(t_token **head);
-
-
-
-
+void  		ft_listadd_back(t_token **lst, t_token *next);
+t_token		*split_tokens_to_list(char **split, t_data *data);
 void		token_to_cmd(t_data *data, t_token **tmp);
 int			evaluate_tokens(t_data *data);
-t_token		*split_tokens_to_list(char **split, t_data *data);
 void		add_token_front(t_token **head, t_token *new);
-// void		clear_token(t_token **token, void (*del)(void*));
 int			tokens_len(t_token **head);
+void 		print_tokens(t_data *data);
+// void		clear_token(t_token **token, void (*del)(void*));
 
 
 
@@ -245,11 +243,11 @@ void		clear_cmd_list(t_cmdexe **cmd, void (*del)(void*));
 void		clear_cmd(t_cmdexe *cmd);
 
 
-char	*find_executable_path(char **paths, char *cmd);
-void 	print_tokens(t_data *data);
-char 	*trim_input(char *input);
+char		*find_executable_path(char **paths, char *cmd);
+char 		*trim_input(char *input);
 
+/* error check */
+int			check_token_error1(t_token *token);
+int 		check_amper(t_token *token);
 
-void  ft_listadd_back(t_token **lst, t_token *next);
-t_token  *last_token(t_token *lst);
 #endif

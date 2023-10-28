@@ -1,8 +1,19 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/eseferi/42/main_minishell'
+make --no-print-directory -C lib/libft
+ 
+mkdir -p obj/src/execution/
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/execution/buitins.c -o obj/src/execution/buitins.o
+mkdir -p obj/src/execution/
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/execution/shlvl.c -o obj/src/execution/shlvl.o
+mkdir -p obj/src/lexer/
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/lexer/envirlists.c -o obj/src/lexer/envirlists.o
+mkdir -p obj/src/lexer/
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/lexer/environment.c -o obj/src/lexer/environment.o
+mkdir -p obj/src/lexer/
+gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/lexer/lexical_analysis.c -o obj/src/lexer/lexical_analysis.o
 mkdir -p obj/src/lexer/
 gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/lexer/token_lists.c -o obj/src/lexer/token_lists.o
- 
 mkdir -p obj/src/lexer/
 gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/lexer/token_utils.c -o obj/src/lexer/token_utils.o
 mkdir -p obj/src/lexer/
@@ -19,7 +30,6 @@ mkdir -p obj/src/parsing/
 gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/parsing/commandslists.c -o obj/src/parsing/commandslists.o
 mkdir -p obj/src/quotes/
 gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/quotes/quotes.c -o obj/src/quotes/quotes.o
- 
 mkdir -p obj/src/quotes/
 gcc -Wall -Wextra -Iinclude -Isrc -O3  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/quotes/quotes_utils.c -o obj/src/quotes/quotes_utils.o
 mkdir -p obj/src/utils/

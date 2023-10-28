@@ -29,18 +29,21 @@ void	tokenise(t_data *data, char *str)
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
-	if (is_chr_str(str[*i], " \t") && !in_quotes(str, *i)
+	if (is_chr_str(str[*i], " \t*") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1))
 	{
 		add_token(head, create_token(data, *i));
+		if (str[*i] == '*')
+			add_token(head, create_arg_token(data, "*", T_STAR));
+		else
+			add_token(head, create_arg_token(data, " ", T_SPACE));
 		(*i)++;
-		add_token(head, create_arg_token(data, "space", T_SPACE));
 		data->count = 0;
 		return (0);
 	}
-	else if (is_chr_str(str[*i], "|<>") && !in_quotes(str, *i)
+	else if (is_chr_str(str[*i], "|<>&") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
-		&& !is_chr_str(str[*i - 1], "|<>"))
+		&& !is_chr_str(str[*i - 1], "|<>&"))
 		add_token(head, create_token(data, *i));
 	return (1);
 }
@@ -64,47 +67,50 @@ int		find_token2(int i, char *str, char *splt, int sign)
 	return (0);
 }
 
-void	set_token_type(t_token *token)
+void	set_token_type2(t_token *token)
 {
 	if (!ft_strcmp(token->word, "<"))
 		token->type = T_RED_INP;
 	else if (!ft_strcmp(token->word, ">"))
 		token->type = T_RED_OUT;
-	else if (!ft_strcmp(token->word, ">>"))
-		token->type = T_APPEND;
-	else if (!ft_strcmp(token->word, "<<"))
-		token->type = T_DELIM;
-	else if (!ft_strcmp(token->word, "&&"))
-		token->type = T_AND;
-	else if (!ft_strcmp(token->word, "||"))
-		token->type = T_OR;
 	else if (!ft_strcmp(token->word, "|"))
 		token->type = T_PIPE;
 	else if (!ft_strcmp(token->word, "$"))
 		token->type = T_DOLLAR;
-	else if ((token->type == T_NEWLINE
-			|| !ft_strcmp(token->word, "\n")) && !token->next)
-		token->type = T_NEWLINE;
-	else if (!ft_strcmp(token->word, "space"))
+	else if (!ft_strcmp(token->word, " "))
 		token->type = T_SPACE;
-	// else if (is_valid_env(token->word))
-	// 	token->type = T_ENV;
-	else
+	else if (!ft_strcmp(token->word, "*"))
+		token->type = T_STAR;
+	else if (!ft_strcmp(token->word, "&"))
+		token->type = T_AMPER;
+	else if (token->type !=  T_NEWLINE)
 		token->type = T_WORD;
 }
 
-void	set_token_types(t_data *data)
+int	set_token_type(t_data *data)
 {
 	t_token	*head;
 
 	head = data->token_list;
 	while (data->token_list)
 	{
-		set_token_type(data->token_list);
+		if (!ft_strcmp(data->token_list->word, ">>"))
+			data->token_list->type = T_APPEND;
+		else if (!ft_strcmp(data->token_list->word, "<<"))
+			data->token_list->type = T_DELIM;
+		else if (!ft_strcmp(data->token_list->word, "&&"))
+			data->token_list->type = T_AND;
+		else if (!ft_strcmp(data->token_list->word, "||"))
+			data->token_list->type = T_OR;
+		else
+			set_token_type2(data->token_list);
 		data->token_list = data->token_list->next;
 	}
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
+	if (check_token_error1(data->token_list))
+		return (1);
+	return (0);
 }
 
 // t_token	*split_tokens_to_list(char **split, t_data *data)
