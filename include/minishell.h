@@ -248,6 +248,6 @@ char 		*trim_input(char *input);
 
 /* error check */
 int			check_token_error1(t_token *token);
-int 		check_amper(t_token *token);
+int 		check_and(t_token *token);
 
 #endif
