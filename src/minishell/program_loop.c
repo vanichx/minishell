@@ -5,14 +5,12 @@ void	start_loop(t_data *data)
 	char *line;
 	while (1)
 	{
-		if (data->token_list || data->cmd_list)
-			reset_data(data);
+		reset_data(data);
 		line = readline(data->input_minishell);
+		if (handle_d(data, line))
+			continue;
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		// data->input_line = "erik seferi | | |";
-		if (data->input_line == NULL)
-			handle_d(data);
 		check_exit(data->input_line);
 		if (ft_strlen(data->input_line) > 0)
 			add_history(data->input_line);

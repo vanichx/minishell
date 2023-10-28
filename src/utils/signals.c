@@ -30,9 +30,18 @@ void	handle_c(int signo)
 
 }
 
-void	handle_d(t_data *data)
+int	handle_d(t_data *data, char *line)
 {
-	rl_on_new_line();
-	rl_redisplay();
-	exit_shell("exit", 0, data);
+	if (line == NULL)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		exit_shell("exit", 0, data);
+	}
+	if (ft_strlen(line) == 0)
+	{
+		ft_strdel(&line);
+		return (1);
+	}
+	return (0);
 }

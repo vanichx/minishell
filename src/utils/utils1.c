@@ -30,7 +30,7 @@ char	*trim_newlines(char *src)
 char *trim_input(char *input)
 {
 	if (!input || !*input)
-        return (NULL);
+		return (NULL);
 	char *str;
 	int	i;
 	int j;

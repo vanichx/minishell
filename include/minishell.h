@@ -162,7 +162,7 @@ void		reset_data(t_data *data);;
 // void		reset_flags(t_flags *flags);
 
 /* signals.c */
-void		handle_d(t_data *data);
+int			handle_d(t_data *data, char *line);
 void		handle_c(int signo);
 void		handle_signal(void);
 void		start_loop(t_data *data);
