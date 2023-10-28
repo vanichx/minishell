@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/27 22:26:20 by eseferi          ###   ########.fr        #
+#    Updated: 2023/10/28 09:35:04 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,8 @@ CC					=	gcc
 CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 #-g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
-BONUS				=	bonus
 MINISHELL			=   minishell
-NAME				=	$(MINISHELL) $(BONUS)
+NAME				=	$(MINISHELL)
 
 # readline, leaks, valgrind
 RL_PREFIX = $(HOME)/.local/pkg/readline
@@ -35,43 +34,27 @@ CFLAGS				+=	-I $(LIBFT_DIR)/include
 MAKE_LIB			=	make --no-print-directory -C
 
 # Source and Object Files
-VPATH				=	src:src/minishell:src/bonus:include
+VPATH				=	src:include:src/execution:src/lexer:src/parsing:src/quotes:src/utils:include
 MINISHELL_INC		=	minishell.h
-MINISHELL_SRC		=	environment.c handle_input.c free.c \
-						init_data.c main.c lexical_analysis.c shlvl.c \
-						signals.c utils.c reset.c exit.c buitins.c commands.c envirlists.c \
-						commandslists.c quotes.c tokenising.c token_lists.c \
+MINISHELL_SRC		=	$(shell find src -name '*.c')
 
-BONUS_INC			=	bonus.h
-BONUS_SRC			=	bonus.c
+# Object Files
+OBJ_DIR				=	obj
+MINISHELL_OBJ		=	$(addprefix $(OBJ_DIR)/, $(MINISHELL_SRC:.c=.o))
+
 # Rules
 all:				$(NAME)
 
-obj:
-					mkdir -p obj
-
-LIB					=	$(LIBFT_FILE)
-MINISHELL_OBJ		=	$(MINISHELL_SRC:%.c=obj/minishell/%.o)
-BONUS_OBJ			= 	$(BONUS_SRC:%.c=obj/bonus/%.o)
-
-$(MINISHELL_OBJ):	obj/minishell/%.o: %.c $(MINISHELL_INC)
-					@mkdir -p $(dir $@)
-					@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
-
-$(BONUS_OBJ):		obj/bonus/%.o: %.c $(BONUS_INC)
+$(OBJ_DIR)/%.o:		%.c $(MINISHELL_INC)
 					@mkdir -p $(dir $@)
 					@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
 
 $(LIBFT_FILE):
 					$(MAKE_LIB) $(LIBFT_DIR)
 
-$(MINISHELL):		$(LIB) $(MINISHELL_OBJ)
-					@$(CC) $(CFLAGS) $(LIB) $(MINISHELL_OBJ) $(RL_LIBS) -o  $@
-					@echo "$(GREEN)$(MINISHELL) was successfully created!$(DEFAULT)"
-
-$(BONUS):			$(LIB) $(BONUS_OBJ)
-					@$(CC) $(CFLAGS) $(LIB) $(BONUS_OBJ) $(RL_LIBS) -o $@
-					@echo "$(GREEN)$(BONUS) was successfully created!$(DEFAULT)"
+$(NAME):			$(LIBFT_FILE) $(MINISHELL_OBJ)
+					@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
+					@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 lib_clean:
 					$(MAKE_LIB) $(LIBFT_DIR) clean
@@ -80,7 +63,7 @@ lib_fclean:
 					$(MAKE_LIB) $(LIBFT_DIR) fclean
 
 clean:				lib_clean
-					$(RM) obj
+					$(RM) $(OBJ_DIR)
 					@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
 
 fclean:				clean lib_fclean

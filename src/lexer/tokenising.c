@@ -64,67 +64,48 @@ int		find_token2(int i, char *str, char *splt, int sign)
 	return (0);
 }
 
-int	ft_is_in_stri(char c, char *str)
+void	set_token_type(t_token *token)
 {
-	int		i;
+	if (!ft_strcmp(token->word, "<"))
+		token->type = T_RED_INP;
+	else if (!ft_strcmp(token->word, ">"))
+		token->type = T_RED_OUT;
+	else if (!ft_strcmp(token->word, ">>"))
+		token->type = T_APPEND;
+	else if (!ft_strcmp(token->word, "<<"))
+		token->type = T_DELIM;
+	else if (!ft_strcmp(token->word, "&&"))
+		token->type = T_AND;
+	else if (!ft_strcmp(token->word, "||"))
+		token->type = T_OR;
+	else if (!ft_strcmp(token->word, "|"))
+		token->type = T_PIPE;
+	else if (!ft_strcmp(token->word, "$"))
+		token->type = T_DOLLAR;
+	else if ((token->type == T_NEWLINE
+			|| !ft_strcmp(token->word, "\n")) && !token->next)
+		token->type = T_NEWLINE;
+	else if (!ft_strcmp(token->word, "space"))
+		token->type = T_SPACE;
+	// else if (is_valid_env(token->word))
+	// 	token->type = T_ENV;
+	else
+		token->type = T_WORD;
+}
 
-	i = 0;
-	while (str[i])
+void	set_token_types(t_data *data)
+{
+	t_token	*head;
+
+	head = data->token_list;
+	while (data->token_list)
 	{
-		if (str[i] == c)
-			return (i);
-		i++;
+		set_token_type(data->token_list);
+		data->token_list = data->token_list->next;
 	}
-	return (-1);
+	data->token_list = head;
+	clean_null_tokens(&data->token_list);
 }
-
-int		is_chr_str(char c, char *str)
-{
-	if (ft_is_in_stri(c, str) >= 0)
-		return (1);
-	return (0);
-}
-
-
-
-
-int		is_escaped(char *s, int pos)
-{
-	int n;
-
-	n = 0;
-	while (pos >= 0 && s[pos] == '\\')
-	{
-		n++;
-		pos--;
-	}
-	return (n % 2);
-}
-
-int		in_quotes(char *s, int pos)
-{
-	int	quotes1;
-	int	quotes2;
-	int	i;
-
-	quotes1 = 0;
-	quotes2 = 0;
-	i = 0;
-	while (i <= pos)
-	{
-		if (s[i] == 34 && (i == 0 || !is_escaped(s, i - 1))
-			&& quotes2 % 2 == 0)
-			quotes1++;
-		if (s[i] == 39 && (i == 0 || quotes2 % 2 != 0 || !is_escaped(s, i - 1))
-			&& quotes1 % 2 == 0)
-			quotes2++;
-		i++;
-	}
-	if (quotes1 % 2 != 0 || quotes2 % 2 != 0)
-		return (1);
-	return (0);
-}
-
 
 // t_token	*split_tokens_to_list(char **split, t_data *data)
 // {
@@ -228,27 +209,3 @@ int		in_quotes(char *s, int pos)
 
 
 
-void clean_null_tokens(t_token **head)
-{
-    t_token *current = *head;
-    t_token *tmp;
-
-    while (current != NULL)
-    {
-        tmp = current;
-        if (ft_strlen(tmp->word) == 0)
-        {
-            if (tmp->prev != NULL)
-                tmp->prev->next = tmp->next;
-            else
-                *head = tmp->next;
-            if (tmp->next != NULL)
-                tmp->next->prev = tmp->prev;
-            current = tmp->next;
-			ft_strdel(&tmp->word);
-            free(tmp);
-        }
-        else
-            current = current->next;
-    }
-}

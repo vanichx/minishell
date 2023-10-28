@@ -21,33 +21,6 @@ int	odd_quote(char *str, t_data *data)
 	return (0);
 }
 
-char first_quote(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\'' || *str == '\"')
-			return (*str);
-		str++;
-	}
-	return (0);
-}
-
-int	special_chars(char *str)
-{
-	int i;
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] == '\\' || str[i] == ';') && !in_quotes(str, i))
-		{
-			printf("minishell: we should not handle `%c'\n", str[i]);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 int closed_singlequotes(char *str)
 {
 	int single_quote;
@@ -74,6 +47,30 @@ int closed_doublequotes(char *str)
 		str++;
 	}
 	return (double_quote % 2 == 0);
+}
+
+int		in_quotes(char *s, int pos)
+{
+	int	quotes1;
+	int	quotes2;
+	int	i;
+
+	quotes1 = 0;
+	quotes2 = 0;
+	i = 0;
+	while (i <= pos)
+	{
+		if (s[i] == 34 && (i == 0 || !is_escaped(s, i - 1))
+			&& quotes2 % 2 == 0)
+			quotes1++;
+		if (s[i] == 39 && (i == 0 || quotes2 % 2 != 0 || !is_escaped(s, i - 1))
+			&& quotes1 % 2 == 0)
+			quotes2++;
+		i++;
+	}
+	if (quotes1 % 2 != 0 || quotes2 % 2 != 0)
+		return (1);
+	return (0);
 }
 
 // int	last_pipe(char *str, int pos)

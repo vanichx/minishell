@@ -96,7 +96,6 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-
 /* args.c */
 void		evaluate_args(t_data *data, t_cmdexe *cmd);
 void		process_args(t_cmdexe *cmd, t_data *data);
@@ -252,5 +251,5 @@ char 	*trim_input(char *input);
 
 
 void  ft_listadd_back(t_token **lst, t_token *next);
-t_token  *ft_lilast(t_token *lst);
+t_token  *last_token(t_token *lst);
 #endif
