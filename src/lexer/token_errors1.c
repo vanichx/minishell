@@ -5,14 +5,16 @@ int	check_token_error1(t_token *token, t_data *data)
 	char *str;
 
 	str = check_first_token(data->input_line);
+	if (str == NULL)
+		return (0);
 	while (token)
 	{
 		if (check_and(token, str))
 			return (1);
 		else if (check_red_inp(token, str))
 			return (1);
-		else if (check_pipe_or(token, str))
-			return (1);
+		// else if (check_pipe_or(token, str))
+		// 	return (1);
 	// else if (check_red_out(token))
 	// 	return (1);
 	// else if (check_append(token))
@@ -80,22 +82,22 @@ int check_red_inp(t_token *token, char *str)
 	return (0);
 }
 
-int		check_pipe_or(t_token *token, char *str)
+// int		check_pipe_or(t_token *token, char *str)
 
-{
-	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||"))
-	{
-		if (token->type == 11)
-			return (printf("minishell: syntax error near unexpected token '||'\n"), 1);
-		else if (token->type == 10)
-			return (printf("minishell: syntax error near unexpected token '|'\n"), 1);
-	}
-	return (0);
-}
+// {
+// 	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||"))
+// 	{
+// 		if (token->type == 11)
+// 			return (printf("minishell: syntax error near unexpected token '||'\n"), 1);
+// 		else if (token->type == 10)
+// 			return (printf("minishell: syntax error near unexpected token '|'\n"), 1);
+// 	}
+// 	return (0);
+// }
 
 char	*check_first_token(char *str)
 {
-	while (str)
+	while (*str)
 	{
 		if (*str == '|' && *(str + 1) == '|')
 			return ("||");
