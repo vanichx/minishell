@@ -57,7 +57,7 @@ char	*find_envir_variable(t_data *data, char *var_name, int len)
 	return (NULL);
 }
 
-void	execute_command(t_data *data)
+void	parse_command(t_data *data)
 {
 	t_cmdexe *cmd_list;
 

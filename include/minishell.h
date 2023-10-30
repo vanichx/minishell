@@ -153,7 +153,7 @@ void		init_data(t_data **data, char **envp);
 /* parsing_commads.c */
 int			lexical_analysis(t_data *data, char *input);
 char		*find_path(t_data *data);
-void		execute_command(t_data *data);
+void		parse_command(t_data *data);
 void		child(t_data *data);
 // static char			*find_executable_path(char **paths, char *cmd);
 void		create_commands(t_data *data, char **cmd);

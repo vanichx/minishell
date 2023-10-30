@@ -19,7 +19,8 @@ void	start_loop(t_data *data)
 			|| (lexical_analysis(data, data->input_line)))
 			continue;
 		// print_tokens(data);////Debug
-		// execute_command(data);
+		
+		parse_command(data);
 		// free(data->input_line);
 	}
 }
