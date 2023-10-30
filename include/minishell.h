@@ -38,6 +38,9 @@ typedef enum e_token_type {
 	T_AMPER,
 	T_RED_INP,
 	T_RED_OUT,
+	T_THREE_IN,
+	T_THREE_OUT,
+	T_IN_OUT,
 	T_APPEND,
 	T_PIPE,
 	T_OR,
@@ -177,6 +180,7 @@ char		**dup_2darray(char **array);
 int			is_only_ascii(char *str);
 int			len_2darray(char **array);
 char		*trim_newlines(char *src);
+int 		ft_has_only_digit(char *str);
 
 /* Environment lists functions */
 void		ft_envadd_back(t_envir **lst, t_envir *new);
@@ -232,6 +236,14 @@ int			evaluate_tokens(t_data *data);
 void		add_token_front(t_token **head, t_token *new);
 int			tokens_len(t_token **head);
 void 		print_tokens(t_data *data);
+void		fix_tokens(t_token **head);
+void		find_ortokens(t_token **head);
+void		find_andtokens(t_token **head);
+void		find_threein(t_token **head);
+void		find_threeout(t_token **head);
+void		find_append(t_token *current);
+void		find_delim(t_token *current);
+void		find_inout(t_token **head);
 // void		clear_token(t_token **token, void (*del)(void*));
 
 
@@ -247,10 +259,15 @@ char		*find_executable_path(char **paths, char *cmd);
 char 		*trim_input(char *input);
 
 /* error check */
+int			check_threeout(t_token *token);
+int			check_threein(t_token *token);
 char		*check_first_token(char *str);
 int			check_token_error1(t_token *token, t_data *data);
 int			check_and(t_token *token, char *str);
-int			check_red_inp(t_token *token, char *str);
+int			check_red(t_token *token, char *str);
+int			check_red_general(t_token *tmp);
+int 		check_red_in(t_token *token);
+int			check_red_out(t_token *token);
 int			check_pipe_or(t_token *token, char *str);
 
 #endif

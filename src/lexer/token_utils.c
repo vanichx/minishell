@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void clean_null_tokens(t_token **head)
+void	clean_null_tokens(t_token **head)
 {
     t_token *current = *head;
     t_token *tmp;
@@ -23,6 +23,15 @@ void clean_null_tokens(t_token **head)
         else
             current = current->next;
     }
+}
+
+void	fix_tokens(t_token **head)
+{
+	find_ortokens(head);
+	find_andtokens(head);
+	find_threein(head);
+	find_threeout(head);
+	find_inout(head);
 }
 
 // printing the tokens to debug

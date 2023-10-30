@@ -108,6 +108,7 @@ int	set_token_type(t_data *data)
 	}
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
+	fix_tokens(&data->token_list);
 	if (check_token_error1(data->token_list, data))
 		return (1);
 	return (0);

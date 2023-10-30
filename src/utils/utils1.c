@@ -76,3 +76,14 @@ int		is_chr_str(char c, char *str)
 		return (1);
 	return (0);
 }
+
+int ft_has_only_digit(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);	
+}
