@@ -13,11 +13,9 @@ int	check_token_error1(t_token *token, t_data *data)
 			return (1);
 		if (check_red(token, str))
 			return (1);
-		// else if (check_pipe_or(token, str))
-		// 	return (1);
+		if (check_pipe_or(token))
+			return (1);
 		// else if (check_append(token))
-		// 	return (1);
-		// else if (check_or(token)) // it is not needed as it is handled in check_pipe_or
 		// 	return (1);
 		token = token->next;
 	}
@@ -68,18 +66,6 @@ int check_red(t_token *token, char *str)
 	return (0);
 }
 
-// int		check_pipe_or(t_token *token, char *str)
-
-// {
-// 	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||"))
-// 	{
-// 		if (token->type == 11)
-// 			return (printf("minishell: syntax error near unexpected token '||'\n"), 1);
-// 		else if (token->type == 10)
-// 			return (printf("minishell: syntax error near unexpected token '|'\n"), 1);
-// 	}
-// 	return (0);
-// }
 
 char	*check_first_token(char *str)
 {
@@ -205,5 +191,22 @@ int check_red_general(t_token *tmp)
 	if (tmp->next->type && tmp->next->type != T_WORD)
 		return (printf("minishell: syntax error near unexpected token `%s'\n", \
 			tmp->next->word), 1);
+	return (0);
+}
+
+int		check_pipe_or(t_token *tmp)
+
+{
+	if (tmp->next == NULL)
+		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->prev->word), 1);
+	if (tmp->type == T_PIPE && (tmp->next->type == T_PIPE || tmp->next->type == T_OR))
+		return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
+	if (tmp->type == T_OR && (tmp->prev == NULL || tmp->prev->type == T_PIPE))
+		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
+	if (tmp->type == T_OR && (tmp->prev->type == T_OR || tmp->next == NULL
+		|| tmp->next->type == T_PIPE || tmp->next->type == T_OR))
+		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
+	if (tmp->type == T_APPEND && tmp->next->type == T_OR && tmp->next->next->type == T_RED_OUT)
+		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
 	return (0);
 }

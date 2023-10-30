@@ -268,6 +268,6 @@ int			check_red(t_token *token, char *str);
 int			check_red_general(t_token *tmp);
 int 		check_red_in(t_token *token);
 int			check_red_out(t_token *token);
-int			check_pipe_or(t_token *token, char *str);
+int			check_pipe_or(t_token *token);
 
 #endif
