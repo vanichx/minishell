@@ -333,6 +333,5 @@ int		check_numbers(t_token *tmp)
 		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->next->word), 1);
 	if (tmp->next->type == T_WORD && ft_has_only_digit(tmp->next->word) && tmp->next->next->type != T_WORD)
 		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->word), 1);
-	printf("anyseg here\n");
 	return (0);
 }
