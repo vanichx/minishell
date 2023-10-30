@@ -206,7 +206,7 @@ int		check_pipe_or(t_token *tmp)
 	if (tmp->type == T_OR && (tmp->prev->type == T_OR || tmp->next == NULL
 		|| tmp->next->type == T_PIPE || tmp->next->type == T_OR))
 		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
-	if (tmp->type == T_APPEND && tmp->next->type == T_OR && tmp->next->next->type == T_RED_OUT)
+	if ((tmp->type == T_APPEND || tmp->type == T_DELIM) && tmp->next->type == T_OR && tmp->next->next->type == T_RED_OUT)
 		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
 	return (0);
 }
