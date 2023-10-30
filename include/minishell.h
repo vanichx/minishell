@@ -219,7 +219,7 @@ int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
 int			ft_is_in_stri(char c, char *str);
 int			is_chr_str(char c, char *str);
 void		tokenise(t_data *data, char *str);
-int			find_token2(int i, char *str, char *splt, int sign);
+int			find_token2(int i, char *str, char *splt);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
 t_token		*create_token(t_data *data, int i);

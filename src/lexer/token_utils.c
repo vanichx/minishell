@@ -29,9 +29,9 @@ void	fix_tokens(t_token **head)
 {
 	find_ortokens(head);
 	find_andtokens(head);
-	find_threein(head);
-	find_threeout(head);
 	find_inout(head);
+	find_threeout(head);
+	find_threein(head);
 }
 
 // printing the tokens to debug

@@ -13,10 +13,8 @@ void	tokenise(t_data *data, char *str)
 		if (!find_token(data, str, &i, head))
 			continue ;
 		data->count++;
-		if (find_token2(i, str, "|", 1) || find_token2(i, str, "|", 0)
-			|| find_token2(i, str, ">", 1) || find_token2(i, str, ">", 0) 
-			|| find_token2(i, str, "<", 1) || find_token2(i, str, "<", 0)
-			|| find_token2(i, str, "&", 1) || find_token2(i, str, "&", 0))
+		if (find_token2(i, str, "|") || find_token2(i, str, ">")
+			|| find_token2(i, str, "<") || find_token2(i, str, "&"))
 			add_token(head, create_token(data, i + 1));
 		i++;
 	}
@@ -48,20 +46,9 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 	return (1);
 }
 
-int		find_token2(int i, char *str, char *splt, int sign)
+int		find_token2(int i, char *str, char *splt)
 {
-	if (sign == 1 && is_chr_str(str[i], splt) && !is_chr_str(str[i + 1], splt)
-		&& !in_quotes(str, i) && !is_escaped(str, i - 1))
-		return (1);
-	else if (!sign && is_chr_str(str[i], splt) && i > 0
-		&& is_chr_str(str[i - 1], splt) && !in_quotes(str, i)
-		&& !is_escaped(str, i - 1))
-		return (1);
-	else if (sign == 2 && is_chr_str(str[i], splt)
-		&& i > 0 && is_chr_str(str[i - 1], splt) && !in_quotes(str, i)
-		&& !is_escaped(str, i - 1))
-		return (1);
-	else if (sign == 3 && is_chr_str(str[i], splt) && !in_quotes(str, i)
+	if (is_chr_str(str[i], splt) && !in_quotes(str, i) 
 		&& !is_escaped(str, i - 1))
 		return (1);
 	return (0);

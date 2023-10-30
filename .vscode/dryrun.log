@@ -1,1 +1,9 @@
 make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/eseferi/42/main_minishell'
+mkdir -p obj/src/minishell/
+gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include -I /Users/eseferi/.local/pkg/readline/include -c src/minishell/program_loop.c -o obj/src/minishell/program_loop.o
+ 
+gcc -Wall -Wextra -Iinclude -Isrc -O3 -g  -I lib/libft/include lib/libft/libft.a obj/src/execution/buitins.o obj/src/execution/shlvl.o obj/src/lexer/envirlists.o obj/src/lexer/environment.o obj/src/lexer/fix_tokens_utils.o obj/src/lexer/lexical_analysis.o obj/src/lexer/token_errors1.o obj/src/lexer/token_lists.o obj/src/lexer/token_utils.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parsing/args.o obj/src/parsing/commands.o obj/src/parsing/commandslists.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o -L /Users/eseferi/.local/pkg/readline/lib -lreadline -lhistory -lcurses -o minishell
+echo "\033[1;32mminishell was successfully created!\033[0m"
+make: Leaving directory `/Users/eseferi/42/main_minishell'
+ 

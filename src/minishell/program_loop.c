@@ -11,7 +11,7 @@ void	start_loop(t_data *data)
 			continue;
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		// data->input_line = ">>>"; //debug
+		// data->input_line = "<<<7&&"; //debug
 		check_exit(data->input_line);
 		if (ft_strlen(data->input_line) > 0)
 			add_history(data->input_line);
