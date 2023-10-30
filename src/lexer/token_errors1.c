@@ -245,15 +245,14 @@ int	check_threeout(t_token *token)
 {
 	if (token->type == T_THREE_OUT)
 	{
-
 		if (token->next->type == T_APPEND || token->next->type == T_THREE_OUT
 			|| token->next->type == T_RED_OUT)
 			return (printf("minishell: syntax error near unexpected token `>>'\n"), 1);
-		if (token->next->type == T_AMPER || token->next->type == T_AND)
+		else if (token->next->type == T_AMPER || token->next->type == T_AND)
 			return (printf("minishell: syntax error near unexpected token >&'\n"), 1);
-		if (token->next->type == T_PIPE || token->next->type == T_OR)
+		else if (token->next->type == T_PIPE || token->next->type == T_OR)
 			return (printf("minishell: syntax error near unexpected token `>|'\n"), 1);
-		if (token->next->type != T_WORD)
+		else
 			return (printf("minishell: syntax error near unexpected token `>'\n"), 1);
 	}
 	return (0);

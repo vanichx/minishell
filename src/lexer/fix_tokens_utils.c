@@ -123,16 +123,19 @@ void	find_threeout(t_token **head)
 void	find_append(t_token *current)
 {
 	t_token *tmp;
+	t_token *tmp2;
+
 	tmp = current;
 	if (tmp->type == T_RED_OUT && tmp->next->type == T_RED_OUT)
 	{
 		tmp->type = T_APPEND;
 		ft_strdel(&tmp->word);
 		tmp->word = ft_strdup(">>");
-		ft_strdel(&tmp->next->word);
-		free(tmp->next);
+		tmp2 = tmp->next;
 		tmp->next = tmp->next->next;
 		tmp->next->prev = tmp;
+		ft_strdel(&tmp2->word);
+		free(tmp2);
 	}
 }
 
