@@ -64,3 +64,60 @@ int is_char_in_str(char c, char *str)
 			return (1);
 	return (0);
 }
+
+int token_len(t_token *token)
+{
+	int len;
+
+	len = 0;
+	while (token)
+	{
+		if (token->type != T_SPACE && token->type != T_NEWLINE)
+			len++;
+		token = token->next;
+	}
+	return (len);
+}
+
+void cmd_array_init(t_data *data, t_cmdexe *cmd)
+{
+	int i;
+	t_cmdexe *head;
+
+	i = 0;
+	head = cmd;
+	while (cmd)
+	{
+		cmd->args_array = malloc(sizeof(char *) * (token_len(data->token_list) + 1));
+		if (cmd->args_array == NULL)
+			return ;
+		cmd = cmd->next;
+	}
+	cmd = head;
+}
+
+t_cmdexe *cmd_array_fill(t_data *data, t_cmdexe *cmd)
+{
+	int i;
+	t_cmdexe *head;
+
+	i = 0;
+	head = cmd;
+	while (cmd)
+	{
+		while (data->token_list != NULL)
+		{
+			if (data->token_list->type != T_SPACE && data->token_list->type != T_NEWLINE)
+			{
+				cmd->args_array[i] = ft_strdup(data->token_list->word);
+				i++;
+			}
+			data->token_list = data->token_list->next;
+		}
+		if (cmd->next != NULL)
+			cmd = cmd->next;
+		else
+			break ;
+	}
+	return (head);
+}

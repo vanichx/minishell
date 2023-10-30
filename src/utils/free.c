@@ -101,3 +101,36 @@ void	free_2darray(char **array)
 	free(array);
 	array = NULL;
 }
+
+void	free_commands(t_data *data)
+
+{
+	t_cmdexe	*tmp;
+
+	if (!data->cmd_list)
+		return ;
+	tmp = data->cmd_list;
+	while (tmp)
+	{
+		if (tmp->cmd)
+		{
+			free(tmp->cmd);
+			tmp->cmd = NULL;
+		}
+		if (tmp->path)
+		{
+			free(tmp->path);
+			tmp->path = NULL;
+		}
+		if (tmp->args_array)
+		{
+			free_2darray(tmp->args_array);
+			tmp->args_array = NULL;
+		}
+		tmp = tmp->next;
+	
+	}
+	free_2darray(data->cmd_array);
+	free_2darray(data->path);
+	free(tmp);
+}

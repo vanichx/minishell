@@ -10,7 +10,8 @@ void reset_data(t_data *data)
 	if (data->input_line && ft_strlen(data->input_line) > 0)
 		ft_strdel(&data->input_line);
 	free_tokens(&data->token_list, free);
-	
+	free_commands(data);
+	// clear_cmd(data->cmd_list);
 	// ft_cmdclear(&data->cmd_list); // need for th future 
 	// free_2darray(data->cmd_array);
 	// free_2darray(data->path);

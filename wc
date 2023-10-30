@@ -1,9 +1,10 @@
-Makefile
-githu.sh
-include
-lib
-minishell
-minishell.dSYM
-obj
-src
-wc
+total 800
+-rw-r--r--  1 ipetruni  2023_wolfsburg    2813 Oct 30 18:51 Makefile
+-rwxr-xr-x  1 ipetruni  2023_wolfsburg     579 Oct 30 15:51 githu.sh
+drwxr-xr-x  3 ipetruni  2023_wolfsburg     102 Oct 30 15:51 include
+drwxr-xr-x  3 ipetruni  2023_wolfsburg     102 Oct 30 15:51 lib
+-rwxr-xr-x  1 ipetruni  2023_wolfsburg  398088 Oct 30 19:59 minishell
+drwxr-xr-x  3 ipetruni  2023_wolfsburg     102 Oct 30 15:51 minishell.dSYM
+drwxr-xr-x  3 ipetruni  2023_wolfsburg     102 Oct 30 19:59 obj
+drwxr-xr-x  9 ipetruni  2023_wolfsburg     306 Oct 30 15:51 src
+-rw-r--r--  1 ipetruni  2023_wolfsburg       0 Oct 30 20:03 wc

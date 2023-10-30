@@ -40,7 +40,7 @@ char	*find_path(t_data *data)
 		return (NULL);
 	command = find_executable_path(data->path, data->cmd_list->cmd);
 	// if (paths)
-	// 	free_2darray(paths);
+		// free_2darray(paths);
 	return (command);
 }
 
@@ -59,18 +59,20 @@ char	*find_envir_variable(t_data *data, char *var_name, int len)
 
 void	parse_command(t_data *data)
 {
-	t_cmdexe *cmd_list;
-
-	cmd_list = data->cmd_list;
-	if (cmd_list == NULL)
+	if (data->token_list == NULL)
 		return ;
-	while (cmd_list != NULL)
+
+	data->cmd_list = ft_cmdnew(data->token_list->word);
+	cmd_array_init(data, data->cmd_list);
+	data->cmd_list = cmd_array_fill(data, data->cmd_list);
+	data->cmd_list->path = find_path(data);
+	while (data->cmd_list != NULL)
 	{
-		if (cmd_list == 2)
+		if (data->cmd_list == 2)
 			handle_builtins(data);
 		else
 			child(data);
-		cmd_list = cmd_list->next;
+		data->cmd_list = data->cmd_list->next;
 	}
 	if (data->curr_dir)
 		free(data->curr_dir);
@@ -82,7 +84,7 @@ void	child(t_data *data)
     data->pid = fork();
     if (!data->pid)
     {
-		if (execve(data->cmd_list->path, data->cmd_array, data->path) == -1)
+		if (execve(data->cmd_list->path, data->cmd_list->args_array, data->path) == -1)
 			{
 				perror("execve");
 				exit(1);

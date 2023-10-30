@@ -55,17 +55,17 @@ typedef struct s_envir {
 }				t_envir;
 
 typedef struct	s_cmdexe {
-	struct s_token		*args;
-	t_list				*env_list;
-	char				**args_array;
-	char				*path;
 	char				*cmd;
+	char				*path;
+	char				**args_array;
+	char				*args;
 	int					scope;
 	int					forked;
 	int					in;
 	int					out;
 	int					pipe[2];
 	int					cmd_type;
+	t_list				*env_list;
 	struct	s_cmdexe	*next;
 	struct	s_cmdexe	*prev;
 }				t_cmdexe;
@@ -273,5 +273,12 @@ int			check_red_out(t_token *token);
 int			check_inout(t_token *token);
 int			check_pipe_or(t_token *token);
 int			check_numbers(t_token *tmp);
+
+/* Command Parsing*/
+int		token_len(t_token *token);
+void	cmd_array_init(t_data *data, t_cmdexe *cmd);
+t_cmdexe	*cmd_array_fill(t_data *data, t_cmdexe *cmd);
+void	free_commands(t_data *data);
+
 
 #endif
