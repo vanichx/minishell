@@ -1,0 +1,9 @@
+Makefile
+githu.sh
+include
+lib
+minishell
+minishell.dSYM
+obj
+src
+wc
