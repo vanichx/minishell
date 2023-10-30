@@ -98,6 +98,7 @@ void	find_threeout(t_token **head)
 {
 	t_token *current = *head;
 	t_token *tmp;
+	t_token *tmp2;
 
 	while (current != NULL)
 	{
@@ -109,10 +110,11 @@ void	find_threeout(t_token **head)
 			tmp->type = T_THREE_OUT;
 			ft_strdel(&tmp->word);
 			tmp->word = ft_strdup(">>>");
-			ft_strdel(&tmp->next->word);
-			free(tmp->next);
+			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			tmp->next->prev = tmp;
+			ft_strdel(&tmp2->word);
+			free(tmp2);
 		}
 		current = current->next;
 	}

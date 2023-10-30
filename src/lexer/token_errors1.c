@@ -39,11 +39,6 @@ int check_and(t_token *token, char *str)
 
 int check_red(t_token *token, char *str)
 {
-	if (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<") || !ft_strcmp(str, "<>")
-		|| !ft_strcmp(str, "<") || !ft_strcmp(str, ">") || !ft_strcmp(str, "<<<")
-		|| !ft_strcmp(str, ">>>"))
-	if (check_numbers(token))
-		return (1);
 	if (!ft_strcmp(str, ">>>"))
 		if (check_threeout(token))
 			return (1);
@@ -209,10 +204,13 @@ int	check_delim(t_token *token)
 			}
 		}
 		if (token->next->type == T_SPACE)
+		{
 			if (check_red_general(token->next))
 				return (1);
-		if (check_red_general(token))
-			return (1);
+		}
+		else 
+			if (check_red_general(token))
+				return (1);
 	}
 	return (0);
 }
@@ -247,6 +245,7 @@ int	check_threeout(t_token *token)
 {
 	if (token->type == T_THREE_OUT)
 	{
+
 		if (token->next->type == T_APPEND || token->next->type == T_THREE_OUT
 			|| token->next->type == T_RED_OUT)
 			return (printf("minishell: syntax error near unexpected token `>>'\n"), 1);
@@ -275,6 +274,8 @@ int check_inout(t_token *token)
 
 int check_red_general(t_token *tmp)
 {
+	if (check_numbers(tmp))
+		return (1);
 	if (tmp->next->type == T_THREE_OUT)
 		return (printf("minishell: syntax error near unexpected token `>>'\n"), 1);
 	if (tmp->next->type == T_AMPER && tmp->next->next->type == T_RED_OUT)
@@ -333,5 +334,6 @@ int		check_numbers(t_token *tmp)
 		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->next->word), 1);
 	if (tmp->next->type == T_WORD && ft_has_only_digit(tmp->next->word) && tmp->next->next->type != T_WORD)
 		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->word), 1);
+	printf("anyseg here\n");
 	return (0);
 }
