@@ -279,8 +279,18 @@ int check_red_general(t_token *tmp)
 int		check_pipe_or(t_token *tmp)
 
 {
-	if (tmp->next == NULL)
-		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->prev->word), 1);
+	if ((tmp->type == T_WORD && tmp->prev == NULL))
+	{
+		while (tmp->next->type == T_SPACE)
+		{
+			if (tmp->next->next->type == T_OR)
+				return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
+			if (tmp->next->next->type == T_PIPE)
+				return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
+			tmp = tmp->next;
+		}	
+		return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
+	}
 	if (tmp->type == T_PIPE && (tmp->next->type == T_PIPE || tmp->next->type == T_OR))
 		return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
 	if (tmp->type == T_OR && (tmp->prev == NULL || tmp->prev->type == T_PIPE))
