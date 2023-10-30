@@ -143,6 +143,7 @@ void	find_inout(t_token **head)
 {
 	t_token *current = *head;
 	t_token *tmp;
+	t_token *tmp2;
 
 	while (current != NULL)
 	{
@@ -153,9 +154,10 @@ void	find_inout(t_token **head)
 			ft_strdel(&tmp->word);
 			tmp->word = ft_strdup("<>");
 			ft_strdel(&tmp->next->word);
-			free(tmp->next);
+			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			tmp->next->prev = tmp;
+			free(tmp2);
 		}
 		current = current->next;
 	}
