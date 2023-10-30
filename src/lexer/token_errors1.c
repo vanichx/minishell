@@ -15,8 +15,6 @@ int	check_token_error1(t_token *token, t_data *data)
 			return (1);
 		if (check_pipe_or(token))
 			return (1);
-		// else if (check_append(token))
-		// 	return (1);
 		token = token->next;
 	}
 	return (0);
@@ -24,24 +22,28 @@ int	check_token_error1(t_token *token, t_data *data)
 
 int check_and(t_token *token, char *str)
 {	
-	if (!ft_strcmp(str, "&") || !ft_strcmp(str, "&&"))
+	if (!ft_strcmp(str, "&"))
 	{
-		if (token->type == T_AMPER && token->prev == NULL )
-		{
-			write(1, "minishell: syntax error near unexpected token `&'\n", 50);
-			return (1);
-		}
-		if (token->type == T_AND && (token->prev == NULL || token->next == NULL))
-		{
-			write(1, "minishell: syntax error near unexpected token `&&'\n", 51);
-			return (1);
-		}
+		if (token->next->type == T_RED_OUT && token->next->next->type == T_SPACE)
+			if (check_red_general(token->next->next))
+				return (1);
+		if (token->next->type == T_RED_OUT)
+			if (check_red_general(token->next))
+				return (1);
+		return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
 	}
+	if (!ft_strcmp(str, "&&"))
+		return (printf("minishell: syntax error near unexpected token `&&'\n"), 1);
 	return (0);
 }
 
 int check_red(t_token *token, char *str)
 {
+	if (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<") || !ft_strcmp(str, "<>")
+		|| !ft_strcmp(str, "<") || !ft_strcmp(str, ">") || !ft_strcmp(str, "<<<")
+		|| !ft_strcmp(str, ">>>"))
+	if (check_numbers(token))
+		return (1);
 	if (!ft_strcmp(str, ">>>"))
 		if (check_threeout(token))
 			return (1);
@@ -127,10 +129,19 @@ int check_red_in(t_token *token)
 			if (token->next->next->type != T_AMPER || token->next->next->type == T_AND)
 				return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
 		}
-		if (token->next->type == T_AMPER)
-			if (check_red_general(token->next))
+		if (token->next->type == T_AMPER && token->next->next->type == T_SPACE 
+			&& token->next->next->next->type == T_WORD && !ft_has_only_digit(token->next->next->next->word))
+			return (printf("minishell: %s: ambiguous redirect\n", token->next->next->next->word), 1);
+		if (token->next->type == T_AMPER && token->next->next->type == T_WORD 
+			&& !ft_has_only_digit(token->next->next->word))
+			return (printf("minishell: %s: ambiguous redirect\n", token->next->next->word), 1);
+		if (token->next->type == T_AMPER && token->next->next->type == T_SPACE)
+			if (check_red_general(token->next->next))
 				return (1);
 		if (token->next->type == T_SPACE)
+			if (check_red_general(token->next))
+				return (1);
+		if (token->next->type == T_AMPER && token->next->next->type != T_WORD)
 			if (check_red_general(token->next))
 				return (1);
 		if (check_red_general(token))
@@ -153,6 +164,19 @@ int check_red_out(t_token *token)
 				return (printf("minishell: syntax error near unexpected token `&>'\n"), 1);
 			if (token->next->next->type != T_AMPER || token->next->next->type == T_AND)
 				return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
+		}
+		if (token->next->type == T_OR && (token->next->next->type == T_PIPE
+			|| token->next->next->type == T_OR))
+			return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
+		if (token->next->type == T_OR)
+			return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
+		if (token->next->type == T_PIPE)
+		{
+			if (token->next->next->type == T_SPACE)
+				if (check_red_general(token->next->next))
+					return (1);
+			if (check_red_general(token->next))
+				return (1);
 		}
 		if (token->next->type == T_AMPER)
 			if (check_red_general(token->next))
@@ -290,5 +314,15 @@ int		check_pipe_or(t_token *tmp)
 		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
 	if ((tmp->type == T_APPEND || tmp->type == T_DELIM) && tmp->next->type == T_OR && tmp->next->next->type == T_RED_OUT)
 		return (printf("minishell: syntax error near unexpected token `||'\n"), 1);
+	return (0);
+}
+
+int		check_numbers(t_token *tmp)
+{
+	if (tmp->next->type == T_SPACE && tmp->next->next->type == T_WORD && ft_has_only_digit(tmp->next->next->word)
+		&& tmp->next->next->next->type != T_WORD)
+		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->next->word), 1);
+	if (tmp->next->type == T_WORD && ft_has_only_digit(tmp->next->word) && tmp->next->next->type != T_WORD)
+		return (printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->word), 1);
 	return (0);
 }
