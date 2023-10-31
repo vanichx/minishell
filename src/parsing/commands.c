@@ -1,13 +1,12 @@
 #include "minishell.h"
 
-void	parse_command(t_data *data)
+int	parse_command(t_data *data)
 {
-	if (data->token_list == NULL)
-		return ;
 	data->cmd_list = ft_cmdnew(data->token_list->word);
 	cmd_array_init(data, data->cmd_list);
 	data->cmd_list = cmd_array_fill(data, data->cmd_list);
-	data->cmd_list->path = find_command_path(data);
+	if (find_command_path(data, data->cmd_list))
+		return (1);
 	while (data->cmd_list != NULL)
 	{
 		if (data->cmd_list == 2)
@@ -18,10 +17,10 @@ void	parse_command(t_data *data)
 	}
 	if (data->curr_dir)
 		free(data->curr_dir);
-	return ;
+	return (0);
 }
 
-char	*find_command_path(t_data *data)
+int	find_command_path(t_data *data, t_cmdexe *cmd)
 {
 	char	*path;
 	char	*command_path;
@@ -30,20 +29,21 @@ char	*find_command_path(t_data *data)
 	i = 0;
 	path = find_envir_variable(data, "PATH=", 5);
 	if (!path)
-		return (NULL);
+		return (1);
 	data->path = ft_split(path, ':');
 	if (!data->path)
-		return (NULL);
+		return (1);
 	command_path = find_executable_path(data->path, data->cmd_list->cmd);
 	if (!command_path)
 	{
 		printf("minishell: %s: command not found\n", data->cmd_list->cmd);
-		return (0);
+		return (1);
 	}
 	printf("Executable_path: %s\n", command_path);
+	cmd->path = ft_strdup(command_path);
 	// if (paths)
 		// free_2darray(paths);
-	return (command_path);
+	return (0);
 }
 
 char	*find_executable_path(char **paths, char *cmd)

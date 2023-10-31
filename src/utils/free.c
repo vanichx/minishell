@@ -93,11 +93,7 @@ void	free_2darray(char **array)
 	if (!array)
 		return ;
 	while (array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
+		ft_strdel(&array[i++]);
 	free(array);
 	array = NULL;
 }
@@ -112,23 +108,13 @@ void	free_commands(t_data *data)
 	tmp = data->cmd_list;
 	while (tmp)
 	{
-		if (tmp->cmd)
-		{
-			free(tmp->cmd);
-			tmp->cmd = NULL;
-		}
-		if (tmp->path)
-		{
-			free(tmp->path);
-			tmp->path = NULL;
-		}
+		if (tmp->cmd && ft_strlen(tmp->cmd) > 0)
+			ft_strdel(&tmp->cmd);
+		if (tmp->path && ft_strlen(tmp->path) > 0)
+			ft_strdel(&tmp->path);
 		if (tmp->args_array)
-		{
 			free_2darray(tmp->args_array);
-			tmp->args_array = NULL;
-		}
 		tmp = tmp->next;
-	
 	}
 	free_2darray(data->cmd_array);
 	free_2darray(data->path);
