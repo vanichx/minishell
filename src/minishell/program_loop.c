@@ -10,8 +10,9 @@ void	start_loop(t_data *data)
 		if (handle_d(data, line))
 			continue;
 		data->input_line = trim_input(line);
+	
 		ft_strdel(&line);
-		// data->input_line = " >>>erik"; //debug
+		// data->input_line = "erik << seferi <<<<<<5"; //debug
 		check_exit(data->input_line);
 		if (ft_strlen(data->input_line) > 0)
 			add_history(data->input_line);
