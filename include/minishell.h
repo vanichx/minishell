@@ -249,6 +249,7 @@ void	print_tree(t_tree *tree);
 void	init_tree(t_data *data);
 int		arg_count(t_token *token, t_token *address);
 t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
+void	free_tree(t_data *data);
 
 
 #endif
