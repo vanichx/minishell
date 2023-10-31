@@ -67,47 +67,10 @@ void	free_2darray(char **array)
 	if (!array)
 		return ;
 	while (array[++i])
-		free(&array[i]);
+		ft_strdel(&array[i]);
 	free(array);
 	array = NULL;
 }
-
-// void	free_tree(t_data *data)
-
-// {
-// 	t_tree *tree;
-// 	t_tree *tmp;
-// 	int i;
-
-// 	i = 0;
-// 	if (!data->tree)
-// 		return ;
-// 	tree = data->tree;
-// 	while (tree)
-// 	{
-// 		tmp = tree;
-// 		if (tree->args_array)
-// 		{
-// 			while (tree->args_array[i])
-// 			{
-// 				free(tree->args_array[i]);
-// 				i++;
-// 			}
-// 			free(tree->args_array);
-// 		}
-// 		i = 0;
-// 		if (tree->left->args_array)
-		
-// 		// if (tree->left->args_array)
-// 		// 	free_2darray(tree->left->args_array);
-// 		// if (tree->left)
-// 		// 	free(tree->left);
-// 		// tree->left = NULL;
-// 		// tree = tree->right;
-// 		// free(tmp);
-// 		// free(data->tree);
-// 	}
-// }
 
 // void	free_commands(t_cmdexe **head, void (*del)(void *))
 // {

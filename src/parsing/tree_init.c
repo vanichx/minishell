@@ -14,8 +14,7 @@ void	init_tree(t_data *data)
 	while (address)
 	{
 		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
-			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND 
-			|| address->type == T_DELIM || address->type == T_THREE_IN || address->type == T_THREE_OUT)
+			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND)
 		{
 			if (tree == NULL)
 			{
@@ -45,7 +44,7 @@ void	init_tree(t_data *data)
 		tree = tree->right;
 	}
 	// printf("I am here\n");
-	print_tree(data);
+	print_tree(data->tree);
 	data->token_list = head;
 }
 
@@ -62,8 +61,6 @@ t_tree	*set_tree_leaf(t_token **token, t_tree *tree)
 	i = 0;
 	arg_nums =	arg_count(*token, NULL);
 	tree->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-	if (!tree->args_array)
-		return (NULL);
 	while (*token != NULL)
 	{
 		tree->args_array[i] = ft_strdup((*token)->word);
@@ -89,11 +86,7 @@ t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree)
 	i = 0;
 	arg_nums =	arg_count(*token, address);
 	tree->left = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree->left)
-		return (NULL);
 	tree->left->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-	if (!tree->left->args_array)
-		return (NULL);
 	while (*token != address)
 	{
 		tree->left->args_array[i] = ft_strdup((*token)->word);
@@ -121,22 +114,18 @@ int		arg_count(t_token *token, t_token *address)
 }
 
 
-void print_tree(t_data *data)
+void print_tree(t_tree *tree)
 {
 	int i;
 
 	i = 0;
-	t_tree *tree;
-	tree = data->tree;
 	if (tree == NULL)
 		return ;
 	while (tree)
 	{
-		if (tree->type)
-			printf("tree->type: %d\n", tree->type);
-		if (tree->value)
-			printf("tree->value: %s\n", tree->value);
-		if (tree->args_array && ft_strlen(&tree->args_array[0]) > 0)
+		printf("tree->type: %d\n", tree->type);
+		printf("tree->value: %s\n", tree->value);
+		if (tree->args_array[i])
 		{
 			while (tree->args_array[i])
 			{

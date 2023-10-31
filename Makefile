@@ -6,13 +6,13 @@
 #    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/31 18:19:16 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/10/31 16:47:24 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g #-fsanitize=address -fno-omit-frame-pointer
+CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 #-g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
 MINISHELL			=   minishell
