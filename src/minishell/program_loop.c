@@ -16,8 +16,10 @@ void	start_loop(t_data *data)
 		if (ft_strlen(data->input_line) > 0)
 			add_history(data->input_line);
 		if ((odd_quote(data->input_line, data)) || (special_chars(data->input_line))
-			|| (lexical_analysis(data, data->input_line)) || (parse_command(data)))
+			|| (lexical_analysis(data, data->input_line)))
 			continue;
+		
+		init_tree(data);
 		// printf("token length: %d\n", token_len(data->token_list));
 		
 		// free(data->input_line);

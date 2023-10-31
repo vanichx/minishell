@@ -4,7 +4,7 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	ft_cmdclear(&data->cmd_list);
+	
 
 	free_2darray(data->env_array);
 
@@ -12,15 +12,7 @@ void	free_data(t_data *data)
 	// 	free(data->curr_dir);
 	
 	free_tokens(&data->token_list, free);
-
-	// while (data->token_list)
-	// {
-	// 	free(data->token_list->word);
-	// 	data->token_list->word = NULL;
-	// 	data->token_list = data->token_list->next;
-	// }
-	// if (data->curr_dir)
-	// 	free(data->curr_dir);
+	
 	if (data->input_line)
 		free(data->input_line);
 	free(data);
@@ -29,40 +21,22 @@ void	free_data(t_data *data)
 
 void	free_tokens(t_token **begin, void (*del)(void *))
 {
-    t_token *tmp;
+	t_token *tmp;
 	t_token *tmp2;
 
-    if (!begin || !del)
-        return ;
+	if (!begin || !del)
+		return ;
 	tmp = *begin;
-    while (tmp)
+	while (tmp)
 	{
-        ft_strdel(&tmp->word);
+		ft_strdel(&tmp->word);
 		tmp2 = tmp->next;
-        free(tmp);
+		free(tmp);
 		tmp = tmp2;
-    }
+	}
 	*begin = NULL;
 }
 
-
-void	free_cmdexe(void *command)
-{
-	t_cmdexe *tmp;
-
-	tmp = (t_cmdexe *)command;
-	if (!command || !tmp)
-		return ;
-	if (tmp->path)
-		tmp->path = NULL;
-	if (tmp->cmd)
-	{
-		free(tmp->cmd);
-		tmp->cmd = NULL;
-	}
-	free(tmp);
-	tmp = NULL;
-}
 
 void	free_envir(t_envir *envir)
 {
@@ -89,34 +63,36 @@ void	free_2darray(char **array)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!array)
 		return ;
-	while (array[i])
-		ft_strdel(&array[i++]);
+	while (array[++i])
+		ft_strdel(&array[i]);
 	free(array);
 	array = NULL;
 }
 
-void	free_commands(t_data *data)
+// void	free_commands(t_cmdexe **head, void (*del)(void *))
+// {
+// 	t_cmdexe *tmp;
+// 	t_cmdexe *tmp2;
 
-{
-	t_cmdexe	*tmp;
+// 	if (!head || !del)
+// 		return ;
+// 	tmp = *head;
+// 	while (tmp)
+// 	{
+// 		printf("free_commands inside while \n");
+// 		if (tmp->cmd)
+// 			ft_strdel(&tmp->cmd);
+// 		if (tmp->path)
+// 			ft_strdel(&tmp->path);
+// 		if (tmp->args_array)
+// 			free_2darray(tmp->args_array);
+// 		tmp2 = tmp->next;
+// 		free(tmp);
+// 		tmp = tmp2;
+// 	}
+// 	*head = NULL;
+// }
 
-	if (!data->cmd_list)
-		return ;
-	tmp = data->cmd_list;
-	while (tmp)
-	{
-		if (tmp->cmd && ft_strlen(tmp->cmd) > 0)
-			ft_strdel(&tmp->cmd);
-		if (tmp->path && ft_strlen(tmp->path) > 0)
-			ft_strdel(&tmp->path);
-		if (tmp->args_array)
-			free_2darray(tmp->args_array);
-		tmp = tmp->next;
-	}
-	free_2darray(data->cmd_array);
-	free_2darray(data->path);
-	free(tmp);
-}

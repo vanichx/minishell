@@ -57,12 +57,3 @@ int		is_valid_env2(char *str)
 	}	
 	return (1);
 }
-
-// int execute_command(char **command, char *args[])
-// {
-//	 if (execve(*command, args, NULL) == -1) {
-//		 perror("execve");
-//		 return -1;
-//	 }
-//	 return 0;
-// }

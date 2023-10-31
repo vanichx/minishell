@@ -54,24 +54,16 @@ typedef struct s_envir {
 	int			count;
 }				t_envir;
 
-typedef struct	s_cmdexe {
-	char				*cmd;
-	char				*path;
-	char				**args_array;
-	// char				*args;
-	// int					scope;
-	// int					forked;
-	// int					in;
-	// int					out;
-	// int					pipe[2];
-	// int					cmd_type;
-	// t_list				*env_list;
-	struct	s_cmdexe	*next;
-	struct	s_cmdexe	*prev;
-}				t_cmdexe;
+typedef struct	s_tree {
+	t_token_type	type;
+	char			*value;
+	char			**args_array;
+	struct	s_tree	*left;
+	struct	s_tree	*right;
+}				t_tree;
 
 typedef struct	s_data {
-	struct s_cmdexe	*cmd_list;
+	struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
@@ -101,12 +93,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-/* args.c */
-void		evaluate_args(t_data *data, t_cmdexe *cmd);
-void		process_args(t_cmdexe *cmd, t_data *data);
-void		add_more_args(t_cmdexe *cmd, t_token **token,  char **split, t_data *data);
-t_token 	*add_args(t_cmdexe *cmd, t_token **token, char **split, t_data *data);
-char		**join_args(t_cmdexe *cmd);
+
 
 /* builtins.c */
 void		builtin_echo(char **args);
@@ -136,7 +123,6 @@ void		free_data(t_data *data);
 // void		free_flags(t_flags *flags);
 // void		free_delimiter(t_delim *delimiter);
 void		free_envir(t_envir *envir);
-void		free_cmdexe(void *command);
 void		free_2darray(char **array);
 
 /* handle_input.c */
@@ -146,18 +132,18 @@ int			is_valid_env(char *str);
 int			is_valid_env2(char *str);
 
 /* init_data.c */
-t_cmdexe 	*init_cmdexe(void);
+// // t_cmdexe 	*init_cmdexe(void);
 void		init_data(t_data **data, char **envp);
 // t_flags			*init_flags(void);
 
 /* parsing_commads.c */
 int			lexical_analysis(t_data *data, char *input);
-int			find_command_path(t_data *data, t_cmdexe *cmd);
+// int			find_command_path(t_data *data, t_cmdexe *cmd);
 int			parse_command(t_data *data);
 void		child(t_data *data);
 // static char			*find_executable_path(char **paths, char *cmd);
 void		create_commands(t_data *data, char **cmd);
-void		ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
+// void		ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
 void		reset_commands(void *command);
 
 /* reset.c */
@@ -191,19 +177,6 @@ void		ft_enviter(t_envir *lst, void (*f)(void *));
 t_envir		*ft_envlast(t_envir *lst);
 t_envir		*ft_envnew(char *var_name, char *var_value);
 int			ft_envsize(t_envir *lst);
-
-/* Commands lists functions */
-void		ft_cmdadd_back(t_cmdexe **lst, t_cmdexe *new);
-void		ft_cmdadd_front(t_cmdexe **lst, t_cmdexe *new);
-void		ft_cmdclear(t_cmdexe **lst);
-void		ft_cmddelone(t_cmdexe *lst, void (*del)(void *));
-void		ft_cmditer(t_cmdexe *lst, void (*f)(void *));
-t_cmdexe	*ft_cmdlast(t_cmdexe *lst);
-t_cmdexe	*ft_cmdnew(char *cmd);
-int			ft_cmdsize(t_cmdexe *lst);
-void		print_cmdexe_list(t_cmdexe *cmdexe_list);
-void		print_cmdexe(void *cmdexe_node);
-void 		ft_cmd_clear(t_cmdexe **cmd_list);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
@@ -248,14 +221,6 @@ void		clean_space_tokens(t_token **head);
 // void		clear_token(t_token **token, void (*del)(void*));
 
 
-
-/* commands.c */
-void		print_cmdexe(void *cmdexe_node);
-void		add_cmd(t_cmdexe **head, t_cmdexe *new);
-void		clear_cmd_list(t_cmdexe **cmd, void (*del)(void*));
-void		clear_cmd(t_cmdexe *cmd);
-
-
 char		*find_executable_path(char **paths, char *cmd);
 char 		*trim_input(char *input);
 
@@ -277,9 +242,13 @@ int			check_numbers(t_token *tmp);
 
 /* Command Parsing*/
 int		token_len(t_token *token);
-void	cmd_array_init(t_data *data, t_cmdexe *cmd);
-t_cmdexe	*cmd_array_fill(t_data *data, t_cmdexe *cmd);
-void	free_commands(t_data *data);
+
+/*Binary Tree*/
+t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
+void	print_tree(t_tree *tree);
+void	init_tree(t_data *data);
+int		arg_count(t_token *token, t_token *address);
+t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
 
 
 #endif
