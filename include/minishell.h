@@ -58,14 +58,14 @@ typedef struct	s_cmdexe {
 	char				*cmd;
 	char				*path;
 	char				**args_array;
-	char				*args;
-	int					scope;
-	int					forked;
-	int					in;
-	int					out;
-	int					pipe[2];
-	int					cmd_type;
-	t_list				*env_list;
+	// char				*args;
+	// int					scope;
+	// int					forked;
+	// int					in;
+	// int					out;
+	// int					pipe[2];
+	// int					cmd_type;
+	// t_list				*env_list;
 	struct	s_cmdexe	*next;
 	struct	s_cmdexe	*prev;
 }				t_cmdexe;
@@ -152,7 +152,7 @@ void		init_data(t_data **data, char **envp);
 
 /* parsing_commads.c */
 int			lexical_analysis(t_data *data, char *input);
-char		*find_path(t_data *data);
+char		*find_command_path(t_data *data);
 void		parse_command(t_data *data);
 void		child(t_data *data);
 // static char			*find_executable_path(char **paths, char *cmd);
@@ -244,6 +244,7 @@ void		find_threeout(t_token **head);
 void		find_append(t_token *current);
 void		find_delim(t_token *current);
 void		find_inout(t_token **head);
+void		clean_space_tokens(t_token **head);
 // void		clear_token(t_token **token, void (*del)(void*));
 
 

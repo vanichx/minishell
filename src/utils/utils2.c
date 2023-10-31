@@ -72,7 +72,7 @@ int token_len(t_token *token)
 	len = 0;
 	while (token)
 	{
-		if (token->type != T_SPACE && token->type != T_NEWLINE)
+		if (token->type != T_NEWLINE)
 			len++;
 		token = token->next;
 	}
@@ -107,7 +107,7 @@ t_cmdexe *cmd_array_fill(t_data *data, t_cmdexe *cmd)
 	{
 		while (data->token_list != NULL)
 		{
-			if (data->token_list->type != T_SPACE && data->token_list->type != T_NEWLINE)
+			if (data->token_list->type != T_NEWLINE)
 			{
 				cmd->args_array[i] = ft_strdup(data->token_list->word);
 				i++;

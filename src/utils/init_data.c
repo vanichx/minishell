@@ -28,18 +28,18 @@ t_cmdexe *init_cmdexe(void)
 	printf("init cmdexe malloc success\n");
 	if (!cmdexe)
 		return (NULL);
-	cmdexe->args = NULL;
-	cmdexe->env_list = NULL;
+	// cmdexe->args = NULL;
+	// cmdexe->env_list = NULL;
 	cmdexe->args_array = NULL;
 	cmdexe->path = NULL;
 	cmdexe->cmd = NULL;
-	cmdexe->scope = 0;
-	cmdexe->forked = 0;
-	cmdexe->in = 0;
-	cmdexe->out = 0;
-	cmdexe->pipe[0] = 0;
-	cmdexe->pipe[1] = 0;
-	cmdexe->cmd_type = 0;
+	// cmdexe->scope = 0;
+	// cmdexe->forked = 0;
+	// cmdexe->in = 0;
+	// cmdexe->out = 0;
+	// cmdexe->pipe[0] = 0;
+	// cmdexe->pipe[1] = 0;
+	// cmdexe->cmd_type = 0;
 	cmdexe->next = NULL;
 	cmdexe->prev = NULL;
 	return (cmdexe);

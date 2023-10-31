@@ -98,6 +98,7 @@ int	set_token_type(t_data *data)
 	fix_tokens(&data->token_list);
 	if (check_token_error1(data->token_list, data))
 		return (1);
+	clean_space_tokens(&data->token_list);
 	return (0);
 }
 

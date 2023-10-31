@@ -18,7 +18,7 @@ void	start_loop(t_data *data)
 		if ((odd_quote(data->input_line, data)) || (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue;
-		// print_tokens(data);////Debug
+		printf("token length: %d\n", token_len(data->token_list));
 		
 		parse_command(data);
 		// free(data->input_line);

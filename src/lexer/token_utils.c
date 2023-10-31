@@ -68,3 +68,28 @@ t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 	new->type = type;
 	return (new);
 }
+
+void	clean_space_tokens(t_token **head)
+{
+    t_token *current = *head;
+    t_token *tmp;
+
+    while (current != NULL)
+    {
+        tmp = current;
+        if (tmp->type == T_SPACE)
+        {
+            if (tmp->prev != NULL)
+                tmp->prev->next = tmp->next;
+            else
+                *head = tmp->next;
+            if (tmp->next != NULL)
+                tmp->next->prev = tmp->prev;
+            current = tmp->next;
+			ft_strdel(&tmp->word);
+            free(tmp);
+        }
+        else
+            current = current->next;
+    }
+}
