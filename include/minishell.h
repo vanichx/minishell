@@ -65,8 +65,8 @@ typedef struct	s_tree {
 }				t_tree;
 
 typedef struct	s_data {
-	struct t_tree	*tree;
-	struct t_token	*token_list;
+	struct s_tree	*tree;
+	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
 	int				single_quote;
@@ -84,14 +84,14 @@ typedef struct	s_data {
 	char			*exit_str;
 	char 			**env_array;
 	char 			**cmd_array;
-	char 			**path
+	char 			**path;
 }				t_data;
 
 typedef struct s_token
 {
 	t_token_type 		type;
 	char 				*word;
-	struct t_parenth	*parenth;
+	struct s_parenth	*parenth;
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;
