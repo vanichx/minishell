@@ -3,14 +3,36 @@
 void	tokenise(t_data *data, char *str)
 {
 	int	i;
+	int parenCount;
+	
 	t_token **head;
 
 	i = 0;
+	parenCount = 1;
 	head = &data->token_list;
 	data->count = 0;
 	while (str[i])
 	{
-		if (!find_token(data, str, &i, head))
+		if (str[i] == '(') {
+            i++;
+            while (str[i] && parenCount > 0) {
+                if (str[i] == '(') {
+                    parenCount++;
+                } else if (str[i] == ')') {
+                    parenCount--;
+                }
+				data->count++;
+                i++;
+            }
+            if (parenCount == 0)
+			{
+				data->count--;
+				i--;
+                add_token(head, create_parenth_token(data, i));
+				i++;
+			}
+        } 
+		else if (!find_token(data, str, &i, head))
 			continue ;
 		data->count++;
 		if (find_token2(i, str, "|") || find_token2(i, str, ">")
@@ -70,6 +92,8 @@ void	set_token_type2(t_token *token)
 		token->type = T_STAR;
 	else if (!ft_strcmp(token->word, "&"))
 		token->type = T_AMPER;
+	else if (token->type == T_PARENTHESES)
+		return ;
 	else if (token->type !=  T_NEWLINE)
 		token->type = T_WORD;
 }

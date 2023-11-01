@@ -57,6 +57,19 @@ t_token	*create_token(t_data *data, int i)
 	return (new);
 }
 
+t_token	*create_parenth_token(t_data *data, int i)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	if (!new)
+		exit_shell("Error: malloc failed\n", 1, data);
+	new->word = ft_substr(data->input_line, i - data->count, data->count);
+	new->type = T_PARENTHESES;
+	data->count = 0;
+	return (new);
+}
+
 t_token	*create_arg_token(t_data *data, char *word, enum e_token_type type)
 {
 	t_token	*new;

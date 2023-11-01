@@ -18,7 +18,7 @@ int	lexical_analysis(t_data *data, char *input)
 	if (set_token_type(data))
 		return (1);
 	
-	print_tokens(data);
+	// print_tokens(data);
 	//evaluate_tokens(data);
 	tmp = data->token_list;
 	// while (tmp)

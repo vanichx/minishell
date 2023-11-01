@@ -18,10 +18,10 @@ void	start_loop(t_data *data)
 		if ((odd_quote(data->input_line, data)) || (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue;
-		
-		init_tree(data);
-		last_input(data->tree);
-		last_output(data->tree);
+		print_tokens(data);
+		// init_tree(data);
+		// last_input(data->tree);
+		// last_output(data->tree);
 
 		// printf("token length: %d\n", token_len(data->token_list));
 		
@@ -31,3 +31,9 @@ void	start_loop(t_data *data)
 
 
 // ivan > erik > alex < hello < world > ls
+
+
+
+
+
+// (cat && ((echo "Hello") &&  (echo "Didn't find 'W'"))) || echo "Failed" || (echo "Failed 2" && echo "Failed 3") || (ls && echo "Failed 4" && echo "Failed 5")
