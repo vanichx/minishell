@@ -11,17 +11,15 @@ int	check_token_error1(t_token *token, t_data *data)
 		str = check_first_token(&data->input_line[i], &i);
 		if (str == NULL)
 			return (0);
-		while (token->type == T_WORD)
+		while (token->type == T_WORD || token->type == T_SPACE)
 			token = token->next;
-		// printf("%s\n", str);
+		printf("%s\n%d\n", str, token->type);
 		if (check_and(token, str))
 			return (1);
 		if (check_red(token, str))
 			return (1);
 		if (check_pipe_or(token))
 			return (1);
-		if (token->next->type == T_SPACE)
-			token = token->next;
 		token = token->next;
 	}
 	return (0);
