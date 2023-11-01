@@ -20,8 +20,14 @@ void	start_loop(t_data *data)
 			continue;
 		
 		init_tree(data);
+		last_input(data->tree);
+		last_output(data->tree);
+
 		// printf("token length: %d\n", token_len(data->token_list));
 		
 		// free(data->input_line);
 	}
 }
+
+
+// ivan > erik > alex < hello < world > ls
