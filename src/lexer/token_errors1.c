@@ -3,18 +3,25 @@
 int	check_token_error1(t_token *token, t_data *data)
 {
 	char *str;
+	int i;
 
-	str = check_first_token(data->input_line);
-	if (str == NULL)
-		return (0);
+	i = 0;
 	while (token)
 	{
+		str = check_first_token(&data->input_line[i], &i);
+		if (str == NULL)
+			return (0);
+		while (token->type == T_WORD)
+			token = token->next;
+		// printf("%s\n", str);
 		if (check_and(token, str))
 			return (1);
 		if (check_red(token, str))
 			return (1);
 		if (check_pipe_or(token))
 			return (1);
+		if (token->next->type == T_SPACE)
+			token = token->next;
 		token = token->next;
 	}
 	return (0);
@@ -33,7 +40,8 @@ int check_and(t_token *token, char *str)
 		return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
 	}
 	if (!ft_strcmp(str, "&&"))
-		return (printf("minishell: syntax error near unexpected token `&&'\n"), 1);
+		if (token->prev->type != T_WORD)
+			return (printf("minishell: syntax error near unexpected token `&&'\n"), 1);
 	return (0);
 }
 
@@ -64,37 +72,34 @@ int check_red(t_token *token, char *str)
 }
 
 
-char	*check_first_token(char *str)
+char	*check_first_token(char *str, int *i)
 {
 	while (*str)
 	{
 		if (*str == '|' && *(str + 1) == '|')
-			return ("||");
+			return (*i += 2, "||");
 		if (*str == '|')
-			return ("|");
+			return (*i += 1, "|");
 		if (*str == '<' && *(str + 1) == '>')
-			return ("<>");
+			return (*i += 2, "<>");
 		if (*str == '<' && *(str + 1) == '<' && *(str + 2) == '<' && *(str + 3) != '>')
-			return ("<<<");
+			return (*i += 3, "<<<");
 		if (*str == '>' && *(str + 1) == '>' && *(str + 2) == '>')
-			return (">>>");
+			return (*i += 3, ">>>");
 		if (*str == '>' && *(str + 1) == '>')
-			return (">>");
+			return (*i += 2, ">>");
 		if (*str == '>')
-			return (">");
+			return (*i += 1, ">");
 		if (*str == '<' && *(str + 1) == '<' && *(str + 2) != '>')
-			return ("<<");
+			return (*i += 2, "<<");
 		if (*str == '<')
-			return ("<");
+			return (*i += 1, "<");
 		if (*str == '&' && *(str + 1) == '&')
-			return ("&&");
+			return (*i += 2, "&&");
 		if (*str == '&')
-			return ("&");
-		if (*str == '*')
-			return ("*");
-		if (*str == '$')
-			return ("$");
+			return (*i += 1, "&");
 		str++;
+		(*i)++;
 	}
 	return (NULL);
 }
@@ -103,6 +108,9 @@ int check_red_in(t_token *token)
 {
 	if (token->type == T_RED_INP)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type == T_IN_OUT)
 		{
 			if (token->next->next->type == T_PIPE || token->next->next->type == T_OR)
@@ -149,6 +157,9 @@ int check_red_out(t_token *token)
 {
 	if (token->type == T_RED_OUT)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type == T_IN_OUT)
 				return (printf("minishell: syntax error near unexpected token `<>'\n"), 1);
 		if (token->next->type == T_AND)
@@ -189,6 +200,9 @@ int	check_delim(t_token *token)
 {
 	if (token->type == T_DELIM)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type != T_SPACE)
 		{
 			if (token->next->type == T_IN_OUT)
@@ -219,6 +233,9 @@ int	check_append(t_token *token)
 {
 	if (token->type == T_APPEND)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type != T_SPACE)
 			if (check_red_general(token))
 				return (1);
@@ -232,6 +249,9 @@ int	check_threein(t_token *token)
 {
 	if (token->type == T_THREE_IN)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type == T_SPACE)
 			if (check_red_general(token->next))
 				return (1);
@@ -262,6 +282,9 @@ int check_inout(t_token *token)
 {
 	if (token->type == T_IN_OUT)
 	{
+		if ((token->next->type == T_SPACE && token->next->next->type == T_WORD) 
+			|| token->next->type == T_WORD)
+			return (0);
 		if (token->next->type == T_SPACE)
 			if (check_red_general(token->next))
 				return (1);
@@ -294,9 +317,9 @@ int check_red_general(t_token *tmp)
 	if (tmp->next->type == T_RED_OUT && (tmp->next->next->type == T_PIPE 
 		|| tmp->next->next->type == T_OR))
 		return (printf("minishell: syntax error near unexpected token `>|'\n"), 1);
-	if (tmp->next->type && tmp->next->type != T_WORD)
-		return (printf("minishell: syntax error near unexpected token `%s'\n", \
-			tmp->next->word), 1);
+	if (tmp->next->type != T_WORD)
+			return (printf("minishell: syntax error near unexpected token `%s'\n", \
+				tmp->next->word), 1);
 	return (0);
 }
 

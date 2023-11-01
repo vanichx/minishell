@@ -229,7 +229,7 @@ int			check_threeout(t_token *token);
 int			check_threein(t_token *token);
 int			check_delim(t_token *token);
 int			check_append(t_token *token);
-char		*check_first_token(char *str);
+char		*check_first_token(char *str, int *i);
 int			check_token_error1(t_token *token, t_data *data);
 int			check_and(t_token *token, char *str);
 int			check_red(t_token *token, char *str);
