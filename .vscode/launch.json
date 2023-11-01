@@ -4,10 +4,10 @@
 			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/Users/alappas/Desktop/minishell/minishell",
+			"program": "/Users/alappas/42WOLFSBURG/PROJECTS/minishell/minishell",
 			"args": [], 
 			"stopAtEntry": false,
-			"cwd": "/Users/alappas/Desktop/minishell/",
+			"cwd": "/Users/alappas/42WOLFSBURG/PROJECTS/minishell/",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"
