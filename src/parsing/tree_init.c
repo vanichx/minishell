@@ -30,7 +30,9 @@ void	init_tree(t_data *data)
 			}
 			delim++;
 		}
-		address = address->next;
+		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
+		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
+			address = address->next;
 	}
 	if (delim == 0)
 	{
@@ -134,7 +136,7 @@ void print_tree(t_tree *tree)
 		{
 			while (tree->args_array[i])
 			{
-				printf("tree->args_array[%d]: %s\n", i, tree->args_array[i]);
+				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
 				i++;
 			}
 		}
@@ -143,7 +145,7 @@ void print_tree(t_tree *tree)
 		{
 			while (tree->left->args_array[i])
 			{
-				printf("tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
+				printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
 				i++;
 			}
 		}
