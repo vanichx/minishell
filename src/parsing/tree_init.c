@@ -13,24 +13,23 @@ void	init_tree(t_data *data)
 	delim = 0;
 	while (address)
 	{
-		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
+		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT || address->type == T_THREE_IN
 			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND || address->type == T_DELIM)
 		{
 			if (tree == NULL)
 			{
 				tree = set_tree_root(&data->token_list, address, tree);
 				data->tree = tree;
-				address = data->token_list;
 			}
 			else
 			{
 				tree->right = set_tree_root(&data->token_list, address, tree);
 				tree = tree->right;
-				address = data->token_list;
 			}
+			address = data->token_list;
 			delim++;
 		}
-		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
+		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT && address->type != T_THREE_IN
 		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
 			address = address->next;
 	}

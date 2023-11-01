@@ -13,7 +13,6 @@ int	check_token_error1(t_token *token, t_data *data)
 			return (0);
 		while (token->type == T_WORD || token->type == T_SPACE)
 			token = token->next;
-		printf("%s\n%d\n", str, token->type);
 		if (check_and(token, str))
 			return (1);
 		if (check_red(token, str))
@@ -338,7 +337,6 @@ int		check_pipe_or(t_token *tmp)
 			if (tmp->next->next->type == T_PIPE)
 				return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
 		}
-		return (printf("minishell: syntax error near unexpected token `|'\n"), 1);
 	}
 	if (tmp->type == T_OR && (tmp->prev->type == T_OR || tmp->next == NULL
 		|| tmp->next->type == T_PIPE || tmp->next->type == T_OR))
