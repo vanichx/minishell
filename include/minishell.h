@@ -58,6 +58,8 @@ typedef struct	s_tree {
 	t_token_type	type;
 	char			*value;
 	char			**args_array;
+	struct	s_tree	*last_input;
+	struct	s_tree	*last_output;
 	struct	s_tree	*left;
 	struct	s_tree	*right;
 }				t_tree;
@@ -139,7 +141,6 @@ int			is_valid_env(char *str);
 int			is_valid_env2(char *str);
 
 /* init_data.c */
-// // t_cmdexe 	*init_cmdexe(void);
 void		init_data(t_data **data, char **envp);
 // t_flags			*init_flags(void);
 
@@ -258,5 +259,6 @@ int		arg_count(t_token *token, t_token *address);
 t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
 void	free_tree(t_data *data);
 
-
+void	last_input(t_tree *tree);
+void	last_output(t_tree *tree);
 #endif

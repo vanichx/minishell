@@ -37,7 +37,8 @@ int check_and(t_token *token, char *str)
 		return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
 	}
 	if (!ft_strcmp(str, "&&"))
-		if (token->prev->type != T_WORD)
+		if ((token->prev->type == T_SPACE && token->prev->prev->type != T_WORD)
+			|| (token->prev->type != T_SPACE && token->prev->type != T_WORD))
 			return (printf("minishell: syntax error near unexpected token `&&'\n"), 1);
 	return (0);
 }
