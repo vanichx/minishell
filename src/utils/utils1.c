@@ -56,6 +56,31 @@ char *trim_input(char *input)
 	return (str);
 }
 
+char *trim_input_parenth(char *input)
+{
+	if (!input || !*input)
+		return (NULL);
+	char *str;
+	int	i;
+	int j;
+
+	if (!(str = ft_calloc(1, ft_strlen(input) + 1)))
+		exit_shell("Error: malloc failed\n", 1, NULL);
+	i = 0;
+	j = 0;
+	while (input[i])
+	{
+		while ((input[i] == '(' || input[i] == ')'))
+            i++;
+		while (in_quotes(input, i) && input[i])
+			str[j++] = input[i++];
+		str[j++] = input[i++];
+	}
+	i = ft_strlen(str) - 1;
+	str[j] = '\0';
+	return (str);
+}
+
 int	ft_is_in_stri(char c, char *str)
 {
 	int		i;

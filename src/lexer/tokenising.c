@@ -20,12 +20,14 @@ void	tokenise(t_data *data, char *str)
 		data->count++;
 		if (find_token2(i, str, "|") || find_token2(i, str, ">")
 			|| find_token2(i, str, "<") || find_token2(i, str, "&"))
-			add_token(head, create_token(data, i + 1));
+			add_token(head, create_token(data, i + 1, str));
 		i++;
 	}
+	
+	printf("STRING2 = %s\n", str);
 	if (i > 0)
 	{
-		add_token(head, create_token(data, i));
+		add_token(head, create_token(data, i, str));
 		add_token(head, create_arg_token(data, "newline", T_NEWLINE));
 	}
 }
@@ -48,7 +50,7 @@ int find_parenthesis_token(t_data *data, char *str, int *i, t_token **head)
 	if (parenCount == 0)
 	{
 		data->count--;
-		add_token(head, create_parenth_token(data,  *i));
+		add_token(head, create_parenth_token(data,  *i, str));
 		(*i)++;
 	}
 	else
@@ -64,7 +66,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 	if (is_chr_str(str[*i], " \t*") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1))
 	{
-		add_token(head, create_token(data, *i));
+		add_token(head, create_token(data, *i, str));
 		if (str[*i] == '*')
 			add_token(head, create_arg_token(data, "*", T_STAR));
 		else
@@ -76,7 +78,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 	else if (is_chr_str(str[*i], "|<>&") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
 		&& !is_chr_str(str[*i - 1], "|<>&"))
-		add_token(head, create_token(data, *i));
+		add_token(head, create_token(data, *i, str));
 	return (1);
 }
 

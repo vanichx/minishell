@@ -82,6 +82,7 @@ typedef struct	s_data {
 	int				forked;
 	char			*input_minishell;
 	char			*input_line;
+	char			*input_line_errors;
 	char			*curr_dir;
 	char			*exit_str;
 	char 			**env_array;
@@ -205,7 +206,7 @@ void		tokenise(t_data *data, char *str);
 int			find_token2(int i, char *str, char *splt);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
-t_token		*create_token(t_data *data, int i);
+t_token		*create_token(t_data *data, int i, char *input);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 t_token  	*last_token(t_token *lst);
 void		add_token(t_token **token, t_token *new);
@@ -263,9 +264,9 @@ void	free_tree(t_data *data);
 
 void	last_input(t_tree *tree);
 void	last_output(t_tree *tree);
-t_token	*create_parenth_token(t_data *data, int i);
+t_token	*create_parenth_token(t_data *data, int i, char *input);
 int		find_parenthesis_token(t_data *data, char *str, int *i, t_token **head);
-
+char *trim_input_parenth(char *input);
 
 
 #endif
