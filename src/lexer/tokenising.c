@@ -163,6 +163,7 @@ int check_parenth(t_token **token)
 				return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->word), 1);
 		*token = (*token)->next;
 	}
+	*token = head;
 	return (0);
 
 }
