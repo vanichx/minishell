@@ -9,12 +9,11 @@ void	start_loop(t_data *data)
 		line = readline(data->input_minishell);
 		if (handle_d(data, line))
 			continue;
-		
 		data->input_line = trim_input(line);
 		data->input_line_errors = trim_input_parenth(data->input_line);
 		ft_strdel(&line);
-		// printf("input_line = %s\n", data->input_line);
-		// printf("input_line_errors = :%s:\n", data->input_line_errors);
+		// printf("input_line = %s\n", data->input_line);//debug
+		// printf("input_line_errors = :%s:\n", data->input_line_errors);//debug
 		// data->input_line = "(hello my name is school)"; //debug
 		// data->input_line_errors = "hello my name is school"; //debug
 		check_exit(data->input_line);
@@ -29,8 +28,8 @@ void	start_loop(t_data *data)
 		if ((odd_quote(data->input_line, data)) || (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue;
-		print_tokens(data);
-		// init_tree(data);
+		print_tokens(data);//debug
+		// init_tree(data->token_list);
 		// last_input(data->tree);
 		// last_output(data->tree);
 

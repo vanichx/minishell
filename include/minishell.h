@@ -250,23 +250,26 @@ int			check_red_out(t_token *token);
 int			check_inout(t_token *token);
 int			check_pipe_or(t_token *token);
 int			check_numbers(t_token *tmp);
+int			check_parenth(t_token **token);
 
 /* Command Parsing*/
 int		token_len(t_token *token);
 
 /*Binary Tree*/
-t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
-void	print_tree(t_tree *tree);
-void	init_tree(t_data *data);
-int		arg_count(t_token *token, t_token *address);
-t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
-void	free_tree(t_data *data);
+t_tree		*set_tree_root(t_token **token, t_token *address, t_tree *tree);
+void		print_tree(t_tree *tree);
+// t_tree		*init_tree(t_token *token);
+void		init_tree(t_data *data);
+t_tree		*create_node(t_token *lowestPriorityOperator);
+int			arg_count(t_token *token, t_token *address);
+t_tree		*set_tree_leaf(t_token **token, t_tree *tree);
+void		free_tree(t_data *data);
 
-void	last_input(t_tree *tree);
-void	last_output(t_tree *tree);
-t_token	*create_parenth_token(t_data *data, int i, char *input);
-int		find_parenthesis_token(t_data *data, char *str, int *i, t_token **head);
-char *trim_input_parenth(char *input);
+void		last_input(t_tree *tree);
+void		last_output(t_tree *tree);
+t_token		*create_parenth_token(t_data *data, int i, char *input);
+int			find_parenthesis_token(t_data *data, char *str, int *i, t_token **head);
+char		*trim_input_parenth(char *input);
 
 
 #endif

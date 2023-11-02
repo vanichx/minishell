@@ -19,11 +19,11 @@ void	tokenise(t_data *data, char *str)
 			continue ;
 		data->count++;
 		if (find_token2(i, str, "|") || find_token2(i, str, ">")
-			|| find_token2(i, str, "<") || find_token2(i, str, "&"))
+			|| find_token2(i, str, "<") || find_token2(i, str, "&")
+			|| find_token2(i, str, "$"))
 			add_token(head, create_token(data, i + 1, str));
 		i++;
 	}
-	
 	printf("STRING2 = %s\n", str);
 	if (i > 0)
 	{
@@ -41,9 +41,9 @@ int find_parenthesis_token(t_data *data, char *str, int *i, t_token **head)
 	{
 		data->count++;
 		(*i)++;
-		if (str[*i] == '(')
+		if (str[*i] == '(' && !in_quotes(str, *i))
 			parenCount++;
-		else if (str[*i] == ')')
+		else if (str[*i] == ')' && !in_quotes(str, *i))
 			parenCount--;
 	}
 		
@@ -75,9 +75,9 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 		data->count = 0;
 		return (0);
 	}
-	else if (is_chr_str(str[*i], "|<>&") && !in_quotes(str, *i)
+	else if (is_chr_str(str[*i], "|<>&$") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1) && *i > 0
-		&& !is_chr_str(str[*i - 1], "|<>&"))
+		&& !is_chr_str(str[*i - 1], "|<>&$"))
 		add_token(head, create_token(data, *i, str));
 	return (1);
 }
@@ -106,6 +106,8 @@ void	set_token_type2(t_token *token)
 		token->type = T_STAR;
 	else if (!ft_strcmp(token->word, "&"))
 		token->type = T_AMPER;
+	else if (!ft_strcmp(token->word, "$"))
+		token->type = T_DOLLAR;
 	else if (token->type == T_PARENTHESES)
 		return ;
 	else if (token->type !=  T_NEWLINE)
@@ -140,7 +142,28 @@ int	set_token_type(t_data *data)
 	if (check_token_error1(data->token_list, data))
 		return (1);
 	clean_space_tokens(&data->token_list);
+	print_tokens(data);//debug
+	if (check_parenth(&data->token_list))
+		return (1);
 	return (0);
+}
+
+int check_parenth(t_token **token)
+{
+	t_token *head;
+
+	head = *token;
+	while (*token)
+	{
+		if ((*token)->type == T_PARENTHESES && (*token)->next->type != T_PIPE && (*token)->next->type != T_RED_INP && (*token)->next->type != T_RED_OUT
+ 			&& (*token)->next->type != T_APPEND && (*token)->next->type != T_OR && (*token)->next->type != T_AND && (*token)->next->type != T_DELIM && (*token)->next->type != T_NEWLINE)
+			return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->next->word), 1);
+		if ((*token)->type == T_PARENTHESES && (*token)->prev->type != T_DOLLAR)
+			return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->word), 1);
+		*token = (*token)->next;
+	}
+	return (0);
+
 }
 
 // t_token	*split_tokens_to_list(char **split, t_data *data)
