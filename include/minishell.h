@@ -263,4 +263,8 @@ void	free_tree(t_data *data);
 void	last_input(t_tree *tree);
 void	last_output(t_tree *tree);
 t_token	*create_parenth_token(t_data *data, int i);
+int		find_parenthesis_token(t_data *data, char *str, int *i, t_token **head);
+
+
+
 #endif

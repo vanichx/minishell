@@ -33,7 +33,7 @@ void	start_loop(t_data *data)
 // ivan > erik > alex < hello < world > ls
 
 
-
+//(echo Hello || echo Erik) || echo Privet
 
 
 // (cat && ((echo "Hello") &&  (echo "Didn't find 'W'"))) || echo "Failed" || (echo "Failed 2" && echo "Failed 3") || (ls && echo "Failed 4" && echo "Failed 5")

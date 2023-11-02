@@ -3,35 +3,18 @@
 void	tokenise(t_data *data, char *str)
 {
 	int	i;
-	int parenCount;
-	
 	t_token **head;
 
 	i = 0;
-	parenCount = 1;
 	head = &data->token_list;
-	data->count = 0;
+	data->count = 0;//Need to init this value during the initialization of the data structure
 	while (str[i])
 	{
-		if (str[i] == '(') {
-            i++;
-            while (str[i] && parenCount > 0) {
-                if (str[i] == '(') {
-                    parenCount++;
-                } else if (str[i] == ')') {
-                    parenCount--;
-                }
-				data->count++;
-                i++;
-            }
-            if (parenCount == 0)
-			{
-				data->count--;
-				i--;
-                add_token(head, create_parenth_token(data, i));
-				i++;
-			}
-        } 
+		if (str[i] == '(')
+		{
+			if (!find_parenthesis_token(data, str, &i, head))
+				continue ;
+		}
 		else if (!find_token(data, str, &i, head))
 			continue ;
 		data->count++;
@@ -45,6 +28,35 @@ void	tokenise(t_data *data, char *str)
 		add_token(head, create_token(data, i));
 		add_token(head, create_arg_token(data, "newline", T_NEWLINE));
 	}
+}
+
+int find_parenthesis_token(t_data *data, char *str, int *i, t_token **head)
+{
+	int parenCount;
+
+	parenCount = 1;
+	while (str[*i] && parenCount > 0)
+	{
+		data->count++;
+		(*i)++;
+		if (str[*i] == '(')
+			parenCount++;
+		else if (str[*i] == ')')
+			parenCount--;
+	}
+		
+	if (parenCount == 0)
+	{
+		data->count--;
+		add_token(head, create_parenth_token(data,  *i));
+		(*i)++;
+	}
+	else
+	{
+		printf("pls close fucking parenthesis, don't broke our program\n");
+		return (1);
+	}
+	return (parenCount);
 }
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
@@ -97,6 +109,9 @@ void	set_token_type2(t_token *token)
 	else if (token->type !=  T_NEWLINE)
 		token->type = T_WORD;
 }
+
+
+
 
 int	set_token_type(t_data *data)
 {
