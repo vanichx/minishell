@@ -64,7 +64,7 @@ char *trim_input_parenth(char *input)
 	int	i;
 	int j;
 
-	if (!(str = ft_calloc(1, ft_strlen(input) + 1)))
+	if (!(str = malloc(sizeof(char) * (ft_strlen(input) + 1))))
 		exit_shell("Error: malloc failed\n", 1, NULL);
 	i = 0;
 	j = 0;
@@ -72,7 +72,7 @@ char *trim_input_parenth(char *input)
 	{
 		while ((input[i] == '(' || input[i] == ')'))
             i++;
-		while (in_quotes(input, i) && input[i])
+		while (in_quotes(input, i) && input[i]) 
 			str[j++] = input[i++];
 		str[j++] = input[i++];
 	}
