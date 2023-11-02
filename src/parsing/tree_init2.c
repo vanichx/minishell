@@ -1,154 +1,99 @@
-// #include "minishell.h"
+#include "minishell.h"
 
-// void	init_tree(t_data *data)
-// {
-// 	t_tree	*tree;
-// 	t_token	*head;
-// 	t_token	*address;
-// 	int		delim;
+int is_command(const char* word)
+{
+	int		i;
+	char	**commands;
 
-// 	tree = NULL;
-// 	address = data->token_list;
-// 	head = data->token_list;
-// 	delim = 0;
-// 	while (address)
-// 	{
-// 		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT || address->type == T_THREE_IN
-// 			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND || address->type == T_DELIM)
-// 		{
-// 			if (tree == NULL)
-// 			{
-// 				tree = set_tree_root(&data->token_list, address, tree);
-// 				data->tree = tree;
-// 			}
-// 			else
-// 			{
-// 				tree->right = set_tree_root(&data->token_list, address, tree);
-// 				tree = tree->right;
-// 			}
-// 			address = data->token_list;
-// 			delim++;
-// 		}
-// 		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT && address->type != T_THREE_IN
-// 		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
-// 			address = address->next;
-// 	}
-// 	if (delim == 0)
-// 	{
-// 		address = data->token_list;
-// 		tree = set_tree_leaf(&data->token_list, tree);
-// 		data->tree = tree;
-// 	}
-// 	else
-// 	{
-// 		tree->right = set_tree_leaf(&data->token_list, tree);
-// 		tree = tree->right;
-// 	}
-// 	print_tree(data->tree);
-// 	data->token_list = head;
-// }
+	i = 0;
+	commands = (char *[]){"echo", "ls", "cd", "pwd", "mkdir", "rmdir", "touch", "export", "unset", "env", NULL};
+	while (i < len_2darray(commands)) 
+	{
+		if (!ft_strcmp(word, commands[i]))
+			return (1);
+		i++;
+	}
+	return (0); // Word is not in the list of commands
+}
 
-// t_tree	*set_tree_leaf(t_token **token, t_tree *tree)
-// {
-// 	int arg_nums;
-// 	int i;
-
-// 	tree = (t_tree *)malloc(sizeof(t_tree));
-// 	if (!tree)
-// 		return (NULL);
-// 	tree->type = (*token)->type;
-// 	tree->value = (*token)->word;
-// 	i = 0;
-// 	arg_nums =	arg_count(*token, NULL);
-// 	if (arg_nums != 0)
-// 		tree->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-// 	while (*token != NULL)
-// 	{
-// 		tree->args_array[i] = ft_strdup((*token)->word);
-// 		*token = (*token)->next;
-// 		i++;
-// 	}
-// 	tree->args_array[i] = NULL;
-// 	tree->left = NULL;
-// 	tree->right = NULL;
-// 	return (tree);
-// }
-
-// t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree)
-// {
-// 	int arg_nums;
-// 	int i;
-
-// 	tree = (t_tree *)malloc(sizeof(t_tree));
-// 	if (!tree)
-// 		return (NULL);
-// 	tree->type = (address)->type;
-// 	tree->value = address->word;
-// 	tree->args_array = NULL;
-// 	i = 0;
-// 	arg_nums =	arg_count(*token, address);
-// 	tree->left = (t_tree *)malloc(sizeof(t_tree));
-// 	if (!tree)
-// 	{
-// 		free(tree);
-// 		return (NULL);
-// 	}
-// 	tree->left->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-// 	while (*token != address)
-// 	{
-// 		tree->left->args_array[i] = ft_strdup((*token)->word);
-// 		*token = (*token)->next;
-// 		i++;
-// 	}
-// 	tree->left->args_array[i] = NULL;
-// 	*token = (*token)->next;
-// 	tree->right = NULL;
-// 	return (tree);
-// }
-
-// int		arg_count(t_token *token, t_token *address)
-// {
-// 	int count;
-
-// 	count = 0;
-// 	while (token != address)
-// 	{
-// 		count++;
-// 		token = token->next;
-// 	}
-// 	return (count);
-// }
+t_tree *init_tree(t_token *token)
+{
+	t_tree *head = malloc(sizeof(t_tree));
+	head->type = token->type;
+	head->left = NULL;
+	head->right = NULL;
 
 
-// void print_tree(t_tree *tree)
-// {
-// 	int i;
+	while (token->type != T_NEWLINE)
+	{
+			if (token->type == T_PARENTHESES)
+			head->left = build_tree_from_tokens(token->next, token->parenth);
+		else if (token->type == T_WORD) 
+		{
+			if (is_command(token->word))
+				head->command = token->word;
+			else
+			{
+				////while
+				head->args_array = token->word;//Maybe here we will need the while loop to copy arguments
+			}
+		}
+		token = token->next;
+	}
 
-// 	i = 0;
-// 	if (tree == NULL)
-// 		return ;
-// 	while (tree)
-// 	{
-// 		printf("tree->type: %d\n", tree->type);
-// 		printf("tree->value: %s\n", tree->value);
-// 		if (tree->args_array)
-// 		{
-// 			while (tree->args_array[i])
-// 			{
-// 				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		if (tree->left)
-// 		{
-// 			while (tree->left->args_array[i])
-// 			{
-// 				printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		tree = tree->right;
-// 	}
-// }
+
+	return (head);
+}
+
+// Recursive function to build the binary tree
+t_tree *build_tree_from_tokens(t_token *start, t_token *end)
+{
+	if (start == NULL || start == end) return NULL;
+
+	t_token *current = start;
+	t_token *lowestPriorityOperator = NULL;
+	t_token *parenthesisOpen = NULL;
+	int parenCount = 0;
+
+	while (current != end->next)
+	{
+		if (current->type == T_PARENTHESES) 
+		{
+			if (parenCount == 0)
+				parenthesisOpen = current;
+			parenCount++;
+		}
+		else if (current->type == T_PARENTHESES && parenCount > 0)
+		{
+			parenCount--;
+			if (parenCount == 0)
+			{
+				t_tree *subexpression = build_tree_from_tokens(parenthesisOpen->next, current->prev);
+				if (lowestPriorityOperator == NULL)
+					return subexpression;
+				else 
+				{
+					t_tree *node = create_node(lowestPriorityOperator);
+					node->left = subexpression;
+					node->right = build_tree_from_tokens(current->next, end);
+					return node;
+				}
+			}
+		}
+		else if ((current->type == T_OR || current->type == T_AND) && parenCount == 0)
+		{
+			if (lowestPriorityOperator == NULL || current->type < lowestPriorityOperator->type)
+				lowestPriorityOperator = current;
+		}
+		current = current->next;
+	}
+	if (lowestPriorityOperator != NULL)
+	{
+		t_tree *node = create_node(lowestPriorityOperator);
+		node->left = build_tree_from_tokens(start, lowestPriorityOperator->prev);
+		node->right = build_tree_from_tokens(lowestPriorityOperator->next, end);
+		return node;
+	}
+	else
+		return init_tree(start);// If no operators are found, assume it's a single command
+}

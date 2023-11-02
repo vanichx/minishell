@@ -84,6 +84,8 @@ char	*check_first_token(char *str, int *i)
 			return (*i += 3, "<<<");
 		if (*str == '>' && *(str + 1) == '>' && *(str + 2) == '>')
 			return (*i += 3, ">>>");
+		if (*str == '>' && *(str + 1) == '>' && *(str + 2) == '>')
+			return (*i += 3, ">>>");
 		if (*str == '>' && *(str + 1) == '>')
 			return (*i += 2, ">>");
 		if (*str == '>')

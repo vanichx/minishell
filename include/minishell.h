@@ -58,6 +58,7 @@ typedef struct s_envir {
 typedef struct	s_tree {
 	t_token_type	type;
 	char			*value;
+	char			*command;
 	char			**args_array;
 	struct	s_tree	*last_input;
 	struct	s_tree	*last_output;
