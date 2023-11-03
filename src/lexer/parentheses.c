@@ -125,25 +125,30 @@ t_token	*create_parenth_token(t_data *data, int i, char *input)
     return (new);
 }
 
-int check_parenth(t_token **token)
+int syntax_error_parenth(t_token **token)
 {
-	t_token *head;
+    t_token *head;
 
-	head = *token;
-	while (*token)
-	{
-		if ((*token)->type == T_PARENTHESES)
-		{
-			if ((*token)->next->type != T_PIPE && (*token)->next->type != T_RED_INP && (*token)->next->type != T_RED_OUT
-				&& (*token)->next->type != T_APPEND && (*token)->next->type != T_OR && (*token)->next->type != T_AND && (*token)->next->type != T_DELIM && (*token)->next->type != T_NEWLINE)
-				return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->next->word), 1);
-			if ((*token)->prev->type == T_SPACE)
-					return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->word), 1);
-		}
-		*token = (*token)->next;
-	}
-	*token = head;
-	return (0);
+    head = *token;
+    while (*token)
+    {
+        if ((*token)->type == T_PARENTHESES)
+        {
+			if (only_parenth((*token)->word))
+				return (printf("minishell: ((: %s: syntax error: operand expected (error token is \")\")", \
+				(*token)->word), 1);
+            // Check if the next token is not a special character
+            if ((*token)->next && (*token)->next->type == T_WORD)
+                return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->next->word), 1);
+            
+            // Check if the previous token is not a special character
+            if ((*token)->prev && (*token)->prev->type == T_WORD)
+                return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->word), 1);
+        }
+        *token = (*token)->next;
+    }
+    *token = head;
+    return (0);
 }
 
 int	set_token_parenth(t_data *data)
@@ -168,7 +173,8 @@ int	set_token_parenth(t_data *data)
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
 	fix_tokens(&data->token_list);
-	clean_space_tokens(&data->token_list);
+	if (syntax_error_parenth(&data->token_list))
+		return (1);
 	return (0);
 }
 
@@ -194,4 +200,27 @@ void	set_token_parenth2(t_token *token)
 	else if (token->type !=  T_NEWLINE && token->type != T_PARENTHESES)
 		token->type = T_WORD;
 	token = head;
+}
+
+int	only_parenth(char *str)
+{
+	int count;
+	int flag;
+
+	count = 0;
+	flag = 0;
+	if (ft_has_only_spaces(str))
+		flag = 1;
+	while (*str)
+	{
+		if (*str == '(' || *str == ')')
+			count++;
+		str++;
+	}
+	if (count == 2)
+		return (0);
+	else if (flag == 1)
+		return (1);
+	else
+		return (0);
 }

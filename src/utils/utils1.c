@@ -87,3 +87,17 @@ int ft_has_only_digit(char *str)
 	}
 	return (1);	
 }
+
+int ft_has_only_spaces(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
