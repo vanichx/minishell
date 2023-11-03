@@ -56,6 +56,9 @@ int		find_token2(int i, char *str, char *splt)
 
 void	set_token_type2(t_token *token)
 {
+	t_token	*head;
+
+	head = token;
 	if (!ft_strcmp(token->word, "<"))
 		token->type = T_RED_INP;
 	else if (!ft_strcmp(token->word, ">"))
@@ -72,6 +75,7 @@ void	set_token_type2(t_token *token)
 		token->type = T_AMPER;
 	else if (token->type !=  T_NEWLINE)
 		token->type = T_WORD;
+	token = head;
 }
 
 int	set_token_type(t_data *data)
@@ -96,7 +100,9 @@ int	set_token_type(t_data *data)
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
 	fix_tokens(&data->token_list);
-	if (check_token_error1(data->token_list, data))
+	if (syntax_errors(data->token_list, data))
+		return (1);
+	if (lexic_with_parenth(data))
 		return (1);
 	clean_space_tokens(&data->token_list);
 	return (0);

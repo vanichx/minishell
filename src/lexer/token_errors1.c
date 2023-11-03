@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	check_token_error1(t_token *token, t_data *data)
+int	syntax_errors(t_token *token, t_data *data)
 {
 	char *str;
 	int i;
@@ -37,8 +37,8 @@ int check_and(t_token *token, char *str)
 		return (printf("minishell: syntax error near unexpected token `&'\n"), 1);
 	}
 	if (!ft_strcmp(str, "&&"))
-		if ((token->prev->type == T_SPACE && token->prev->prev->type != T_WORD)
-			|| (token->prev->type != T_SPACE && token->prev->type != T_WORD))
+		if ( (token->type == T_AND && token->prev->type == T_AND)
+			|| (token->type == T_AND && token->next->type == T_AND))
 			return (printf("minishell: syntax error near unexpected token `&&'\n"), 1);
 	return (0);
 }
@@ -82,6 +82,8 @@ char	*check_first_token(char *str, int *i)
 			return (*i += 2, "<>");
 		if (*str == '<' && *(str + 1) == '<' && *(str + 2) == '<' && *(str + 3) != '>')
 			return (*i += 3, "<<<");
+		if (*str == '>' && *(str + 1) == '>' && *(str + 2) == '>')
+			return (*i += 3, ">>>");
 		if (*str == '>' && *(str + 1) == '>' && *(str + 2) == '>')
 			return (*i += 3, ">>>");
 		if (*str == '>' && *(str + 1) == '>')

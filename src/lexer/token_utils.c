@@ -53,6 +53,7 @@ t_token	*create_token(t_data *data, int i)
 	if (!new)
 		exit_shell("Error: malloc failed\n", 1, data);
 	new->word = ft_substr(data->input_line, i - data->count, data->count);
+	new->type = T_WORD; // putting a default value because of cosing conditional jump base on uninitialised value
 	data->count = 0;
 	return (new);
 }

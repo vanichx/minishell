@@ -46,6 +46,7 @@ typedef enum e_token_type {
 	T_OR,
 	T_AND,
 	T_DELIM,
+	T_PARENTHESES,
 } t_token_type;
 
 typedef struct s_envir {
@@ -65,7 +66,7 @@ typedef struct	s_tree {
 }				t_tree;
 
 typedef struct	s_data {
-	struct s_tree	*tree;
+	// struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
@@ -91,18 +92,17 @@ typedef struct s_token
 {
 	t_token_type 		type;
 	char 				*word;
-	struct s_parenth	*parenth;
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;
 
-typedef	struct s_parenth
-{
-	t_token	*token;
-	int		valid;
-	int		depth;
-	struct s_parenth *address;
-}	t_parenth;
+// typedef	struct s_parenth
+// {
+// 	t_token	*token;
+// 	int		valid;
+// 	int		depth;
+// 	struct s_parenth *address;
+// }	t_parenth;
 
 /* builtins.c */
 void		builtin_echo(char **args);
@@ -238,7 +238,7 @@ int			check_threein(t_token *token);
 int			check_delim(t_token *token);
 int			check_append(t_token *token);
 char		*check_first_token(char *str, int *i);
-int			check_token_error1(t_token *token, t_data *data);
+int			syntax_errors(t_token *token, t_data *data);
 int			check_and(t_token *token, char *str);
 int			check_red(t_token *token, char *str);
 int			check_red_general(t_token *tmp);
@@ -249,7 +249,17 @@ int			check_pipe_or(t_token *token);
 int			check_numbers(t_token *tmp);
 
 /* Command Parsing*/
-int		token_len(t_token *token);
+int			token_len(t_token *token);
+
+/* Parentheses */
+t_token		*create_parenth_token(t_data *data, int i, char *input);
+int			find_parenthesis(char *str);
+int			lexic_with_parenth(t_data *data);
+void		tokenise_parenth(t_data *data, char *str);
+int 		find_parenth_token(t_data *data, char *str, int *i, t_token **head);
+void		set_token_parenth2(t_token *token);
+int			set_token_parenth(t_data *data);
+int 		check_parenth(t_token **token);
 
 /*Binary Tree*/
 t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
