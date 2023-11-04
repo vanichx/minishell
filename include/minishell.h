@@ -66,7 +66,7 @@ typedef struct	s_tree {
 }				t_tree;
 
 typedef struct	s_data {
-	// struct s_tree	*tree;
+	struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
@@ -282,12 +282,15 @@ int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
 
 /*Binary Tree*/
-t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
+t_tree	*build_right_tree(t_token **token, t_token *address, t_tree *tree);
+t_tree	*build_left_tree(t_token **token, t_token *address, t_tree *tree);
 void	print_tree(t_tree *tree);
 void	init_tree(t_data *data);
 int		arg_count(t_token *token, t_token *address);
-t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
+t_tree	*build_tree_leaf(t_token **token, t_tree *tree);
 void	free_tree(t_data *data);
+t_token *find_tree_root(t_data *data);
+t_tree	*create_tree_root(t_token *token);
 
 void	last_input(t_tree *tree);
 void	last_output(t_tree *tree);

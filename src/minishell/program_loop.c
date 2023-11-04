@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:52:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/04 21:19:36 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ void	start_loop(t_data *data)
 			|| (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
+		init_tree(data);
+		// print_tree(data->tree);
 	}
 }
-// init_tree(data);
 // last_input(data->tree);
 // last_output(data->tree);
 // printf("token length: %d\n", token_len(data->token_list));
