@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 19:05:45 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	odd_quote(char *str, t_data *data)
 {
-	char first_q;
-	int	i;
+	char	first_q;
+	int		i;
 
 	i = 0;
 	first_q = first_quote(str);
@@ -13,7 +25,7 @@ int	odd_quote(char *str, t_data *data)
 		data->double_quote = 1;
 	else if (first_q == '\0')
 		return (0);
-	else 
+	else
 	{
 		write(2, "We should not handle unclosed quotes\n", 37);
 		return (1);
@@ -21,9 +33,9 @@ int	odd_quote(char *str, t_data *data)
 	return (0);
 }
 
-int closed_singlequotes(char *str)
+int	closed_singlequotes(char *str)
 {
-	int single_quote;
+	int	single_quote;
 
 	single_quote = 0;
 	while (*str)
@@ -35,9 +47,9 @@ int closed_singlequotes(char *str)
 	return (single_quote % 2 == 0);
 }
 
-int closed_doublequotes(char *str)
+int	closed_doublequotes(char *str)
 {
-	int double_quote;
+	int	double_quote;
 
 	double_quote = 0;
 	while (*str)
@@ -49,7 +61,7 @@ int closed_doublequotes(char *str)
 	return (double_quote % 2 == 0);
 }
 
-int		in_quotes(char *s, int pos)
+int	in_quotes(char *s, int pos)
 {
 	int	quotes1;
 	int	quotes2;

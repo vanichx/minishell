@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:30:53 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:32:19 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	check_exit(char *input)
@@ -9,18 +21,18 @@ void	check_exit(char *input)
 	}
 }
 
-void print_parsed_input(char *command) {
-	if (command != NULL) {
+void	print_parsed_input(char *command)
+{
+	if (command != NULL)
 		printf("Command: %s\n", command);
-	} else {
+	else
 		printf("Failed to parse the input.\n");
-	}
 }
 
-int		is_valid_env(char *str)
+int	is_valid_env(char *str)
 {
-	int i;
-	int eq_sign;
+	int	i;
+	int	eq_sign;
 
 	i = 0;
 	eq_sign = 0;
@@ -39,10 +51,10 @@ int		is_valid_env(char *str)
 	}
 	if (eq_sign)
 		return (1);
-	return (0);	
+	return (0);
 }
 
-int		is_valid_env2(char *str)
+int	is_valid_env2(char *str)
 {
 	int	i;
 
@@ -54,6 +66,6 @@ int		is_valid_env2(char *str)
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
-	}	
+	}
 	return (1);
 }

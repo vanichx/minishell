@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:58:04 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 // int	find_command_path(t_data *data, t_tree *tree)
@@ -25,12 +37,11 @@
 // 		// free_2darray(paths);
 // 	return (0);
 // }
-
 char	*find_executable_path(char **paths, char *cmd)
 {
 	char	*tmp;
 	char	*command;
-	
+
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");
@@ -43,10 +54,12 @@ char	*find_executable_path(char **paths, char *cmd)
 	}
 	return (NULL);
 }
+
 char	*find_envir_variable(t_data *data, char *var_name, int len)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (data->env_array[i])
 	{
 		if (ft_strncmp(data->env_array[i], var_name, len) == 0)
@@ -55,7 +68,6 @@ char	*find_envir_variable(t_data *data, char *var_name, int len)
 	}
 	return (NULL);
 }
-
 // void	handle_builtins(t_data *data)
 // {
 // 	// while (data->cmd_list->next != NULL)
@@ -78,13 +90,13 @@ char	*find_envir_variable(t_data *data, char *var_name, int len)
 // 	// else if (ft_strcmp(data->cmdexe->cmd, "export") == 0)
 // 	// 	builtin_export(data->env, ); // continue
 // }
-
 // void	child(t_data *data)
 // {
 //     data->pid = fork();
 //     if (!data->pid)
 //     {
-// 		if (execve(data->cmd_list->path, data->cmd_list->args_array, data->path) == -1)
+// 		if (execve(data->cmd_list->path, data->cmd_list->args_array,
+//		data->path) == -1)
 // 			{
 // 				perror("execve");
 // 				exit(1);

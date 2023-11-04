@@ -1,30 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:49:09 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	
-
 	free_2darray(data->env_array);
-
-	// if (data->curr_dir && data->curr_dir[0] != '\0')
-	// 	free(data->curr_dir);
-	
 	free_tokens(&data->token_list, free);
-	
-	// if (data->input_line)
-	// 	ft_strdel(&data->input_line);
-	// if (data->input_minishell)
-	// 	ft_strdel(&data->input_minishell);
 	free(data);
 	data = NULL;
 }
 
 void	free_tokens(t_token **begin, void (*del)(void *))
 {
-	t_token *tmp;
-	t_token *tmp2;
+	t_token	*tmp;
+	t_token	*tmp2;
 
 	if (!begin || !del)
 		return ;
@@ -38,7 +39,6 @@ void	free_tokens(t_token **begin, void (*del)(void *))
 	}
 	*begin = NULL;
 }
-
 
 void	free_envir(t_envir *envir)
 {
@@ -59,7 +59,6 @@ void	free_envir(t_envir *envir)
 	}
 	free(tmp);
 }
-
 
 void	free_2darray(char **array)
 {
@@ -122,4 +121,3 @@ void	free_2darray(char **array)
 // 	}
 // 	*head = NULL;
 // }
-
