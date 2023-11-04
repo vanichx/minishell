@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:45:36 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:46:03 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 // ingores all whitespaces before the first character
@@ -9,7 +21,7 @@ char	*ignore_spaces(char *input)
 }
 
 // checks if the string contains only ascii characters
-int		is_only_ascii(char *str)
+int	is_only_ascii(char *str)
 {
 	while (*str)
 		if (!ft_isascii(*str++))
@@ -18,7 +30,7 @@ int		is_only_ascii(char *str)
 }
 
 // duplicates a 2d array
-char **dup_2darray(char **array)
+char	**dup_2darray(char **array)
 {
 	int		i;
 	char	**dup;
@@ -48,7 +60,7 @@ char **dup_2darray(char **array)
 // counts the length of a 2d array
 int	len_2darray(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])
@@ -57,25 +69,10 @@ int	len_2darray(char **array)
 }
 
 // turnes true if the character is in the string
-int is_char_in_str(char c, char *str)
+int	is_char_in_str(char c, char *str)
 {
 	while (*str)
 		if (*str++ == c)
 			return (1);
 	return (0);
 }
-
-int token_len(t_token *token)
-{
-	int len;
-
-	len = 0;
-	while (token)
-	{
-		if (token->type != T_NEWLINE)
-			len++;
-		token = token->next;
-	}
-	return (len);
-}
-

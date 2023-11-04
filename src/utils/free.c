@@ -1,28 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:49:09 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	
-
 	free_2darray(data->env_array);
-
-	// if (data->curr_dir && data->curr_dir[0] != '\0')
-	// 	free(data->curr_dir);
-	
 	free_tokens(&data->token_list, free);
-	
-	if (data->input_line)
-		free(data->input_line);
 	free(data);
 	data = NULL;
 }
 
 void	free_tokens(t_token **begin, void (*del)(void *))
 {
-	t_token *tmp;
-	t_token *tmp2;
+	t_token	*tmp;
+	t_token	*tmp2;
 
 	if (!begin || !del)
 		return ;
@@ -36,7 +39,6 @@ void	free_tokens(t_token **begin, void (*del)(void *))
 	}
 	*begin = NULL;
 }
-
 
 void	free_envir(t_envir *envir)
 {
@@ -58,7 +60,6 @@ void	free_envir(t_envir *envir)
 	free(tmp);
 }
 
-
 void	free_2darray(char **array)
 {
 	int	i;
@@ -72,30 +73,30 @@ void	free_2darray(char **array)
 	array = NULL;
 }
 
-void	free_tree(t_data *data)
+// void	free_tree(t_data *data)
 
-{
-	int i;
-	t_tree *right;
+// {
+// 	int i;
+// 	t_tree *right;
 
-	i = 0;
-	if (!data->tree)
-		return ;
-	while (data->tree)
-	{
-		right = data->tree->right;
-		if (data->tree->left)
-		{
-			if (data->tree->left->args_array)
-				free_2darray(data->tree->left->args_array);
-			free(data->tree->left);
-			data->tree->left = NULL;
-		}
-		free_2darray(data->tree->args_array);
-		free(data->tree);
-		data->tree = right;
-	}
-}
+// 	i = 0;
+// 	if (!data->tree)
+// 		return ;
+// 	while (data->tree)
+// 	{
+// 		right = data->tree->right;
+// 		if (data->tree->left)
+// 		{
+// 			if (data->tree->left->args_array)
+// 				free_2darray(data->tree->left->args_array);
+// 			free(data->tree->left);
+// 			data->tree->left = NULL;
+// 		}
+// 		free_2darray(data->tree->args_array);
+// 		free(data->tree);
+// 		data->tree = right;
+// 	}
+// }
 
 // void	free_commands(t_cmdexe **head, void (*del)(void *))
 // {
@@ -120,4 +121,3 @@ void	free_tree(t_data *data)
 // 	}
 // 	*head = NULL;
 // }
-

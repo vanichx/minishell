@@ -7,8 +7,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
  
+find: src: No such file or directory
 
-# Make data base, printed on Wed Nov  1 11:01:52 2023
+
+# Make data base, printed on Sat Nov  4 21:06:50 2023
 
 # Variables
 
@@ -29,14 +31,13 @@ CURDIR := /Users/eseferi/42/main_minishell
 # makefile
 SHELL = /bin/sh
 # makefile (from `Makefile', line 17)
- 
 RM = rm -rf
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 32)
-CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3 -g -fsanitize=address -fno-omit-frame-pointer -I $(LIBFT_DIR)/include
+CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3  -I $(LIBFT_DIR)/include
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # makefile (from `Makefile', line 18)
@@ -50,7 +51,7 @@ VSCODE_CWD = /
 # makefile (from `Makefile', line 25)
 VALGRIND = valgrind --leak-check=full 
 # environment
-PATH = /Users/eseferi/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Library/Apple/usr/bin
+PATH = /Users/eseferi/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin
 # makefile (from `Makefile', line 38)
 MINISHELL_INC = minishell.h
 # makefile (from `Makefile', line 91)
@@ -58,21 +59,19 @@ BOLD = \033[1m
 # makefile (from `Makefile', line 37)
 VPATH = src:include:src/execution:src/lexer:src/parsing:src/quotes:src/utils:include
 # environment
-LaunchInstanceID = 4F73B9B7-54E5-4015-B993-D4DEC2DAC9AC
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # makefile (from `Makefile', line 30)
 LIBFT_DIR = lib/libft
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.XvPtjpCH2f/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.nEHXb7brbh/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 HOMEBREW_TEMP = /tmp/eseferi/Homebrew/Temp
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.AZmDcW37a6/org.xquartz:0
+DISPLAY = /private/tmp/com.apple.launchd.3iM5UEoL0f/org.xquartz:0
 # environment
 PWD = /Users/eseferi/42/main_minishell
 # makefile (from `Makefile', line 43)
@@ -144,17 +143,17 @@ MFLAGS = -sRrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.microsoft.VSCode.2196
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile (from `Makefile', line 92)
 YELLOW = \033[1;33m
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 +F = $(notdir $+)
 # environment
 __CF_USER_TEXT_ENCODING = 0x191A4:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
@@ -171,8 +170,6 @@ LC_ALL = C
 DEFAULT = \033[0m
 # makefile (from `Makefile', line 24)
 RL_LIBS = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-# environment
-SECURITYSESSIONID = 186a8
 # makefile (from `Makefile', line 31)
 LIBFT_FILE = $(LIBFT_DIR)/$(LIBFT)
 # automatic
@@ -186,9 +183,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3233
+VSCODE_PID = 43405
 # variable set hash-table stats:
-# Load=87/1024=8%, Rehash=0, Collisions=2/138=1%
+# Load=85/1024=8%, Rehash=0, Collisions=2/136=1%
 
 # Pattern-specific Variable Values
 
@@ -196,23 +193,17 @@ VSCODE_PID = 3233
 
 # Directories
 
-# src/lexer/lib/libft: could not be stat'd.
-# src/quotes/lib/libft: could not be stat'd.
-# src/parsing/lib/libft: could not be stat'd.
-# include (device 16777225, inode 2144002): No files, no impossibilities so far.
-# . (device 16777225, inode 2143927): 11 files, no impossibilities.
+# include (device 16777225, inode 2180421): 3 files, no impossibilities.
+# . (device 16777225, inode 2180345): 11 files, no impossibilities.
 # include/lib/libft: could not be stat'd.
-# src/utils (device 16777225, inode 2144098): No files, no impossibilities so far.
-# src/execution (device 16777225, inode 2144076): No files, no impossibilities so far.
-# src/utils/lib/libft: could not be stat'd.
-# src/execution/lib/libft: could not be stat'd.
-# src (device 16777225, inode 2144074): 6 files, no impossibilities so far.
-# src/lexer (device 16777225, inode 2144079): No files, no impossibilities so far.
-# src/quotes (device 16777225, inode 2144095): No files, no impossibilities so far.
-# src/parsing (device 16777225, inode 2144091): No files, no impossibilities so far.
-# src/lib/libft: could not be stat'd.
+# src/utils: could not be stat'd.
+# src/execution: could not be stat'd.
+# src: could not be stat'd.
+# src/lexer: could not be stat'd.
+# src/quotes: could not be stat'd.
+# src/parsing: could not be stat'd.
 
-# 17 files, no impossibilities in 15 directories.
+# 14 files, no impossibilities in 9 directories.
 
 # Implicit Rules
 
@@ -226,12 +217,6 @@ obj/%.o: %.c minishell.h
 
 # Files
 
-# Not a target:
-obj/src/utils/reset.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 all: minishell
 #  Phony target (prerequisite of .PHONY).
 #  Command-line target.
@@ -242,19 +227,7 @@ all: minishell
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 
-# Not a target:
-obj/src/parsing/commands.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 .PHONY: all lib_clean lib_fclean clean fclean re
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/lexer/tokenising.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -268,54 +241,23 @@ obj/src/lexer/tokenising.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2023-10-31 11:51:59
+#  Last modified 2023-11-03 15:12:04
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-obj/src/execution/shlvl.o:
+minishell: lib/libft/libft.a
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/lexer/lexical_analysis.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/handle_input.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/quotes/quotes_utils.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/signals.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/free.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/lexer/token_errors1.o:
- 
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+#  commands to execute (from `Makefile', line 56):
+	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
+	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+	
 
 fclean: clean lib_fclean
 #  Phony target (prerequisite of .PHONY).
@@ -335,19 +277,7 @@ leaks: minishell
 	$(LEAKS) ./$(NAME)
 	
 
-# Not a target:
-obj/src/lexer/fix_tokens_utils.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 .SILENT:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/parsing/args.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -358,28 +288,10 @@ obj/src/parsing/args.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/lexer/token_lists.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/parsing/commandslists.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
-#  File has not been updated.
-
-# Not a target:
-obj/src/execution/buitins.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
 #  File has not been updated.
 
 clean: lib_clean
@@ -392,47 +304,12 @@ clean: lib_clean
 	@echo "$(YELLOW)$(NAME) object files deleted!$(DEFAULT)"
 	
 
-# Not a target:
-obj/src/lexer/token_utils.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/exit.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/utils1.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-minishell: lib/libft/libft.a obj/src/execution/buitins.o obj/src/execution/shlvl.o obj/src/lexer/envirlists.o obj/src/lexer/environment.o obj/src/lexer/fix_tokens_utils.o obj/src/lexer/lexical_analysis.o obj/src/lexer/token_errors1.o obj/src/lexer/token_lists.o obj/src/lexer/token_utils.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parsing/args.o obj/src/parsing/commands.o obj/src/parsing/commandslists.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o
-#  Implicit rule search has not been done.
-#  Last modified 2023-10-31 11:41:51
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-#  commands to execute (from `Makefile', line 56):
-	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
-	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
-	
-
-# Not a target:
-obj/src/quotes/quotes.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 lib_fclean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  commands to execute (from `Makefile', line 63):
 	$(MAKE_LIB) $(LIBFT_DIR) fclean
 	
@@ -474,30 +351,6 @@ lib/libft/libft.a:
 	$(MAKE_LIB) $(LIBFT_DIR)
 	
 
-# Not a target:
-obj/src/minishell/minishell.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/lexer/environment.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/lexer/envirlists.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/minishell/program_loop.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 valgrind: minishell
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -506,32 +359,20 @@ valgrind: minishell
 	$(VALGRIND) ./$(NAME)
 	
 
-# Not a target:
-obj/src/utils/init_data.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-obj/src/utils/utils2.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # files hash-table stats:
-# Load=40/1024=4%, Rehash=0, Collisions=5/107=5%
+# Load=15/1024=1%, Rehash=0, Collisions=0/50=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
 
 # General (`VPATH' variable) search path:
-# src:include:src/execution:src/lexer:src/parsing:src/quotes:src/utils:include
+# include:include
 
 # # of strings in strcache: 1
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Nov  1 11:01:52 2023
+# Finished Make data base on Sat Nov  4 21:06:50 2023
 
  

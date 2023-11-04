@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:34:19 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	handle_signal(void)
@@ -27,7 +39,6 @@ void	handle_c(int signo)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-
 }
 
 int	handle_d(t_data *data, char *line)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envirlists.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:58:22 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:58:43 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 // void	ft_envadd_back(t_envir **lst, t_envir *new)
@@ -64,7 +76,6 @@
 // t_envir	*ft_envlast(t_envir *lst)
 // {
 // 	t_envir	*node;
-	
 // 	node = lst;
 //     while (node != NULL)
 // 	{

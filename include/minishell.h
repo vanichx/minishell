@@ -58,7 +58,6 @@ typedef struct s_envir {
 typedef struct	s_tree {
 	t_token_type	type;
 	char			*value;
-	char			*command;
 	char			**args_array;
 	struct	s_tree	*last_input;
 	struct	s_tree	*last_output;
@@ -67,7 +66,7 @@ typedef struct	s_tree {
 }				t_tree;
 
 typedef struct	s_data {
-	struct s_tree	*tree;
+	// struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
@@ -82,7 +81,6 @@ typedef struct	s_data {
 	int				forked;
 	char			*input_minishell;
 	char			*input_line;
-	char			*input_line_errors;
 	char			*curr_dir;
 	char			*exit_str;
 	char 			**env_array;
@@ -94,18 +92,17 @@ typedef struct s_token
 {
 	t_token_type 		type;
 	char 				*word;
-	struct s_parenth	*parenth;
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;
 
-typedef	struct s_parenth
-{
-	t_token	*token;
-	int		valid;
-	int		depth;
-	struct s_parenth *address;
-}	t_parenth;
+// typedef	struct s_parenth
+// {
+// 	t_token	*token;
+// 	int		valid;
+// 	int		depth;
+// 	struct s_parenth *address;
+// }	t_parenth;
 
 /* builtins.c */
 void		builtin_echo(char **args);
@@ -153,9 +150,6 @@ int			lexical_analysis(t_data *data, char *input);
 int			parse_command(t_data *data);
 void		child(t_data *data);
 // static char			*find_executable_path(char **paths, char *cmd);
-void		create_commands(t_data *data, char **cmd);
-// void		ft_lstadd_back_cmd(t_list **lst, t_cmdexe *cmd);
-void		reset_commands(void *command);
 
 /* reset.c */
 void		reset_data(t_data *data);;
@@ -176,8 +170,10 @@ char		*ignore_spaces(char *input);
 char		**dup_2darray(char **array);
 int			is_only_ascii(char *str);
 int			len_2darray(char **array);
-char		*trim_newlines(char *src);
 int 		ft_has_only_digit(char *str);
+int 		only_spaces_parenth(char *str);
+char		*trim_input(char *input);
+void		process_input(char *input, char *str, int *i, int *j);
 
 /* Environment lists functions */
 void		ft_envadd_back(t_envir **lst, t_envir *new);
@@ -206,7 +202,7 @@ void		tokenise(t_data *data, char *str);
 int			find_token2(int i, char *str, char *splt);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
-t_token		*create_token(t_data *data, int i, char *input);
+t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 t_token  	*last_token(t_token *lst);
 void		add_token(t_token **token, t_token *new);
@@ -233,43 +229,66 @@ void		clean_space_tokens(t_token **head);
 
 
 char		*find_executable_path(char **paths, char *cmd);
-char 		*trim_input(char *input);
 
 /* error check */
 int			check_threeout(t_token *token);
 int			check_threein(t_token *token);
 int			check_delim(t_token *token);
+int			check_first_half_delim(t_token *token);
+int			check_second_half_delim(t_token *token);
 int			check_append(t_token *token);
 char		*check_first_token(char *str, int *i);
-int			check_token_error1(t_token *token, t_data *data);
+char		*check_first_half(char *str, int *i);
+char		*check_second_half(char *str, int *i);
+int			syntax_errors(t_token *token, t_data *data);
+int 		syntax_error_parenth(t_token **token);
+int 		check_prev_token(t_token **token);
+int			check_next_token(t_token **token);
 int			check_and(t_token *token, char *str);
 int			check_red(t_token *token, char *str);
 int			check_red_general(t_token *tmp);
+int			check_first_half_general(t_token *tmp);
+int			check_second_half_general(t_token *tmp);
 int 		check_red_in(t_token *token);
+int			check_redin_first_half(t_token *token);
+int			check_redin_second_half(t_token *token);
+int			check_redin_last_part(t_token *token);
 int			check_red_out(t_token *token);
+int			check_first_half_out(t_token *token);
+int			check_second_half_out(t_token *token);
+int			check_last_part_out(t_token *token);
 int			check_inout(t_token *token);
 int			check_pipe_or(t_token *token);
+int			check_first_half_pipe_or(t_token *tmp);
+int			check_second_half_pipe_or(t_token *tmp);
 int			check_numbers(t_token *tmp);
-int			check_parenth(t_token **token);
 
 /* Command Parsing*/
-int		token_len(t_token *token);
+int			token_len(t_token *token);
+
+/* Parentheses */
+t_token		*create_parenth_token(t_data *data, int i, char *input);
+int			lexic_with_parenth(t_data *data);
+void		tokenise_parenth(t_data *data, char *str);
+void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
+int 		find_parenth_token(t_data *data, char *str, int *i, t_token **head);
+void		set_token_parenth2(t_token *token);
+int			set_token_parenth(t_data *data);
+int 		only_parenth(char *str);
+int			operand_error_parenth(int i);
+int			find_token3(t_data *data, char *str, int *i, t_token **head);
+int			find_parenthesis(char *str);
+int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
+int			check_parenthesis(int parenCount, int parenth_total);
 
 /*Binary Tree*/
-t_tree		*set_tree_root(t_token **token, t_token *address, t_tree *tree);
-void		print_tree(t_tree *tree);
-// t_tree		*init_tree(t_token *token);
-void		init_tree(t_data *data);
-t_tree		*create_node(t_token *lowestPriorityOperator);
-int			arg_count(t_token *token, t_token *address);
-t_tree		*set_tree_leaf(t_token **token, t_tree *tree);
-void		free_tree(t_data *data);
+t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
+void	print_tree(t_tree *tree);
+void	init_tree(t_data *data);
+int		arg_count(t_token *token, t_token *address);
+t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
+void	free_tree(t_data *data);
 
-void		last_input(t_tree *tree);
-void		last_output(t_tree *tree);
-t_token		*create_parenth_token(t_data *data, int i, char *input);
-int			find_parenthesis_token(t_data *data, char *str, int *i, t_token **head);
-char		*trim_input_parenth(char *input);
-
-
+void	last_input(t_tree *tree);
+void	last_output(t_tree *tree);
 #endif

@@ -1,84 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:34:40 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:44:32 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// for what is this 
-char	*trim_newlines(char *src)
+// takes the input and trims the spaces and tabs of every 
+// word outside the quotes
+char	*trim_input(char *input)
 {
-	int i;
-	int j;
-	char *dst;
+	char	*str;
+	int		i;
+	int		j;
 
-	if (!src)
-		return (NULL);
-	if (!ft_strchr(src, '\n'))
-		return (src);
-	i = 0;
-	j = 0;
-	if (!(dst = ft_calloc(1, ft_strlen(src))))
-		exit_shell("Error: malloc failed\n", 1, NULL);
-	printf("Hello im in trim_newlines ft_calloc success\n");
-	while (src[i])
-	{
-		if (src[i] != '\n')
-			dst[j++] = src[i];
-		i++;
-	}
-	dst[j] = '\0';
-	return (dst);
-}
-
-// takes the input and trims the spaces and tabs of every word outside the quotes
-char *trim_input(char *input)
-{
 	if (!input || !*input)
 		return (NULL);
-	char *str;
-	int	i;
-	int j;
-
-	if (!(str = ft_calloc(1, ft_strlen(input) + 1)))
+	str = ft_calloc(1, ft_strlen(input) + 1);
+	if (!(str))
 		exit_shell("Error: malloc failed\n", 1, NULL);
 	i = 0;
 	j = 0;
 	while ((input[i] == ' ' || input[i] == '\t') && input[i])
 		i++;
-	while (input[i])
-	{
-		while ((input[i] == ' ' || input[i] == '\t') && (input[i + 1] == ' ' || input[i + 1] == '\t'))
-            i++;
-		while (in_quotes(input, i) && input[i])
-			str[j++] = input[i++];
-		str[j++] = input[i++];
-	}
+	process_input(input, str, &i, &j);
 	i = ft_strlen(str) - 1;
 	while (str[i] == ' ' || str[i] == '\t')
-		str[i] = '\0';
+		str[i--] = '\0';
 	str[j] = '\0';
 	return (str);
 }
 
-char *trim_input_parenth(char *input)
+void	process_input(char *input, char *str, int *i, int *j)
 {
-	if (!input || !*input)
-		return (NULL);
-	char *str;
-	int	i;
-	int j;
-
-	if (!(str = malloc(sizeof(char) * (ft_strlen(input) + 1))))
-		exit_shell("Error: malloc failed\n", 1, NULL);
-	i = 0;
-	j = 0;
-	while (input[i])
+	while (input[*i])
 	{
-		while ((input[i] == '(' || input[i] == ')'))
-            i++;
-		while (in_quotes(input, i) && input[i]) 
-			str[j++] = input[i++];
-		str[j++] = input[i++];
+		while ((input[*i] == ' ' || input[*i] == '\t')
+			&& (input[*i + 1] == ' ' || input[*i + 1] == '\t'))
+			(*i)++;
+		while (in_quotes(input, *i) && input[*i])
+			str[(*j)++] = input[(*i)++];
+		str[(*j)++] = input[(*i)++];
 	}
-	i = ft_strlen(str) - 1;
-	str[j] = '\0';
-	return (str);
 }
 
 int	ft_is_in_stri(char c, char *str)
@@ -95,14 +64,14 @@ int	ft_is_in_stri(char c, char *str)
 	return (-1);
 }
 
-int		is_chr_str(char c, char *str)
+int	is_chr_str(char c, char *str)
 {
 	if (ft_is_in_stri(c, str) >= 0)
 		return (1);
 	return (0);
 }
 
-int ft_has_only_digit(char *str)
+int	ft_has_only_digit(char *str)
 {
 	while (*str)
 	{
@@ -110,5 +79,5 @@ int ft_has_only_digit(char *str)
 			return (0);
 		str++;
 	}
-	return (1);	
+	return (1);
 }

@@ -1,10 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shlvl.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:54:40 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:55:26 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+// else
+// 	export(&(*data).env_list, "SHLVL", "1");
 void	incr_shell_lvl(t_data *data)
 {
-	char *shlvl;
-	int level = 0;
+	char	*shlvl;
+	int		level;
 
+	level = 0;
 	shlvl = find_envir_variable(data, "SHLVL", ft_strlen("SHLVL"));
 	if (shlvl)
 	{
@@ -20,8 +35,6 @@ void	incr_shell_lvl(t_data *data)
 			shlvl = ft_strdup("1");
 		}
 	}
-	// else
-	// 	export(&(*data).env_list, "SHLVL", "1");
 	free(shlvl);
 }
 

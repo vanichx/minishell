@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_lists.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:21:49 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:23:01 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	add_token(t_token **head, t_token *new)
@@ -27,18 +39,17 @@ void	add_token(t_token **head, t_token *new)
 }
 
 // for what we need also this ?
-t_token  *last_token(t_token *lst)
-
+t_token	*last_token(t_token *lst)
 {
-  t_token  *node;
+	t_token	*node;
 
-  node = lst;
-  if (node != NULL)
-  {
-    while (node->next != NULL)
-      node = node->next;
-  }
-  return (node);
+	node = lst;
+	if (node != NULL)
+	{
+		while (node->next != NULL)
+			node = node->next;
+	}
+	return (node);
 }
 
 // adds a token in the front of the list
@@ -58,8 +69,7 @@ void	add_token_front(t_token **head, t_token *new)
 // caunts the len of the tokens list
 int	tokens_len(t_token **head)
 {
-	printf("tokens_len\n");
-	t_token *tmp;
+	t_token	*tmp;
 	int		i;
 
 	i = 0;
@@ -70,20 +80,4 @@ int	tokens_len(t_token **head)
 		tmp = tmp->next;
 	}
 	return (i);
-}
-
-// for what we need this when we hav ft_lstadd_back
-void  ft_listadd_back(t_token **lst, t_token *next)
-{
-  if (!lst)
-    return ;
-  if (lst)
-  {
-    if (*lst)
-    {
-    	last_token(*lst)->next = next;
-    	return ;
-    }
-  }
-  *lst = next;
 }

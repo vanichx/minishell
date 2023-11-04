@@ -1,4 +1,16 @@
-// #include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tree_init.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 21:03:35 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 21:04:15 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 // void	init_tree(t_data *data)
 // {
@@ -13,8 +25,10 @@
 // 	delim = 0;
 // 	while (address)
 // 	{
-// 		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT || address->type == T_THREE_IN
-// 			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND || address->type == T_DELIM)
+// 		if (address->type == T_PIPE || address->type == T_RED_INP 
+//			|| address->type == T_RED_OUT || address->type == T_THREE_IN
+// 			|| address->type == T_APPEND || address->type == T_OR 
+//			|| address->type == T_AND || address->type == T_DELIM)
 // 		{
 // 			if (tree == NULL)
 // 			{
@@ -29,8 +43,10 @@
 // 			address = data->token_list;
 // 			delim++;
 // 		}
-// 		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT && address->type != T_THREE_IN
-// 		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
+// 		if (address->type != T_PIPE && address->type != T_RED_INP 
+//			&& address->type != T_RED_OUT && address->type != T_THREE_IN
+// 		 	&& address->type != T_APPEND && address->type != T_OR 
+//			&& address->type != T_AND && address->type != T_DELIM)
 // 			address = address->next;
 // 	}
 // 	if (delim == 0)
@@ -119,7 +135,6 @@
 // 	return (count);
 // }
 
-
 // void print_tree(t_tree *tree)
 // {
 // 	int i;
@@ -135,7 +150,7 @@
 // 		{
 // 			while (tree->args_array[i])
 // 			{
-// 				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
+// 			printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
 // 				i++;
 // 			}
 // 		}
@@ -144,7 +159,7 @@
 // 		{
 // 			while (tree->left->args_array[i])
 // 			{
-// 				printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
+// 		printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
 // 				i++;
 // 			}
 // 		}

@@ -1,5 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buitins.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 20:53:10 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 20:54:29 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "minishell.h"
 
 // int	ft_is_builtin(char *cmd)
 // {
@@ -54,7 +65,6 @@
 // 		perror("pwd");
 // }
 
-
 // void	builtin_unset(t_list **head, char *var_name)
 // {
 // 	t_list *curr = *head;
@@ -94,15 +104,6 @@
 // {
 // 	exit_shell("exit", 0, data);
 // }
-
-
-
-
-
-
-
-
-
 
 // void builtin_cd(t_data *data, char *path)
 // {
@@ -169,6 +170,7 @@
 // void	builtin_export(t_envir *env)
 // {
 
-// 	////NEED TO FINISH BECAUSE WE CANT USE EXPORT FUNTION LIKE THIS ITS PROHIBITED BY SUBJECT
+// 	////NEED TO FINISH BECAUSE WE CANT USE EXPORT FUNTION 
+// LIKE THIS ITS PROHIBITED BY SUBJECT
 // 	export(env, env->var_name, env->var_value);
 // }
