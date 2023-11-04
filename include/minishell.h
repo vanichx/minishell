@@ -175,7 +175,7 @@ int			is_only_ascii(char *str);
 int			len_2darray(char **array);
 char		*trim_newlines(char *src);
 int 		ft_has_only_digit(char *str);
-int 		ft_has_only_spaces(char *str);
+int 		only_spaces_parenth(char *str);
 
 /* Environment lists functions */
 void		ft_envadd_back(t_envir **lst, t_envir *new);
@@ -262,6 +262,8 @@ void		set_token_parenth2(t_token *token);
 int			set_token_parenth(t_data *data);
 int 		syntax_error_parenth(t_token **token);
 int 		only_parenth(char *str);
+int			operand_error_parenth(int i);
+int			find_token3(t_data *data, char *str, int *i, t_token **head);
 
 /*Binary Tree*/
 t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);

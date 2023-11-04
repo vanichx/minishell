@@ -88,14 +88,14 @@ int ft_has_only_digit(char *str)
 	return (1);	
 }
 
-int ft_has_only_spaces(char *str)
+int only_spaces_parenth(char *str)
 {
 	int i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != ' ')
+		if (str[i] != ' ' && str[i] != '(' && str[i] != ')')
 			return (0);
 		i++;
 	}

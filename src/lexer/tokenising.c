@@ -33,7 +33,7 @@ int	find_token(t_data *data, char *str, int *i, t_token **head)
 		add_token(head, create_token(data, *i));
 		if (str[*i] == '*')
 			add_token(head, create_arg_token(data, "*", T_STAR));
-		else
+		else if (str[*i] == ' ' || str[*i] == '\t')
 			add_token(head, create_arg_token(data, " ", T_SPACE));
 		(*i)++;
 		data->count = 0;
@@ -85,16 +85,7 @@ int	set_token_type(t_data *data)
 	head = data->token_list;
 	while (data->token_list)
 	{
-		if (!ft_strcmp(data->token_list->word, ">>"))
-			data->token_list->type = T_APPEND;
-		else if (!ft_strcmp(data->token_list->word, "<<"))
-			data->token_list->type = T_DELIM;
-		else if (!ft_strcmp(data->token_list->word, "&&"))
-			data->token_list->type = T_AND;
-		else if (!ft_strcmp(data->token_list->word, "||"))
-			data->token_list->type = T_OR;
-		else
-			set_token_type2(data->token_list);
+		set_token_type2(data->token_list);
 		data->token_list = data->token_list->next;
 	}
 	data->token_list = head;
@@ -104,7 +95,7 @@ int	set_token_type(t_data *data)
 		return (1);
 	if (lexic_with_parenth(data))
 		return (1);
-	clean_space_tokens(&data->token_list);
+	// clean_space_tokens(&data->token_list);
 	return (0);
 }
 

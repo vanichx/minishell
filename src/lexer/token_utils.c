@@ -8,7 +8,7 @@ void	clean_null_tokens(t_token **head)
     while (current != NULL)
     {
         tmp = current;
-        if (ft_strlen(tmp->word) == 0)
+        if (ft_strlen(tmp->word) == 0 && tmp->type != T_PARENTHESES)
         {
             if (tmp->prev != NULL)
                 tmp->prev->next = tmp->next;
