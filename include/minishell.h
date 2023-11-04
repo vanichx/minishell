@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/04 22:06:32 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -24,10 +36,10 @@
 # define MAX_PATH_LEN 100
 # define MAX_CMD_LEN 100
 
-#define NEW_LINE_ERR	"syntax error near unexpected token `newline'"
-#define SINGLE_PIPE_ERR		"syntax error near unexpected token `|'"
-#define DOUBLE_PIPE_ERR		"syntax error near unexpected token `||'"
-#define DEL_ERR			"syntax error near unexpected token `<<'"
+# define NEW_LINE_ERR "syntax error near unexpected token `newline'"
+# define SINGLE_PIPE_ERR "syntax error near unexpected token `|'"
+# define DOUBLE_PIPE_ERR "syntax error near unexpected token `||'"
+# define DEL_ERR "syntax error near unexpected token `<<'"
 
 typedef enum e_token_type {
 	T_WORD = 1,
@@ -47,7 +59,7 @@ typedef enum e_token_type {
 	T_AND,
 	T_DELIM,
 	T_PARENTHESES,
-} t_token_type;
+}			t_token_type;
 
 typedef struct s_envir {
 	char		**var_name;
@@ -55,18 +67,18 @@ typedef struct s_envir {
 	int			count;
 }				t_envir;
 
-typedef struct	s_tree {
+typedef struct s_tree {
 	t_token_type	type;
 	char			*value;
 	char			**args_array;
-	struct	s_tree	*last_input;
-	struct	s_tree	*last_output;
-	struct	s_tree	*left;
-	struct	s_tree	*right;
+	struct s_tree	*last_input;
+	struct s_tree	*last_output;
+	struct s_tree	*left;
+	struct s_tree	*right;
 }				t_tree;
 
-typedef struct	s_data {
-	// struct s_tree	*tree;
+typedef struct s_data {
+	struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
 	t_list			*sorted_env_list;
@@ -75,23 +87,23 @@ typedef struct	s_data {
 	long int		exit_status;
 	int				cmd_nbrs;
 	int				pid;
-	int 			count;
+	int				count;
 	int				arg_nums;
-	int 			parenthesis_scope;
+	int				parenthesis_scope;
 	int				forked;
 	char			*input_minishell;
 	char			*input_line;
 	char			*curr_dir;
 	char			*exit_str;
-	char 			**env_array;
-	char 			**cmd_array;
-	char 			**path;
+	char			**env_array;
+	char			**cmd_array;
+	char			**path;
 }				t_data;
 
 typedef struct s_token
 {
-	t_token_type 		type;
-	char 				*word;
+	t_token_type		type;
+	char				*word;
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;
@@ -170,30 +182,21 @@ char		*ignore_spaces(char *input);
 char		**dup_2darray(char **array);
 int			is_only_ascii(char *str);
 int			len_2darray(char **array);
-int 		ft_has_only_digit(char *str);
-int 		only_spaces_parenth(char *str);
+int			ft_has_only_digit(char *str);
+int			only_spaces_parenth(char *str);
 char		*trim_input(char *input);
 void		process_input(char *input, char *str, int *i, int *j);
 
-/* Environment lists functions */
-void		ft_envadd_back(t_envir **lst, t_envir *new);
-void		ft_envadd_front(t_envir **lst, t_envir *new);
-void		ft_envclear(t_envir **lst);
-void		ft_envdelone(t_envir *lst, void (*del)(void *));
-void		ft_enviter(t_envir *lst, void (*f)(void *));
-t_envir		*ft_envlast(t_envir *lst);
-t_envir		*ft_envnew(char *var_name, char *var_value);
-int			ft_envsize(t_envir *lst);
-
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
-char 		first_quote(char *str);
+char		first_quote(char *str);
 int			special_chars(char *str);
-int 		closed_singlequotes(char *str);
-int 		closed_doublequotes(char *str);
+int			closed_singlequotes(char *str);
+int			closed_doublequotes(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
-int			last_pipe(char *str, int pos);//Comented for the moment to avoid warning
+//Comented for the moment to avoid warning
+int			last_pipe(char *str, int pos);
 
 /* tokens */
 int			ft_is_in_stri(char c, char *str);
@@ -204,18 +207,18 @@ int			find_token(t_data *data, char *str, int *i, t_token **head);
 void		free_tokens(t_token **begin, void (*del)(void *));
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
-t_token  	*last_token(t_token *lst);
+t_token		*last_token(t_token *lst);
 void		add_token(t_token **token, t_token *new);
 int			set_token_type(t_data *data);
 void		set_token_type2(t_token *token);
-void 		clean_null_tokens(t_token **head);
-void  		ft_listadd_back(t_token **lst, t_token *next);
+void		clean_null_tokens(t_token **head);
+void		ft_listadd_back(t_token **lst, t_token *next);
 t_token		*split_tokens_to_list(char **split, t_data *data);
 void		token_to_cmd(t_data *data, t_token **tmp);
 int			evaluate_tokens(t_data *data);
 void		add_token_front(t_token **head, t_token *new);
 int			tokens_len(t_token **head);
-void 		print_tokens(t_data *data);
+void		print_tokens(t_data *data);
 void		fix_tokens(t_token **head);
 void		find_ortokens(t_token **head);
 void		find_andtokens(t_token **head);
@@ -226,7 +229,6 @@ void		find_delim(t_token *current);
 void		find_inout(t_token **head);
 void		clean_space_tokens(t_token **head);
 // void		clear_token(t_token **token, void (*del)(void*));
-
 
 char		*find_executable_path(char **paths, char *cmd);
 
@@ -241,15 +243,15 @@ char		*check_first_token(char *str, int *i);
 char		*check_first_half(char *str, int *i);
 char		*check_second_half(char *str, int *i);
 int			syntax_errors(t_token *token, t_data *data);
-int 		syntax_error_parenth(t_token **token);
-int 		check_prev_token(t_token **token);
+int			syntax_error_parenth(t_token **token);
+int			check_prev_token(t_token **token);
 int			check_next_token(t_token **token);
 int			check_and(t_token *token, char *str);
 int			check_red(t_token *token, char *str);
 int			check_red_general(t_token *tmp);
 int			check_first_half_general(t_token *tmp);
 int			check_second_half_general(t_token *tmp);
-int 		check_red_in(t_token *token);
+int			check_red_in(t_token *token);
 int			check_redin_first_half(t_token *token);
 int			check_redin_second_half(t_token *token);
 int			check_redin_last_part(t_token *token);
@@ -271,10 +273,10 @@ t_token		*create_parenth_token(t_data *data, int i, char *input);
 int			lexic_with_parenth(t_data *data);
 void		tokenise_parenth(t_data *data, char *str);
 void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
-int 		find_parenth_token(t_data *data, char *str, int *i, t_token **head);
+int			find_parenth_token(t_data *data, char *str, int *i, t_token **head);
 void		set_token_parenth2(t_token *token);
 int			set_token_parenth(t_data *data);
-int 		only_parenth(char *str);
+int			only_parenth(char *str);
 int			operand_error_parenth(int i);
 int			find_token3(t_data *data, char *str, int *i, t_token **head);
 int			find_parenthesis(char *str);
@@ -282,13 +284,13 @@ int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
 
 /*Binary Tree*/
-t_tree	*set_tree_root(t_token **token, t_token *address, t_tree *tree);
-void	print_tree(t_tree *tree);
-void	init_tree(t_data *data);
-int		arg_count(t_token *token, t_token *address);
-t_tree	*set_tree_leaf(t_token **token, t_tree *tree);
-void	free_tree(t_data *data);
+t_tree		*set_tree_root(t_token **token, t_token *address, t_tree *tree);
+void		print_tree(t_tree *tree);
+void		init_tree(t_data *data);
+int			arg_count(t_token *token, t_token *address);
+t_tree		*set_tree_leaf(t_token **token, t_tree *tree);
+void		free_tree(t_data *data);
 
-void	last_input(t_tree *tree);
-void	last_output(t_tree *tree);
+void		last_input(t_tree *tree);
+void		last_output(t_tree *tree);
 #endif

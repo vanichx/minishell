@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:46:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/27 16:15:09 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:15:45 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	return (trimmed);
 }
-
