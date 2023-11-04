@@ -139,13 +139,19 @@ int syntax_error_parenth(t_token **token)
 				return (operand_error_parenth(only_parenth((*token)->word)));
 			if ((!ft_strcmp((*token)->word, "") && (!(*token)->prev || (*token)->prev->type != T_DOLLAR))
 				|| ((*token)->prev && (*token)->prev->type == T_SPACE && (*token)->prev->prev->type != T_OR
-				&& (*token)->prev->prev->type != T_AND && (*token)->prev->prev->type != T_PIPE && (*token)->prev->prev->type != T_WORD))
+				&& (*token)->prev->prev->type != T_AND && (*token)->prev->prev->type != T_PIPE 
+				&& (*token)->prev->prev->type != T_WORD))
 				return (printf("minishell: syntax error near unexpected token `)'\n"), 1);
-			if ((*token)->next->type == T_PARENTHESES || ((*token)->next->type == T_SPACE && (*token)->next->next->type == T_PARENTHESES))
+			if ((*token)->next->type == T_PARENTHESES || ((*token)->next->type == T_SPACE 
+				&& (*token)->next->next->type == T_PARENTHESES))
 				return (printf("minishell: syntax error near unexpected token `)'\n"), 1);
-            if (((*token)->prev->type == T_SPACE && (*token)->prev->prev->type == T_WORD)
-				|| ((*token)->prev->type == T_WORD))
+            if ((*token)->prev && (((*token)->prev->type == T_SPACE && (*token)->prev->prev->type == T_WORD)
+				|| ((*token)->prev->type == T_WORD)))
 				return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->word), 1);
+			if ((*token)->next->type == T_WORD)
+				return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->next->word), 1);
+			if ((*token)->next->type == T_SPACE && (*token)->next->next->type == T_WORD)
+				return (printf("minishell: syntax error near unexpected token `%s'\n", (*token)->next->next->word), 1);
         }
         *token = (*token)->next;
     }

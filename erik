@@ -3,6 +3,10 @@ erik
 githu.sh
 include
 lib
-minishell
-obj
+src
+Makefile
+erik
+githu.sh
+include
+lib
 src
