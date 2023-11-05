@@ -30,17 +30,17 @@ void	init_tree(t_data *data)
 {
 	t_token	*head;
 	t_token	*address;
-    t_token *root;
+	t_token *root;
 
 	address = data->token_list;
 	head = data->token_list;
-    root = find_tree_root(data->token_list);
-    if (root->type == T_OR || root->type == T_AND)
-    {
-        data->tree = create_tree_root(root);
-        address = root;
+	root = find_tree_root(data->token_list);
+	if (root->type == T_OR || root->type == T_AND)
+	{
+		data->tree = create_tree_root(root);
+		address = root;
 		build_full_tree(data, address);
-    }
+	}
 	else if (root->type == T_PARENTHESES)
 	{
 		data->tree = init_parenth_tree(data->token_list);

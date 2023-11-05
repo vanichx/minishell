@@ -1,7 +1,6 @@
 #include "minishell.h"
 
 t_tree	*build_left_tree(t_data *data, t_token *address)
-
 {
 	t_tree	*tree;
 	t_tree	*root;
