@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:21:49 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:23:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/05 19:18:15 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

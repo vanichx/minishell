@@ -10,9 +10,9 @@ t_tree	*init_parenth_tree(t_token *parenth_token)
 
 	tree = NULL;
     temp_data = malloc(sizeof(t_data));
-    temp_data->input_line = trim_input(parenth_token->word);
+    temp_data->input_line = parenth_token->word;
 	lexical_analysis(temp_data, temp_data->input_line);
-	// printf("I segfault here\n");
+	printf("I segfault here\n");
 	address = temp_data->token_list;
 	head = temp_data->token_list;
     root = find_tree_root(temp_data->token_list);
