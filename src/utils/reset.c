@@ -6,7 +6,7 @@
 /*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:32:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/05 03:20:19 by alappas          ###   ########.fr       */
+/*   Updated: 2023/11/05 18:06:40 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	reset_data(t_data *data)
 	if (data->input_line && ft_strlen(data->input_line) > 0)
 		ft_strdel(&data->input_line);
 	free_tokens(&data->token_list, free);
-	// free_tree(data);
+	free_tree(data);
 }
 
