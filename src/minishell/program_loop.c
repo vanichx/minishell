@@ -6,7 +6,7 @@
 /*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 21:19:36 by alappas          ###   ########.fr       */
+/*   Updated: 2023/11/05 04:12:05 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	start_loop(t_data *data)
 	{
 		reset_data(data);
 		line = readline(data->input_minishell);
+		// data->input_line = "1 | 2 | 3 || 4 < 5";
 		if (handle_d(data, line))
 			continue ;
 		if (ft_strlen(line) > 0)

@@ -17,8 +17,11 @@ D. Check the errors of tokenized parenthesis and free after parsing the parenthe
 
 The current idea = starting with line 39 I want to add conditions on how to build the trees to make the functions composed too. Therefore, there is a third condition (it root->type == T_PARENTH) which will be modified accordingly (it will just require initial tokenization).
 
+What was done = the right tree is being built successfully when parsing || or &&. Only thing left is to build the left tree just by mirroring the movement inside the token_list, etc. Easy part, but must be done very cautiously.
+ATTENTION! I will finish building the left tree in the daytime, so you can start working with parenthesees (third condition);
+
 WARNING! The free_tree function was added in tree_utils.c as it was deleted, I have restored it from our previous version. The tree is being freed in the way it is created now (will be needed to improved to clean the left tree), 
-but with sanitizer it started giving an error, which doesn't exist in the previous version, commit "Fixed last leaf" on November 1st. Reason is unknown, tried to fix it, but didn't work (tried double pointer, etc).
+but with sanitizer it started giving an error, which doesn't exist in the previous version, commit "Fixed last leaf" on November 1st. Reason is unknown, tried to fix it, but didn't work (tried double pointer, returning t_tree address, etc).
 More thoughts on this problem in the mentioned file.
 
 */
@@ -38,120 +41,25 @@ void	init_tree(t_data *data)
     root = find_tree_root(data);
     if (root->type == T_OR || root->type == T_AND)
     {
-        tree = create_tree_root(root);
+        data->tree = create_tree_root(root);
         address = root;
+		printf("ADDRESS NODE = %s\n", address->next->word);
+		build_full_tree(data, address, data->tree);
     }
 	else if (root->type == T_PARENTHESES)
 		return ;
 	else
-		create_simple_tree(data, address);
+		data->tree = create_simple_tree(data, address);
 	print_tree(data->tree);
 	data->token_list = head;
 }
 
-t_tree	*build_tree_leaf(t_token **token, t_tree *tree)
+void	build_full_tree(t_data *data, t_token *address, t_tree *tree)
+
 {
-	int arg_nums;
-	int i;
-
-	tree = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree)
-		return (NULL);
-	tree->type = (*token)->type;
-	tree->value = (*token)->word;
-	i = 0;
-	arg_nums =	arg_count(*token, NULL);
-	if (arg_nums != 0)
-		tree->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-	while (*token != NULL)
-	{
-		tree->args_array[i] = ft_strdup((*token)->word);
-		*token = (*token)->next;
-		i++;
-	}
-	tree->args_array[i] = NULL;
-	tree->left = NULL;
-	tree->right = NULL;
-	return (tree);
+	data->tree->right = build_right_tree(data, address->next);
+	// data->tree->left = build_left_tree(data, address->prev);
 }
-
-t_tree	*build_right_tree(t_token **token, t_token *address, t_tree *tree)
-{
-	int arg_nums;
-	int i;
-
-	tree = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree)
-		return (NULL);
-	tree->type = (address)->type;
-	tree->value = address->word;
-	tree->args_array = NULL;
-	i = 0;
-	arg_nums =	arg_count(*token, address);
-	tree->left = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree)
-	{
-		free(tree);
-		return (NULL);
-	}
-	tree->left->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-	while (*token != address)
-	{
-		tree->left->args_array[i] = ft_strdup((*token)->word);
-		*token = (*token)->next;
-		i++;
-	}
-	tree->left->args_array[i] = NULL;
-	*token = (*token)->next;
-	tree->right = NULL;
-	return (tree);
-}
-
-t_tree	*build_left_tree(t_token **token, t_token *address, t_tree *tree)
-{
-	int arg_nums;
-	int i;
-
-	tree = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree)
-		return (NULL);
-	tree->type = (address)->type;
-	tree->value = address->word;
-	tree->args_array = NULL;
-	i = 0;
-	arg_nums =	arg_count(*token, address);
-	tree->right = (t_tree *)malloc(sizeof(t_tree));
-	if (!tree)
-	{
-		free(tree);
-		return (NULL);
-	}
-	tree->right->args_array = (char **)malloc(sizeof(char *) * (arg_nums + 1));
-	while (*token != address)
-	{
-		tree->right->args_array[i] = ft_strdup((*token)->word);
-		*token = (*token)->next;
-		i++;
-	}
-	tree->right->args_array[i] = NULL;
-	*token = (*token)->next;
-	tree->left = NULL;
-	return (tree);
-}
-
-int		arg_count(t_token *token, t_token *address)
-{
-	int count;
-
-	count = 0;
-	while (token != address)
-	{
-		count++;
-		token = token->next;
-	}
-	return (count);
-}
-
 
 t_token *find_tree_root(t_data *data)
 {
@@ -212,10 +120,11 @@ t_tree	*create_tree_root(t_token *token)
 	tree->right = NULL;
 	return (tree);
 }
-void	create_simple_tree(t_data *data, t_token *address)
+t_tree	*create_simple_tree(t_data *data, t_token *address)
 
 {
 	t_tree	*tree;
+	t_tree	*root;
 	int	delim;
 
 	tree = NULL;
@@ -227,34 +136,36 @@ void	create_simple_tree(t_data *data, t_token *address)
 		{
 			if (tree == NULL)
 			{
-				tree = build_right_tree(&data->token_list, address, tree);
-				data->tree = tree;
+				tree = build_right_branch(&data->token_list, address, tree);
+				root = tree;
 				address = data->token_list;
 			}
 			else
 			{
-				tree->right = build_right_tree(&data->token_list, address, tree);
+				tree->right = build_right_branch(&data->token_list, address, tree);
 				tree = tree->right;
 				address = data->token_list;
 			}
 			delim++;
 		}
 		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
-		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
+		 	&& address->type != T_APPEND &&  address->type != T_DELIM)
 			address = address->next;
 	}
 	if (delim == 0)
 	{
 		address = data->token_list;
-		tree = build_tree_leaf(&data->token_list, tree);
-		data->tree = tree;
+		tree = build_tree_leaf_right(&data->token_list, tree);
+		root = tree;
 	}
 	else
 	{
-		tree->right = build_tree_leaf(&data->token_list, tree);
+		tree->right = build_tree_leaf_right(&data->token_list, tree);
 		tree = tree->right;
 	}
+	return (root);
 }
+
 void print_tree(t_tree *tree)
 {
 	int i;
