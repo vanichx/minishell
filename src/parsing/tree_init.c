@@ -22,23 +22,19 @@ What was done = The tree is being fully built, only the parenthesees case left t
 
 WARNING! The free_tree function was added in tree_utils.c as it was deleted, I have restored it from our previous version. The tree is being freed in the way it is created now (will be needed to improved to clean the left tree), 
 but with sanitizer it started giving an error, which doesn't exist in the previous version, commit "Fixed last leaf" on November 1st. Reason is unknown, tried to fix it, but didn't work (tried double pointer, returning t_tree address, etc).
-More thoughts on this problem in the mentioned file.
+More thoughts on this problem in the mentioned file. Also, "/" doesn't work for some reason.
 
 */
 
 void	init_tree(t_data *data)
 {
-	t_tree	*tree;
 	t_token	*head;
 	t_token	*address;
     t_token *root;
-	int		delim;
 
-	tree = NULL;
 	address = data->token_list;
 	head = data->token_list;
-	delim = 0;
-    root = find_tree_root(data);
+    root = find_tree_root(data->token_list);
     if (root->type == T_OR || root->type == T_AND)
     {
         data->tree = create_tree_root(root);
@@ -46,7 +42,9 @@ void	init_tree(t_data *data)
 		build_full_tree(data, address);
     }
 	else if (root->type == T_PARENTHESES)
-		return ;
+	{
+		data->tree = init_parenth_tree(data->token_list);
+	}
 	else
 	{
 		data->tree = create_simple_tree(data, address);
@@ -69,14 +67,14 @@ void	build_full_tree(t_data *data, t_token *address)
 	print_right_tree(data->tree->right);
 }
 
-t_token *find_tree_root(t_data *data)
+t_token *find_tree_root(t_token *token_list)
 {
 	t_token *token;
 	t_token *tmp;
 	int 	count;
 
 	count = 0;
-	token = data->token_list;
+	token = token_list;
 
 	while (token->type != T_NEWLINE)
 	{
@@ -93,7 +91,7 @@ t_token *find_tree_root(t_data *data)
 		}
 		token = token->next;
 	}
-	token = data->token_list;
+	token = token_list;
 	if (count == 0)
 	{
 		while (token->type != T_NEWLINE)
@@ -109,7 +107,7 @@ t_token *find_tree_root(t_data *data)
 		}
 	}
 	if (count == 0)
-		tmp = data->token_list;
+		tmp = token_list;
 	return (tmp);
 }
 

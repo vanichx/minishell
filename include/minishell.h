@@ -294,10 +294,11 @@ int		arg_count_left(t_token *token, t_token *address);
 t_tree	*build_tree_leaf_right(t_token **token, t_tree *tree);
 t_tree	*build_tree_leaf_left(t_token **token, t_tree *tree);
 void	free_tree(t_data *data);
-t_token *find_tree_root(t_data *data);
+t_token *find_tree_root(t_token *token);
 t_tree	*create_tree_root(t_token *token);
 t_tree	*create_simple_tree(t_data *data, t_token *address);
 void	build_full_tree(t_data *data, t_token *address);
+t_tree	*init_parenth_tree(t_token *parenth_token);
 
 void	last_input(t_tree *tree);
 void	last_output(t_tree *tree);
