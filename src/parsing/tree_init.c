@@ -15,6 +15,12 @@ C. When the parenthesis is met = we have to create a new temporary data structur
 will work with the tree structure only.
 D. Check the errors of tokenized parenthesis and free after parsing the parenthesis inside the tree itself.
 
+The current idea = starting with line 39 I want to add conditions on how to build the trees to make the functions composed too. Therefore, there is a third condition (it root->type == T_PARENTH) which will be modified accordingly (it will just require initial tokenization).
+
+WARNING! The free_tree function was added in tree_utils.c as it was deleted, I have restored it from our previous version. The tree is being freed in the way it is created now (will be needed to improved to clean the left tree), 
+but with sanitizer it started giving an error, which doesn't exist in the previous version, commit "Fixed last leaf" on November 1st. Reason is unknown, tried to fix it, but didn't work (tried double pointer, etc).
+More thoughts on this problem in the mentioned file.
+
 */
 
 void	init_tree(t_data *data)
@@ -29,47 +35,16 @@ void	init_tree(t_data *data)
 	address = data->token_list;
 	head = data->token_list;
 	delim = 0;
-    // root = find_tree_root(data);
-    // if (root->type == T_OR || root->type == T_AND)
-    // {
-    //     tree = create_tree_root(root);
-    //     address = root;
-    // }
-    // printf("prev address = %s\n", address = )
-	while (address)
-	{
-		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
-			|| address->type == T_APPEND || address->type == T_OR || address->type == T_AND || address->type == T_DELIM)
-		{
-			if (tree == NULL)
-			{
-				tree = build_right_tree(&data->token_list, address, tree);
-				data->tree = tree;
-				address = data->token_list;
-			}
-			else
-			{
-				tree->right = build_right_tree(&data->token_list, address, tree);
-				tree = tree->right;
-				address = data->token_list;
-			}
-			delim++;
-		}
-		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
-		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
-			address = address->next;
-	}
-	if (delim == 0)
-	{
-		address = data->token_list;
-		tree = build_tree_leaf(&data->token_list, tree);
-		data->tree = tree;
-	}
+    root = find_tree_root(data);
+    if (root->type == T_OR || root->type == T_AND)
+    {
+        tree = create_tree_root(root);
+        address = root;
+    }
+	else if (root->type == T_PARENTHESES)
+		return ;
 	else
-	{
-		tree->right = build_tree_leaf(&data->token_list, tree);
-		tree = tree->right;
-	}
+		create_simple_tree(data, address);
 	print_tree(data->tree);
 	data->token_list = head;
 }
@@ -237,8 +212,49 @@ t_tree	*create_tree_root(t_token *token)
 	tree->right = NULL;
 	return (tree);
 }
+void	create_simple_tree(t_data *data, t_token *address)
 
+{
+	t_tree	*tree;
+	int	delim;
 
+	tree = NULL;
+	delim = 0;
+	while (address)
+	{
+		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
+			|| address->type == T_APPEND || address->type == T_DELIM)
+		{
+			if (tree == NULL)
+			{
+				tree = build_right_tree(&data->token_list, address, tree);
+				data->tree = tree;
+				address = data->token_list;
+			}
+			else
+			{
+				tree->right = build_right_tree(&data->token_list, address, tree);
+				tree = tree->right;
+				address = data->token_list;
+			}
+			delim++;
+		}
+		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
+		 	&& address->type != T_APPEND && address->type != T_OR && address->type != T_AND && address->type != T_DELIM)
+			address = address->next;
+	}
+	if (delim == 0)
+	{
+		address = data->token_list;
+		tree = build_tree_leaf(&data->token_list, tree);
+		data->tree = tree;
+	}
+	else
+	{
+		tree->right = build_tree_leaf(&data->token_list, tree);
+		tree = tree->right;
+	}
+}
 void print_tree(t_tree *tree)
 {
 	int i;
