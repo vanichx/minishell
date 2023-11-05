@@ -14,7 +14,7 @@ t_tree	*build_left_tree(t_data *data, t_token *address)
 	data->token_list = address;
 	while (address)
 	{
-		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
+		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT || address->type == T_THREE_IN
 			|| address->type == T_APPEND || address->type == T_DELIM || address->type == T_AND || address->type == T_OR)
 		{
 			if (tree == NULL)
@@ -31,7 +31,7 @@ t_tree	*build_left_tree(t_data *data, t_token *address)
 			}
 			delim++;
 		}
-		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
+		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT && address->type != T_THREE_IN
 		 	&& address->type != T_APPEND &&  address->type != T_DELIM && address->type != T_AND && address->type != T_OR)
 			address = address->prev;
 	}
