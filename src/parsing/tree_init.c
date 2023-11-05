@@ -17,8 +17,8 @@ D. Check the errors of tokenized parenthesis and free after parsing the parenthe
 
 The current idea = starting with line 39 I want to add conditions on how to build the trees to make the functions composed too. Therefore, there is a third condition (it root->type == T_PARENTH) which will be modified accordingly (it will just require initial tokenization).
 
-What was done = the right tree is being built successfully when parsing || or &&. Only thing left is to build the left tree just by mirroring the movement inside the token_list, etc. Easy part, but must be done very cautiously.
-ATTENTION! I will finish building the left tree in the daytime, so you can start working with parenthesees (third condition);
+What was done = The tree is being fully built, only the parenthesees case left to be done.
+
 
 WARNING! The free_tree function was added in tree_utils.c as it was deleted, I have restored it from our previous version. The tree is being freed in the way it is created now (will be needed to improved to clean the left tree), 
 but with sanitizer it started giving an error, which doesn't exist in the previous version, commit "Fixed last leaf" on November 1st. Reason is unknown, tried to fix it, but didn't work (tried double pointer, returning t_tree address, etc).
@@ -43,22 +43,30 @@ void	init_tree(t_data *data)
     {
         data->tree = create_tree_root(root);
         address = root;
-		printf("ADDRESS NODE = %s\n", address->next->word);
-		build_full_tree(data, address, data->tree);
+		build_full_tree(data, address);
     }
 	else if (root->type == T_PARENTHESES)
 		return ;
 	else
+	{
 		data->tree = create_simple_tree(data, address);
-	print_tree(data->tree);
+		print_right_tree(data->tree);
+	}
 	data->token_list = head;
 }
 
-void	build_full_tree(t_data *data, t_token *address, t_tree *tree)
+void	build_full_tree(t_data *data, t_token *address)
 
 {
+	t_tree *root;
+
+	root = data->tree;
+	printf("ROOT TYPE = %d, ROOT VALUE = %s\n\n", root->type, root->value);
+	data->tree->left = build_left_tree(data, address->prev);
+	print_left_tree(data->tree->left);
+	data->tree = root;
 	data->tree->right = build_right_tree(data, address->next);
-	// data->tree->left = build_left_tree(data, address->prev);
+	print_right_tree(data->tree->right);
 }
 
 t_token *find_tree_root(t_data *data)
@@ -164,37 +172,4 @@ t_tree	*create_simple_tree(t_data *data, t_token *address)
 		tree = tree->right;
 	}
 	return (root);
-}
-
-void print_tree(t_tree *tree)
-{
-	int i;
-
-	i = 0;
-	if (tree == NULL)
-		return ;
-	while (tree)
-	{
-		printf("tree->type: %d\n", tree->type);
-		printf("tree->value: %s\n", tree->value);
-		if (tree->args_array)
-		{
-			while (tree->args_array[i])
-			{
-				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
-				i++;
-			}
-		}
-		i = 0;
-		if (tree->left)
-		{
-			while (tree->left->args_array[i])
-			{
-				printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
-				i++;
-			}
-		}
-		i = 0;
-		tree = tree->right;
-	}
 }

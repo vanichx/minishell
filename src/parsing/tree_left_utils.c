@@ -15,7 +15,7 @@ t_tree	*build_left_tree(t_data *data, t_token *address)
 	while (address)
 	{
 		if (address->type == T_PIPE || address->type == T_RED_INP || address->type == T_RED_OUT 
-			|| address->type == T_APPEND || address->type == T_DELIM)
+			|| address->type == T_APPEND || address->type == T_DELIM || address->type == T_AND || address->type == T_OR)
 		{
 			if (tree == NULL)
 			{
@@ -32,7 +32,7 @@ t_tree	*build_left_tree(t_data *data, t_token *address)
 			delim++;
 		}
 		if (address->type != T_PIPE && address->type != T_RED_INP && address->type != T_RED_OUT 
-		 	&& address->type != T_APPEND &&  address->type != T_DELIM)
+		 	&& address->type != T_APPEND &&  address->type != T_DELIM && address->type != T_AND && address->type != T_OR)
 			address = address->prev;
 	}
 	if (delim == 0)
@@ -48,19 +48,6 @@ t_tree	*build_left_tree(t_data *data, t_token *address)
 	}
 	data->token_list = head;
 	return (root);
-}
-
-int		arg_count_left(t_token *token, t_token *address)
-{
-	int count;
-
-	count = 0;
-	while (token != address)
-	{
-		count++;
-		token = token->prev;
-	}
-	return (count);
 }
 
 t_tree	*build_left_branch(t_token **token, t_token *address, t_tree *tree)
@@ -119,4 +106,17 @@ t_tree	*build_tree_leaf_left(t_token **token, t_tree *tree)
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);
+}
+
+int		arg_count_left(t_token *token, t_token *address)
+{
+	int count;
+
+	count = 0;
+	while (token != address)
+	{
+		count++;
+		token = token->prev;
+	}
+	return (count);
 }

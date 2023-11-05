@@ -286,7 +286,8 @@ t_tree	*build_right_branch(t_token **token, t_token *address, t_tree *tree);
 t_tree	*build_right_tree(t_data *data, t_token *address);
 t_tree	*build_left_tree(t_data *data, t_token *address);
 t_tree	*build_left_branch(t_token **token, t_token *address, t_tree *tree);
-void	print_tree(t_tree *tree);
+void	print_right_tree(t_tree *tree);
+void	print_left_tree(t_tree *tree);
 void	init_tree(t_data *data);
 int		arg_count_right(t_token *token, t_token *address);
 int		arg_count_left(t_token *token, t_token *address);
@@ -296,7 +297,7 @@ void	free_tree(t_data *data);
 t_token *find_tree_root(t_data *data);
 t_tree	*create_tree_root(t_token *token);
 t_tree	*create_simple_tree(t_data *data, t_token *address);
-void	build_full_tree(t_data *data, t_token *address, t_tree *tree);
+void	build_full_tree(t_data *data, t_token *address);
 
 void	last_input(t_tree *tree);
 void	last_output(t_tree *tree);
