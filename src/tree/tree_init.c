@@ -8,51 +8,29 @@ int	built_tree(t_tree *tree, t_token *address)
 	tmp_left = NULL;
 	tmp_right = NULL;
 	if (!address->type || address->type == T_NEWLINE)
-		return ;
-	if (address->type == T_OR || address->type == T_AND || is_special_type(address))
+		return 0;
+	tmp_left = find_tree_root_left(address, address);
+	if (tmp_left->type == T_PARENTHESES)
 	{
-		tmp_left = find_tree_root_left(tree, address);
-		if (tmp_left->type == T_PARENTHESES)
-		{
-			if (tokenise_for_tree(tmp_left))
-				return (1);
-			tmp_left = find_tree_root_left(tree, address);
-		}
-		tmp_right = find_tree_root_right(tree, address);
-		if (tmp_right->type == T_PARENTHESES)
-		{
-			if (tokenise_for_tree(tmp_right))
-				return (1);
-			tmp_right = find_tree_root_right(tree, address);
-		}
-		if (build_tree(tree->left, tmp_left))
+		if (tokenise_for_tree(tmp_left))
 			return (1);
-		if (build_tree(tree->right, tmp_right))
-			return (1);
+		tmp_left = find_tree_root_left(address, address);
 	}
-	else if (address->type == T_PARENTHESES)
+	tmp_right = find_tree_root_right(address, address);
+	if (tmp_right->type == T_PARENTHESES)
 	{
-		if (tmp_left->type == T_PARENTHESES)
-		{
-			if (tokenise_for_tree(tmp_left))
-				return (1);
-			tmp_left = find_tree_root_left(tree, address);
-		}
-		if (tmp_right->type == T_PARENTHESES)
-		{
-			if (tokenise_for_tree(tmp_right))
-				return (1);
-			tmp_right = find_tree_root_right(tree, address);
-		}
-	}
-	else
-	{
-		if (build_tree(tree, address))
+		if (tokenise_for_tree(tmp_right))
 			return (1);
+		tmp_right = find_tree_root_right(address, address);
 	}
+	if (built_tree(tree->left, tmp_left))
+		return (1);
+	if (built_tree(tree->right, tmp_right))
+		return (1);
 	return (0);
 }
-void	init_tree(t_data *data)
+
+int	init_tree(t_data *data)
 {
 	t_token *head;
 	t_token *address;
@@ -60,9 +38,9 @@ void	init_tree(t_data *data)
 	char	*parenth_word;
 
 	head = data->token_list;
-	init_tree_root(data);
+	data->tree = init_tree_root();
 	root_token =  find_first_root(head);
-	if (root_token == T_PARENTHESES)
+	if (root_token->type == T_PARENTHESES)
 	{
 		parenth_word = root_token->word;
 		free_tokens(&data->token_list, free);
@@ -71,7 +49,10 @@ void	init_tree(t_data *data)
 		root_token = find_first_root(head);
 	}
 	address = root_token;	
-	build_tree(data->tree, address, 0);/////////NOW WE ARE HERE///////////////////////////
+	if (built_tree(data->tree, address))
+		return (1);
+		
+	/////////NOW WE ARE HERE///////////////////////////
 	// if (root_token->type == T_OR || root_token->type == T_AND)
 	// {
 	// 	data->tree = init_tree_root(root_token);
@@ -89,6 +70,7 @@ void	init_tree(t_data *data)
 	// }
 	
 	data->token_list = head;
+	return (0);
 }
 
 

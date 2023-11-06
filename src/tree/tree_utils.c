@@ -31,7 +31,7 @@ t_token	*find_first_root(t_token *root_token)
 
 
 
-t_tree	*init_tree_root(t_data *data)
+t_tree	*init_tree_root(void)
 {
 	t_tree *tree;
 
@@ -54,14 +54,14 @@ int is_special_type(t_token *address)
 }
 
 
-t_token	*find_tree_root_right(t_token *root_token)
+t_token	*find_tree_root_right(t_token *root_token, t_token *address)
 {
 	 t_token *token = root_token;
 	 t_token *tmp = NULL;
 	t_token	*or = NULL;
 	t_token *and = NULL;
 
-	 while (token->type != T_NEWLINE)
+	 while (token->type != T_NEWLINE || token != address)
 	 {
 		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
 		{
@@ -90,7 +90,7 @@ t_token	*find_tree_root_left(t_token *root_token, t_token *address)
 	t_token	*or = NULL;
 	t_token *and = NULL;
 
-	 while (token->type != NULL || token != address)
+	 while (!token->type || token != address)
 	 {
 		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
 		{

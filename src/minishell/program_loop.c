@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 16:51:50 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:08:49 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	start_loop(t_data *data)
 		if (tokenise_for_tree(temp))
 			continue ;
 		print_tokens(data);
-		// init_tree(data);
+		if (init_tree(data))
+			continue ;
 	}
 }
 // init_tree(data);

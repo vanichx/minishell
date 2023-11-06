@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 15:36:15 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:13:25 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,25 +289,29 @@ t_tree		*build_left_tree(t_data *data, t_token *address);
 t_tree		*build_left_branch(t_token **token, t_token *address, t_tree *tree);
 void		print_right_tree(t_tree *tree);
 void		print_left_tree(t_tree *tree);
-void		init_tree(t_data *data);
 int			arg_count_right(t_token *token, t_token *address);
 int			arg_count_left(t_token *token, t_token *address);
 t_tree		*build_tree_leaf_right(t_token **token, t_tree *tree);
 t_tree		*build_tree_leaf_left(t_token **token, t_tree *tree);
 void		free_tree(t_tree *tree);
 t_token		*find_tree_root(t_token *token);
-t_tree		*init_tree_root(t_data *data);
 t_tree		*create_simple_tree(t_data *data, t_token *address);
 void		build_full_tree(t_data *data, t_token *address);
 t_tree		*init_parenth_tree(t_token *parenth_token);
 t_tree		*create_tree_based_on_root_type(t_token *root, t_data *temp_data, t_token *address);
-int			is_special_type(t_token *address);
 
 
 /* tokenise left for the tree */
 int			tokenise_for_tree(t_token *t_parenth);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
+t_token		*find_tree_root_right(t_token *root_token, t_token *address);
+t_token		*find_first_root(t_token *root_token);
+t_token		*find_tree_root_left(t_token *root_token, t_token *address);
+int			is_special_type(t_token *address);
+t_tree		*init_tree_root(void);
+int			built_tree(t_tree *tree, t_token *address);
+int			init_tree(t_data *data);
 
 t_token		*find_first_root(t_token *root_token);
 
