@@ -9,20 +9,26 @@ int	built_tree(t_tree *tree, t_token *address)
 	tmp_right = NULL;
 	if (!address->type || address->type == T_NEWLINE)
 		return 0;
-	tmp_left = find_tree_root_left(address, address);
+	tmp_left = find_tree_root_left(address->prev, address);
 	if (tmp_left->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_left))
 			return (1);
-		tmp_left = find_tree_root_left(address, address);
+		tmp_left = find_tree_root_left(address->prev, address);
 	}
-	tmp_right = find_tree_root_right(address, address);
+	tree->left = init_tree_root();
+	tree->left->type = tmp_left->type;
+	tree->left->value = ft_strdup(tmp_left->word);
+	tmp_right = find_tree_root_right(address->next, address);
 	if (tmp_right->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_right))
 			return (1);
-		tmp_right = find_tree_root_right(address, address);
+		tmp_right = find_tree_root_right(address->next, address);
 	}
+	tree->right = init_tree_root();
+	tree->right->type = tmp_right->type;
+	tree->right->value = ft_strdup(tmp_right->word);
 	if (built_tree(tree->left, tmp_left))
 		return (1);
 	if (built_tree(tree->right, tmp_right))
@@ -45,10 +51,20 @@ int	init_tree(t_data *data)
 		parenth_word = root_token->word;
 		free_tokens(&data->token_list, free);
 		lexical_analysis(data, parenth_word);
+		find_first_root(data->token_list);
 		head = data->token_list;
 		root_token = find_first_root(head);
+		data->tree->type = root_token->type;
+		data->tree->value = ft_strdup(root_token->word);
+		address = root_token;
 	}
-	address = root_token;	
+	else
+	{
+		data->tree->type = root_token->type;
+		data->tree->value = ft_strdup(root_token->word);
+		address = root_token;
+		printf("type: %d, value: %s", data->tree->type, data->tree->value);
+	}
 	if (built_tree(data->tree, address))
 		return (1);
 		

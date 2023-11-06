@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 17:13:25 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:43:00 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,7 @@ int			is_special_type(t_token *address);
 t_tree		*init_tree_root(void);
 int			built_tree(t_tree *tree, t_token *address);
 int			init_tree(t_data *data);
+void		print_tree(t_tree *tree);
 
 t_token		*find_first_root(t_token *root_token);
 

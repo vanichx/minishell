@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 15:05:09 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:34:06 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	lexical_analysis(t_data *data, char *input)
 	tokenise(data, input);
 	if (set_token_type(data))
 		return (1);
-	print_tokens(data);
+	// print_tokens(data);
 	tmp = data->token_list;
 	return (0);
 }

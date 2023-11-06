@@ -61,7 +61,7 @@ t_token	*find_tree_root_right(t_token *root_token, t_token *address)
 	t_token	*or = NULL;
 	t_token *and = NULL;
 
-	 while (token->type != T_NEWLINE || token != address)
+	 while (!token && (token->type != T_NEWLINE || token != address))
 	 {
 		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
 		{
@@ -85,13 +85,13 @@ t_token	*find_tree_root_right(t_token *root_token, t_token *address)
 
 t_token	*find_tree_root_left(t_token *root_token, t_token *address)
 {
-	t_token *token = root_token->prev;
+	t_token *token = root_token;
 	t_token *tmp = NULL;
 	t_token	*or = NULL;
 	t_token *and = NULL;
 
-	 while (!token->type || token != address)
-	 {
+	while (!token && (!token->type || token != address))
+	{
 		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
 		{
 			if (token->type == T_OR)
@@ -103,96 +103,24 @@ t_token	*find_tree_root_left(t_token *root_token, t_token *address)
 			if (or)
 				tmp = or;
 		}
-		 else if (!or && !and && is_special_type(token))
-			 tmp = token;
-		 token = token->prev;
-	 }
-	 if (tmp == NULL)
-		 tmp = root_token;
-	 return tmp;
+		else if (!or && !and && is_special_type(token))
+			tmp = token;
+		token = token->prev;
+	}
+	if (tmp == NULL)
+		tmp = root_token;
+	return tmp;
 }
 
 
-// // Function to free the binary tree
-// void free_tree(t_tree *tree)
-// {
-//	 if (tree == NULL)
-//		 return;
-
-//	 free_tree(tree->left);
-//	 free_tree(tree->right);
-
-// 	if (tree->args_array)
-//	 	free_2darray(tree->args_array);
-//	 free(tree);
-// }
-
-// // Function to print the binary tree
-// void print_right_tree(t_tree *tree)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (tree == NULL)
-// 		return ;
-// 	while (tree)
-// 	{
-// 		printf("HEAD tree->type: %d\n", tree->type);
-// 		printf("HEAD tree->value: %s\n", tree->value);
-// 		if (tree->args_array)
-// 		{
-// 			while (tree->args_array[i])
-// 			{
-// 				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		if (tree->left)
-// 		{
-// 			while (tree->left->args_array[i])
-// 			{
-// 				printf("LEFT tree->args_array[%d]: %s\n", i, tree->left->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		tree = tree->right;
-// 	}
-// 	printf("Completed printing the RIGHT tree\n\n");
-// }
-
-// void print_left_tree(t_tree *tree)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (tree == NULL)
-// 		return ;
-// 	while (tree)
-// 	{
-// 		printf("HEAD tree->type: %d\n", tree->type);
-// 		printf("HEAD tree->value: %s\n", tree->value);
-// 		if (tree->args_array)
-// 		{
-// 			while (tree->args_array[i])
-// 			{
-// 				printf("HEAD tree->args_array[%d]: %s\n", i, tree->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		if (tree->right)
-// 		{
-// 			while (tree->right->args_array[i])
-// 			{
-// 				printf("RIGHT tree->args_array[%d]: %s\n", i, tree->right->args_array[i]);
-// 				i++;
-// 			}
-// 		}
-// 		i = 0;
-// 		tree = tree->left;
-// 	}
-// 	printf("Completed printing the left tree\n\n");
-// }
-
+void print_tree(t_tree *tree)
+{
+	if (!tree)
+		return ;
+	printf("word: %s\n", tree->value);
+	printf("type: %d\n", tree->type);
+	printf("left: %p\n", tree->left);
+	printf("right: %p\n", tree->right);
+	print_tree(tree->left);
+	print_tree(tree->right);
+}

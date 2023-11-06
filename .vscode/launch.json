@@ -4,10 +4,10 @@
 			"name": "(lldb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/Users/eseferi/42/erik_branch/minishell",
+			"program": "/Users/ipetruni/Desktop/minishellerikbranch/minishell",
 			"args": [], 
 			"stopAtEntry": false,
-			"cwd": "/Users/eseferi/42/erik_branch/",
+			"cwd": "/Users/ipetruni/Desktop/minishellerikbranch/",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb"
