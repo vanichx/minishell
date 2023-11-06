@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:52:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 01:17:25 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	start_loop(t_data *data)
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
 		check_exit(data->input_line);
+		// data->input_line = "(erik || seferi)";
 		if ((odd_quote(data->input_line, data))
 			|| (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
+		init_tree(data);
 	}
 }
 // init_tree(data);

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 22:06:32 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 01:22:23 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,12 +284,26 @@ int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
 
 /*Binary Tree*/
-t_tree		*set_tree_root(t_token **token, t_token *address, t_tree *tree);
-void		print_tree(t_tree *tree);
+t_tree		*build_right_branch(t_token **token, t_token *address, t_tree *tree);
+t_tree		*build_right_tree(t_data *data, t_token *address);
+t_tree		*build_left_tree(t_data *data, t_token *address);
+t_tree		*build_left_branch(t_token **token, t_token *address, t_tree *tree);
+void		print_right_tree(t_tree *tree);
+void		print_left_tree(t_tree *tree);
 void		init_tree(t_data *data);
-int			arg_count(t_token *token, t_token *address);
-t_tree		*set_tree_leaf(t_token **token, t_tree *tree);
-void		free_tree(t_data *data);
+int			arg_count_right(t_token *token, t_token *address);
+int			arg_count_left(t_token *token, t_token *address);
+t_tree		*build_tree_leaf_right(t_token **token, t_tree *tree);
+t_tree		*build_tree_leaf_left(t_token **token, t_tree *tree);
+void		free_tree(t_tree *tree);
+t_token		*find_tree_root(t_token *token);
+t_tree		*create_tree_root(t_token *token);
+t_tree		*create_simple_tree(t_data *data, t_token *address);
+void		build_full_tree(t_data *data, t_token *address);
+t_tree		*init_parenth_tree(t_token *parenth_token);
+t_tree		*create_tree_based_on_root_type(t_token *root, t_data *temp_data, t_token *address);
+int			is_special_type(t_token *address);
+
 
 void		last_input(t_tree *tree);
 void		last_output(t_tree *tree);
