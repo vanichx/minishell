@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:32:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/05 23:26:47 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 13:37:38 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	reset_data(t_data *data)
 		ft_strdel(&data->curr_dir);
 	if (data->input_line && ft_strlen(data->input_line) > 0)
 		ft_strdel(&data->input_line);
-	if (data->tree)
-		free_tree(data->tree);
+	// if (data->tree)
+	// 	free_tree(data->tree);
 	free_tokens(&data->token_list, free);
 }

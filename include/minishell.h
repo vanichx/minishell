@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 01:22:23 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:36:15 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_data {
 	char			*curr_dir;
 	char			*exit_str;
 	char			**env_array;
-	char			**cmd_array;
 	char			**path;
 }				t_data;
 
@@ -297,13 +296,20 @@ t_tree		*build_tree_leaf_right(t_token **token, t_tree *tree);
 t_tree		*build_tree_leaf_left(t_token **token, t_tree *tree);
 void		free_tree(t_tree *tree);
 t_token		*find_tree_root(t_token *token);
-t_tree		*create_tree_root(t_token *token);
+t_tree		*init_tree_root(t_data *data);
 t_tree		*create_simple_tree(t_data *data, t_token *address);
 void		build_full_tree(t_data *data, t_token *address);
 t_tree		*init_parenth_tree(t_token *parenth_token);
 t_tree		*create_tree_based_on_root_type(t_token *root, t_data *temp_data, t_token *address);
 int			is_special_type(t_token *address);
 
+
+/* tokenise left for the tree */
+int			tokenise_for_tree(t_token *t_parenth);
+t_data		*init_temp_data(void);
+t_token		*find_token_parenth(t_token **head);
+
+t_token		*find_first_root(t_token *root_token);
 
 void		last_input(t_tree *tree);
 void		last_output(t_tree *tree);

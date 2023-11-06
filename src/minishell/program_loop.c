@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 01:17:25 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 16:51:50 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	start_loop(t_data *data)
 {
 	char	*line;
-
+	t_token *temp;
+	
 	while (1)
 	{
 		reset_data(data);
@@ -32,7 +33,11 @@ void	start_loop(t_data *data)
 			|| (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
-		init_tree(data);
+		temp = find_token_parenth(&data->token_list);
+		if (tokenise_for_tree(temp))
+			continue ;
+		print_tokens(data);
+		// init_tree(data);
 	}
 }
 // init_tree(data);

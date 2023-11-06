@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/06 08:47:45 by eseferi          ###   ########.fr        #
+#    Updated: 2023/11/06 11:51:37 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ CFLAGS				+=	-I $(LIBFT_DIR)/include
 MAKE_LIB			=	make --no-print-directory -C
 
 # Source and Object Files
-VPATH				=	src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/quotes:src/utils:include
+VPATH				=	src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/quotes:src/tree:src/utils:include
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	$(shell find src -name '*.c')
 

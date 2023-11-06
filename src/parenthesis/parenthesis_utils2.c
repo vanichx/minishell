@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:38:11 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 18:41:35 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 13:00:18 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	find_parenth_token(t_data *data, char *str, int *i, t_token **head)
 		if (parencount > 0)
 			(*i)++;
 	}
-	return (parencount);
+	return (parencount); 
 }
 
 t_token	*create_parenth_token(t_data *data, int i, char *input)
