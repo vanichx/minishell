@@ -63,9 +63,8 @@ t_token	*find_tree_root_right(t_token *root_token)
 
 	 while (token->type != T_NEWLINE)
 	 {
-		 if (!found && (token->type == T_OR 
-				|| (token->type == T_AND && tmp == NULL)))
-		 {
+		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
+		{
 			if (token->type == T_OR)
 				or = token;
 			if (token->type == T_AND)
@@ -74,7 +73,7 @@ t_token	*find_tree_root_right(t_token *root_token)
 				tmp = and;
 			if (or)
 				tmp = or;
-		 }
+		}
 		 else if (!or && !and && is_special_type(token))
 			 tmp = token;
 		 token = token->next;
