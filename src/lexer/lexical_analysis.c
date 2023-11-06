@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 19:16:04 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/06 19:24:30 by alappas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	lexical_analysis(t_data *data, char *input)
 	tokenise(data, input);
 	if (set_token_type(data))
 		return (1);
-	print_tokens(data);
+	// print_tokens(data);
 	tmp = data->token_list;
 	return (0);
 }

@@ -30,21 +30,27 @@ void	init_tree(t_data *data)
 {
 	t_token	*head;
 	t_token	*address;
-	t_token *root;
+    t_token *root;
 
 	address = data->token_list;
 	head = data->token_list;
-	root = find_tree_root(data->token_list);
-	if (root->type == T_OR || root->type == T_AND)
+    root = find_tree_root(data->token_list);
+	if (root->type == T_PARENTHESES)
 	{
-		data->tree = create_tree_root(root);
-		address = root;
+		ft_strdel(&data->input_line);
+		data->input_line = ft_strdup(root->word);
+		free_tokens(&data->token_list, free);
+		lexical_analysis(data, data->input_line);
+		root = find_tree_root(data->token_list);
+		// print_tokens(data);
+	}
+	printf("I segfault here\n");
+    if (root->type == T_OR || root->type == T_AND)
+    {
+        data->tree = create_tree_root(root);
+        address = root;
 		build_full_tree(data, address);
-	}
-	else if (root->type == T_PARENTHESES)
-	{
-		data->tree = init_parenth_tree(data->token_list);
-	}
+    }
 	else
 	{
 		data->tree = create_simple_tree(data, address);

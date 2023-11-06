@@ -59,8 +59,8 @@ typedef struct	s_tree {
 	t_token_type	type;
 	char			*value;
 	char			**args_array;
-	// struct	s_tree	*last_input;
-	// struct	s_tree	*last_output;
+	struct	s_tree	*last_input;
+	struct	s_tree	*last_output;
 	struct	s_tree	*left;
 	struct	s_tree	*right;
 }				t_tree;
