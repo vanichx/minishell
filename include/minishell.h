@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 14:57:46 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/07 16:55:57 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ int			is_special_type(t_token *address);
 t_tree		*init_tree_root(void);
 int			built_tree(t_tree **tree, t_token *address);
 int			init_tree(t_data *data, t_token **head);
-void		print_tree(t_tree *tree);
+void		print_tree(t_tree *tree, char *side);
 
 void		last_input(t_tree *tree);
 void		last_output(t_tree *tree);

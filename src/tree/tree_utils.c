@@ -102,14 +102,15 @@ t_token	*find_tree_root_left(t_token **root_token)
 }
 
 
-void print_tree(t_tree *tree)
+void print_tree(t_tree *tree, char *side)
 {
 	if (!tree)
 		return ;
+	printf("SIDE: %s\n", side);
 	printf("word: %s\n", tree->value);
 	printf("type: %d\n", tree->type);
 	printf("left: %p\n", tree->left);
 	printf("right: %p\n", tree->right);
-	print_tree(tree->left);
-	print_tree(tree->right);
+	print_tree(tree->left, "LEFT ->");
+	print_tree(tree->right, "RIGHT ->");
 }
