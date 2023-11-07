@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenise_for_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/06 15:09:25 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:48:23 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ int	tokenise_for_tree(t_token *t_parenth)
     atach_right = t_parenth->next;
 
     temp_data = init_temp_data();
-    printf("%s", t_parenth->word);
+    // printf("%s", t_parenth->word);
     temp_data->input_line = ft_strdup(t_parenth->word);
 	ft_strdel(&t_parenth->word);
-	free(t_parenth);
     if (lexical_analysis(temp_data, temp_data->input_line))
         return (1);
     head = temp_data->token_list;

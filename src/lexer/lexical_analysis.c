@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 17:34:06 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:17:13 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

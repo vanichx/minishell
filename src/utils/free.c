@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 13:37:47 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/07 17:32:43 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	free_2darray(data->env_array);
-	free_tokens(&data->token_list, free);
-	// if (data->tree)
-	// 	free_tree(data->tree);
+	if (data->env_array)
+		free_2darray(data->env_array);
+	if (data->token_list)
+		free_tokens(&data->token_list, free);
+	// Add similar checks for other members of `data` that need to be freed
+	// if (data->other_member)
+	// 	free_other_member(data->other_member);
 	free(data);
 	data = NULL;
 }

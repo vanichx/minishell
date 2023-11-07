@@ -3,20 +3,23 @@
 t_token	*find_first_root(t_token **root_token)
 {
 	t_token *token = *root_token;
+	t_token *special = NULL;
 
-	while (token && token->type != T_NEWLINE)
+	while (token && token->next && token->next->type != T_NEWLINE)
 	{
-		if (token->type == T_OR || token->type == T_AND )
+		if (token->type == T_OR || token->type == T_AND || is_special_type(token))
 		{
 			if (token->type == T_OR)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
+			if (is_special_type(token))
+				special = token;
 		}
-		else if (is_special_type(token))
-			return (token);
 		token = token->next;
 	}
+	if (special)
+		return (special);
 	return (token);
 }
 

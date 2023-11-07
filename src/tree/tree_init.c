@@ -11,12 +11,16 @@ int	init_tree(t_data *data, t_token **head)
 	printf("MAIN ROOT TYPE = %d, MAIN ROOT VALUE = %s\n\n", root_token->type, root_token->word);
 	if (root_token->type == T_PARENTHESES)
 	{
-		parenth_word = root_token->word;
+		print_tokens(data);
+		// parenth_word = root_token->word;
+		data->input_line = ft_strdup(root_token->word);
 		free_tokens(&data->token_list, free);
-		lexical_analysis(data, parenth_word);
+		lexical_analysis(data, data->input_line);
 		root_token = find_first_root(head);
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
+		free(root_token->word);
+		root_token->word = ft_strdup("boundary");
 	}
 	else
 	{
