@@ -7,18 +7,28 @@ int	built_tree(t_tree *tree, t_token *address)
 
 	tmp_left = NULL;
 	tmp_right = NULL;
-	if (!address->type || address->type == T_NEWLINE)
+	if (!address || address->type == T_NEWLINE)
 		return 0;
 	tmp_left = find_tree_root_left(address->prev, address);
-	if (tmp_left->type == T_PARENTHESES)
+	if (tmp_left && tmp_left->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_left))
 			return (1);
 		tmp_left = find_tree_root_left(address->prev, address);
 	}
-	tree->left = init_tree_root();
-	tree->left->type = tmp_left->type;
-	tree->left->value = ft_strdup(tmp_left->word);
+	if (tmp_left)
+	{
+		tree->left = init_tree_root();
+		tree->left->type = tmp_left->type;
+		tree->left->value = ft_strdup(tmp_left->word);
+		if (tmp_left->type != T_PARENTHESES && tmp_left->type != T_WORD)
+		{
+			ft_strdel(&tmp_left->word);
+			tmp_left->word = ft_strdup("boundary");
+		}	
+	}
+	else
+		tree->left = NULL;
 	tmp_right = find_tree_root_right(address->next, address);
 	if (tmp_right->type == T_PARENTHESES)
 	{
@@ -26,9 +36,19 @@ int	built_tree(t_tree *tree, t_token *address)
 			return (1);
 		tmp_right = find_tree_root_right(address->next, address);
 	}
-	tree->right = init_tree_root();
-	tree->right->type = tmp_right->type;
-	tree->right->value = ft_strdup(tmp_right->word);
+	if (tmp_right)
+	{
+		tree->right = init_tree_root();
+		tree->right->type = tmp_right->type;
+		tree->right->value = ft_strdup(tmp_right->word);
+		if (tmp_right->type != T_PARENTHESES && tmp_right->type != T_WORD)
+		{
+			ft_strdel(&tmp_right->word);
+			tmp_right->word = ft_strdup("boundary");
+		}
+	}
+	else
+		tree->right = NULL;
 	if (built_tree(tree->left, tmp_left))
 		return (1);
 	if (built_tree(tree->right, tmp_right))
@@ -61,7 +81,14 @@ int	init_tree(t_data *data)
 	else
 	{
 		data->tree->type = root_token->type;
-		data->tree->value = ft_strdup(root_token->word);
+		if (root_token->type != T_WORD || root_token->type != T_NEWLINE)
+		{
+			data->tree->value = ft_strdup(root_token->word);
+			ft_strdel(&root_token->word);
+			root_token->word = ft_strdup("boundary");
+		}
+		else
+			data->tree->value = ft_strdup(root_token->word);
 		address = root_token;
 		printf("type: %d, value: %s", data->tree->type, data->tree->value);
 	}
