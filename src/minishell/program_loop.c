@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 11:28:58 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:17:13 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	start_loop(t_data *data)
 	
 	while (1)
 	{
-		reset_data(data);
+git s		reset_data(data);
 		// line = readline(data->input_minishell);
 		// if (handle_d(data, line))
 		// 	continue ;
@@ -39,7 +39,7 @@ void	start_loop(t_data *data)
 		// 	continue ;
 		// print_tokens(data);
 		
-		if (init_tree(data))
+		if (init_tree(data, &data->token_list))
 			continue ;
 		// print_tree(data->tree);
 	}

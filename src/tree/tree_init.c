@@ -1,113 +1,88 @@
 #include "minishell.h"
 
-int	init_tree(t_data *data)
+int	init_tree(t_data *data, t_token **head)
 {
-	t_token *head;
-	t_token *address;
 	t_token *root_token;
 	char	*parenth_word;
 
-	head = data->token_list;
+	parenth_word = NULL;
 	data->tree = init_tree_root();
 	root_token =  find_first_root(head);
+	printf("MAIN ROOT TYPE = %d, MAIN ROOT VALUE = %s\n\n", root_token->type, root_token->word);
 	if (root_token->type == T_PARENTHESES)
 	{
 		parenth_word = root_token->word;
 		free_tokens(&data->token_list, free);
 		lexical_analysis(data, parenth_word);
-		find_first_root(data->token_list);
-		head = data->token_list;
 		root_token = find_first_root(head);
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
-		address = root_token;
 	}
 	else
 	{
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
-		ft_strdel(&root_token->word);
+		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
-		address = root_token;
-		printf("type: %d, value: %s", data->tree->type, data->tree->value);
-	}
-	if (built_tree(data->tree, address))
-		return (1);
 		
-	/////////NOW WE ARE HERE///////////////////////////
-	// if (root_token->type == T_OR || root_token->type == T_AND)
-	// {
-	// 	data->tree = init_tree_root(root_token);
-	// 	address = root_token;
-	// }
-    // else if (root_token->type == T_PARENTHESES)
-	// {
-	// 	data->tree = init_parenth_tree(data->token_list);
-	// 	// store the adrees here
-	// }
-	// else
-	// {
-	// 	data->tree = create_simple_tree(data, address);
-	// 	// store the address
-	// }
-	
-	data->token_list = head;
+	}
+	if (built_tree(&data->tree, root_token))
+		return (1);
 	return (0);
 }
 
-int	built_tree(t_tree *tree, t_token *address)
+int	built_tree(t_tree **tree, t_token *address)
 {
 	t_token *tmp_left;
 	t_token *tmp_right;
+	t_tree	*tmp_tree;
 
-	tmp_left = NULL;
-	tmp_right = NULL;
+	tmp_tree = *tree;
 	if (!address || address->type == T_NEWLINE)
 		return 0;
-	tmp_left = find_tree_root_left(address->prev);
+	tmp_left = find_tree_root_left(&address->prev);
 	if (tmp_left && tmp_left->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_left))
 			return (1);
-		tmp_left = find_tree_root_left(address->prev);
+		tmp_left = find_tree_root_left(&address->prev);
 	}
-	if (tmp_left)
+	if (tmp_left && ft_strcmp(tmp_left->word, "boundary"))
 	{
-		tree->left = init_tree_root();
-		tree->left->type = tmp_left->type;
-		tree->left->value = ft_strdup(tmp_left->word);
+		tmp_tree->left = init_tree_root();
+		if (tmp_left->type)
+ 			tmp_tree->left->type = tmp_left->type;
+		if (tmp_left->word)
+			tmp_tree->left->value = ft_strdup(tmp_left->word);
 		ft_strdel(&tmp_left->word);
 		tmp_left->word = ft_strdup("boundary");
+		if (built_tree(&tmp_tree->left, tmp_left))
+			return (1);
 	}
 	else
-		tree->left = NULL;
-	tmp_right = find_tree_root_right(address->next);
-	if (tmp_right->type == T_PARENTHESES)
+		tmp_tree->left = NULL;
+	tmp_right = find_tree_root_right(&address->next);
+	if (tmp_right && tmp_right->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_right))
 			return (1);
-		tmp_right = find_tree_root_right(address->next);
+		tmp_right = find_tree_root_right(&address->next);
 	}
-	if (tmp_right)
+	if (tmp_right && ft_strcmp(tmp_right->word, "boundary"))
 	{
-		tree->right = init_tree_root();
-		tree->right->type = tmp_right->type;
-		tree->right->value = ft_strdup(tmp_right->word);
-		ft_strdel(&tmp_right->word);
+		tmp_tree->right = init_tree_root();
+		tmp_tree->right->type = tmp_right->type;
+		if (tmp_right->word)
+		{
+			tmp_tree->right->value = ft_strdup(tmp_right->word);
+			ft_strdel(&tmp_right->word);
+		}
 		tmp_right->word = ft_strdup("boundary");
+		if (built_tree(&tmp_tree->right, tmp_right))
+			return (1);
 	}
 	else
-		tree->right = NULL;
-	if (tree->left != NULL)
-	{
-		if (built_tree(tree->left, tmp_left))
-			return (1);
-	}
-	if (tree->right)
-	{
-		if (built_tree(tree->right, tmp_right))
-			return (1);
-	}
+		tmp_tree->right = NULL;
 	return (0);
 }
 
