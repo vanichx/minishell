@@ -3,30 +3,21 @@
 t_token	*find_first_root(t_token *root_token)
 {
 	t_token *token = root_token;
-	t_token *tmp = NULL;
-	t_token	*or = NULL;
-	t_token *and = NULL;
 
 	while (token && token->type != T_NEWLINE)
 	{
-		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
+		if (token->type == T_OR || token->type == T_AND )
 		{
 			if (token->type == T_OR)
-				or = token;
+				return (token);
 			if (token->type == T_AND)
-				and = token;
-			if (and && !or)
-				tmp = and;
-			if (or)
-				tmp = or;
+				return (token);
 		}
-		else if (!or && !and && is_special_type(token))
-			tmp = token;
+		else if (is_special_type(token))
+			return (token);
 		token = token->next;
 	}
-	if (tmp == NULL)
-		tmp = root_token;
-	return tmp;
+	return (root_token);
 }
 
 
@@ -56,62 +47,48 @@ int is_special_type(t_token *address)
 }
 
 
-t_token	*find_tree_root_right(t_token *root_token, t_token *address)
-{
-	 t_token *token = root_token;
-	 t_token *tmp = NULL;
-	t_token	*or = NULL;
-	t_token *and = NULL;
-
-	 while (token && token->type != T_NEWLINE && ft_strcmp(token->word, "boundary"))
-	 {
-		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
-		{
-			if (token->type == T_OR)
-				or = token;
-			if (token->type == T_AND)
-				and = token;
-			if (and && !or)
-				tmp = and;
-			if (or)
-				tmp = or;
-		}
-		 else if (!or && !and && is_special_type(token))
-			 tmp = token;
-		 token = token->next;
-	 }
-	 if (tmp == NULL)
-		 tmp = root_token;
-	 return tmp;
-}
-
-t_token	*find_tree_root_left(t_token *root_token, t_token *address)
+t_token	*find_tree_root_right(t_token *root_token)
 {
 	t_token *token = root_token;
-	t_token *tmp = NULL;
-	t_token	*or = NULL;
-	t_token *and = NULL;
 
-	while (token && token->type && ft_strcmp(token->word, "boundary"))
+	if (!token)
+		return (NULL);
+	while (token && token->next->type != T_NEWLINE && ft_strcmp(token->next->word, "boundary"))
 	{
-		if ((token->type == T_OR || (token->type == T_AND && tmp == NULL)))
+		if (token->type == T_OR || token->type == T_AND )
 		{
 			if (token->type == T_OR)
-				or = token;
+				return (token);
 			if (token->type == T_AND)
-				and = token;
-			if (and && !or)
-				tmp = and;
-			if (or)
-				tmp = or;
+				return (token);
 		}
-		else if (!or && !and && is_special_type(token))
-			tmp = token;
+		else if (is_special_type(token))
+			return (token);
+		token = token->next;
+	}
+	return (token);
+}
+
+t_token	*find_tree_root_left(t_token *root_token)
+{
+	t_token *token = root_token;
+
+	if (!token)
+		return (NULL);
+	while (token != NULL && token->prev != NULL && ft_strcmp(token->prev->word, "boundary"))
+	{
+		if (token->type == T_OR || token->type == T_AND )
+		{
+			if (token->type == T_OR)
+				return (token);
+			if (token->type == T_AND)
+				return (token);
+		}
+		else if (is_special_type(token))
+			return (token);
 		token = token->prev;
 	}
-	if (tmp == NULL)
-		tmp = root_token;
-	return tmp;
+	return (token);
 }
 
 

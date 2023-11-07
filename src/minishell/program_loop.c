@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 00:05:45 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/07 11:28:58 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 void	start_loop(t_data *data)
 {
-	char	*line;
+	// char	*line;
 	// t_token *temp;
 	
 	while (1)
 	{
 		reset_data(data);
-		line = readline(data->input_minishell);
-		if (handle_d(data, line))
-			continue ;
-		if (ft_strlen(line) > 0)
-			add_history(line);
-		data->input_line = trim_input(line);
-		ft_strdel(&line);
-		check_exit(data->input_line);
-		// data->input_line = "erik || seferi ||  seferi";
+		// line = readline(data->input_minishell);
+		// if (handle_d(data, line))
+		// 	continue ;
+		// if (ft_strlen(line) > 0)
+		// 	add_history(line);
+		// data->input_line = trim_input(line);
+		// ft_strdel(&line);
+		
+		// check_exit(data->input_line);
+		data->input_line = "erik || seferi ||  ivan";
 		if ((odd_quote(data->input_line, data))
 			|| (special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
@@ -38,8 +39,8 @@ void	start_loop(t_data *data)
 		// 	continue ;
 		// print_tokens(data);
 		
-		// if (init_tree(data))
-		// 	continue ;
+		if (init_tree(data))
+			continue ;
 		// print_tree(data->tree);
 	}
 }
