@@ -102,15 +102,28 @@ t_token	*find_tree_root_left(t_token **root_token)
 }
 
 
-void print_tree(t_tree *tree, char *side)
+void print_tree(t_tree *tree, int depth)
 {
-	if (!tree)
-		return ;
-	printf("SIDE: %s\n", side);
-	printf("word: %s\n", tree->value);
-	printf("type: %d\n", tree->type);
-	printf("left: %p\n", tree->left);
-	printf("right: %p\n", tree->right);
-	print_tree(tree->left, "LEFT ->");
-	print_tree(tree->right, "RIGHT ->");
+    if (!tree)
+        return;
+
+    // Print tabs for current depth
+    for (int i = 0; i < depth; i++)
+        printf("\t");
+
+    printf("Node word: %s, type: %d\n", tree->value, tree->type);
+
+    if (tree->left) {
+        for (int i = 0; i <= depth; i++)
+            printf("\t");
+        printf("Left child of above node:\n");
+        print_tree(tree->left, depth + 1);
+    }
+
+    if (tree->right) {
+        for (int i = 0; i <= depth; i++)
+            printf("\t");
+        printf("Right child of above node:\n");
+        print_tree(tree->right, depth + 1);
+    }
 }
