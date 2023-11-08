@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 10:04:39 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:18:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,8 @@ int	set_token_type(t_data *data)
 	if (lexic_with_parenth(data))
 		return (1);
 	clean_space_tokens(&data->token_list);
-
-
-
-	
-	//Here we are cconcantenate the tokens that are in the same line and has type T_WORD
-	//For example: "echo" "hello" "world" will be "echo hello world"
 	concantenate_word_tokens(&data->token_list);
-	print_tokens(data);
-	
+	// print_tokens(data);
 	return (0);
 }
 

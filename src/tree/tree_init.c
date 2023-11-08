@@ -21,14 +21,19 @@ int	init_tree(t_data *data, t_token **head)
 		data->tree->value = ft_strdup(root_token->word);
 		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
+		if (data->tree->type == T_WORD)
+			data->tree->args_array = ft_split(data->tree->value, ' ');
 	}
 	else
 	{
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
+		if (root_token->type == T_WORD)
+			data->tree->args_array = ft_split(root_token->word, ' ');
 		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
-		
+		if (data->tree->type == T_WORD)
+			data->tree->args_array = ft_split(data->tree->value, ' ');
 	}
 	if (built_tree(&data->tree, root_token))
 		return (1);
@@ -60,6 +65,8 @@ int	built_tree(t_tree **tree, t_token *address)
 			tmp_tree->left->value = ft_strdup(tmp_left->word);
 		ft_strdel(&tmp_left->word);
 		tmp_left->word = ft_strdup("boundary");
+		if (tmp_tree->left->type == T_WORD)
+			tmp_tree->left->args_array = ft_split(tmp_tree->left->value, ' ');
 		if (built_tree(&tmp_tree->left, tmp_left))
 			return (1);
 	}
@@ -82,6 +89,8 @@ int	built_tree(t_tree **tree, t_token *address)
 			ft_strdel(&tmp_right->word);
 		}
 		tmp_right->word = ft_strdup("boundary");
+		if (tmp_tree->right->type == T_WORD)
+			tmp_tree->right->args_array = ft_split(tmp_tree->right->value, ' ');
 		if (built_tree(&tmp_tree->right, tmp_right))
 			return (1);
 	}

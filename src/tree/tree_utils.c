@@ -116,6 +116,15 @@ void print_tree(t_tree *tree, int depth)
 
     printf("Node word: :%s:, type: %d\n", tree->value, tree->type);
 
+    // If the type is word, print the args_array
+    if (tree->type == T_WORD) {
+        printf("Args array: ");
+        for (int i = 0; tree->args_array[i] != NULL; i++) {
+            printf("arg[%d] = \"%s\" ", i, tree->args_array[i]);
+        }
+        printf("\n");
+    }
+
     if (tree->left) {
         for (int i = 0; i <= depth; i++)
             printf("\t");
