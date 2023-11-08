@@ -13,7 +13,8 @@ int	init_tree(t_data *data, t_token **head)
 		ft_strdel(&data->input_line);
 		data->input_line = ft_strdup(root_token->word);
 		free_tokens(&data->token_list, free);
-		lexical_analysis(data, data->input_line);
+		if (lexical_analysis(data, data->input_line))
+			return (1);
 		root_token = find_first_root(head);
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
