@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 10:54:49 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:37:09 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,6 @@ typedef struct s_token
 	struct s_token		*prev;
 }					t_token;
 
-// typedef	struct s_parenth
-// {
-// 	t_token	*token;
-// 	int		valid;
-// 	int		depth;
-// 	struct s_parenth *address;
-// }	t_parenth;
-
 /* builtins.c */
 void		builtin_echo(char **args);
 void		builtin_pwd(void);
@@ -140,8 +132,6 @@ void		exit_shell(char *message, int exit_code, t_data *data);
 
 /* free.c */
 void		free_data(t_data *data);
-// void		free_flags(t_flags *flags);
-// void		free_delimiter(t_delim *delimiter);
 void		free_envir(t_envir *envir);
 void		free_2darray(char **array);
 
@@ -153,7 +143,6 @@ int			is_valid_env2(char *str);
 
 /* init_data.c */
 void		init_data(t_data **data, char **envp);
-// t_flags			*init_flags(void);
 
 /* parsing_commads.c */
 int			lexical_analysis(t_data *data, char *input);
@@ -164,7 +153,6 @@ void		child(t_data *data);
 
 /* reset.c */
 void		reset_data(t_data *data);;
-// void		reset_flags(t_flags *flags);
 
 /* signals.c */
 int			handle_d(t_data *data, char *line);
@@ -188,14 +176,10 @@ void		process_input(char *input, char *str, int *i, int *j);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
-char		first_quote(char *str);
 int			special_chars(char *str);
-int			closed_singlequotes(char *str);
-int			closed_doublequotes(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
-//Comented for the moment to avoid warning
-int			last_pipe(char *str, int pos);
+
 
 /* tokens */
 int			ft_is_in_stri(char c, char *str);
@@ -210,14 +194,12 @@ t_token		*last_token(t_token *lst);
 void		add_token(t_token **token, t_token *new);
 int			set_token_type(t_data *data);
 void		set_token_type2(t_token *token);
-void		clean_null_tokens(t_token **head);
-void		ft_listadd_back(t_token **lst, t_token *next);
-t_token		*split_tokens_to_list(char **split, t_data *data);
-void		token_to_cmd(t_data *data, t_token **tmp);
-int			evaluate_tokens(t_data *data);
+
+
+
+
 void		add_token_front(t_token **head, t_token *new);
 int			tokens_len(t_token **head);
-void		print_tokens(t_data *data);
 void		fix_tokens(t_token **head);
 void		find_ortokens(t_token **head);
 void		find_andtokens(t_token **head);
@@ -227,7 +209,9 @@ void		find_append(t_token *current);
 void		find_delim(t_token *current);
 void		find_inout(t_token **head);
 void		clean_space_tokens(t_token **head);
-// void		clear_token(t_token **token, void (*del)(void*));
+void		clean_null_tokens(t_token **head);
+void 		concantenate_word_tokens(t_token **head);
+void		print_tokens(t_data *data);
 
 char		*find_executable_path(char **paths, char *cmd);
 
@@ -283,25 +267,7 @@ int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
 
 /*Binary Tree*/
-t_tree		*build_right_branch(t_token **token, t_token *address, t_tree *tree);
-t_tree		*build_right_tree(t_data *data, t_token *address);
-t_tree		*build_left_tree(t_data *data, t_token *address);
-t_tree		*build_left_branch(t_token **token, t_token *address, t_tree *tree);
-void		print_right_tree(t_tree *tree);
-void		print_left_tree(t_tree *tree);
-int			arg_count_right(t_token *token, t_token *address);
-int			arg_count_left(t_token *token, t_token *address);
-t_tree		*build_tree_leaf_right(t_token **token, t_tree *tree);
-t_tree		*build_tree_leaf_left(t_token **token, t_tree *tree);
 void		free_tree(t_tree **tree);
-t_token		*find_tree_root(t_token *token);
-t_tree		*create_simple_tree(t_data *data, t_token *address);
-void		build_full_tree(t_data *data, t_token *address);
-t_tree		*init_parenth_tree(t_token *parenth_token);
-t_tree		*create_tree_based_on_root_type(t_token *root, t_data *temp_data, t_token *address);
-
-
-/* tokenise left for the tree */
 int			tokenise_for_tree(t_token *t_parenth);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
@@ -314,8 +280,8 @@ int			built_tree(t_tree **tree, t_token *address);
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 
+
 void		last_input(t_tree *tree);
 void		last_output(t_tree *tree);
 
-void concantenate_word_tokens(t_token **head);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 19:05:45 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:42:22 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,52 @@
 
 int	odd_quote(char *str, t_data *data)
 {
-	char	first_q;
 	int		i;
+	int		s_quotes;
+	int		d_quotes;
+	
 
 	i = 0;
-	first_q = first_quote(str);
-	if (first_q == '\'' && closed_singlequotes(str))
-		data->single_quote = 1;
-	else if (first_q == '\"' && closed_doublequotes(str))
-		data->double_quote = 1;
-	else if (first_q == '\0')
-		return (0);
-	else
+	s_quotes = 0;
+	d_quotes = 0;
+	while (str[i])
 	{
-		write(2, "We should not handle unclosed quotes\n", 37);
+		if (str[i] == '\'' && d_quotes % 2 == 0)
+			s_quotes++;
+		else if (str[i] == '\"' && s_quotes % 2 == 0)
+			d_quotes++;
+		i++;
+	}
+	if (s_quotes % 2 != 0 || d_quotes % 2 != 0)
+	{
+		write(2, "minishell:", 10);
+		write(2, " handling of unclosed quotes is not required by subject\n", 57);
+		data->exit_status = 1;
 		return (1);
 	}
 	return (0);
 }
 
-int	closed_singlequotes(char *str)
-{
-	int	single_quote;
-
-	single_quote = 0;
-	while (*str)
-	{
-		if (*str == '\'')
-			single_quote++;
-		str++;
-	}
-	return (single_quote % 2 == 0);
-}
-
-int	closed_doublequotes(char *str)
-{
-	int	double_quote;
-
-	double_quote = 0;
-	while (*str)
-	{
-		if (*str == '\"')
-			double_quote++;
-		str++;
-	}
-	return (double_quote % 2 == 0);
-}
-
 int	in_quotes(char *s, int pos)
 {
-	int	quotes1;
-	int	quotes2;
+	int	s_quotes;
+	int	d_qoutes;
 	int	i;
 
-	quotes1 = 0;
-	quotes2 = 0;
+	s_quotes = 0;
+	d_qoutes = 0;
 	i = 0;
 	while (i <= pos)
 	{
 		if (s[i] == 34 && (i == 0 || !is_escaped(s, i - 1))
-			&& quotes2 % 2 == 0)
-			quotes1++;
-		if (s[i] == 39 && (i == 0 || quotes2 % 2 != 0 || !is_escaped(s, i - 1))
-			&& quotes1 % 2 == 0)
-			quotes2++;
+			&& d_qoutes % 2 == 0)
+			s_quotes++;
+		if (s[i] == 39 && (i == 0 || d_qoutes % 2 != 0 || !is_escaped(s, i - 1))
+			&& s_quotes % 2 == 0)
+			d_qoutes++;
 		i++;
 	}
-	if (quotes1 % 2 != 0 || quotes2 % 2 != 0)
+	if (s_quotes % 2 != 0 || d_qoutes % 2 != 0)
 		return (1);
 	return (0);
 }
