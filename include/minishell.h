@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 11:37:09 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:05:42 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,10 +265,11 @@ int			find_token3(t_data *data, char *str, int *i, t_token **head);
 int			find_parenthesis(char *str);
 int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
+t_token		*copy_tokens(t_token *head);
 
 /*Binary Tree*/
 void		free_tree(t_tree **tree);
-int			tokenise_for_tree(t_token *t_parenth);
+int			tokenise_for_tree(t_token *t_parenth, t_data *data);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
 t_token		*find_tree_root_right(t_token **root_token);
@@ -276,7 +277,7 @@ t_token		*find_first_root(t_token **root_token);
 t_token		*find_tree_root_left(t_token **root_token);
 int			is_special_type(t_token *address);
 t_tree		*init_tree_root(void);
-int			built_tree(t_tree **tree, t_token *address);
+int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 
