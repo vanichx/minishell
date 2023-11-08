@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 11:42:22 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:00:11 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	odd_quote(char *str, t_data *data)
 	}
 	if (s_quotes % 2 != 0 || d_quotes % 2 != 0)
 	{
-		write(2, "minishell:", 10);
-		write(2, " handling of unclosed quotes is not required by subject\n", 57);
-		data->exit_status = 1;
+		printf("%s\n", \
+		"minishell: handling of unclosed quotes is not required by subject");
+		// data->exit_status = 1;
 		return (1);
 	}
 	return (0);

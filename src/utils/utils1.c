@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:44:32 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 14:13:33 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ char	*trim_input(char *input)
 	while ((input[i] == ' ' || input[i] == '\t') && input[i])
 		i++;
 	process_input(input, str, &i, &j);
-	i = ft_strlen(str) - 1;
+	i = ft_strlen(str);
 	while (str[i] == ' ' || str[i] == '\t')
 		str[i--] = '\0';
-	str[j] = '\0';
 	return (str);
 }
 
@@ -41,11 +40,11 @@ void	process_input(char *input, char *str, int *i, int *j)
 {
 	while (input[*i])
 	{
+		while (in_quotes(input, *i) && input[*i])
+			str[(*j)++] = input[(*i)++];
 		while ((input[*i] == ' ' || input[*i] == '\t')
 			&& (input[*i + 1] == ' ' || input[*i + 1] == '\t'))
 			(*i)++;
-		while (in_quotes(input, *i) && input[*i])
-			str[(*j)++] = input[(*i)++];
 		str[(*j)++] = input[(*i)++];
 	}
 }

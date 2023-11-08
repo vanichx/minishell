@@ -3,23 +3,21 @@
 int	init_tree(t_data *data, t_token **head)
 {
 	t_token *root_token;
-	char	*parenth_word;
 
-	parenth_word = NULL;
 	data->tree = init_tree_root();
 	root_token =  find_first_root(head);
 	printf("MAIN ROOT TYPE = %d, MAIN ROOT VALUE = %s\n\n", root_token->type, root_token->word);
 	if (root_token->type == T_PARENTHESES)
 	{
 		print_tokens(data);
-		// parenth_word = root_token->word;
+		ft_strdel(&data->input_line);
 		data->input_line = ft_strdup(root_token->word);
 		free_tokens(&data->token_list, free);
 		lexical_analysis(data, data->input_line);
 		root_token = find_first_root(head);
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
-		free(root_token->word);
+		ft_strdel(&root_token->word);
 		root_token->word = ft_strdup("boundary");
 		if (data->tree->type == T_WORD)
 			data->tree->args_array = ft_split(data->tree->value, ' ');
@@ -49,6 +47,7 @@ int	built_tree(t_tree **tree, t_token *address)
 	tmp_tree = *tree;
 	if (!address || address->type == T_NEWLINE)
 		return 0;
+	
 	tmp_left = find_tree_root_left(&address->prev);
 	if (tmp_left && tmp_left->type == T_PARENTHESES)
 	{

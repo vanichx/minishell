@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 17:01:55 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:56:15 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,24 @@ void	start_loop(t_data *data)
 	{
 		reset_data(data);
 		line = readline(data->input_minishell);
+		
 		if (handle_d(data, line))
 			continue ;
 		if (ft_strlen(line) > 0)
 			add_history(line);
+		if (odd_quote(line, data))
+		{
+			ft_strdel(&line);
+			continue ;
+		}
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
 		
 		check_exit(data->input_line);
-		// data->input_line = "erik || seferi ||  ivan";
-		if ((odd_quote(data->input_line, data))
-			|| (special_chars(data->input_line))
+		// // data->input_line = "erik || seferi ||  ivan";
+		if ((special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
-		// temp = find_token_parenth(&data->token_list);
-		// if (tokenise_for_tree(temp))
-		// 	continue ;
-		// print_tokens(data);
-		
 		if (init_tree(data, &data->token_list))
 			continue ;
 		print_tree(data->tree, 0);
