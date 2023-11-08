@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 17:17:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 10:04:39 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,39 @@ void	tokenise(t_data *data, char *str)
 	}
 }
 
+
+void concantenate_word_tokens(t_token **head)
+{
+	t_token *tmp;
+	t_token *tmp2;
+	char *str;
+	
+	str = NULL;
+	tmp = *head;
+	while (tmp && tmp->next != NULL && tmp->next->type != T_NEWLINE)
+	{
+		if (tmp->type == T_WORD && tmp->next && tmp->next->type == T_WORD)
+		{
+			str = malloc(sizeof(char) * (ft_strlen(tmp->word) + ft_strlen(tmp->next->word) + 2));
+			ft_strcpy(str, tmp->word);
+			ft_strcat(str, " ");
+			ft_strcat(str, tmp->next->word);
+
+			free(tmp->word);
+			tmp->word = str;
+
+			tmp2 = tmp->next;
+			tmp->next = tmp->next->next;
+			if (tmp->next)
+				tmp->next->prev = tmp;
+			free(tmp2->word);
+			free(tmp2);
+		}
+		else
+			tmp = tmp->next;
+	}
+}
+
 int	set_token_type(t_data *data)
 {
 	t_token	*head;
@@ -70,6 +103,15 @@ int	set_token_type(t_data *data)
 	if (lexic_with_parenth(data))
 		return (1);
 	clean_space_tokens(&data->token_list);
+
+
+
+	
+	//Here we are cconcantenate the tokens that are in the same line and has type T_WORD
+	//For example: "echo" "hello" "world" will be "echo hello world"
+	concantenate_word_tokens(&data->token_list);
+	print_tokens(data);
+	
 	return (0);
 }
 

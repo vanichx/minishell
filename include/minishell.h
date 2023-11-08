@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 17:01:50 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:23:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,4 +316,6 @@ void 		print_tree(t_tree *tree, int depth);
 
 void		last_input(t_tree *tree);
 void		last_output(t_tree *tree);
+
+void concantenate_word_tokens(t_token **head);
 #endif

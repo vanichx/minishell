@@ -114,7 +114,7 @@ void print_tree(t_tree *tree, int depth)
     for (int i = 0; i < depth; i++)
         printf("\t");
 
-    printf("Node word: %s, type: %d\n", tree->value, tree->type);
+    printf("Node word: :%s:, type: %d\n", tree->value, tree->type);
 
     if (tree->left) {
         for (int i = 0; i <= depth; i++)
