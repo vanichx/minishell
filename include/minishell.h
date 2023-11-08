@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 18:23:01 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:54:49 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ int			arg_count_right(t_token *token, t_token *address);
 int			arg_count_left(t_token *token, t_token *address);
 t_tree		*build_tree_leaf_right(t_token **token, t_tree *tree);
 t_tree		*build_tree_leaf_left(t_token **token, t_tree *tree);
-void		free_tree(t_tree *tree);
+void		free_tree(t_tree **tree);
 t_token		*find_tree_root(t_token *token);
 t_tree		*create_simple_tree(t_data *data, t_token *address);
 void		build_full_tree(t_data *data, t_token *address);

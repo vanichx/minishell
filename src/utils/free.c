@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/07 17:32:43 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:01:39 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ void	free_data(t_data *data)
 		free_2darray(data->env_array);
 	if (data->token_list)
 		free_tokens(&data->token_list, free);
-	// Add similar checks for other members of `data` that need to be freed
-	// if (data->other_member)
-	// 	free_other_member(data->other_member);
+	if (data->curr_dir)
+		ft_strdel(&data->curr_dir);
+	if (data->input_line)
+		ft_strdel(&data->input_line);
+	if (data->tree)
+	{
+		free_tree(&data->tree);
+		data->tree = NULL;
+	}
 	free(data);
 	data = NULL;
 }
@@ -78,30 +84,29 @@ void	free_2darray(char **array)
 	array = NULL;
 }
 
-// void	free_tree(t_data *data)
+void	free_tree(t_tree **tree)
+{
+	int i;
+	t_tree *temp_tree;
+	t_tree *left;
+	t_tree *right;
 
-// {
-// 	int i;
-// 	t_tree *right;
-
-// 	i = 0;
-// 	if (!data->tree)
-// 		return ;
-// 	while (data->tree)
-// 	{
-// 		right = data->tree->right;
-// 		if (data->tree->left)
-// 		{
-// 			if (data->tree->left->args_array)
-// 				free_2darray(data->tree->left->args_array);
-// 			free(data->tree->left);
-// 			data->tree->left = NULL;
-// 		}
-// 		free_2darray(data->tree->args_array);
-// 		free(data->tree);
-// 		data->tree = right;
-// 	}
-// }
+	temp_tree = *tree;
+	left = NULL;
+	right = NULL;
+	i = 0;
+	if (!temp_tree)
+		return ;
+	if (temp_tree->value)
+		ft_strdel(&temp_tree->value);
+	if (temp_tree->args_array)
+		free_2darray(temp_tree->args_array);
+	left = temp_tree->left;
+	right = temp_tree->right;
+	free(temp_tree);
+	free_tree(&left);
+	free_tree(&right);
+}
 
 // void	free_commands(t_cmdexe **head, void (*del)(void *))
 // {

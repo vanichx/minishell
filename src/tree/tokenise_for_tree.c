@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/07 17:48:23 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:04:35 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	tokenise_for_tree(t_token *t_parenth)
     }
     ft_strdel(&temp_data->input_line);
     free(temp_data);
+	free(t_parenth);
     return (0);
 }
 
