@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/08 19:49:33 by eseferi          ###   ########.fr        #
+#    Updated: 2023/11/08 20:55:10 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME				=	$(MINISHELL)
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all -s --track-origins=yes
+VALGRIND  = valgrind #--leak-check=full  #-s #--show-leak-kinds=all --track-origins=yes
 LEAKS	  = leaks --atExit --
 
 # Libraries

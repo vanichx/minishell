@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/08 19:41:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/08 20:34:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ int	tokenise_for_tree(t_token *t_parenth, t_data *data)
 		atach_left->next = head;
 		head->prev = atach_left;
 	}
-	if (atach_right->type != T_NEWLINE && tail)
+	if (atach_right->type && tail)
 	{
-		ft_strdel(&atach_right->prev->word);
-		free(atach_right->prev);
+		if (!atach_left)
+		{
+			ft_strdel(&atach_right->prev->word);
+			free(atach_right->prev);
+		}
 		atach_right->prev = tail;
 		tail->next = atach_right;
 	}
