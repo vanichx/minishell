@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/08 20:34:28 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:45:57 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_data	*init_temp_data(void)
 	temp_data->env_list = NULL;
 	temp_data->sorted_env_list = NULL;
 	temp_data->input_line = NULL;
-	temp_data->env_array = NULL;
 	temp_data->input_minishell = NULL;
 	temp_data->curr_dir = NULL;
 	temp_data->exit_str = NULL;

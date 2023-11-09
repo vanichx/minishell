@@ -6,57 +6,34 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 21:01:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:47:12 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	save_envir(t_data *data, char **env_str)
+// int	find_envir_line(t_envir *env, char *var_name)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (var_name[i])
+// 	{
+// 		if (ft_strcmp(&env->var_name[i], var_name) == 0)
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+void	print_env_node(t_envir *env_node)
 {
-	int	i;
-	int	j;
+    t_envir	*env;
+    int		i;
 
-	i = 0;
-	j = 0;
-	while (env_str[j])
-		j++;
-	data->env_array = malloc(sizeof(char *) * (j + 1));
-	printf("save envir malloc success\n");
-	while (env_str[i])
-	{
-		data->env_array[i] = ft_strdup(env_str[i]);
-		i++;
-	}
-	data->env_array[i] = NULL;
-}
-
-int	find_envir_line(t_envir *env, char *var_name)
-{
-	int	i;
-
-	i = 0;
-	while (var_name[i])
-	{
-		if (ft_strcmp(env->var_name[i], var_name) == 0)
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-void	print_env_node(void *env_node)
-{
-	t_envir	*env;
-	int		i;
-
-	env = (t_envir *)env_node;
-	i = 0;
-	while (env->var_name[i])
-	{
-		printf("%s=%s\n", env->var_name[i], env->var_value[i]);
-		i++;
-	}
+    env = env_node;
+    i = 0;
+    printf("envir_name: %s, envir_value: %s", env->var_name, env->var_value);
 }
 
 void	free_envir_array(char **env_array)

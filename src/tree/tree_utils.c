@@ -4,6 +4,7 @@ t_token	*find_first_root(t_token **root_token)
 {
 	t_token *token = *root_token;
 	t_token *special = NULL;
+	int flag = 0;
 
 	while (token && token->next && token->next->type != T_NEWLINE)
 	{
@@ -13,8 +14,11 @@ t_token	*find_first_root(t_token **root_token)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token))
+			if (is_special_type(token) && !flag)
+			{
+				flag = 1;
 				special = token;
+			}
 		}
 		token = token->next;
 	}
@@ -46,7 +50,7 @@ t_tree	*init_tree_root(void)
 int is_special_type(t_token *address)
 {
 	return (address->type == T_PIPE || address->type == T_RED_INP 
-		|| address->type == T_RED_OUT 
+		|| address->type == T_RED_OUT
 		|| address->type == T_APPEND || address->type == T_DELIM 
 		|| address->type == T_THREE_IN);
 }
@@ -107,35 +111,31 @@ t_token	*find_tree_root_left(t_token **root_token)
 
 void print_tree(t_tree *tree, int depth)
 {
-    if (!tree)
-        return;
-
-    // Print tabs for current depth
-    for (int i = 0; i < depth; i++)
-        printf("\t");
-
-    printf("Node word: :%s:, type: %d\n", tree->value, tree->type);
-
-    // If the type is word, print the args_array
-    if (tree->type == T_WORD) {
-        printf("Args array: ");
-        for (int i = 0; tree->args_array[i] != NULL; i++) {
-            printf("arg[%d] = \"%s\" ", i, tree->args_array[i]);
-        }
-        printf("\n");
-    }
-
-    if (tree->left) {
-        for (int i = 0; i <= depth; i++)
-            printf("\t");
-        printf("Left child of above node:\n");
-        print_tree(tree->left, depth + 1);
-    }
-
-    if (tree->right) {
-        for (int i = 0; i <= depth; i++)
-            printf("\t");
-        printf("Right child of above node:\n");
-        print_tree(tree->right, depth + 1);
-    }
+	if (!tree)
+		return;
+	for (int i = 0; i < depth; i++)
+		printf("\t");
+	printf("Node word: :%s:, type: %d\n", tree->value, tree->type);
+	if (tree->type == T_WORD) 
+	{
+		printf("Args array: ");
+		for (int i = 0; tree->args_array[i] != NULL; i++) {
+			printf("arg[%d] = %s ", i, tree->args_array[i]);
+		}
+		printf("\n");
+	}
+	if (tree->left)
+	{
+		for (int i = 0; i <= depth; i++)
+			printf("\t");
+		printf("Left child of above node:\n");
+		print_tree(tree->left, depth + 1);
+	}
+	if (tree->right)
+	{
+		for (int i = 0; i <= depth; i++)
+			printf("\t");
+		printf("Right child of above node:\n");
+		print_tree(tree->right, depth + 1);
+	}
 }

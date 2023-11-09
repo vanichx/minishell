@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:33:01 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/05 21:22:17 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:47:01 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_data(t_data **data, char **envp)
 	(*data)->input_minishell = "minishell>> ";
 	(*data)->pid = getpid();
 	(*data)->curr_dir = getcwd(NULL, 0);
-	save_envir((*data), envp);
+	int i = 0;
+	fill_env(envp, *data);
 	incr_shell_lvl(*data);
 }

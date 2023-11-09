@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 19:05:42 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:46:54 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <limits.h>
 # include <errno.h>
 # include "libft.h"
+# include "stdbool.h"
 
 # define MAX_ENV_VARS 100
 # define MAX_DOLLAR_VALUE_LEN 100
@@ -62,9 +63,10 @@ typedef enum e_token_type {
 }			t_token_type;
 
 typedef struct s_envir {
-	char		**var_name;
-	char		**var_value;
-	int			count;
+	char			*var_name;
+	char			*var_value;
+	struct s_envir	*next;
+	struct s_envir	*prev;
 }				t_envir;
 
 typedef struct s_tree {
@@ -81,7 +83,7 @@ typedef struct s_data {
 	struct s_tree	*tree;
 	struct s_token	*token_list;
 	t_envir			*env_list;
-	t_list			*sorted_env_list;
+	t_envir			*sorted_env_list;
 	int				single_quote;
 	int				double_quote;
 	long int		exit_status;
@@ -95,7 +97,6 @@ typedef struct s_data {
 	char			*input_line;
 	char			*curr_dir;
 	char			*exit_str;
-	char			**env_array;
 	char			**path;
 }				t_data;
 
@@ -121,11 +122,20 @@ void		handle_builtins(t_data *data);
 int			ft_is_builtin(char *cmd);
 
 /* environment.c */
-void		save_envir(t_data *data, char **env_str);
 char		*find_envir_variable(t_data *data, char *var_name, int len);
-void		print_env_node(void *env_node);
-int			find_envir_line(t_envir *env, char *var_name);
+void		print_env_node(t_envir *env_node);
+// int			find_envir_line(t_envir *env, char *var_name);
 void		free_envir_array(char **env_array);
+void		ft_envadd_back(t_envir **lst, t_envir *new);
+void		ft_envadd_front(t_envir **lst, t_envir *new);
+void		ft_envclear(t_envir **lst);
+void		ft_envdelone(t_envir *lst, void (*del)(void *));
+void		ft_enviter(t_envir *lst, void (*f)(t_envir *));
+t_envir		*ft_envlast(t_envir *lst);
+int			ft_envsize(t_envir *lst);
+t_envir		*fill_env(char **env, t_data *data);
+t_envir		*ft_envnew(void);
+
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);
@@ -173,6 +183,7 @@ int			ft_has_only_digit(char *str);
 int			only_spaces_parenth(char *str);
 char		*trim_input(char *input);
 void		process_input(char *input, char *str, int *i, int *j);
+char		**ft_split_args(char *s, char c);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
