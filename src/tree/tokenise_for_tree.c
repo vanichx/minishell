@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenise_for_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/09 14:45:57 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 17:37:11 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ int	tokenise_for_tree(t_token *t_parenth, t_data *data)
 	else
 	{
 		ft_strdel(&atach_right->prev->word);
-		// free(atach_right->prev);
 		atach_right->prev = tail;
 		tail->next = atach_right;
 	}
-	// free(new_tokens);
     return (0);
 }
 

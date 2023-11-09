@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 21:07:11 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 17:39:23 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	start_loop(t_data *data)
 		if (init_tree(data, &data->token_list))
 			continue ;
 		print_tree(data->tree, 0);
+		//execute(data);
 	}
 }
 // init_tree(data);
@@ -49,3 +50,14 @@ void	start_loop(t_data *data)
 // last_output(data->tree);
 // printf("token length: %d\n", token_len(data->token_list));
 // free(data->input_line);
+
+// void	execute(t_data *data)
+// {
+	// find a general rules for execution
+			// delim
+			// pipe
+			// redirection
+			// builtin
+	// if built in, execute_builtin
+	// else execute_command
+// }

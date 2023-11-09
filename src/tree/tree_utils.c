@@ -60,6 +60,7 @@ t_token	*find_tree_root_right(t_token **root_token)
 {
 	t_token *token = *root_token;
 	t_token *special = NULL;
+	int flag = 0;
 
 	if (!token)
 		return (NULL);
@@ -73,8 +74,11 @@ t_token	*find_tree_root_right(t_token **root_token)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token))
+			if (is_special_type(token) && !flag)
+			{
+				flag = 1;
 				special = token;
+			}
 		}
 		token = token->next;
 	}
@@ -87,6 +91,7 @@ t_token	*find_tree_root_left(t_token **root_token)
 {
 	t_token *token = *root_token;
 	t_token *special = NULL;
+	int flag = 0;
 
 	if (!token)
 		return (NULL);
@@ -100,11 +105,16 @@ t_token	*find_tree_root_left(t_token **root_token)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token))
+			if (is_special_type(token) && !flag)
+			{
+				flag = 1;
 				special = token;
+			}
 		}
 		token = token->prev;
 	}
+	if (special)
+		return (special);
 	return (token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 15:48:21 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:19:45 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ int			ft_is_builtin(char *cmd);
 /* environment.c */
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
 void		print_env_node(t_envir *env_node);
-// int			find_envir_line(t_envir *env, char *var_name);
 void		free_envir_array(char **env_array);
 void		ft_envadd_back(t_envir **lst, t_envir *new);
 void		ft_envadd_front(t_envir **lst, t_envir *new);
@@ -136,6 +135,14 @@ int			ft_envsize(t_envir *lst);
 t_envir		*fill_env(char **env, t_data *data);
 t_envir		*ft_envnew(void);
 
+
+/*sorted envariment */
+
+t_envir		*copy_envir_list(t_envir *original);
+void		swap_nodes(t_envir *a, t_envir *b);
+void		sort_envir_list(t_envir *list);
+t_envir		*copy_and_sort_envir_list(t_envir *original);
+void		print_env_node_sorted(t_envir *env_node);
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);

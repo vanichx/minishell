@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:54:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 15:35:59 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:24:43 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	incr_shell_lvl(t_data *data)
 	int		level;
 	t_envir	*envir;
 
+	if (!data->env_list)
+		return ;
 	level = 0;
 	envir = find_envir_variable(data, "SHLVL", ft_strlen("SHLVL"));
 	if (envir->var_value)

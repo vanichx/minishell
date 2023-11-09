@@ -6,34 +6,34 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 15:18:33 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:22:40 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	find_envir_line(t_envir *env, char *var_name)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (var_name[i])
-// 	{
-// 		if (ft_strcmp(&env->var_name[i], var_name) == 0)
-// 			return (i);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 void	print_env_node(t_envir *env_node)
 {
     t_envir	*env;
     int		i;
 
+	if (!env_node)
+		return ;
     env = env_node;
     i = 0;
-    printf("%s %s\n", env->var_name, env->var_value);
+    printf("%s=%s\n", env->var_name, env->var_value);
+}
+
+void	print_env_node_sorted(t_envir *env_node)
+{
+    t_envir	*env;
+    int		i;
+
+	if (!env_node)
+		return ;
+    env = env_node;
+    i = 0;
+    printf("declare -x %s=%s\n", env->var_name, env->var_value);
 }
 
 void	free_envir_array(char **env_array)

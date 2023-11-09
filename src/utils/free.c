@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 16:11:20 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:46:50 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	free_data(t_data *data)
 		return ;
 	if (data->env_list)
 		ft_envclear(&data->env_list);
+	if (data->sorted_env_list)
+		ft_envclear(&data->sorted_env_list);
 	if (data->token_list)
 		free_tokens(&data->token_list, free);
 	if (data->curr_dir)
