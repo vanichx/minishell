@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 14:46:54 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:48:21 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ void		handle_builtins(t_data *data);
 int			ft_is_builtin(char *cmd);
 
 /* environment.c */
-char		*find_envir_variable(t_data *data, char *var_name, int len);
+t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
 void		print_env_node(t_envir *env_node);
 // int			find_envir_line(t_envir *env, char *var_name);
 void		free_envir_array(char **env_array);
 void		ft_envadd_back(t_envir **lst, t_envir *new);
 void		ft_envadd_front(t_envir **lst, t_envir *new);
 void		ft_envclear(t_envir **lst);
-void		ft_envdelone(t_envir *lst, void (*del)(void *));
+void		ft_envdelone(t_envir *lst, void (*del));
 void		ft_enviter(t_envir *lst, void (*f)(t_envir *));
 t_envir		*ft_envlast(t_envir *lst);
 int			ft_envsize(t_envir *lst);

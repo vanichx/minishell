@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 14:47:12 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:18:33 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_env_node(t_envir *env_node)
 
     env = env_node;
     i = 0;
-    printf("envir_name: %s, envir_value: %s", env->var_name, env->var_value);
+    printf("%s %s\n", env->var_name, env->var_value);
 }
 
 void	free_envir_array(char **env_array)

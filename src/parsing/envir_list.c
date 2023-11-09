@@ -3,59 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   envir_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:20:21 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 14:52:39 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:27:42 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-
 unsigned int	find_equal_sign(char *str)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
-
 	while (str[i] != '=')
 		i++;
-	return(i);
+	return (i);
 }
 
 t_envir	*fill_env(char **env, t_data *data)
 {
-	unsigned int	j;
+	unsigned int	i;
 	size_t			len;
 	t_envir			*envir;
+	t_envir			*head;
 
-	envir = NULL;
 	if (!*env)
 		return (NULL);
-	j = 0;
+	i = 0;
 	len = 0;
+	envir = ft_envnew();
+	head = envir;
 	while (*env)
 	{
-		envir = ft_envnew();
-		j = find_equal_sign(*env);
+		i = find_equal_sign(*env);
 		len = ft_strlen(*env);
-		envir->var_name = ft_substr(*env, 0, j);
-		envir->var_value = ft_substr(*env, j + 1, len - j);
+		envir->var_name = ft_substr(*env, 0, i);
+		envir->var_value = ft_substr(*env, i + 1, len - i);
 		env++;
-		envir = envir->next;
+		if (*env)
+		{
+			envir->next = ft_envnew();
+			envir->next->prev = envir;
+			envir = envir->next;
+		}
 	}
-	ft_enviter(envir, print_env_node);
-	printf("hello from ivan\n");
-	return (envir);
+	data->env_list = head;
+	return (head);
 }
-
-
-
 
 // t_envir *fill_sorted_env(t_envir *sorted_lst, char **env)
 // {
-	
 // }

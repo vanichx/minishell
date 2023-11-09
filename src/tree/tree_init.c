@@ -31,8 +31,6 @@ int	init_tree(t_data *data, t_token **head)
 			data->tree->args_array = ft_split_args(root_token->word, ' ');
 		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
-		if (data->tree->type == T_WORD)
-			data->tree->args_array = ft_split_args(data->tree->value, ' ');
 		printf("%p\n", data->tree->args_array);
 	}
 	if (built_tree(&data->tree, root_token, data))

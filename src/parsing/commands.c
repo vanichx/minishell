@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:58:04 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:31:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,23 @@ char	*find_executable_path(char **paths, char *cmd)
 	return (NULL);
 }
 
-char	*find_envir_variable(t_data *data, char *var_name, int len)
-{
-	int	i;
+t_envir	*find_envir_variable(t_data *data, char *var_name, int len)
+{	
+	t_envir	*current;
 
-	i = 0;
-	while (data->env_array[i])
+	current = data->env_list;
+	while (current)
 	{
-		if (ft_strncmp(data->env_array[i], var_name, len) == 0)
-			return (data->env_array[i] + len);
-		i++;
+		if (ft_strncmp(current->var_name, var_name, len) == 0)
+			return (current);
+		current = current->next;
 	}
 	return (NULL);
 }
+
+
+
+
 // void	handle_builtins(t_data *data)
 // {
 // 	// while (data->cmd_list->next != NULL)

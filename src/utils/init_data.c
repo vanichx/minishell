@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:33:01 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 14:47:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 16:04:49 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_data(t_data **data, char **envp)
 	(*data)->input_minishell = "minishell>> ";
 	(*data)->pid = getpid();
 	(*data)->curr_dir = getcwd(NULL, 0);
-	int i = 0;
 	fill_env(envp, *data);
 	incr_shell_lvl(*data);
 }

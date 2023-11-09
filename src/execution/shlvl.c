@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:54:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:55:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:35:59 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,32 @@
 // 	export(&(*data).env_list, "SHLVL", "1");
 void	incr_shell_lvl(t_data *data)
 {
-	char	*shlvl;
 	int		level;
+	t_envir	*envir;
 
 	level = 0;
-	shlvl = find_envir_variable(data, "SHLVL", ft_strlen("SHLVL"));
-	if (shlvl)
+	envir = find_envir_variable(data, "SHLVL", ft_strlen("SHLVL"));
+	if (envir->var_value)
 	{
-		level = ft_atoi(shlvl);
+		level = ft_atoi(envir->var_value);
 		level++;
 		if (level <= 999)
-			shlvl = ft_itoa(level);
+		{
+			ft_strdel(&envir->var_value);
+			envir->var_value = ft_itoa(level);
+		}
 		else if (level == 1000)
-			shlvl = ft_strdup("\n");
+		{
+			ft_strdel(&envir->var_value);
+			envir->var_value = ft_strdup("");
+		}
 		else
 		{
 			level = 1;
-			shlvl = ft_strdup("1");
+			ft_strdel(&envir->var_value);
+			envir->var_value = ft_strdup("1");
 		}
 	}
-	free(shlvl);
 }
 
 // void	export(t_data **data, char *var_name, char *var_value)

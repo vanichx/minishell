@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 11:14:14 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 16:03:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ void concantenate_word_tokens(t_token **head)
 			ft_strcat(str, " ");
 			ft_strcat(str, tmp->next->word);
 
-			free(tmp->word);
+			ft_strdel(&tmp->word);
 			tmp->word = str;
 
 			tmp2 = tmp->next;
 			tmp->next = tmp->next->next;
 			if (tmp->next)
 				tmp->next->prev = tmp;
-			free(tmp2->word);
+			ft_strdel(&tmp2->word);
 			free(tmp2);
 		}
 		else

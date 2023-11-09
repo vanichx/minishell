@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envirlists_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 13:25:17 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:49:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,19 @@ void	ft_envadd_front(t_envir **lst, t_envir *new)
 
 void	ft_envclear(t_envir **lst)
 {
-	t_envir  *head;
+    t_envir	*next;
 
-	while (*lst)
-	{
-		head = (*lst)->next;
-		free(*lst);
-		(*lst) = head;
-	}
+    if (!lst || !*lst)
+        return ;
+    while (*lst)
+    {
+        next = (*lst)->next;
+        ft_envdelone(*lst, free);
+        *lst = next;
+    }
 }
 
-void	ft_envdelone(t_envir *lst, void (*del)(void *))
+void	ft_envdelone(t_envir *lst, void (*del))
 {
     if (!lst || !del)
         return ;

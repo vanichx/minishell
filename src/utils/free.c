@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 11:01:39 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/09 16:11:20 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	if (data->env_array)
-		free_2darray(data->env_array);
+	if (data->env_list)
+		ft_envclear(&data->env_list);
 	if (data->token_list)
 		free_tokens(&data->token_list, free);
 	if (data->curr_dir)
