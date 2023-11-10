@@ -6,14 +6,13 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:54:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 17:24:43 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:07:39 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// else
-// 	export(&(*data).env_list, "SHLVL", "1");
+
 void	incr_shell_lvl(t_data *data)
 {
 	int		level;

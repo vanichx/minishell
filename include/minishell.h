@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:08:20 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:30:44 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,8 +309,8 @@ void 		print_tree(t_tree *tree, int depth);
 
 /* execute_builtins.c */
 int			is_builtin(char *cmd);
-int			execute_builtin(t_tree *tree);
-int			execute_echo(char **args);
+int			execute_builtin(t_data *data, t_tree *tree);
+int			execute_echo(t_data	*data, char *args[]);
 // int			builtin_pwd(void);
 // int			builtin_unset(t_list **head, char *var_name);
 // int			builtin_env(t_list *head);
