@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 17:19:45 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:23:59 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,21 @@ int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 
 
-void		last_input(t_tree *tree);
-void		last_output(t_tree *tree);
+/* execution */
+int			execute(t_data *data);
+int			evaluate_execution(t_data *data, t_tree *tree);
+int			execute_logic(t_data *data, t_tree *tree);
+int			execute_special(t_data *data, t_tree *tree);
+int			execute_word(t_data *data, t_tree *tree);
+int			execute_and(t_data *data, t_tree *tree);
+int			execute_or(t_data *data, t_tree *tree);
+int			execute_pipe(t_data *data, t_tree *tree);
+int			execute_red_inp(t_data *data, t_tree *tree);
+int			execute_red_out(t_data *data, t_tree *tree);
+int			execute_append(t_data *data, t_tree *tree);
+int			execute_delim(t_data *data, t_tree *tree);
+int			is_logic_root(t_tree *tree);
+int			is_word_root(t_tree *tree);
+int			is_special_root(t_tree *tree);
 
 #endif
