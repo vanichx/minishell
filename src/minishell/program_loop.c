@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 17:39:23 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:44:05 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,35 @@ void	start_loop(t_data *data)
 // printf("token length: %d\n", token_len(data->token_list));
 // free(data->input_line);
 
-// void	execute(t_data *data)
+// int	execute(t_data *data)
 // {
-	// find a general rules for execution
-			// delim
-			// pipe
-			// redirection
-			// builtin
-	// if built in, execute_builtin
-	// else execute_command
+// 	if (evaluate_execution(data, data->tree))
+// 		return (1);
+// 	if (execute(data))
+// 		return (1);
+// 	if (execute(data))
+// 		return (1);
+// 	return (0);
 // }
+
+// int evaluate_execution(t_data *data, t_tree *tree)
+// {
+// 	//  based on what is the root node
+// 	if (is_llogic_root(tree))
+// 	{
+// 		if (execut_llogic(data, tree))
+// 		return (1);
+// 	}
+// 	if (is_special_type)
+// 	{
+// 		if (execut_special(data, tree))
+// 		return (1);
+// 	}
+// 	if (is_word_root(tree))
+// 	{
+// 		if (execut_word(data, tree))
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
