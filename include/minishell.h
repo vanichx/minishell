@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 14:23:59 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/10 16:08:20 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,7 @@ typedef struct s_token
 	struct s_token		*prev;
 }					t_token;
 
-/* builtins.c */
-void		builtin_echo(char **args);
-void		builtin_pwd(void);
-void		builtin_unset(t_list **head, char *var_name);
-void		builtin_env(t_list *head);
-void		builtin_cd(t_data *data, char *path);
-void		builtin_exit(t_data *data);
-char		*get_curr_dir(void);
-char		*get_home_dir(void);
-void		builtin_export(t_envir *env);
-void		handle_builtins(t_data *data);
-int			ft_is_builtin(char *cmd);
+
 
 /* environment.c */
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
@@ -137,7 +126,6 @@ t_envir		*ft_envnew(void);
 
 
 /*sorted envariment */
-
 t_envir		*copy_envir_list(t_envir *original);
 void		swap_nodes(t_envir *a, t_envir *b);
 void		sort_envir_list(t_envir *list);
@@ -300,21 +288,67 @@ int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 
 
-/* execution */
-int			execute(t_data *data);
-int			evaluate_execution(t_data *data, t_tree *tree);
-int			execute_logic(t_data *data, t_tree *tree);
-int			execute_special(t_data *data, t_tree *tree);
-int			execute_word(t_data *data, t_tree *tree);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* execute_builtins.c */
+int			is_builtin(char *cmd);
+int			execute_builtin(t_tree *tree);
+int			execute_echo(char **args);
+// int			builtin_pwd(void);
+// int			builtin_unset(t_list **head, char *var_name);
+// int			builtin_env(t_list *head);
+// int			builtin_cd(t_data *data, char *path);
+// int			builtin_exit(t_data *data);
+// char		*get_curr_dir(void);
+// char		*get_home_dir(void);
+// int			builtin_export(t_envir *env);
+// int			handle_builtins(t_data *data);
+
+/* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);
 int			execute_or(t_data *data, t_tree *tree);
-int			execute_pipe(t_data *data, t_tree *tree);
-int			execute_red_inp(t_data *data, t_tree *tree);
-int			execute_red_out(t_data *data, t_tree *tree);
-int			execute_append(t_data *data, t_tree *tree);
-int			execute_delim(t_data *data, t_tree *tree);
+
+/* execute_special.c */
+int 		execute_pipe(t_data *data, t_tree *tree);
+// int			execute_red_inp(t_data *data, t_tree *tree);
+// int			execute_red_out(t_data *data, t_tree *tree);
+// int			execute_append(t_data *data, t_tree *tree);
+// int			execute_delim(t_data *data, t_tree *tree);
+
+/* execute_utils.c */
 int			is_logic_root(t_tree *tree);
 int			is_word_root(t_tree *tree);
 int			is_special_root(t_tree *tree);
+
+/* execute_word.c */
+int			execute_word(t_data *data, t_tree *tree);
+
+/* execute.c */
+int			execute(t_data *data);
+int			evaluate_execution(t_data *data, t_tree *tree);
+// int			execute_logic(t_data *data, t_tree *tree);
+int			execute_special(t_data *data, t_tree *tree);
+// int			execute_command(t_data *data, t_tree *tree);
+
+
+
+
 
 #endif

@@ -1,60 +1,89 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buitins.c                                          :+:      :+:    :+:   */
+/*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:53:10 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:54:29 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/10 16:08:34 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	ft_is_builtin(char *cmd)
-// {
-// 	if (ft_strcmp(cmd, "echo") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "cd") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "pwd") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "export") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "unset") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "env") == 0)
-// 		return (1);
-// 	else if (ft_strcmp(cmd, "exit") == 0)
-// 		return (1);
-// 	return (0);
-// }
+int is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
+}
 
-// void builtin_echo(char *args[])
-// {
-// 	int i;
-// 	int no_newline;
+int	execute_builtin(t_tree *tree)
+{
+	if (ft_strcmp(tree->args_array[0], "echo") == 0)
+	{
+		if (execute_echo(tree->args_array))
+			return (1);
+	}
+	// if (ft_strcmp(tree->args_array[0], "cd") == 0)
+	// 	if (execute_cd(data, tree))
+	// 		return (1);
+	// if (ft_strcmp(tree->args_array[0], "pwd") == 0)
+	// 	if (execute_pwd(data, tree))
+	// 		return (1);
+	// if (ft_strcmp(tree->args_array[0], "export") == 0)
+	// 	if (execute_export(data, tree))
+	// 		return (1);
+	// if (ft_strcmp(tree->args_array[0], "unset") == 0)
+	// 	if (execute_unset(data, tree))
+	// 		return (1);
+	// if (ft_strcmp(tree->args_array[0], "env") == 0)
+	// 	if (execute_env(data, tree))
+	// 		return (1);
+	// if (ft_strcmp(tree->args_array[0], "exit") == 0)
+	// 	if (execute_exit(data, tree))
+	// 		return (1);
+	return (0);
+}
 
-// 	i = 1;
-// 	no_newline = 0;
+int	execute_echo(char *args[])
+{
+	int i;
+	int no_newline;
 
-// 	if (args[i] != (void *)0 && ft_strncmp(args[i], "-n", 2) == 0)
-// 	{
-// 		no_newline = 1;
-// 		i++;
-// 	}
+	i = 1;
+	no_newline = 0;
 
-// 	while (args[i] !=  (void *)0)
-// 	{
-// 		printf("%s", args[i]);
-// 		i++;
-// 		if (args[i] !=  (void *)0)
-// 			printf(" ");
-// 	}
-// 	if (!no_newline)
-// 		printf("\n");
-// }
+	if (args[i] != (void *)0 && ft_strcmp(args[i], "-n") == 0)
+	{
+		no_newline = 1;
+		i++;
+	}
+
+	while (args[i] !=  (void *)0)
+	{
+		printf("%s", args[i]);
+		i++;
+		if (args[i] !=  (void *)0)
+			printf(" ");
+	}
+	if (!no_newline)
+		printf("\n");
+	return (0);
+}
 
 // void	builtin_pwd(void)
 // {
