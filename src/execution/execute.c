@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:09:47 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:45:38 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	execute(t_data *data)
 {
 	if (evaluate_execution(data, data->tree))
 		return (1);
-	if (execute(data))
-		return (1);
-	if (execute(data))
-		return (1);
+	// if (execute(data))
+	// 	return (1);
+	// if (execute(data))
+	// 	return (1);
 	data->exit_status = 0;
 	return (data->exit_status);
 }

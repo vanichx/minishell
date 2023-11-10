@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:53:10 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:08:34 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:07:54 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,27 +61,23 @@ int	execute_builtin(t_tree *tree)
 
 int	execute_echo(char *args[])
 {
-	int i;
 	int no_newline;
 
-	i = 1;
+	args++;
 	no_newline = 0;
-
-	if (args[i] != (void *)0 && ft_strcmp(args[i], "-n") == 0)
+	
+	if (*args && !ft_strncmp(*args, "-n", 2))
 	{
 		no_newline = 1;
-		i++;
+		args++;
 	}
-
-	while (args[i] !=  (void *)0)
+	while (*args || *args[0] != '\0')
 	{
-		printf("%s", args[i]);
-		i++;
-		if (args[i] !=  (void *)0)
-			printf(" ");
+		ft_putstr_fd(*args, STDOUT_FILENO);
+		args++;
 	}
 	if (!no_newline)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
 

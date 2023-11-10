@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:41:02 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:15:02 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:58:23 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ int execute_pipe(t_data *data, t_tree *tree)
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
+		dup2(STDOUT_FILENO, pipefd[1]);
 		close(pipefd[1]);
 		execute_word(data, tree->left);
-		waitpid(pid, NULL, 0);
-		exit(0);
+	
 	}
 	else
 	{
