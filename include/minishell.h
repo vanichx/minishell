@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 19:30:44 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:37:06 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,14 @@ void 		print_tree(t_tree *tree, int depth);
 
 
 
+/* echo.c */
+void		echo_handle_option(char ***args, int *no_newline);
+char		*handle_dollar_question(t_data *data, char **arg);
+int			extract_var_name(char **arg, char **var_name);
+int			handle_env_var(t_data *data, char *var_name);
+// int			echo_handle_quotes(char *arg, char qoute);
+// int			echo_handle_dollar(t_data *data, char *arg);
+int			execute_echo(t_data	*data, char *args[]);
 
 
 
@@ -310,14 +318,14 @@ void 		print_tree(t_tree *tree, int depth);
 /* execute_builtins.c */
 int			is_builtin(char *cmd);
 int			execute_builtin(t_data *data, t_tree *tree);
-int			execute_echo(t_data	*data, char *args[]);
+int			check_echo(t_data *data, t_tree *tree);
 // int			builtin_pwd(void);
 // int			builtin_unset(t_list **head, char *var_name);
 // int			builtin_env(t_list *head);
 // int			builtin_cd(t_data *data, char *path);
 // int			builtin_exit(t_data *data);
-// char		*get_curr_dir(void);
-// char		*get_home_dir(void);
+// char			*get_curr_dir(void);
+// char			*get_home_dir(void);
 // int			builtin_export(t_envir *env);
 // int			handle_builtins(t_data *data);
 

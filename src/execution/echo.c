@@ -1,87 +1,149 @@
 #include "minishell.h"
 
-int	execute_echo(t_data	*data, char *args[])
-{
-	int		no_newline;
-	char	*arg;
-	char	*end;
-	char	*var_start;
-	char	*var_name;
-	t_envir	*env_var;
 
-	args++;
-	no_newline = 0;
-	if (*args && !ft_strncmp(*args, "-n", 2))
+void	echo_handle_option(char ***args, int *no_newline)
+{
+	char *arg;
+
+	if (**args && !ft_strncmp(**args, "-n", 2))
 	{
-		if (*args && **args == '-')
-		{
-			char *arg = *args + 1;
-			no_newline = 1;
+			arg = **args + 1;
+			*no_newline = 1;
 			while (*arg)
 			{
 				if (*arg != 'n')
 				{
-					no_newline = 0;
+					*no_newline = 0;
 					break;
 				}
 				arg++;
 			}
-			if (no_newline)
-				args++;
-		}
+			if (*no_newline)
+				(*args)++;
 	}
+}
+
+void	echo_single_quotes(char **arg)
+{
+	char	*end;
+	
+	(*arg)++;
+	end = ft_strrchr(*arg, '\'');
+	*end = '\0';
+	ft_putstr_fd(*arg, STDOUT_FILENO);
+}
+
+void	echo_double_quotes(char **arg)
+{
+	char	*end;
+	
+	(*arg)++;
+	end = ft_strrchr(*arg, '\"');
+	*end = '\0';
+}
+
+
+char	*handle_dollar_question(t_data *data, char **arg)
+{
+	int i;
+	int j;
+	int k;
+	char *check;
+	char *buffer;
+	char *temp;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	check = *arg;
+	temp = ft_itoa(data->exit_status);
+	buffer = malloc(sizeof(char) * (ft_strlen(check) + ft_strlen(temp) + 1));
+	while(check[i])
+	{
+		if (check[i] == '$' && check[i + 1] != '?')
+			buffer[j++] = check[i++];
+		else if (check[i] == '$' && check[i + 1] == '?')
+		{
+			while (temp[k] != '\0')
+				buffer[j++] = temp[k++];
+			i += 2;
+		}
+		else
+			buffer[j++] = check[i++];
+	}
+	buffer[j] = '\0';
+
+	free(temp);
+	return (buffer);
+}
+
+
+
+int	handle_env_var(t_data *data, char *string)
+{
+	int		i;
+	int		j;
+	t_envir *env_var;
+	char	*variable_name;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == '$')
+		{
+			j = i + 1;
+			while (string[j] && string[j] != '$')
+				j++;
+			variable_name = ft_substr(string, i + 1, j - i - 1);
+			env_var = find_envir_variable(data, variable_name, ft_strlen(variable_name));
+			if (!env_var)
+			{
+				ft_putstr_fd("", STDERR_FILENO);
+				return (1);
+			}
+			if (env_var && env_var->var_value)
+			{
+				if(ft_putstr_fd(env_var->var_value, STDOUT_FILENO))
+					return (1);
+			}
+			free(variable_name);
+			i = j - 1;
+		}
+		else
+			ft_putchar_fd(string[i], STDOUT_FILENO);
+		i++;
+	}
+	return (0);
+}
+
+int	execute_echo(t_data	*data, char *args[])
+{
+	char	*arg;
+	char	*buffer;
+	int		no_newline;
+
+	args++;
+	no_newline = 0;
+	echo_handle_option(&args, &no_newline);
 	while (*args && *args[0] != '\0')
 	{
 		arg = *args;
 		if (*arg == '\'')
-		{
-			arg++;
-			end = ft_strrchr(arg, '\'');
-			*end = '\0';
-	 		ft_putstr_fd(arg, STDOUT_FILENO);
-		}
+			echo_single_quotes(&arg);
 		else
 		{
 			if (*arg == '\"')
-			{
-				arg++;
-				end = ft_strrchr(arg, '\"');
-				if (end)
-					*end = '\0';
-			}
+				echo_double_quotes(&arg);
 			if (*arg)
 			{
-				if (*arg == '$')
-				{
-					arg++;
-					if (*arg == '?')
-					{
-						ft_putstr_fd(ft_itoa(data->exit_status), STDOUT_FILENO);
-						arg++;
-						ft_putstr_fd(arg, STDOUT_FILENO);
-					}
-					else
-					{
-						var_start = arg;
-						while (*arg && *arg != ' ' && *arg != '\"' && *arg != '\0')
-							arg++;
-						var_name = ft_substr(var_start, 0, arg - var_start);
-						env_var = find_envir_variable(data, var_name, ft_strlen(var_name));
-						if (env_var)
-						{
-							if(ft_putstr_fd(env_var->var_value, STDOUT_FILENO))
-								return (1);
-						}
-						free(var_name);						
-					}
-				}
-				else
-				{
-					ft_putstr_fd(arg, STDOUT_FILENO);
-				}
+				buffer = handle_dollar_question(data, &arg);
+				handle_env_var(data, buffer);
+				free(buffer);
 			}
 		}
 		arg++;
+		if (*(args + 1) && *(args + 1)[0] != '\0')
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		args++;
 	}
 	if (!no_newline)

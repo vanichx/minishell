@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:45:38 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:21:13 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ int evaluate_execution(t_data *data, t_tree *tree)
 
 	
 	if (is_special_root(tree))
+	{
 		if (execute_special(data, tree))
 			return (1);
-	if (is_word_root(tree))
+	}
+	else if (is_word_root(tree))
+	{
 		if (execute_word(data, tree))
-		return (1);
+			return (1);
+	}
 	return (0);
 }
 

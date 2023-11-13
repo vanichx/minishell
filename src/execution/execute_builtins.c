@@ -3,7 +3,7 @@
 
 int is_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") == 0)
+	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -20,11 +20,53 @@ int is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_data *data, t_tree *tree)
+int check_echo(t_data *data, t_tree *tree)
 {
-	if (ft_strcmp(tree->args_array[0], "echo") == 0)
+	char **cmd;
+
+	cmd = NULL;
+	if (!ft_strcmp(tree->args_array[0], "echo"))
 	{
 		if (execute_echo(data, tree->args_array))
+			return (1);
+	}
+	else
+	{
+		cmd = malloc(sizeof(char *) * 4);
+		if (ft_strcmp(&tree->args_array[0][4], "$PWD"))
+		{
+			cmd[0] = ft_strdup("echo");
+			cmd[1] = ft_strdup("-n");
+			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
+			cmd[3] = NULL;
+			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (execute_echo(data, cmd) == 0)
+				data->exit_status = 127;
+			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
+		}
+		else
+		{
+			cmd[0] = ft_strdup("echo");
+			cmd[1] = ft_strdup("-n");
+			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
+			cmd[3] = NULL;
+			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (execute_echo(data, cmd) == 0)
+				data->exit_status = 127;
+			ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
+		}
+		free_2darray(cmd);
+		return (1);
+	}
+	return (0);
+}
+
+int	execute_builtin(t_data *data, t_tree *tree)
+{
+
+	if (!ft_strncmp(tree->args_array[0], "echo", 4))
+	{
+		if (check_echo(data, tree))
 			return (1);
 	}
 	// if (ft_strcmp(tree->args_array[0], "cd") == 0)
