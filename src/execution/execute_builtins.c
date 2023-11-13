@@ -3,7 +3,7 @@
 
 int is_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") == 0)
+	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -20,11 +20,53 @@ int is_builtin(char *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_data *data, t_tree *tree)
+int check_echo(t_data *data, t_tree *tree)
 {
-	if (ft_strcmp(tree->args_array[0], "echo") == 0)
+	char **cmd;
+
+	cmd = NULL;
+	if (!ft_strcmp(tree->args_array[0], "echo"))
 	{
 		if (execute_echo(data, tree->args_array))
+			return (1);
+	}
+	else
+	{
+		cmd = malloc(sizeof(char *) * 4);
+		if (ft_strcmp(&tree->args_array[0][4], "$PWD"))
+		{
+			cmd[0] = ft_strdup("echo");
+			cmd[1] = ft_strdup("-n");
+			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
+			cmd[3] = NULL;
+			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (execute_echo(data, cmd) == 0)
+				data->exit_status = 127;
+			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
+		}
+		else
+		{
+			cmd[0] = ft_strdup("echo");
+			cmd[1] = ft_strdup("-n");
+			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
+			cmd[3] = NULL;
+			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (execute_echo(data, cmd) == 0)
+				data->exit_status = 127;
+			ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
+		}
+		free_2darray(cmd);
+		return (1);
+	}
+	return (0);
+}
+
+int	execute_builtin(t_data *data, t_tree *tree)
+{
+
+	if (!ft_strncmp(tree->args_array[0], "echo", 4))
+	{
+		if (check_echo(data, tree))
 			return (1);
 	}
 	if (ft_strcmp(tree->args_array[0], "cd") == 0)
@@ -48,9 +90,9 @@ int	execute_builtin(t_data *data, t_tree *tree)
 	// 		return (1);
 	if (ft_strcmp(tree->args_array[0], "env") == 0)
 		execute_env(&data->env_list);
-	if (ft_strcmp(tree->args_array[0], "exit") == 0)
-		if (execute_exit(data, tree))
-			return (1);
+	// if (ft_strcmp(tree->args_array[0], "exit") == 0)
+	// 	if (execute_exit(data, tree))
+	// 		return (1);
 	return (0);
 }
 
@@ -65,30 +107,30 @@ int	execute_pwd(t_data *data)
 		return (data->exit_status = 1, perror("pwd"), 1);
 }
 
-int	execute_exit(t_data *data, t_tree *tree)
-{
-	int i;
+// int	execute_exit(t_data *data, t_tree *tree)
+// {
+// 	int i;
 
-	i = 0;
-	if (tree->args_array[1])
-	{
-		if (!ft_has_only_digit(tree->args_array[1]))
-		{
-			data->exit_status = 255;
-			printf("minishell: exit: %s: numeric argument required\n", tree->args_array[1]);
-		}
-		else
-		{
-			i = ft_atoi(tree->args_array[1]);
-			data->exit_status = i;
-			exit_shell("exit", i, data);
-		}
-	}
-	else
-		exit_shell("exit", 0, data);
-	free(input);
-	exit(0);
-}
+// 	i = 0;
+// 	if (tree->args_array[1])
+// 	{
+// 		if (!ft_has_only_digit(tree->args_array[1]))
+// 		{
+// 			data->exit_status = 255;
+// 			printf("minishell: exit: %s: numeric argument required\n", tree->args_array[1]);
+// 		}
+// 		else
+// 		{
+// 			i = ft_atoi(tree->args_array[1]);
+// 			data->exit_status = i;
+// 			exit_shell("exit", i, data);
+// 		}
+// 	}
+// 	else
+// 		exit_shell("exit", 0, data);
+// 	free(input);
+// 	exit(0);
+// }
 
 // void	builtin_unset(t_list **head, char *var_name)
 // {
