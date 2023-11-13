@@ -85,14 +85,14 @@ int	execute_builtin(t_data *data, t_tree *tree)
 	if (ft_strcmp(tree->args_array[0], "export") == 0)
 		if (execute_export(data, tree))
 			return (1);
-	// if (ft_strcmp(tree->args_array[0], "unset") == 0)
-	// 	if (execute_unset(data, tree))
-	// 		return (1);
+	if (ft_strcmp(tree->args_array[0], "unset") == 0)
+		if (execute_unset(data, tree))
+			return (1);
 	if (ft_strcmp(tree->args_array[0], "env") == 0)
 		execute_env(&data->env_list);
-	// if (ft_strcmp(tree->args_array[0], "exit") == 0)
-	// 	if (execute_exit(data, tree))
-	// 		return (1);
+	if (ft_strcmp(tree->args_array[0], "exit") == 0)
+		if (execute_exit(data, tree))
+			return (1);
 	return (0);
 }
 
@@ -107,62 +107,61 @@ int	execute_pwd(t_data *data)
 		return (data->exit_status = 1, perror("pwd"), 1);
 }
 
-// int	execute_exit(t_data *data, t_tree *tree)
-// {
-// 	int i;
+int	execute_exit(t_data *data, t_tree *tree)
+{
+	int i;
 
-// 	i = 0;
-// 	if (tree->args_array[1])
-// 	{
-// 		if (!ft_has_only_digit(tree->args_array[1]))
-// 		{
-// 			data->exit_status = 255;
-// 			printf("minishell: exit: %s: numeric argument required\n", tree->args_array[1]);
-// 		}
-// 		else
-// 		{
-// 			i = ft_atoi(tree->args_array[1]);
-// 			data->exit_status = i;
-// 			exit_shell("exit", i, data);
-// 		}
-// 	}
-// 	else
-// 		exit_shell("exit", 0, data);
-// 	free(input);
-// 	exit(0);
-// }
+	i = 0;
+	if (tree->args_array[1])
+	{
+		if (!ft_has_only_digit(tree->args_array[1]))
+		{
+			data->exit_status = 255;
+			printf("minishell: exit: %s: numeric argument required\n", tree->args_array[1]);
+		}
+		else
+		{
+			i = ft_atoi(tree->args_array[1]);
+			data->exit_status = i;
+			exit_shell("exit", i, data);
+		}
+	}
+	else
+		exit_shell("exit", 0, data);
+	exit(0);
+}
 
-// void	builtin_unset(t_list **head, char *var_name)
-// {
-// 	t_list *curr = *head;
-// 	t_list *prev = NULL;
+int	execute_unset(t_data *data, t_tree *tree)
+{
+	t_envir *env_var;
+	t_envir *temp;
+	char	**args;
+	int i;
 
-// 	while (curr != NULL)
-// 	{
-// 		t_envir *env = (t_envir *)curr->content;
-// 		if (ft_strcmp(env->var_name, var_name) == 0)
-// 		{
-// 			if (prev == NULL)
-// 				*head = curr->next;
-// 			else
-// 				prev->next = curr->next;
-// 			ft_lstdelone(curr, &free);
-// 			return;
-// 		}
-// 		prev = curr;
-// 		curr = curr->next;
-// 	}
-// }
+	i = 0;
+	env_var = NULL;
+	args = tree->args_array;
+	temp = NULL;
+	while (args[++i])
+	{
+		env_var = find_envir_variable(data, args[i], ft_strlen(args[i]));
+		if (env_var)
+		{
+			temp = env_var;
+			if (env_var->prev)
+				env_var->prev->next = env_var->next;
+			if (env_var->next)
+				env_var->next->prev = env_var->prev;
+			ft_envdelone(temp, free);
+		}
+	}
+	return (0);
+}
 
 void	execute_env(t_envir **env)
 {
 	ft_enviter(*env, print_env_node);
 }
-
-// void builtin_exit(t_data *data)
-// {
-// 	exit_shell("exit", 0, data);
-// }
 
 int execute_cd(t_data *data, char *path)
 {

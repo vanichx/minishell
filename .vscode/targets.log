@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Nov 13 18:54:37 2023
+# Make data base, printed on Mon Nov 13 19:47:39 2023
 
 # Variables
 
@@ -28,7 +28,6 @@ VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 CURDIR := /Users/eseferi/42/erik_branch
 # makefile
 SHELL = /bin/sh
- 
 # makefile (from `Makefile', line 17)
 RM = rm -rf
 # environment
@@ -36,7 +35,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 32)
-CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3 -g  -I $(LIBFT_DIR)/include
+CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3  -I $(LIBFT_DIR)/include
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # makefile (from `Makefile', line 18)
@@ -188,7 +187,7 @@ LANG = C
 # environment
 VSCODE_PID = 884
 # variable set hash-table stats:
-# Load=87/1024=8%, Rehash=0, Collisions=2/138=1%
+# Load=87/1024=8%, Rehash=0, Collisions=2/142=1%
 
 # Pattern-specific Variable Values
 
@@ -196,27 +195,18 @@ VSCODE_PID = 884
 
 # Directories
 
-# src/lexer/lib/libft: could not be stat'd.
-# src/quotes/lib/libft: could not be stat'd.
-# src/parenthesis/lib/libft: could not be stat'd.
-# include (device 16777225, inode 2307015): No files, no impossibilities so far.
-# . (device 16777225, inode 2306939): 13 files, no impossibilities.
-# include/lib/libft: could not be stat'd.
+# include (device 16777225, inode 2307015): 3 files, no impossibilities so far.
+# . (device 16777225, inode 2306939): 15 files, no impossibilities.
 # src/utils (device 16777225, inode 2307123): No files, no impossibilities so far.
 # src/tree (device 16777225, inode 2307119): No files, no impossibilities so far.
-# src/execution (device 16777225, inode 2307088): No files, no impossibilities so far.
-# src/utils/lib/libft: could not be stat'd.
-# src/tree/lib/libft: could not be stat'd.
-# src/execution/lib/libft: could not be stat'd.
-# src (device 16777225, inode 2307086): 6 files, no impossibilities so far.
+# src/execution (device 16777225, inode 2307088): 3 files, no impossibilities so far.
+# src (device 16777225, inode 2307086): 11 files, no impossibilities.
 # src/lexer (device 16777225, inode 2307091): No files, no impossibilities so far.
 # src/quotes (device 16777225, inode 2307116): No files, no impossibilities so far.
 # src/parsing (device 16777225, inode 2307111): No files, no impossibilities so far.
-# src/parsing/lib/libft: could not be stat'd.
 # src/parenthesis (device 16777225, inode 2307106): No files, no impossibilities so far.
-# src/lib/libft: could not be stat'd.
 
-# 19 files, no impossibilities in 19 directories.
+# 32 files, no impossibilities in 10 directories.
 
 # Implicit Rules
 
@@ -262,7 +252,16 @@ all: minishell
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/8=0%
+
+# Not a target:
+include/minishell.h:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-13 19:47:36
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 obj/src/parsing/commands.o:
@@ -295,6 +294,7 @@ obj/src/lexer/syntax_errors.o:
 
 # Not a target:
 obj/src/lexer/token_errors.o:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -303,7 +303,6 @@ obj/src/lexer/token_errors.o:
 obj/src/execution/execute.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -315,7 +314,7 @@ obj/src/execution/execute.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-13 18:54:34
+#  Last modified 2023-11-13 19:46:28
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -357,6 +356,18 @@ obj/src/parsing/envir_list.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.o obj/src/execution/execute_builtins.o obj/src/execution/execute_logic.o obj/src/execution/execute_special.o obj/src/execution/execute_utils.o obj/src/execution/execute_word.o obj/src/execution/shlvl.o obj/src/lexer/delim_append_errors.o obj/src/lexer/fix_tokens.o obj/src/lexer/fix_tokens2.o obj/src/lexer/lexical_analysis.o obj/src/lexer/redin_errors.o obj/src/lexer/redir_general_errors.o obj/src/lexer/redout_errors.o obj/src/lexer/syntax_errors.o obj/src/lexer/token_errors.o obj/src/lexer/token_lists.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parenthesis/parenthesis.o obj/src/parenthesis/parenthesis_errors.o obj/src/parenthesis/parenthesis_utils.o obj/src/parenthesis/parenthesis_utils2.o obj/src/parsing/commands.o obj/src/parsing/envir_list.o obj/src/parsing/envirlists_utils.o obj/src/parsing/environment.o obj/src/parsing/file_parse.o obj/src/parsing/sorted_envir.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/tree/tokenise_for_tree.o obj/src/tree/tree_init.o obj/src/tree/tree_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o obj/src/utils/utils3.o
+#  Implicit rule search has not been done.
+#  Last modified 2023-11-13 19:46:38
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/8=0%
+#  commands to execute (from `Makefile', line 56):
+	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
+	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+	
+
 # Not a target:
 obj/src/execution/execute_logic.o:
 #  Implicit rule search has not been done.
@@ -369,11 +380,34 @@ obj/src/quotes/quotes_utils.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/execution/echo.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/src/execution/echo.o: src/execution/echo.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/echo'
+#  Last modified 2023-11-13 19:46:35
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := obj/src/execution/echo.o
+# automatic
+# % := 
+# automatic
+# * := src/execution/echo
+# automatic
+# + := src/execution/echo.c include/minishell.h
+# automatic
+# | := 
+# automatic
+# < := src/execution/echo.c
+# automatic
+# ^ := src/execution/echo.c include/minishell.h
+# automatic
+# ? := include/minishell.h
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=4/19=21%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/utils/signals.o:
@@ -492,18 +526,6 @@ obj/src/utils/utils1.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.o obj/src/execution/execute_builtins.o obj/src/execution/execute_logic.o obj/src/execution/execute_special.o obj/src/execution/execute_utils.o obj/src/execution/execute_word.o obj/src/execution/shlvl.o obj/src/lexer/delim_append_errors.o obj/src/lexer/fix_tokens.o obj/src/lexer/fix_tokens2.o obj/src/lexer/lexical_analysis.o obj/src/lexer/redin_errors.o obj/src/lexer/redir_general_errors.o obj/src/lexer/redout_errors.o obj/src/lexer/syntax_errors.o obj/src/lexer/token_errors.o obj/src/lexer/token_lists.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parenthesis/parenthesis.o obj/src/parenthesis/parenthesis_errors.o obj/src/parenthesis/parenthesis_utils.o obj/src/parenthesis/parenthesis_utils2.o obj/src/parsing/commands.o obj/src/parsing/envir_list.o obj/src/parsing/envirlists_utils.o obj/src/parsing/environment.o obj/src/parsing/file_parse.o obj/src/parsing/sorted_envir.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/tree/tokenise_for_tree.o obj/src/tree/tree_init.o obj/src/tree/tree_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o obj/src/utils/utils3.o
-#  Implicit rule search has not been done.
-#  Last modified 2023-11-13 18:43:38
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-#  commands to execute (from `Makefile', line 56):
-	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
-	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
-	
-
 # Not a target:
 obj/src/lexer/lexical_analysis.o:
 #  Implicit rule search has not been done.
@@ -530,6 +552,7 @@ obj/src/parenthesis/parenthesis.o:
 
 lib_fclean:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -548,29 +571,9 @@ lib_clean:
 
 lib/libft/libft.a:
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: `'
-#  File does not exist.
+#  Last modified 2023-11-13 19:46:35
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := lib/libft/libft.a
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := 
-# automatic
-# | := 
-# automatic
-# < := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=3/12=25%
- 
+#  Successfully updated.
 #  commands to execute (from `Makefile', line 53):
 	$(MAKE_LIB) $(LIBFT_DIR)
 	
@@ -643,8 +646,17 @@ obj/src/utils/utils2.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+src/execution/echo.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-13 18:43:38
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
 # files hash-table stats:
-# Load=60/1024=6%, Rehash=0, Collisions=12/149=8%
+# Load=62/1024=6%, Rehash=0, Collisions=10/148=7%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -657,6 +669,6 @@ obj/src/utils/utils2.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Nov 13 18:54:37 2023
+# Finished Make data base on Mon Nov 13 19:47:39 2023
 
  

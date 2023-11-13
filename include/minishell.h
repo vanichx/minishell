@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 18:55:20 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/13 19:47:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void		free_envir(t_envir *envir);
 void		free_2darray(char **array);
 
 /* handle_input.c */
-void		execute_exit(char *input);
+int			execute_exit(t_data *data, t_tree *tree);
 void		print_parsed_input(char *command);
 int			is_valid_env(char *str);
 int			is_valid_env2(char *str);
@@ -321,14 +321,11 @@ int			execute_builtin(t_data *data, t_tree *tree);
 int			check_echo(t_data *data, t_tree *tree);
 int			execute_cd(t_data *data, char *path);
 int			execute_pwd(t_data *data);
-// int			builtin_unset(t_list **head, char *var_name);
+int			execute_unset(t_data *data, t_tree *tree);
 void		execute_env(t_envir **env);
-// int			builtin_cd(t_data *data, char *path);
-// int			builtin_exit(t_data *data);
-char			*get_curr_dir(void);
-char			*get_home_dir(void);
+char		*get_curr_dir(void);
+char		*get_home_dir(void);
 int			execute_export(t_data *data, t_tree *tree);
-// int			handle_builtins(t_data *data);
 
 /* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);
