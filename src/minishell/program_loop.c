@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 18:57:03 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:50:56 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	start_loop(t_data *data)
+void	start_loop(t_data *data, char *envp[])
 {
 	char	*line;
 	// t_token *temp;
@@ -33,16 +33,14 @@ void	start_loop(t_data *data)
 		}
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		
-		check_exit(data->input_line);
 		// // data->input_line = "erik || seferi ||  ivan";
 		if ((special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
 		if (init_tree(data, &data->token_list))
 			continue ;
-		// print_tree(data->tree, 0);
-		if (execute(data))
+		print_tree(data->tree, 0);
+		if (execute(data, envp))
 			continue ;
 	}
 }

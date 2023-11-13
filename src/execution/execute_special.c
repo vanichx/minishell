@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_special.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:41:02 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 19:13:33 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:21:50 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int execute_pipe(t_data *data, t_tree *tree)
+int execute_pipe(t_data *data, t_tree *tree, char *envp[])
 {
 	int pipefd[2];
 	pid_t pid;
@@ -27,14 +27,14 @@ int execute_pipe(t_data *data, t_tree *tree)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDOUT_FILENO);
 		close(pipefd[0]);
-		execute_word(data, tree->left);
+		execute_word(data, tree->left, envp);
 	}
 	else
 	{
 		close(pipefd[0]);
 		dup2(pipefd[1], STDIN_FILENO);
 		close(pipefd[1]);
-		execute_word(data, tree->right);
+		execute_word(data, tree->right, envp);
 		waitpid(pid, NULL, 0);
 	}
 	return (0);

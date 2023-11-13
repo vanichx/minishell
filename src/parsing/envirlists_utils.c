@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envirlists_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 15:49:01 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:21:15 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_envir	*ft_envlast(t_envir *lst)
 {
 	t_envir	*node;
 	node = lst;
-    while (node != NULL)
+    if (node != NULL)
 	{
 		while (node->next != NULL)
 			node = node->next;

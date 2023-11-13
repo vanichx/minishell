@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:50:43 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 16:55:38 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:14:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char *envp[])
 {
 	t_data	*data;
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init_data(&(data), envp);
 	handle_signal();
-	start_loop(data);
+	start_loop(data, envp);
 	free_data(data);
 	return (0);
 }

@@ -27,36 +27,68 @@ int	execute_builtin(t_data *data, t_tree *tree)
 		if (execute_echo(data, tree->args_array))
 			return (1);
 	}
-	// if (ft_strcmp(tree->args_array[0], "cd") == 0)
-	// 	if (execute_cd(data, tree))
-	// 		return (1);
-	// if (ft_strcmp(tree->args_array[0], "pwd") == 0)
-	// 	if (execute_pwd(data, tree))
-	// 		return (1);
-	// if (ft_strcmp(tree->args_array[0], "export") == 0)
-	// 	if (execute_export(data, tree))
-	// 		return (1);
+	if (ft_strcmp(tree->args_array[0], "cd") == 0)
+	{
+		if (tree->args_array[1])
+		{
+			if (execute_cd(data, tree->args_array[1]))
+				return (1);
+		}
+		else if (execute_cd(data, NULL))
+			return (1);
+	}
+	if (ft_strcmp(tree->args_array[0], "pwd") == 0)
+		if (execute_pwd(data))
+			return (1);
+	if (ft_strcmp(tree->args_array[0], "export") == 0)
+		if (execute_export(data, tree))
+			return (1);
 	// if (ft_strcmp(tree->args_array[0], "unset") == 0)
 	// 	if (execute_unset(data, tree))
 	// 		return (1);
-	// if (ft_strcmp(tree->args_array[0], "env") == 0)
-	// 	if (execute_env(data, tree))
-	// 		return (1);
-	// if (ft_strcmp(tree->args_array[0], "exit") == 0)
-	// 	if (execute_exit(data, tree))
-	// 		return (1);
+	if (ft_strcmp(tree->args_array[0], "env") == 0)
+		execute_env(&data->env_list);
+	if (ft_strcmp(tree->args_array[0], "exit") == 0)
+		if (execute_exit(data, tree))
+			return (1);
 	return (0);
 }
 
 
-// void	builtin_pwd(void)
-// {
-// 	char cwd[PATH_MAX];
-// 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-// 		printf("%s\n", cwd);
-// 	else
-// 		perror("pwd");
-// }
+int	execute_pwd(t_data *data)
+{
+	char cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		return (printf("%s\n", cwd), 0);
+	else
+		return (data->exit_status = 1, perror("pwd"), 1);
+}
+
+int	execute_exit(t_data *data, t_tree *tree)
+{
+	int i;
+
+	i = 0;
+	if (tree->args_array[1])
+	{
+		if (!ft_has_only_digit(tree->args_array[1]))
+		{
+			data->exit_status = 255;
+			printf("minishell: exit: %s: numeric argument required\n", tree->args_array[1]);
+		}
+		else
+		{
+			i = ft_atoi(tree->args_array[1]);
+			data->exit_status = i;
+			exit_shell("exit", i, data);
+		}
+	}
+	else
+		exit_shell("exit", 0, data);
+	free(input);
+	exit(0);
+}
 
 // void	builtin_unset(t_list **head, char *var_name)
 // {
@@ -80,90 +112,107 @@ int	execute_builtin(t_data *data, t_tree *tree)
 // 	}
 // }
 
-// void	builtin_env(t_list *head)
-// {
-// 	t_envir *env;
-
-// 	while (head != NULL)
-// 	{
-// 		env = (t_envir *)head->content;
-// 		printf("%s=%s\n", env->var_name, env->var_value);
-// 		printf("\n");
-// 		head = head->next;
-// 	}
-// }
+void	execute_env(t_envir **env)
+{
+	ft_enviter(*env, print_env_node);
+}
 
 // void builtin_exit(t_data *data)
 // {
 // 	exit_shell("exit", 0, data);
 // }
 
-// void builtin_cd(t_data *data, char *path)
-// {
-// 	char *cwd;
-// 	t_envir *pwd_env;
+int execute_cd(t_data *data, char *path)
+{
+	char *cwd;
+	t_envir *pwd_env;
+	struct stat path_stat;
 
-// 	if (!path) 
-// 	{
-// 		path = get_home_dir();
-// 		if (!path)
-// 		{
-// 			printf("minishell: cd: HOME not set\n");
-// 			return;
-// 		}
-// 	}
-// 	if (chdir(path) != 0) {
-// 		printf("minishell: cd: %s: No such file or directory\n", path);
-// 		return;
-// 	}
-// 	cwd = get_curr_dir();
-// 	if (!cwd) {
-// 		printf("minishell: error getting current directory\n");
-// 		return;
-// 	}
-// 	pwd_env = find_envir(data->env, "PWD");
-// 	if (!pwd_env) {
-// 		printf("minishell: PWD environment variable not found\n");
-// 		free(cwd);
-// 		return;
-// 	}
-// 	free(pwd_env->var_value);
-// 	pwd_env->var_value = cwd;
-// 	free(cwd);
-// }
+	if (!path) 
+	{
+		path = get_home_dir();
+		if (!path)
+			return (printf("minishell: cd: HOME not set\n"), 1);
+	}
 
-// char *get_curr_dir(void)
-// {
-// 	char *cwd;
+	// Check if path exists and is a directory
+	if (stat(path, &path_stat) != 0)
+		return (printf("minishell: cd: %s: No such file or directory\n", path), 1);
+	if ((path_stat.st_mode & S_IFMT) != S_IFDIR)
+		return (printf("minishell: cd: %s: Not a directory\n", path), 1);
 
-// 	cwd = malloc(PATH_MAX);
-// 	if (!cwd)
-// 	{
-// 		perror("minishell: cd: Cant get the current directory\n");
-// 		return NULL;
-// 	}
-// 	if (!getcwd(cwd, PATH_MAX))
-// 	{
-// 		free(cwd);
-// 		return NULL;
-// 	}
-// 	return cwd;
-// }
+	if (chdir(path) != 0)
+		return (printf("minishell: cd: %s: No such file or directory\n", path), 1);
+	cwd = get_curr_dir();
+	if (!cwd)
+		return (printf("minishell: error getting current directory\n"), 1);
+	pwd_env = find_envir_variable(data, "PWD", 3);
+	if (!pwd_env) 
+		return (free(cwd), 0);
+	ft_strdel(&pwd_env->var_value);
+	pwd_env->var_value = ft_strdup(cwd);
+	return (free(cwd), 0);
+}
 
-// char *get_home_dir(void)
-// {
-// 	const char *home_dir = getenv("HOME");
-// 	if (!home_dir) {
-// 		perror("minishell: cd: HOME not set\n");
-// 		return NULL;
-// 	}
-// 	return strdup(home_dir);
-// }
+char *get_curr_dir(void)
+{
+	char *cwd;
 
-// void	builtin_export(t_envir *env)
-// {
+	cwd = malloc(PATH_MAX);
+	if (!cwd)
+	{
+		perror("minishell: cd: Cant get the current directory\n");
+		return NULL;
+	}
+	if (!getcwd(cwd, PATH_MAX))
+	{
+		free(cwd);
+		return NULL;
+	}
+	return cwd;
+}
 
-// 	////NEED TO FINISH BECAUSE WE CANT USE EXPORT FUNTION 
-// LIKE THIS ITS PROHIBITED BY SUBJECT
-// 	export(env, env->var_name, env->var_value);
-// }
+char *get_home_dir(void)
+{
+	return (getenv("HOME"));
+}
+
+int	execute_export(t_data *data, t_tree *tree)
+{
+	t_envir *sorted;
+	char **temp;
+	int i;
+
+	i = 0;
+	sorted = NULL;
+	temp = NULL;
+	if (!tree->args_array[1])
+	{
+		sorted = copy_and_sort_envir_list(data->env_list);
+		ft_enviter(sorted, print_env_node_sorted);
+		return (ft_envclear(&sorted), 0);
+	}
+	else
+	{
+		while (tree->args_array[++i])
+		{
+			temp = ft_split(tree->args_array[i], '=');
+			if (temp[1] && !temp[2])
+				export(&data->env_list, temp[0], temp[1]);
+			free_2darray(temp);
+		}
+	}
+	return 0;
+}
+
+void	export(t_envir **env_list, char *var_name, char *var_value)
+{
+	t_envir	*new_envir;
+
+	new_envir = ft_envnew();
+	new_envir->var_name = ft_strdup(var_name);
+	new_envir->var_value = ft_strdup(var_value);
+	ft_envadd_back(env_list, new_envir);
+}
+
+
