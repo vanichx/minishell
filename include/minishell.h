@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 19:47:48 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 12:21:21 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef enum e_token_type {
 	T_NEWLINE,
 	T_SPACE,
 	T_DOLLAR,
-	T_STAR,
 	T_AMPER,
 	T_RED_INP,
 	T_RED_OUT,
@@ -167,7 +166,7 @@ void		start_loop(t_data *data, char *envp[]);
 
 /* shlvl.c */
 void		incr_shell_lvl(t_data *data);
-void		export(t_envir **env_list, char *var_name, char *var_value);
+void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
 
 /* utils.c */
 char		*ignore_spaces(char *input);
@@ -342,6 +341,7 @@ int			execute_pipe(t_data *data, t_tree *tree, char *envp[]);
 int			is_logic_root(t_tree *tree);
 int			is_word_root(t_tree *tree);
 int			is_special_root(t_tree *tree);
+int			is_only_asterisks(char *str);
 
 /* execute_word.c */
 int			execute_word(t_data *data, t_tree *tree, char *envp[]);
@@ -352,6 +352,7 @@ int			evaluate_execution(t_data *data, t_tree *tree, char *envp[]);
 // int			execute_logic(t_data *data, t_tree *tree);
 int			execute_special(t_data *data, t_tree *tree, char *envp[]);
 int			execute_command(t_data *data, t_tree *tree, char *envp[]);
+int			fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[]);
 
 
 

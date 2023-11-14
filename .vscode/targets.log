@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Nov 13 19:47:39 2023
+# Make data base, printed on Tue Nov 14 12:19:59 2023
 
 # Variables
 
@@ -16,6 +16,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
+ 
 # environment
 VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # automatic
@@ -57,7 +58,7 @@ BOLD = \033[1m
 # makefile (from `Makefile', line 37)
 VPATH = src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/quotes:src/tree:src/utils:include
 # environment
-LaunchInstanceID = 5C2A0FBE-E113-4337-AD4D-485802A5C7C0
+LaunchInstanceID = C139EC2D-AF21-4686-B956-804307441234
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -65,13 +66,13 @@ ELECTRON_RUN_AS_NODE = 1
 # makefile (from `Makefile', line 30)
 LIBFT_DIR = lib/libft
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.WbsrijF7e3/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.05lxjcrlwE/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 HOMEBREW_TEMP = /tmp/eseferi/Homebrew/Temp
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.ingOUUJgrT/org.xquartz:0
+DISPLAY = /private/tmp/com.apple.launchd.ASKW2X9yzy/org.xquartz:0
 # environment
 PWD = /Users/eseferi/42/erik_branch
 # makefile (from `Makefile', line 43)
@@ -185,7 +186,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 884
+VSCODE_PID = 2225
 # variable set hash-table stats:
 # Load=87/1024=8%, Rehash=0, Collisions=2/142=1%
 
@@ -195,18 +196,27 @@ VSCODE_PID = 884
 
 # Directories
 
+# src/obj/src/execution: could not be stat'd.
 # include (device 16777225, inode 2307015): 3 files, no impossibilities so far.
-# . (device 16777225, inode 2306939): 15 files, no impossibilities.
+# src/lexer/obj/src/execution: could not be stat'd.
+# src/quotes/obj/src/execution: could not be stat'd.
+# . (device 16777225, inode 2306939): 13 files, no impossibilities.
+# src/parenthesis/obj/src/execution: could not be stat'd.
 # src/utils (device 16777225, inode 2307123): No files, no impossibilities so far.
 # src/tree (device 16777225, inode 2307119): No files, no impossibilities so far.
-# src/execution (device 16777225, inode 2307088): 3 files, no impossibilities so far.
+# include/obj/src/execution: could not be stat'd.
+# src/execution (device 16777225, inode 2307088): 9 files, no impossibilities so far.
+# src/utils/obj/src/execution: could not be stat'd.
+# src/parsing/obj/src/execution: could not be stat'd.
+# src/tree/obj/src/execution: could not be stat'd.
 # src (device 16777225, inode 2307086): 11 files, no impossibilities.
+# src/execution/obj/src/execution: could not be stat'd.
 # src/lexer (device 16777225, inode 2307091): No files, no impossibilities so far.
 # src/quotes (device 16777225, inode 2307116): No files, no impossibilities so far.
 # src/parsing (device 16777225, inode 2307111): No files, no impossibilities so far.
 # src/parenthesis (device 16777225, inode 2307106): No files, no impossibilities so far.
 
-# 32 files, no impossibilities in 10 directories.
+# 36 files, no impossibilities in 19 directories.
 
 # Implicit Rules
 
@@ -232,11 +242,18 @@ obj/src/parsing/sorted_envir.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/execution/execute_special.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/src/execution/execute_special.o: src/execution/execute_special.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute_special'
+#  Last modified 2023-11-14 12:19:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/utils/reset.o:
@@ -257,7 +274,7 @@ all: minishell
 # Not a target:
 include/minishell.h:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-13 19:47:36
+#  Last modified 2023-11-14 11:03:35
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -269,6 +286,7 @@ obj/src/parsing/commands.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 .PHONY: all lib_clean lib_fclean clean fclean re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -294,16 +312,22 @@ obj/src/lexer/syntax_errors.o:
 
 # Not a target:
 obj/src/lexer/token_errors.o:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/execution/execute.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/src/execution/execute.o: src/execution/execute.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute'
+#  Last modified 2023-11-14 12:19:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 .SUFFIXES:
@@ -314,7 +338,7 @@ obj/src/execution/execute.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-13 19:46:28
+#  Last modified 2023-11-14 12:06:02
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -326,11 +350,34 @@ obj/src/execution/shlvl.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/execution/execute_word.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/src/execution/execute_word.o: src/execution/execute_word.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute_word'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := obj/src/execution/execute_word.o
+# automatic
+# % := 
+# automatic
+# * := src/execution/execute_word
+# automatic
+# + := src/execution/execute_word.c include/minishell.h
+# automatic
+# | := 
+# automatic
+# < := src/execution/execute_word.c
+# automatic
+# ^ := src/execution/execute_word.c include/minishell.h
+# automatic
+# ? := src/execution/execute_word.c include/minishell.h
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=4/19=21%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/lexer/fix_tokens2.o:
@@ -356,23 +403,27 @@ obj/src/parsing/envir_list.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.o obj/src/execution/execute_builtins.o obj/src/execution/execute_logic.o obj/src/execution/execute_special.o obj/src/execution/execute_utils.o obj/src/execution/execute_word.o obj/src/execution/shlvl.o obj/src/lexer/delim_append_errors.o obj/src/lexer/fix_tokens.o obj/src/lexer/fix_tokens2.o obj/src/lexer/lexical_analysis.o obj/src/lexer/redin_errors.o obj/src/lexer/redir_general_errors.o obj/src/lexer/redout_errors.o obj/src/lexer/syntax_errors.o obj/src/lexer/token_errors.o obj/src/lexer/token_lists.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parenthesis/parenthesis.o obj/src/parenthesis/parenthesis_errors.o obj/src/parenthesis/parenthesis_utils.o obj/src/parenthesis/parenthesis_utils2.o obj/src/parsing/commands.o obj/src/parsing/envir_list.o obj/src/parsing/envirlists_utils.o obj/src/parsing/environment.o obj/src/parsing/file_parse.o obj/src/parsing/sorted_envir.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/tree/tokenise_for_tree.o obj/src/tree/tree_init.o obj/src/tree/tree_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o obj/src/utils/utils3.o
-#  Implicit rule search has not been done.
-#  Last modified 2023-11-13 19:46:38
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/8=0%
-#  commands to execute (from `Makefile', line 56):
-	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
-	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
-	
-
 # Not a target:
-obj/src/execution/execute_logic.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/execution/execute_utils.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-14 11:42:32
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+obj/src/execution/execute_logic.o: src/execution/execute_logic.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute_logic'
+#  Last modified 2023-11-14 12:19:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/quotes/quotes_utils.o:
@@ -383,27 +434,11 @@ obj/src/quotes/quotes_utils.o:
 obj/src/execution/echo.o: src/execution/echo.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/echo'
-#  Last modified 2023-11-13 19:46:35
+#  Last modified 2023-11-14 12:19:49
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := obj/src/execution/echo.o
-# automatic
-# % := 
-# automatic
-# * := src/execution/echo
-# automatic
-# + := src/execution/echo.c include/minishell.h
-# automatic
-# | := 
-# automatic
-# < := src/execution/echo.c
-# automatic
-# ^ := src/execution/echo.c include/minishell.h
-# automatic
-# ? := include/minishell.h
+#  Successfully updated.
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=4/19=21%
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 #  commands to execute (from `Makefile', line 49):
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
@@ -463,6 +498,15 @@ leaks: minishell
 #  File has not been updated.
 
 # Not a target:
+src/execution/execute_builtins.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-14 11:41:54
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 obj/src/lexer/delim_append_errors.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -473,6 +517,15 @@ obj/src/lexer/token_lists.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+src/execution/execute_special.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-13 13:21:50
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -502,11 +555,18 @@ obj/src/tree/tree_utils.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-obj/src/execution/execute_builtins.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+obj/src/execution/execute_builtins.o: src/execution/execute_builtins.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute_builtins'
+#  Last modified 2023-11-14 12:19:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/parsing/file_parse.o:
@@ -516,6 +576,7 @@ obj/src/parsing/file_parse.o:
 
 # Not a target:
 obj/src/utils/exit.o:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -525,6 +586,18 @@ obj/src/utils/utils1.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.o obj/src/execution/execute_builtins.o obj/src/execution/execute_logic.o obj/src/execution/execute_special.o obj/src/execution/execute_utils.o obj/src/execution/execute_word.o obj/src/execution/shlvl.o obj/src/lexer/delim_append_errors.o obj/src/lexer/fix_tokens.o obj/src/lexer/fix_tokens2.o obj/src/lexer/lexical_analysis.o obj/src/lexer/redin_errors.o obj/src/lexer/redir_general_errors.o obj/src/lexer/redout_errors.o obj/src/lexer/syntax_errors.o obj/src/lexer/token_errors.o obj/src/lexer/token_lists.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parenthesis/parenthesis.o obj/src/parenthesis/parenthesis_errors.o obj/src/parenthesis/parenthesis_utils.o obj/src/parenthesis/parenthesis_utils2.o obj/src/parsing/commands.o obj/src/parsing/envir_list.o obj/src/parsing/envirlists_utils.o obj/src/parsing/environment.o obj/src/parsing/file_parse.o obj/src/parsing/sorted_envir.o obj/src/quotes/quotes.o obj/src/quotes/quotes_utils.o obj/src/tree/tokenise_for_tree.o obj/src/tree/tree_init.o obj/src/tree/tree_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o obj/src/utils/utils3.o
+#  Implicit rule search has not been done.
+#  Last modified 2023-11-13 18:43:38
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/8=0%
+#  commands to execute (from `Makefile', line 56):
+	@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
+	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
+	
 
 # Not a target:
 obj/src/lexer/lexical_analysis.o:
@@ -537,6 +610,15 @@ obj/src/lexer/redout_errors.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+src/execution/execute.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-13 18:44:39
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 obj/src/quotes/quotes.o:
@@ -552,7 +634,6 @@ obj/src/parenthesis/parenthesis.o:
 
 lib_fclean:
 #  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -571,7 +652,7 @@ lib_clean:
 
 lib/libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2023-11-13 19:46:35
+#  Last modified 2023-11-14 12:19:49
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 53):
@@ -579,10 +660,26 @@ lib/libft/libft.a:
 	
 
 # Not a target:
-obj/src/execution/execute_utils.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+src/execution/execute_word.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-14 12:19:42
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+obj/src/execution/execute_utils.o: src/execution/execute_utils.c include/minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `src/execution/execute_utils'
+#  Last modified 2023-11-14 12:19:49
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 49):
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
+	
 
 # Not a target:
 obj/src/minishell/minishell.o:
@@ -641,6 +738,15 @@ obj/src/utils/init_data.o:
 #  File has not been updated.
 
 # Not a target:
+src/execution/execute_logic.c:
+#  Implicit rule search has been done.
+#  Last modified 2023-11-10 18:00:25
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 obj/src/utils/utils2.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -656,7 +762,7 @@ src/execution/echo.c:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # files hash-table stats:
-# Load=62/1024=6%, Rehash=0, Collisions=10/148=7%
+# Load=68/1024=7%, Rehash=0, Collisions=14/253=6%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -669,6 +775,6 @@ src/execution/echo.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Nov 13 19:47:39 2023
+# Finished Make data base on Tue Nov 14 12:19:59 2023
 
  

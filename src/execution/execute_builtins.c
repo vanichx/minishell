@@ -237,23 +237,44 @@ int	execute_export(t_data *data, t_tree *tree)
 	{
 		while (tree->args_array[++i])
 		{
-			temp = ft_split(tree->args_array[i], '=');
+			temp = ft_split_parenth(tree->args_array[i], '=');
 			if (temp[1] && !temp[2])
-				export(&data->env_list, temp[0], temp[1]);
+			{
+				printf("are we heren\n");
+				if (!is_only_asterisks(temp[0]))
+					return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
+				export(&data->env_list, temp[0], temp[1], data);
+			}
+			else if (temp[0] && !temp[1])
+				if (!is_only_asterisks(temp[0]))
+					return (printf("minishell: export: `%s': not a valid identifier\n", temp[0]), free_2darray(temp), 1);
 			free_2darray(temp);
 		}
 	}
 	return 0;
 }
 
-void	export(t_envir **env_list, char *var_name, char *var_value)
+void	export(t_envir **env_list, char *var_name, char *var_value, t_data *data)
 {
 	t_envir	*new_envir;
+	t_envir	*temp;
+	int		i;
 
+	i = 0;
 	new_envir = ft_envnew();
 	new_envir->var_name = ft_strdup(var_name);
-	new_envir->var_value = ft_strdup(var_value);
-	ft_envadd_back(env_list, new_envir);
+	temp = find_envir_variable(data, new_envir->var_name, ft_strlen(new_envir->var_name));
+	if (temp)
+	{
+		ft_strdel(&temp->var_value);
+		temp->var_value = ft_strdup(var_value);
+		ft_strdel(&new_envir->var_name);
+	}
+	else
+	{
+		new_envir->var_value = ft_strdup(var_value);
+		ft_envadd_back(env_list, new_envir);
+	}
 }
 
 

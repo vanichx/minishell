@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:27:42 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/09 10:53:17 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 10:53:13 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	find_token(t_data *data, char *str, int *i, t_token **head)
 {
-	if (is_chr_str(str[*i], " \t*") && !in_quotes(str, *i)
+	if (is_chr_str(str[*i], " \t") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1))
 	{
 		add_token(head, create_token(data, *i));
-		if (str[*i] == '*')
-			add_token(head, create_arg_token(data, "*", T_STAR));
-		else if (str[*i] == ' ' || str[*i] == '\t')
+		if (str[*i] == ' ' || str[*i] == '\t')
 			add_token(head, create_arg_token(data, " ", T_SPACE));
 		(*i)++;
 		data->count = 0;

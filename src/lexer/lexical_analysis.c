@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 09:49:49 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:53:55 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void	set_token_type2(t_token *token)
 		token->type = T_DOLLAR;
 	else if (!ft_strcmp(token->word, " "))
 		token->type = T_SPACE;
-	else if (!ft_strcmp(token->word, "*"))
-		token->type = T_STAR;
 	else if (!ft_strcmp(token->word, "&"))
 		token->type = T_AMPER;
 	else if (token->type != T_NEWLINE)

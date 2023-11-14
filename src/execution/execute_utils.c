@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:08:37 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/10 14:39:20 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 11:42:32 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,17 @@ int is_special_root(t_tree *tree)
 		|| tree->type == T_RED_OUT
 		|| tree->type == T_APPEND || tree->type == T_DELIM 
 		|| tree->type == T_THREE_IN);
+}
+
+int is_only_asterisks(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i++] != '*')
+			return (0);
+	}
+	return (1);
 }
