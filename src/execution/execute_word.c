@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 12:21:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 13:05:11 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int execute_command(t_data *data, t_tree *tree, char *envp[])
         data->exit_status = 127;
         return 1;
     }
-    return fork_process(data, tree, exec_path, envp);
+    return (fork_command(data, tree, exec_path, envp));
 }
 
 int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
