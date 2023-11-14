@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 13:05:11 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 16:05:15 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int execute_command(t_data *data, t_tree *tree, char *envp[])
     exec_path = find_executable_path(data->path, tree->args_array[0]);
     if (exec_path == NULL)
     {
-        printf("minishell: %s: command not found\n", tree->args_array[0]);
+		ft_putstr_fd("minishell: ", 0);
+		ft_putstr_fd(tree->args_array[0], 0);
+		ft_putstr_fd(": command not found\n", 0);
         data->exit_status = 127;
         return 1;
     }
@@ -64,7 +66,7 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
 		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		{
 			data->exit_status = 1;
-			exit_shell("Error from execve\n", 1, data);
+			free(exec_path);
 		}
 	}
 	return 0;

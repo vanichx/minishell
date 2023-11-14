@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 11:44:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 15:07:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	start_loop(t_data *data, char *envp[])
 			continue ;
 		if (init_tree(data, &data->token_list))
 			continue ;
-		print_tree(data->tree, 0);
+		// print_tree(data->tree, 0);///////Debug
 		if (execute(data, envp))
 			continue ;
 	}

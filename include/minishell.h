@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 12:21:21 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 16:20:55 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,11 @@ int			handle_env_var(t_data *data, char *var_name);
 int			execute_echo(t_data	*data, char *args[]);
 
 
+/* execute_redout.c */
+int	execute_redout(t_data *data, t_tree *tree, char *envp[]);
 
+/* execute_append.c */
+int	execute_append(t_data *data, t_tree *tree, char *envp[]);
 
 /* execute_builtins.c */
 int			is_builtin(char *cmd);
