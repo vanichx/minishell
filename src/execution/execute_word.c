@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 16:05:15 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:33:55 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,16 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
 	if (pid == -1)
 	{
 		perror("fork");
-		return 1;
+		return (ft_strdel(&exec_path), 1);
 	}
 	else if (pid == 0)
 	{
 		if (execve(exec_path, tree->args_array, envp) == -1)
+		{
+			ft_strdel(&exec_path);
 			exit(EXIT_FAILURE);
+		}
+		ft_strdel(&exec_path);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -66,8 +70,10 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
 		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		{
 			data->exit_status = 1;
-			free(exec_path);
+			ft_strdel(&exec_path);
 		}
+		else 
+			ft_strdel(&exec_path);
 	}
 	return 0;
 }
