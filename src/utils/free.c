@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 14:11:41 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 14:09:19 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	free_data(t_data *data)
 		ft_strdel(&data->curr_dir);
 	if (data->input_line)
 		ft_strdel(&data->input_line);
+	if (data->root_directory && *data->root_directory)
+		free_2darray(data->root_directory);
 	if (data->tree)
 	{
 		free_tree(&data->tree);

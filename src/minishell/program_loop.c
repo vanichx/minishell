@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 11:44:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/15 14:16:55 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ void	start_loop(t_data *data, char *envp[])
 		}
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
+		// data->input_line = ("echo M*a*e*le");
 		if ((special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
 		if (init_tree(data, &data->token_list))
 			continue ;
-		print_tree(data->tree, 0);
+		// print_tree(data->tree, 0);
 		if (execute(data, envp))
 			continue ;
 	}

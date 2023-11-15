@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:33:01 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 19:15:22 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 13:44:52 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_data(t_data **data, char **envp)
 	(*data)->token_list = NULL;
 	(*data)->input_line = NULL;
 	(*data)->tree = NULL;
+	(*data)->root_directory = NULL;
 	(*data)->exit_status = 0;
 	(*data)->input_minishell = "minishell>> ";
 	(*data)->pid = getpid();

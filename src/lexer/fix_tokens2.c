@@ -6,19 +6,20 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:09:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:25:59 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/15 12:15:24 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fix_tokens(t_token **head)
+void	fix_tokens(t_token **head, t_data *data)
 {
 	find_ortokens(head);
 	find_andtokens(head);
 	find_inout(head);
 	find_threeout(head);
 	find_threein(head);
+	find_asterisk(head, data);
 }
 
 void	find_append(t_token *current)
@@ -88,5 +89,25 @@ void	clean_null_tokens(t_token **head)
 		}
 		else
 			current = current->next;
+	}
+}
+
+void	find_asterisk(t_token **head, t_data *data)
+{
+	t_token	*current;
+	t_token	*tmp;
+
+	current = *head;
+	while (current != NULL)
+	{
+		tmp = current;
+		if (tmp->type == T_WORD)
+		{
+			if (has_asterisk(tmp->word))
+			{
+				extend_asterisk(tmp, data);
+			}
+		}
+		current = current->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:38:11 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 10:55:55 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 17:48:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	set_token_parenth(t_data *data)
 	}
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
-	fix_tokens(&data->token_list);
+	fix_tokens(&data->token_list, data);
 	if (syntax_error_parenth(&data->token_list))
 		return (1);
 	return (0);

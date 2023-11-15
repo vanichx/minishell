@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 12:21:21 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/15 16:06:11 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_data {
 	char			*input_minishell;
 	char			*input_line;
 	char			*curr_dir;
+	char			**root_directory;
 	char			*exit_str;
 	char			**path;
 }				t_data;
@@ -178,6 +179,7 @@ int			only_spaces_parenth(char *str);
 char		*trim_input(char *input);
 void		process_input(char *input, char *str, int *i, int *j);
 char		**ft_split_args(char *s, char c);
+int			arraylen(char **str);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
@@ -205,7 +207,7 @@ void		set_token_type2(t_token *token);
 
 void		add_token_front(t_token **head, t_token *new);
 int			tokens_len(t_token **head);
-void		fix_tokens(t_token **head);
+void		fix_tokens(t_token **head, t_data *data);
 void		find_ortokens(t_token **head);
 void		find_andtokens(t_token **head);
 void		find_threein(t_token **head);
@@ -255,6 +257,18 @@ int			check_numbers(t_token *tmp);
 
 /* Command Parsing*/
 int			token_len(t_token *token);
+
+/* Wildcard */
+char		**get_root_directory(void);
+int			count_root_directory(void);
+int			has_asterisk(char *str);
+void		find_asterisk(t_token **head, t_data *data);
+void		extend_asterisk(t_token *token, t_data *data);
+void		sort_directory(char **arr);
+void		check_matches(t_token *token, char **root_directory);
+int			match_pattern(const char *pattern, const char *string);
+
+
 
 /* Parentheses */
 t_token		*create_parenth_token(t_data *data, int i, char *input);

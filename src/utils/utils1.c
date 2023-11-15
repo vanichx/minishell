@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 14:13:33 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/14 16:19:11 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,14 @@ int	ft_has_only_digit(char *str)
 		str++;
 	}
 	return (1);
+}
+
+int	arraylen(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
