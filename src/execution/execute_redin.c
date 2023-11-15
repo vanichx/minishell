@@ -24,8 +24,8 @@ int	execute_redin(t_data *data, t_tree *tree, char *envp[])
 			printf("minishell: dup2 error\n");
 			exit(-1);
 		}
-		else if (execute_word(data, tree->left, envp) != 0)
-			close(fd);
+		execute_word(data, tree->left, envp);
+		close(fd);
 		exit(127);
 	}
 	else

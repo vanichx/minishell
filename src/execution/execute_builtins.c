@@ -5,17 +5,17 @@ int is_builtin(char *cmd)
 {
 	if (!ft_strncmp(cmd, "echo", 4) || !ft_strncmp(cmd, "ECHO", 4))
 		return (1);
-	if (!ft_strcmp(cmd, "cd") || !ft_strncmp(cmd, "CD", 4))
+	if (!ft_strcmp(cmd, "cd"))
 		return (1);
 	if (!ft_strcmp(cmd, "pwd") || !ft_strncmp(cmd, "PWD", 4))
 		return (1);
-	if (!ft_strcmp(cmd, "export") || !ft_strncmp(cmd, "EXPORT", 4))
+	if (!ft_strcmp(cmd, "export"))
 		return (1);
-	if (!ft_strcmp(cmd, "unset") || !ft_strncmp(cmd, "UNSET", 4))
+	if (!ft_strcmp(cmd, "unset"))
 		return (1);
 	if (!ft_strcmp(cmd, "env") || !ft_strncmp(cmd, "ENV", 4))
 		return (1);
-	if (!ft_strcmp(cmd, "exit") || !ft_strncmp(cmd, "EXIT", 4))
+	if (!ft_strcmp(cmd, "exit"))
 		return (1);
 	return (0);
 }
