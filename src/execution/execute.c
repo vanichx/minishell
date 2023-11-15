@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/15 11:31:16 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/15 14:59:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int evaluate_execution(t_data *data, t_tree *tree, char *envp[])
 
 int execute_special(t_data *data, t_tree *tree, char *envp[])
 {
-	// if (tree->type == T_PIPE)
-	// 	if (execute_pipe(data, tree, envp))
-	// 		return (1);
+	if (tree->type == T_PIPE)
+		if (execute_pipe(data, tree, envp))
+			return (1);
 	if (tree->type == T_RED_INP || tree->type == T_THREE_IN)
 		if (execute_redin(data, tree, envp))
 			return (1);
