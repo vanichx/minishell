@@ -3,19 +3,19 @@
 
 int is_builtin(char *cmd)
 {
-	if (ft_strncmp(cmd, "echo", 4) == 0)
+	if (!ft_strncmp(cmd, "echo", 4) || !ft_strncmp(cmd, "ECHO", 4))
 		return (1);
-	if (ft_strcmp(cmd, "cd") == 0)
+	if (!ft_strcmp(cmd, "cd"))
 		return (1);
-	if (ft_strcmp(cmd, "pwd") == 0)
+	if (!ft_strcmp(cmd, "pwd") || !ft_strncmp(cmd, "PWD", 4))
 		return (1);
-	if (ft_strcmp(cmd, "export") == 0)
+	if (!ft_strcmp(cmd, "export"))
 		return (1);
-	if (ft_strcmp(cmd, "unset") == 0)
+	if (!ft_strcmp(cmd, "unset"))
 		return (1);
-	if (ft_strcmp(cmd, "env") == 0)
+	if (!ft_strcmp(cmd, "env") || !ft_strncmp(cmd, "ENV", 4))
 		return (1);
-	if (ft_strcmp(cmd, "exit") == 0)
+	if (!ft_strcmp(cmd, "exit"))
 		return (1);
 	return (0);
 }
@@ -25,7 +25,7 @@ int check_echo(t_data *data, t_tree *tree)
 	char **cmd;
 
 	cmd = NULL;
-	if (!ft_strcmp(tree->args_array[0], "echo"))
+	if (!ft_strcmp(tree->args_array[0], "echo") || !ft_strcmp(tree->args_array[0], "ECHO"))
 	{
 		if (execute_echo(data, tree->args_array))
 			return (1);
@@ -39,7 +39,10 @@ int check_echo(t_data *data, t_tree *tree)
 			cmd[1] = ft_strdup("-n");
 			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
 			cmd[3] = NULL;
-			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (!ft_strncmp(tree->args_array[0], "echo", 4))
+				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
+				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
 			if (execute_echo(data, cmd) == 0)
 				data->exit_status = 127;
 			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
@@ -50,7 +53,10 @@ int check_echo(t_data *data, t_tree *tree)
 			cmd[1] = ft_strdup("-n");
 			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
 			cmd[3] = NULL;
-			ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			if (!ft_strncmp(tree->args_array[0], "echo", 4))
+				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
+			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
+				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
 			if (execute_echo(data, cmd) == 0)
 				data->exit_status = 127;
 			ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
@@ -64,12 +70,12 @@ int check_echo(t_data *data, t_tree *tree)
 int	execute_builtin(t_data *data, t_tree *tree)
 {
 
-	if (!ft_strncmp(tree->args_array[0], "echo", 4))
+	if (!ft_strncmp(tree->args_array[0], "echo", 4) || !ft_strncmp(tree->args_array[0], "ECHO", 4))
 	{
 		if (check_echo(data, tree))
 			return (1);
 	}
-	if (ft_strcmp(tree->args_array[0], "cd") == 0)
+	if (!ft_strcmp(tree->args_array[0], "cd") || !ft_strcmp(tree->args_array[0], "CD"))
 	{
 		if (tree->args_array[1])
 		{
@@ -79,18 +85,18 @@ int	execute_builtin(t_data *data, t_tree *tree)
 		else if (execute_cd(data, NULL))
 			return (1);
 	}
-	if (ft_strcmp(tree->args_array[0], "pwd") == 0)
+	if (!ft_strcmp(tree->args_array[0], "pwd") || !ft_strcmp(tree->args_array[0], "PWD"))
 		if (execute_pwd(data))
 			return (1);
-	if (ft_strcmp(tree->args_array[0], "export") == 0)
+	if (!ft_strcmp(tree->args_array[0], "export") || !ft_strcmp(tree->args_array[0], "EXPORT"))
 		if (execute_export(data, tree))
 			return (1);
-	if (ft_strcmp(tree->args_array[0], "unset") == 0)
+	if (!ft_strcmp(tree->args_array[0], "unset") || !ft_strcmp(tree->args_array[0], "UNSET"))
 		if (execute_unset(data, tree))
 			return (1);
-	if (ft_strcmp(tree->args_array[0], "env") == 0)
+	if (!ft_strcmp(tree->args_array[0], "env") || !ft_strcmp(tree->args_array[0], "ENV"))
 		execute_env(&data->env_list);
-	if (ft_strcmp(tree->args_array[0], "exit") == 0)
+	if (!ft_strcmp(tree->args_array[0], "exit") || !ft_strcmp(tree->args_array[0], "EXIT"))
 		if (execute_exit(data, tree))
 			return (1);
 	return (0);
