@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 16:21:08 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:31:16 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,18 @@ int execute_special(t_data *data, t_tree *tree, char *envp[])
 	// if (tree->type == T_PIPE)
 	// 	if (execute_pipe(data, tree, envp))
 	// 		return (1);
-	// if (tree->type == T_RED_INP || tree->type == T_THREE_IN)
-	// 	if (execute_red_inp(data, tree))
-	// 		return (1);
+	if (tree->type == T_RED_INP || tree->type == T_THREE_IN)
+		if (execute_redin(data, tree, envp))
+			return (1);
 	if (tree->type == T_RED_OUT)
 		if (execute_redout(data, tree, envp))
 			return (1);
 	if (tree->type == T_APPEND)
 		if (execute_append(data, tree, envp))
 			return (1);
-	// if (tree->type == T_DELIM)
-	// 	if (execute_delim(data, tree))
+	if (tree->type == T_DELIM)
+		if (execute_delim(tree->right->args_array[0]))
+			return (1);
 	// 		return (1);
 	return (0);
 }
