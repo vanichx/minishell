@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	execute_delim(t_data *data, t_tree *tree, char *envp[], char *delemiter)
+int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 {
 	int		fd;
 	char	*buf;
@@ -39,7 +39,7 @@ int	execute_delim(t_data *data, t_tree *tree, char *envp[], char *delemiter)
 			printf("minishell: %s\n", strerror(errno));
 			exit(1);
 		}
-		evaluate_execution(data, tree->left, envp);
+		evaluate_execution(data, tree->left);
 		close(fd);
 		exit(127);
 	}

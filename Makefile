@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/16 13:27:36 by ipetruni         ###   ########.fr        #
+#    Updated: 2023/11/16 23:10:16 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME				=	$(MINISHELL)
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --track-fds=yes --leak-check=full  #-s #--show-leak-kinds=all --track-origins=yes
+VALGRIND  = valgrind --track-fds=yes #--leak-check=full  -s #--show-leak-kinds=all --track-origins=yes
 LEAKS	  = leaks --atExit --
 
 # Libraries

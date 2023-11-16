@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 17:04:45 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:02:58 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	start_loop(t_data *data, char *envp[])
+void	start_loop(t_data *data)
 {
 	char	*line;
 	// t_token *temp;
@@ -25,7 +25,7 @@ void	start_loop(t_data *data, char *envp[])
 			continue ;
 		if (ft_strlen(line) > 0)
 			add_history(line);
-		if (odd_quote(line, data))
+		if (odd_quote(line))
 		{
 			ft_strdel(&line);
 			continue ;
@@ -39,7 +39,7 @@ void	start_loop(t_data *data, char *envp[])
 		if (init_tree(data, &data->token_list))
 			continue ;
 		// print_tree(data->tree, 0);///////Debug
-		if (execute(data, envp))
+		if (execute(data))
 			continue ;
 	}
 }

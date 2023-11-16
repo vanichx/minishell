@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 15:36:12 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:15:51 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef enum e_token_type {
 typedef struct s_envir {
 	char			*var_name;
 	char			*var_value;
+	int				visible;
 	struct s_envir	*next;
 	struct s_envir	*prev;
 }				t_envir;
@@ -123,6 +124,8 @@ t_envir		*ft_envlast(t_envir *lst);
 int			ft_envsize(t_envir *lst);
 t_envir		*fill_env(char **env, t_data *data);
 t_envir		*ft_envnew(void);
+char		**env(t_envir **lst);
+char		**create_envp(void);
 
 
 /*sorted envariment */
@@ -139,6 +142,7 @@ void		exit_shell(char *message, int exit_code, t_data *data);
 void		free_data(t_data *data);
 void		free_envir(t_envir *envir);
 void		free_2darray(char **array);
+void		print2darray(char **array);
 
 /* handle_input.c */
 int			execute_exit(t_data *data, t_tree *tree);
@@ -163,7 +167,7 @@ void		reset_data(t_data *data);;
 int			handle_d(t_data *data, char *line);
 void		handle_c(int signo);
 void		handle_signal(void);
-void		start_loop(t_data *data, char *envp[]);
+void		start_loop(t_data *data);
 
 /* shlvl.c */
 void		incr_shell_lvl(t_data *data);
@@ -182,7 +186,7 @@ char		**ft_split_args(char *s, char c);
 int			arraylen(char **str);
 
 /* quotes.c */
-int			odd_quote(char *str, t_data *data);
+int			odd_quote(char *str);
 int			special_chars(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
@@ -327,19 +331,19 @@ int			execute_echo(t_data	*data, char *args[]);
 
 
 /* execute_redout.c */
-int			execute_redout(t_data *data, t_tree *tree, char *envp[]);
+int			execute_redout(t_data *data, t_tree *tree);
 
 /* execute_append.c */
-int			execute_append(t_data *data, t_tree *tree, char *envp[]);
+int			execute_append(t_data *data, t_tree *tree);
 
 /* execute_redinp.c */
-int			execute_redin(t_data *data, t_tree *tree, char *envp[]);
+int			execute_redin(t_data *data, t_tree *tree);
 
 /* execute_delim.c */
-int			execute_delim(t_data *data, t_tree *tree, char *envp[], char *delemiter);
+int			execute_delim(t_data *data, t_tree *tree, char *delemiter);
 
 /* execute_pipe.c */
-int			execute_pipe(t_data *data, t_tree *tree, char *envp[]);
+int			execute_pipe(t_data *data, t_tree *tree);
 
 
 /* execute_builtins.c */
@@ -355,10 +359,10 @@ char		*get_home_dir(void);
 int			execute_export(t_data *data, t_tree *tree);
 
 /* execute_logic.c */
-int			execute_and(t_data *data, t_tree *tree, char *envp[]);
-int			execute_or(t_data *data, t_tree *tree, char *envp[]);
-int			execute_logic(t_data *data, t_tree *tree, char *envp[]);
-int			evaluate_leftmost_leaf(t_data *data, t_tree *tree, char *envp[]);
+int			execute_and(t_data *data, t_tree *tree);
+int			execute_or(t_data *data, t_tree *tree);
+int			execute_logic(t_data *data, t_tree *tree);
+int			evaluate_leftmost_leaf(t_data *data, t_tree *tree);
 
 
 
@@ -370,14 +374,14 @@ int			is_special_root(t_tree *tree);
 int			is_only_asterisks(char *str);
 
 /* execute_word.c */
-int			execute_word(t_data *data, t_tree *tree, char *envp[]);
+int			execute_word(t_data *data, t_tree *tree);
 
 /* execute.c */
-int			execute(t_data *data, char *envp[]);
-int			evaluate_execution(t_data *data, t_tree *tree, char *envp[]);
-int			execute_special(t_data *data, t_tree *tree, char *envp[]);
-int			execute_command(t_data *data, t_tree *tree, char *envp[]);
-int			fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[]);
+int			execute(t_data *data);
+int			evaluate_execution(t_data *data, t_tree *tree);
+int			execute_special(t_data *data, t_tree *tree);
+int			execute_command(t_data *data, t_tree *tree);
+int			fork_command(t_data *data, t_tree *tree, char *exec_path);
 
 
 #endif

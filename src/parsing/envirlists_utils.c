@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/13 16:21:15 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 22:53:00 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_envir	*ft_envnew(void)
         return (NULL);
     head->var_name = NULL;
     head->var_value = NULL;
+	head->visible = 0;
     head->next = NULL;
     head->prev = NULL;
     return (head);

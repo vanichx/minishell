@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	execute_redin(t_data *data, t_tree *tree, char *envp[])
+int	execute_redin(t_data *data, t_tree *tree)
 {
 	int		fd;
 	pid_t	pid;
@@ -32,11 +32,11 @@ int	execute_redin(t_data *data, t_tree *tree, char *envp[])
 			exit(-1);
 		}
 		if (tree->right->type == T_RED_OUT)
-			execute_redout(data, tree->right, envp);
+			execute_redout(data, tree->right);
 		if (tree->right->type == T_PIPE)
-			execute_pipe(data, tree->right, envp);
+			execute_pipe(data, tree->right);
 		else
-			execute_word(data, tree->left, envp);
+			execute_word(data, tree->left);
 		close(fd);
 		exit(127);
 	}

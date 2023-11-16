@@ -243,18 +243,26 @@ int	execute_export(t_data *data, t_tree *tree)
 	{
 		while (tree->args_array[++i])
 		{
-			temp = ft_split_parenth(tree->args_array[i], '=');
-			if (temp[1] && !temp[2])
+			if (!ft_strrchr(tree->args_array[i], '='))
+				export(&data->env_list, tree->args_array[i], "visible", data);
+			else
 			{
-				printf("are we heren\n");
-				if (!is_only_asterisks(temp[0]))
-					return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
-				export(&data->env_list, temp[0], temp[1], data);
+				temp = ft_split_parenth(tree->args_array[i], '=');
+				if (temp[1] && !temp[2])
+				{
+					printf("are we heren\n");
+					if (has_asterisk(temp[0]))
+						return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
+					export(&data->env_list, temp[0], temp[1], data);
+				}
+				else if (temp[0] && !temp[1])
+				{
+					if (has_asterisk(temp[0]))
+						return (printf("minishell: export: `%s': not a valid identifier\n", temp[0]), free_2darray(temp), 1);
+					export(&data->env_list, temp[0], "", data);
+				}
+				free_2darray(temp);
 			}
-			else if (temp[0] && !temp[1])
-				if (!is_only_asterisks(temp[0]))
-					return (printf("minishell: export: `%s': not a valid identifier\n", temp[0]), free_2darray(temp), 1);
-			free_2darray(temp);
 		}
 	}
 	return 0;
@@ -270,7 +278,7 @@ void	export(t_envir **env_list, char *var_name, char *var_value, t_data *data)
 	new_envir = ft_envnew();
 	new_envir->var_name = ft_strdup(var_name);
 	temp = find_envir_variable(data, new_envir->var_name, ft_strlen(new_envir->var_name));
-	if (temp)
+	if (temp && ft_strcmp(var_value, "visible"))
 	{
 		ft_strdel(&temp->var_value);
 		temp->var_value = ft_strdup(var_value);
@@ -278,8 +286,18 @@ void	export(t_envir **env_list, char *var_name, char *var_value, t_data *data)
 	}
 	else
 	{
-		new_envir->var_value = ft_strdup(var_value);
-		ft_envadd_back(env_list, new_envir);
+		if (!ft_strcmp(var_value, "visible"))
+		{
+			new_envir->visible = 1;
+			new_envir->var_value = ft_strdup("");
+			ft_envadd_back(env_list, new_envir);
+			printf("%d\n", new_envir->visible);
+		}
+		else
+		{
+			new_envir->var_value = ft_strdup(var_value);
+			ft_envadd_back(env_list, new_envir);
+		}
 	}
 }
 

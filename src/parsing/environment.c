@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 09:37:15 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 22:54:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	print_env_node(t_envir *env_node)
 		return ;
     env = env_node;
     i = 0;
-    printf("%s=%s\n", env->var_name, env->var_value);
+	if (!env->visible)
+    	printf("%s=%s\n", env->var_name, env->var_value);
+	else
+		return ;
 }
 
 void	print_env_node_sorted(t_envir *env_node)
@@ -33,7 +36,10 @@ void	print_env_node_sorted(t_envir *env_node)
 		return ;
     env = env_node;
     i = 0;
-    printf("declare -x %s=\"%s\"\n", env->var_name, env->var_value);
+	if (env->visible)
+		printf("declare -x %s\n", env->var_name);
+	else
+   		printf("declare -x %s=\"%s\"\n", env->var_name, env->var_value);
 }
 
 void	free_envir_array(char **env_array)

@@ -14,6 +14,7 @@ t_envir	*copy_envir_list(t_envir *original)
 		node = ft_envnew();
 		node->var_name = strdup(original->var_name);
 		node->var_value = strdup(original->var_value);
+		node->visible = original->visible;
 		node->prev = prev;
 		if (prev)
 			prev->next = node;

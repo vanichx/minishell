@@ -6,13 +6,13 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 14:00:11 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 21:02:32 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	odd_quote(char *str, t_data *data)
+int	odd_quote(char *str)
 {
 	int		i;
 	int		s_quotes;

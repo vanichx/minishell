@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	execute_redout(t_data *data, t_tree *tree, char *envp[])
+int	execute_redout(t_data *data, t_tree *tree)
 {
 	int		fd;
 	pid_t	pid;
@@ -30,9 +30,9 @@ int	execute_redout(t_data *data, t_tree *tree, char *envp[])
 			exit(-1);
 		}
 		if (tree->left->type == T_RED_OUT)
-			execute_redout(data, tree->left, envp);
+			execute_redout(data, tree->left);
 		else
-			evaluate_execution(data, tree->left, envp);
+			evaluate_execution(data, tree->left);
 		close(fd);
 		exit(127);
 	}

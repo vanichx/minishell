@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	execute_append(t_data *data, t_tree *tree, char *envp[])
+int	execute_append(t_data *data, t_tree *tree)
 {
 	int		fd;
 	pid_t	pid;
@@ -24,7 +24,7 @@ int	execute_append(t_data *data, t_tree *tree, char *envp[])
 			printf("minishell: dup2 error\n");
 			return (-1);
 		}
-		evaluate_execution(data, tree->left, envp);
+		evaluate_execution(data, tree->left);
 		close(fd);
 		exit(127);
 	}
