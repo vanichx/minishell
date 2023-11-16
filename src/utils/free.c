@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 14:09:19 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 12:05:18 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	free_tree(t_tree **tree)
 		return ;
 	if (temp_tree->value)
 		ft_strdel(&temp_tree->value);
-	if (temp_tree->args_array)
+	if (temp_tree->args_array && *temp_tree->args_array)
 		free_2darray(temp_tree->args_array);
 	left = temp_tree->left;
 	right = temp_tree->right;

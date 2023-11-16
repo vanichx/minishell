@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/15 17:33:55 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:12:10 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
 			ft_strdel(&exec_path);
 			exit(EXIT_FAILURE);
 		}
-		ft_strdel(&exec_path);
+		if (exec_path)
+			ft_strdel(&exec_path);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -72,7 +73,7 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[])
 			data->exit_status = 1;
 			ft_strdel(&exec_path);
 		}
-		else 
+		else
 			ft_strdel(&exec_path);
 	}
 	return 0;

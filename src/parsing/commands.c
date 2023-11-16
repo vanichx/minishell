@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/15 17:26:11 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:11:53 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ char	*find_executable_path(char **paths, char *cmd)
 
 	while (*paths)
 	{
+		if (access(cmd, X_OK) == 0)
+		{
+			command = ft_strdup(cmd);
+			return (command);
+		}
 		tmp = ft_strjoin(*paths, "/");
 		command = ft_strjoin(tmp, cmd);
 		ft_strdel(&tmp);
 		if (access(command, F_OK) == 0)
-		{
 			return (command);
-		}
 		ft_strdel(&command);
 		paths++;
 	}
