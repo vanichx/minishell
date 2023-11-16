@@ -6,9 +6,16 @@ int	execute_redin(t_data *data, t_tree *tree, char *envp[])
 	pid_t	pid;
 	int		status;
 	char	*file_name;
+	t_tree	*current;
 
 	fd = -1;
-	file_name = tree->right->args_array[0];
+	current = tree;
+	while (current->right && current->right->type == T_RED_INP)
+		current = current->right;
+	if (current->right && current->right->args_array)
+		file_name = current->right->args_array[0];
+	else
+		return (-1);
 	pid = fork();
 	if (pid < 0)
 		return (-1);
@@ -24,7 +31,12 @@ int	execute_redin(t_data *data, t_tree *tree, char *envp[])
 			printf("minishell: dup2 error\n");
 			exit(-1);
 		}
-		execute_word(data, tree->left, envp);
+		if (tree->right->type == T_RED_OUT)
+			execute_redout(data, tree->right, envp);
+		if (tree->right->type == T_PIPE)
+			execute_pipe(data, tree->right, envp);
+		else
+			execute_word(data, tree->left, envp);
 		close(fd);
 		exit(127);
 	}

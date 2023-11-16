@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 12:05:18 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 13:11:59 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	free_data(t_data *data)
 		ft_strdel(&data->curr_dir);
 	if (data->input_line)
 		ft_strdel(&data->input_line);
-	if (data->root_directory && *data->root_directory)
-		free_2darray(data->root_directory);
+	// if (data->root_directory && *data->root_directory)
+	// 	free_2darray(data->root_directory);
 	if (data->tree)
 	{
 		free_tree(&data->tree);

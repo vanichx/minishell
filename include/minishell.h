@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/15 18:49:54 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:36:12 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ int			execute_append(t_data *data, t_tree *tree, char *envp[]);
 int			execute_redin(t_data *data, t_tree *tree, char *envp[]);
 
 /* execute_delim.c */
-int			execute_delim(char *delemiter);
+int			execute_delim(t_data *data, t_tree *tree, char *envp[], char *delemiter);
 
 /* execute_pipe.c */
 int			execute_pipe(t_data *data, t_tree *tree, char *envp[]);
@@ -355,8 +355,12 @@ char		*get_home_dir(void);
 int			execute_export(t_data *data, t_tree *tree);
 
 /* execute_logic.c */
-int			execute_and(t_data *data, t_tree *tree);
-int			execute_or(t_data *data, t_tree *tree);
+int			execute_and(t_data *data, t_tree *tree, char *envp[]);
+int			execute_or(t_data *data, t_tree *tree, char *envp[]);
+int			execute_logic(t_data *data, t_tree *tree, char *envp[]);
+int			evaluate_leftmost_leaf(t_data *data, t_tree *tree, char *envp[]);
+
+
 
 
 /* execute_utils.c */
@@ -371,7 +375,6 @@ int			execute_word(t_data *data, t_tree *tree, char *envp[]);
 /* execute.c */
 int			execute(t_data *data, char *envp[]);
 int			evaluate_execution(t_data *data, t_tree *tree, char *envp[]);
-// int			execute_logic(t_data *data, t_tree *tree);
 int			execute_special(t_data *data, t_tree *tree, char *envp[]);
 int			execute_command(t_data *data, t_tree *tree, char *envp[]);
 int			fork_command(t_data *data, t_tree *tree, char *exec_path, char *envp[]);

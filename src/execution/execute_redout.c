@@ -6,9 +6,14 @@ int	execute_redout(t_data *data, t_tree *tree, char *envp[])
 	pid_t	pid;
 	int		status;
 	char	*file_name;
+	t_tree	*current;
 
 	fd = -1;
-	file_name = tree->right->args_array[0];
+	current = tree;
+	while (current->right && current->right->type == T_RED_OUT)
+		current = current->right;
+	if (current->right && current->right->args_array)
+		file_name = current->right->args_array[0];
 	pid = fork();
 	if (pid < 0)
 		return (-1);
@@ -24,7 +29,10 @@ int	execute_redout(t_data *data, t_tree *tree, char *envp[])
 			printf("minishell: dup2 error\n");
 			exit(-1);
 		}
-		execute_word(data, tree->left, envp);
+		if (tree->left->type == T_RED_OUT)
+			execute_redout(data, tree->left, envp);
+		else
+			evaluate_execution(data, tree->left, envp);
 		close(fd);
 		exit(127);
 	}

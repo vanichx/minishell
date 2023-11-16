@@ -24,7 +24,7 @@ int	execute_append(t_data *data, t_tree *tree, char *envp[])
 			printf("minishell: dup2 error\n");
 			return (-1);
 		}
-		execute_word(data, tree->left, envp);
+		evaluate_execution(data, tree->left, envp);
 		close(fd);
 		exit(127);
 	}
