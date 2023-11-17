@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 21:12:06 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 11:15:09 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 	else if (pid == 0)
 	{
 		envp = env(&data->env_list);
-		print2darray(envp);
 		if (execve(exec_path, tree->args_array, envp) == -1)
 		{
 			ft_strdel(&exec_path);

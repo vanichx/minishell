@@ -64,6 +64,7 @@ char	*handle_dollar_question(t_data *data, char **arg)
 			buffer[j++] = check[i++];
 		else if (check[i] == '$' && check[i + 1] == '?')
 		{
+			k = 0;
 			while (temp[k] != '\0')
 				buffer[j++] = temp[k++];
 			i += 2;
@@ -76,8 +77,6 @@ char	*handle_dollar_question(t_data *data, char **arg)
 	free(temp);
 	return (buffer);
 }
-
-
 
 int	handle_env_var(t_data *data, char *string)
 {
@@ -92,26 +91,29 @@ int	handle_env_var(t_data *data, char *string)
 		if (string[i] == '$')
 		{
 			j = i + 1;
-			while (string[j] && string[j] != '$')
+			while (string[j] && (isalnum(string[j]) || string[j] == '_') && !isdigit(string[j]))
 				j++;
 			variable_name = ft_substr(string, i + 1, j - i - 1);
 			env_var = find_envir_variable(data, variable_name, ft_strlen(variable_name));
-			if (!env_var)
-			{
-				ft_putstr_fd("", STDERR_FILENO);
-				return (1);
-			}
+            if (!env_var)
+            {
+                i = j;
+                free(variable_name);
+                continue;
+            }
 			if (env_var && env_var->var_value)
 			{
 				if(ft_putstr_fd(env_var->var_value, STDOUT_FILENO))
 					return (1);
 			}
 			free(variable_name);
-			i = j - 1;
+			i = j;
 		}
 		else
+		{
 			ft_putchar_fd(string[i], STDOUT_FILENO);
-		i++;
+			i++;
+		}
 	}
 	return (0);
 }

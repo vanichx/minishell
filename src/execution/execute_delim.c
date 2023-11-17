@@ -1,12 +1,11 @@
 #include "minishell.h"
-
 int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 {
 	int		fd;
 	char	*buf;
 	pid_t	pid;
 	int		status;
-
+	t_tree	*current;
 
 	fd = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
@@ -20,7 +19,8 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 		write(fd, "\n", 1);
 		free(buf);
 	}
-	free(buf);
+	if (buf)
+		free(buf);
 	close(fd);
 
 	pid = fork();
@@ -48,6 +48,12 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			data->exit_status = WEXITSTATUS(status);
+	}
+	current = tree->right;
+	while (current != NULL)
+	{
+		evaluate_execution(data, current);
+		current = current->right;
 	}
 	unlink(".heredoc_tmp");
 	return (0);
