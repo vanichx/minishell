@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 11:15:09 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/17 12:32:45 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int execute_command(t_data *data, t_tree *tree)
 {
     char *exec_path;
 
-    exec_path = find_executable_path(data->path, tree->args_array[0]);
+    exec_path = find_executable_path(data, tree->args_array[0]);
     if (exec_path == NULL)
     {
 		ft_putstr_fd("minishell: ", 0);

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 22:15:51 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 12:32:12 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_data {
 	char			*curr_dir;
 	char			**root_directory;
 	char			*exit_str;
-	char			**path;
 }				t_data;
 
 typedef struct s_token
@@ -224,7 +223,7 @@ void		clean_null_tokens(t_token **head);
 void 		concantenate_word_tokens(t_token **head);
 void		print_tokens(t_data *data);
 
-char		*find_executable_path(char **paths, char *cmd);
+char		*find_executable_path(t_data *data, char *cmd);
 
 /* error check */
 int			check_threeout(t_token *token);

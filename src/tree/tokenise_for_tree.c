@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenise_for_tree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/09 17:37:11 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/17 12:33:46 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_data	*init_temp_data(void)
 	temp_data->input_minishell = NULL;
 	temp_data->curr_dir = NULL;
 	temp_data->exit_str = NULL;
-	temp_data->path = NULL;
 	return (temp_data);
 }
 
