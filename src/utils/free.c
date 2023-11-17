@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 12:34:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 14:19:40 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ void	free_data(t_data *data)
 		free_tree(&data->tree);
 		data->tree = NULL;
 	}
+	free(data);
+	data = NULL;
+}
+
+void	free_temp_data(t_data *data)
+{
+	if (!data)
+		return ;
+	if (data->input_line)
+		ft_strdel(&data->input_line);
+	if (data->token_list)
+		free_tokens(&data->token_list, free);
 	free(data);
 	data = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 12:32:12 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 16:55:23 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ typedef struct s_tree {
 	t_token_type	type;
 	char			*value;
 	char			**args_array;
-	struct s_tree	*last_input;
-	struct s_tree	*last_output;
+	int				parenth;
+	// struct s_tree	*last_input;
+	// struct s_tree	*last_output;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }				t_tree;
@@ -139,6 +140,7 @@ void		exit_shell(char *message, int exit_code, t_data *data);
 
 /* free.c */
 void		free_data(t_data *data);
+void		free_temp_data(t_data *data);
 void		free_envir(t_envir *envir);
 void		free_2darray(char **array);
 void		print2darray(char **array);
@@ -185,10 +187,11 @@ char		**ft_split_args(char *s, char c);
 int			arraylen(char **str);
 
 /* quotes.c */
-int			odd_quote(char *str);
+int			odd_quote(char *str, t_data *data);
 int			special_chars(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
+char		*get_quotes(char *input);
 
 
 /* tokens */

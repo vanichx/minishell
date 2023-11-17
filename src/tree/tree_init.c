@@ -42,7 +42,9 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 	t_token *tmp_left;
 	t_token *tmp_right;
 	t_tree	*tmp_tree;
+	int		flag;
 
+	flag = 0;
 	tmp_tree = *tree;
 	if (!address || address->type == T_NEWLINE)
 		return 0;
@@ -53,10 +55,14 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		if (tokenise_for_tree(tmp_left, data))
 			return (1);
 		tmp_left = find_tree_root_left(&address->prev);
+		flag = 1;
 	}
+	else
+		flag = 0;
 	if (tmp_left && ft_strcmp(tmp_left->word, "boundary"))
 	{
 		tmp_tree->left = init_tree_root();
+		tmp_tree->left->parenth = flag;
 		if (tmp_left->type)
  			tmp_tree->left->type = tmp_left->type;
 		if (tmp_left->word)
@@ -76,10 +82,14 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		if (tokenise_for_tree(tmp_right, data))
 			return (1);
 		tmp_right = find_tree_root_right(&address->next);
+		flag = 1;
 	}
+	else
+		flag = 0;
 	if (tmp_right && ft_strcmp(tmp_right->word, "boundary"))
 	{
 		tmp_tree->right = init_tree_root();
+		tmp_tree->right->parenth = flag;
 		tmp_tree->right->type = tmp_right->type;
 		if (tmp_right->word)
 		{

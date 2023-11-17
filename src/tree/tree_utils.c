@@ -39,8 +39,9 @@ t_tree	*init_tree_root(void)
 	tree->type = 0;
 	tree->value = NULL;
 	tree->args_array = NULL;
-	tree->last_input = NULL;
-	tree->last_output = NULL;
+	tree->parenth = 0;
+	// tree->last_input = NULL;
+	// tree->last_output = NULL;
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);
@@ -126,6 +127,12 @@ void print_tree(t_tree *tree, int depth)
 	for (int i = 0; i < depth; i++)
 		printf("\t");
 	printf("Node word: :%s:, type: %d\n", tree->value, tree->type);
+	if (tree->parenth == 1)
+    {
+        for (int i = 0; i < depth; i++)
+            printf("\t");
+        printf("Parenth on\n");
+    }
 	if (tree->type == T_WORD) 
 	{
 		printf("Args array: ");

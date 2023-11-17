@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/17 12:33:46 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 14:19:56 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	tokenise_for_tree(t_token *t_parenth, t_data *data)
 		printf("malloc error\n");
 		return (1);
 	}
-	free_data(temp_data);
+	free_temp_data(temp_data);
 	head = new_tokens;
 	temp = head;
 	while (temp && temp->type != T_NEWLINE)
