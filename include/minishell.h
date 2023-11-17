@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 16:55:23 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/17 17:23:25 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int			arraylen(char **str);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
+char		*expand_input_line(t_data *data, char *input);
 int			special_chars(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
