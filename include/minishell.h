@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 02:17:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 09:34:24 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,13 @@ int			arraylen(char **str);
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
-char		*expand_input_line(t_data *data, char *s);
+char		*expand_quotes(t_data *data, char *s);
 int			special_chars(char *str);
 int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
+void		find_quotes(t_token **head, t_data *data);
+int			has_quotes(char *str);
 char		*expand_dollar(t_data *data, char *s, int *i);
-char		*expand_single_quotes(char *s, char *result, int *i);
-char		*expand_double_quotes(t_data *data, char *s, char *result, int *i);
 int			check_single_quote(char *s, int *i, int pos);
 int			check_double_quote(char *s, int *i, int pos);
 int			is_valid_env_char(char c);

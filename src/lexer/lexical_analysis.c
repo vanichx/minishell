@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 17:42:14 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 09:56:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	set_token_type(t_data *data)
 	if (lexic_with_parenth(data))
 		return (1);
 	clean_space_tokens(&data->token_list);
+	find_quotes(&data->token_list, data);
 	concantenate_word_tokens(&data->token_list);
 	// print_tokens(data);
 	return (0);

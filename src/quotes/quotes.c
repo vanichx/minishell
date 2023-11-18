@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 04:33:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 09:30:16 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	in_quotes(char *s, int pos)
 // 	}
 // }
 
-char *expand_input_line(t_data *data, char *s) {
+char *expand_quotes(t_data *data, char *s) {
     int i = -1;
     int j = 0;
     char *result = malloc(sizeof(char) * (ft_strlen(s) + 1));
@@ -171,12 +171,7 @@ char *expand_input_line(t_data *data, char *s) {
 					}
                 } 
 				else 
-				{
                     result[j++] = s[i];
-					// printf("%d\n", i);
-					// printf("%s\n", result);
-					// printf("%d\n", j);
-                }
         	}
         }
 		else if (s[i] == '\'')
@@ -199,9 +194,7 @@ char *expand_input_line(t_data *data, char *s) {
             }
         } 
 		else
-		{
             result[j++] = s[i];
-        }
     }
     result[j] = '\0';
     return result;
@@ -218,9 +211,7 @@ char *expand_dollar(t_data *data, char *s, int *i) {
     while (is_valid_env_char(s[j]))
         j++;
 
-    int len = j - *i - 1;  // Calculate the length of the variable name
-    // Simulate finding the environment variable in data
-    // Replace this part with your actual implementation
+    int len = j - *i - 1;
     t_envir *temp = find_envir_variable(data, &s[*i + 1], len);
     if (temp && !ft_strncmp(temp->var_name, &s[*i + 1], len))
 	{

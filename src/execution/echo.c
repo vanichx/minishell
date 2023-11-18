@@ -23,24 +23,6 @@ void	echo_handle_option(char ***args, int *no_newline)
 	}
 }
 
-void	echo_single_quotes(char **arg)
-{
-	char	*end;
-	
-	(*arg)++;
-	end = ft_strrchr(*arg, '\'');
-	*end = '\0';
-	ft_putstr_fd(*arg, STDOUT_FILENO);
-}
-
-void	echo_double_quotes(char **arg)
-{
-	char	*end;
-	
-	(*arg)++;
-	end = ft_strrchr(*arg, '\"');
-	*end = '\0';
-}
 
 
 // char	*handle_dollar_question(t_data *data, char **arg)
@@ -129,21 +111,6 @@ int	execute_echo(t_data	*data, char *args[])
 	echo_handle_option(&args, &no_newline);
 	while (*args && *args[0] != '\0')
 	{
-		arg = *args;
-		if (*arg == '\'')
-			echo_single_quotes(&arg);
-		else
-		{
-			if (*arg == '\"')
-				echo_double_quotes(&arg);
-			if (*arg)
-			{
-				buffer = handle_dollar_question(data, &arg);
-				handle_env_var(data, buffer);
-				free(buffer);
-			}
-		}
-		arg++;
 		if (*(args + 1) && *(args + 1)[0] != '\0')
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		args++;

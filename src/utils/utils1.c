@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 16:19:11 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 09:26:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	process_input(char *input, char *str, int *i, int *j)
 {
 	while (input[*i])
 	{
-		while (in_quotes(input, *i) && input[*i])
+		while (in_quotes(input, *i) != 0 && input[*i])
 			str[(*j)++] = input[(*i)++];
 		while ((input[*i] == ' ' || input[*i] == '\t')
 			&& (input[*i + 1] == ' ' || input[*i + 1] == '\t'))

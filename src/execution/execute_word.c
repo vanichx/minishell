@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 12:32:45 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 09:48:14 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int execute_command(t_data *data, t_tree *tree)
 		ft_putstr_fd(tree->args_array[0], 0);
 		ft_putstr_fd(": command not found\n", 0);
         data->exit_status = 127;
-        return 1;
+        return (1);
     }
     return (fork_command(data, tree, exec_path));
 }
