@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 13:40:57 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:08:49 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ int			extract_var_name(char **arg, char **var_name);
 int			handle_env_var(t_data *data, char *var_name);
 // int			echo_handle_quotes(char *arg, char qoute);
 // int			echo_handle_dollar(t_data *data, char *arg);
-int			execute_echo(t_data	*data, char *args[]);
+int			execute_echo(char *args[]);
 
 
 /* execute_redout.c */

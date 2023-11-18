@@ -23,10 +23,8 @@ void	echo_handle_option(char ***args, int *no_newline)
 	}
 }
 
-int	execute_echo(t_data	*data, char *args[])
+int	execute_echo(char *args[])
 {
-	char	*arg;
-	char	*buffer;
 	int		no_newline;
 
 	args++;
@@ -36,6 +34,7 @@ int	execute_echo(t_data	*data, char *args[])
 	{
 		if (*(args + 1) && *(args + 1)[0] != '\0')
 			ft_putstr_fd(" ", STDOUT_FILENO);
+		ft_putstr_fd(*args, STDOUT_FILENO);
 		args++;
 	}
 	if (!no_newline)
