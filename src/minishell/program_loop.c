@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 14:28:06 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:35:09 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ void	start_loop(t_data *data)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		if (odd_quote(line, data))
-		{
-			ft_strdel(&line);
 			continue ;
-		}
-		// line = ft_strdup("echo ":           '$USER':" ':             "":'");
-		// line = ft_strdup("echo "'"'"'"$USER"'"'"'"");
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
 		if ((special_chars(data->input_line))

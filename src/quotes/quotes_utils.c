@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:19 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/08 13:24:05 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:13:01 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,28 @@ int	special_chars(char *str)
 			return (1);
 		}
 		i++;
+	}
+	return (0);
+}
+
+int has_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\"' ||*str == '\'')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int has_dollar(char *str)
+{
+	while (*str)
+	{
+		if (*str == '$')
+			return (1);
+		str++;
 	}
 	return (0);
 }
