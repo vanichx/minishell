@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/17 17:24:02 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 03:47:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	start_loop(t_data *data)
 		ft_strdel(&line);
 		data->input_line = expanded_line;
 		printf("%s\n", data->input_line);
-		if ((special_chars(data->input_line))
-			|| (lexical_analysis(data, data->input_line)))
-			continue ;
-		if (init_tree(data, &data->token_list))
-			continue ;
-		// print_tree(data->tree, 0);
-		if (execute(data))
-			continue ;
+		// if ((special_chars(data->input_line))
+		// 	|| (lexical_analysis(data, data->input_line)))
+		// 	continue ;
+		// if (init_tree(data, &data->token_list))
+		// 	continue ;
+		// // print_tree(data->tree, 0);
+		// if (execute(data))
+		// 	continue ;
 	}
 }
 
