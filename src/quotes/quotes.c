@@ -94,7 +94,6 @@ char *expand_dollar(t_data *data, char *s, int *i) {
     if (temp && !ft_strncmp(temp->var_name, &s[*i + 1], len))
 	{
 		*i = j - 1;
-		// printf("IIIIII inside if %d\n", *i);
 		return (ft_strdup(temp->var_value));
 	}
 	else

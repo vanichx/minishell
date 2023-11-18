@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:03:33 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:50:49 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ int			extract_var_name(char **arg, char **var_name);
 int			handle_env_var(t_data *data, char *var_name);
 // int			echo_handle_quotes(char *arg, char qoute);
 // int			echo_handle_dollar(t_data *data, char *arg);
-int			execute_echo(t_data	*data, char *args[]);
+int			execute_echo(char *args[]);
 
 
 /* execute_redout.c */

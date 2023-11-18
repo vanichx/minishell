@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:35:09 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:49:53 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	start_loop(t_data *data)
 			continue ;
 		if (init_tree(data, &data->token_list))
 			continue ;
-		print_tree(data->tree, 0);
-		// if (execute(data))
-		// 	continue ;
+		// print_tree(data->tree, 0);
+		if (execute(data))
+			continue ;
 	}
 }
 

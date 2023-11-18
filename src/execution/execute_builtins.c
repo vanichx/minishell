@@ -27,7 +27,7 @@ int check_echo(t_data *data, t_tree *tree)
 	cmd = NULL;
 	if (!ft_strcmp(tree->args_array[0], "echo") || !ft_strcmp(tree->args_array[0], "ECHO"))
 	{
-		if (execute_echo(data, tree->args_array))
+		if (execute_echo(tree->args_array))
 			return (1);
 	}
 	else
@@ -43,7 +43,7 @@ int check_echo(t_data *data, t_tree *tree)
 				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
 			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
 				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
-			if (execute_echo(data, cmd) == 0)
+			if (execute_echo(cmd) == 0)
 				data->exit_status = 127;
 			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
 		}
@@ -57,7 +57,7 @@ int check_echo(t_data *data, t_tree *tree)
 				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
 			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
 				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
-			if (execute_echo(data, cmd) == 0)
+			if (execute_echo(cmd) == 0)
 				data->exit_status = 127;
 			ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
 		}
