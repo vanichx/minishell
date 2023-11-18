@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 11:43:11 by eseferi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 int	odd_quote(char *str, t_data *data)
@@ -68,7 +56,7 @@ int	check_double_quote(char *s, int *i, int pos)
 		else
 			j++;
 	}
-	*i = j + 1;
+	*i = j;
 	return double_q;
 }
 
@@ -92,7 +80,7 @@ int	check_single_quote(char *s, int *i, int pos)
 		else
 			j++;
 	}
-	*i = j + 1;
+	*i = j;
 	return single_q;
 }
 
@@ -119,7 +107,6 @@ int	in_quotes(char *s, int pos)
 			}
 		}
 		i++;
-		printf("%d\n", i);
 	}
 	return (0);
 }
@@ -127,22 +114,27 @@ int	in_quotes(char *s, int pos)
 char *expand_quotes(t_data *data, char *s) {
     int i = -1;
     int j = 0;
-    char *result = malloc(sizeof(char) * (ft_strlen(s) + 1));
+    char *result = NULL;
 	char *temp = NULL;
-    if (!result)
-        return NULL;
-
+	
     while (s[++i])
 	{
         if (s[i] == '\"') 
 		{
-            while (s[++i] && s[i] != '\"')
+            while (s[++i] != '\"')
 			{
                 if (s[i] == '$') 
 				{
                     temp = expand_dollar(data, s, &i);
 					if (!temp && s[i + 1])
-						result[j++] = s[++i];  // Skip the '$' character
+					{
+						temp = ft_substr(s, i, 1);
+						if (temp)
+						{
+							result = ft_strjoin_double_free(result, temp);
+							j = ft_strlen(result);
+						}
+					}
 					else if (temp)
 					{
 						result = ft_strjoin_double_free(result, temp);
@@ -150,13 +142,28 @@ char *expand_quotes(t_data *data, char *s) {
 					}
                 } 
 				else 
-                    result[j++] = s[i];
+				{
+					temp = ft_substr(s, i, 1);
+					printf("%d , %s\n", i, temp);
+					if (temp)
+					{
+						result = ft_strjoin_double_free(result, temp);
+                   		j = ft_strlen(result);
+					}
+				}
         	}
         }
 		else if (s[i] == '\'')
 		{
             while (s[++i] != '\'')
-                result[j++] = s[i];
+            {
+				temp = ft_substr(s, i, 1);
+				if (temp)
+				{
+					result = ft_strjoin_double_free(result, temp);
+					j = ft_strlen(result);
+				}
+			}
         }
 		else if (s[i] == '$') 
 		{
@@ -164,7 +171,14 @@ char *expand_quotes(t_data *data, char *s) {
             if (!temp)
 			{
 				if (s[i + 1])
-                	result[j++] = s[++i];  // Skip the '$' character
+                {
+					temp = ft_substr(s, i, 1);
+					if (temp)
+					{
+						result = ft_strjoin_double_free(result, temp);
+                   		j = ft_strlen(result);
+					}
+				}
 			}
             else 
 			{
@@ -173,9 +187,15 @@ char *expand_quotes(t_data *data, char *s) {
             }
         } 
 		else
-            result[j++] = s[i];
+        {
+			temp = ft_substr(s, i, 1);
+			if (temp)
+			{
+				result = ft_strjoin_double_free(result, temp);
+				j = ft_strlen(result);
+			}
+		}
     }
-    result[j] = '\0';
     return result;
 }
 
@@ -195,7 +215,7 @@ char *expand_dollar(t_data *data, char *s, int *i) {
     if (temp && !ft_strncmp(temp->var_name, &s[*i + 1], len))
 	{
 		*i = j - 1;
-		printf("%d\n", *i);
+		// printf("IIIIII inside if %d\n", *i);
 		return (ft_strdup(temp->var_value));
 	}
 	else
@@ -214,7 +234,7 @@ void	find_quotes(char **str, t_data *data)
 	temp = NULL;
 	while (*str)
 	{
-		if (has_quotes(*str))
+		if (has_quotes(*str) || has_dollar(*str))
 		{
 			temp = expand_quotes(data, *str);
 			ft_strdel(&(*str));
@@ -230,6 +250,17 @@ int has_quotes(char *str)
 	while (*str)
 	{
 		if (*str == '\"' ||*str == '\'')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+int has_dollar(char *str)
+{
+	while (*str)
+	{
+		if (*str == '$')
 			return (1);
 		str++;
 	}

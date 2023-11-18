@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 10:49:16 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 13:40:57 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,7 @@ char		*expand_dollar(t_data *data, char *s, int *i);
 int			check_single_quote(char *s, int *i, int pos);
 int			check_double_quote(char *s, int *i, int pos);
 int			is_valid_env_char(char c);
-char		*ft_strjoin_custom(const char *s1, const char *s2);
-char		*ft_strndup(const char *s, size_t n);
+int			has_dollar(char *str);
 
 
 /* tokens */
