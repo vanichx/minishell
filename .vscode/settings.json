@@ -35,6 +35,7 @@
 		"system_error": "c",
 		"tuple": "c",
 		"type_traits": "c",
-		"__string": "c"
+		"__string": "c",
+		"_rsize_t.h": "c"
 	}
 }

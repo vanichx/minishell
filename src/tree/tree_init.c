@@ -20,14 +20,20 @@ int	init_tree(t_data *data, t_token **head)
 		ft_strdel(&root_token->word);
 		root_token->word = ft_strdup("boundary");
 		if (data->tree->type == T_WORD)
+		{
 			data->tree->args_array = ft_split_args(data->tree->value, ' ');
+			find_quotes(data->tree->args_array, data);
+		}
 	}
 	else
 	{
 		data->tree->type = root_token->type;
 		data->tree->value = ft_strdup(root_token->word);
 		if (root_token->type == T_WORD)
+		{
 			data->tree->args_array = ft_split_args(root_token->word, ' ');
+			find_quotes(data->tree->args_array, data);
+		}
 		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
 		// printf("%p\n", data->tree->args_array);
@@ -70,7 +76,10 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		ft_strdel(&tmp_left->word);
 		tmp_left->word = ft_strdup("boundary");
 		if (tmp_tree->left->type == T_WORD)
+		{
 			tmp_tree->left->args_array = ft_split_args(tmp_tree->left->value, ' ');
+			find_quotes(tmp_tree->left->args_array, data);
+		}
 		if (built_tree(&tmp_tree->left, tmp_left, data))
 			return (1);
 	}
@@ -98,7 +107,10 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		}
 		tmp_right->word = ft_strdup("boundary");
 		if (tmp_tree->right->type == T_WORD)
+		{
 			tmp_tree->right->args_array = ft_split_args(tmp_tree->right->value, ' ');
+			find_quotes(tmp_tree->right->args_array, data);
+		}
 		if (built_tree(&tmp_tree->right, tmp_right, data))
 			return (1);
 	}

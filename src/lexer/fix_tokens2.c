@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:09:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 09:44:46 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 10:46:35 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,39 +110,4 @@ void	find_asterisk(t_token **head, t_data *data)
 		}
 		current = current->next;
 	}
-}
-
-void	find_quotes(t_token **head, t_data *data)
-{
-	t_token	*current;
-	t_token	*tmp;
-	char *tmp_quotes;
-
-	current = *head;
-	while (current != NULL)
-	{
-		tmp = current;
-		if (tmp->type == T_WORD)
-		{
-			if (has_quotes(tmp->word))
-			{
-				tmp_quotes = expand_quotes(data, tmp->word);
-				ft_strdel(&tmp->word);
-				tmp->word = ft_strdup(tmp_quotes);
-				ft_strdel(&tmp_quotes);
-			}
-		}
-		current = current->next;
-	}
-}
-
-int has_quotes(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\"' ||*str == '\'')
-			return (1);
-		str++;
-	}
-	return (0);
 }

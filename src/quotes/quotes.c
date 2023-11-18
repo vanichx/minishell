@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:28 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 09:30:16 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 11:43:11 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int	check_single_quote(char *s, int *i, int pos)
 
 int	in_quotes(char *s, int pos)
 {
-	int i = -1;
+	int i = 0;
 	int result;
 
-	while (s[++i])
+	while (s[i] != '\0')
 	{
 		if (s[i] == '\"' || s[i] == '\'')
 		{
@@ -118,33 +118,11 @@ int	in_quotes(char *s, int pos)
 					return (result);
 			}
 		}
+		i++;
+		printf("%d\n", i);
 	}
 	return (0);
 }
-// char *get_quotes(char *input) {
-// 	int start = -1;
-// 	int end = -1;
-// 	int in_quotes = 0;
-// 	for (int i = 0; i < (int)strlen(input); i++) {
-// 		if (input[i] == '\'' || input[i] == '\"') {
-// 			if (in_quotes && start != -1) {
-// 				end = i;
-// 				break;
-// 			} else {
-// 				start = i + 1;
-// 				in_quotes = 1;
-// 			}
-// 		}
-// 	}
-// 	if (start != -1 && end != -1) {
-// 		char *result = malloc(end - start + 1);
-// 		strncpy(result, &input[start], end - start);
-// 		result[end - start] = '\0';
-// 		return result;
-// 	} else {
-// 		return NULL;
-// 	}
-// }
 
 char *expand_quotes(t_data *data, char *s) {
     int i = -1;
@@ -154,7 +132,8 @@ char *expand_quotes(t_data *data, char *s) {
     if (!result)
         return NULL;
 
-    while (s[++i]) {
+    while (s[++i])
+	{
         if (s[i] == '\"') 
 		{
             while (s[++i] && s[i] != '\"')
@@ -228,78 +207,31 @@ int is_valid_env_char(char c) {
     return isalnum(c) || c == '_';
 }
 
+void	find_quotes(char **str, t_data *data)
+{
+	char *temp;
 
-
-
-
-
-
-
-
-
-
-char *handle_dollar_question(t_data *data, char **arg) {
-    int i = 0, j = 0, k = 0;
-    int in_single_quotes = 0;
-    char *check = *arg;
-    char *temp = ft_itoa(data->exit_status);
-    char *buffer = malloc(sizeof(char) * (ft_strlen(check) + ft_strlen(temp) + 1));
-
-    while(check[i]) {
-        if (check[i] == '\'') {
-            in_single_quotes = !in_single_quotes;
-        }
-        if (check[i] == '$' && check[i + 1] != '?' && !in_single_quotes) {
-            buffer[j++] = check[i++];
-        } else if (check[i] == '$' && check[i + 1] == '?' && !in_single_quotes) {
-            k = 0;
-            while (temp[k] != '\0') {
-                buffer[j++] = temp[k++];
-            }
-            i += 2;
-        } else {
-            buffer[j++] = check[i++];
-        }
-    }
-    buffer[j] = '\0';
-
-    free(temp);
-    return buffer;
+	temp = NULL;
+	while (*str)
+	{
+		if (has_quotes(*str))
+		{
+			temp = expand_quotes(data, *str);
+			ft_strdel(&(*str));
+			*str = ft_strdup(temp);
+			ft_strdel(&temp);
+		}
+		str++;
+	}
 }
 
-int handle_env_var(t_data *data, char *string) {
-    int i = 0, j = 0;
-    int in_single_quotes = 0;
-    t_envir *env_var;
-    char *variable_name;
-
-    while (string[i]) {
-        if (string[i] == '\'') {
-            in_single_quotes = !in_single_quotes;
-        }
-        if (string[i] == '$' && !in_single_quotes) {
-            j = i + 1;
-            while (string[j] && (isalnum(string[j]) || string[j] == '_') && !isdigit(string[j])) {
-                j++;
-            }
-            variable_name = ft_substr(string, i + 1, j - i - 1);
-            env_var = find_envir_variable(data, variable_name, ft_strlen(variable_name));
-            if (!env_var) {
-                i = j;
-                free(variable_name);
-                continue;
-            }
-            if (env_var && env_var->var_value) {
-                if(ft_putstr_fd(env_var->var_value, STDOUT_FILENO)) {
-                    return 1;
-                }
-            }
-            free(variable_name);
-            i = j;
-        } else {
-            ft_putchar_fd(string[i], STDOUT_FILENO);
-            i++;
-        }
-    }
-    return 0;
+int has_quotes(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\"' ||*str == '\'')
+			return (1);
+		str++;
+	}
+	return (0);
 }
