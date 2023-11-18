@@ -116,7 +116,7 @@ char *expand_quotes(t_data *data, char *s) {
     int j = 0;
     char *result = NULL;
 	char *temp = NULL;
-	
+
     while (s[++i])
 	{
         if (s[i] == '\"') 
@@ -237,6 +237,8 @@ void	find_quotes(char **str, t_data *data)
 		if (has_quotes(*str) || has_dollar(*str))
 		{
 			temp = expand_quotes(data, *str);
+			if (!temp)
+				return ;
 			ft_strdel(&(*str));
 			*str = ft_strdup(temp);
 			ft_strdel(&temp);
