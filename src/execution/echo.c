@@ -7,19 +7,19 @@ void	echo_handle_option(char ***args, int *no_newline)
 
 	if (**args && !ft_strncmp(**args, "-n", 2))
 	{
-			arg = **args + 1;
-			*no_newline = 1;
-			while (*arg)
+		arg = **args + 1;
+		*no_newline = 1;
+		while (*arg)
+		{
+			if (*arg != 'n')
 			{
-				if (*arg != 'n')
-				{
-					*no_newline = 0;
-					break;
-				}
-				arg++;
+				*no_newline = 0;
+				break;
 			}
-			if (*no_newline)
-				(*args)++;
+			arg++;
+		}
+		if (*no_newline)
+			(*args)++;
 	}
 }
 
