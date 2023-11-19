@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 16:48:03 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 17:56:47 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,7 +319,10 @@ void		fix_right_delim(t_tree *tree);
 void		fix_left_delim(t_tree *tree);
 
 
-
+char **join2darrays(char **str1, char **str2);
+void	find_command_right(t_tree **tree);
+void	find_command_left(t_tree **tree);
+void fix_tree(t_tree *tree);
 
 
 

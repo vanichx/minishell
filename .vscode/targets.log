@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sun Nov 19 16:04:03 2023
+# Make data base, printed on Sun Nov 19 18:25:45 2023
 
 # Variables
 
@@ -35,7 +35,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 32)
-CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3 -g  -I $(LIBFT_DIR)/include
+CFLAGS = -Wall -Wextra -Iinclude -Isrc -O3 -g -fsanitize=address -fno-omit-frame-pointer -I $(LIBFT_DIR)/include
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # makefile (from `Makefile', line 18)
@@ -52,7 +52,6 @@ VALGRIND = valgrind --track-fds=yes
 PATH = /Users/eseferi/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/Users/eseferi/goinfre/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/opt/X11/bin:/Library/Apple/usr/bin
 # makefile (from `Makefile', line 38)
 MINISHELL_INC = minishell.h
- 
 # makefile (from `Makefile', line 91)
 BOLD = \033[1m
 # makefile (from `Makefile', line 37)
@@ -200,7 +199,7 @@ VSCODE_PID = 3036
 
 # src/minishell (device 16777225, inode 2502192): 4 files, no impossibilities so far.
 # include (device 16777225, inode 2502094): 3 files, no impossibilities so far.
-# . (device 16777225, inode 2502013): 14 files, no impossibilities.
+# . (device 16777225, inode 2502013): 19 files, no impossibilities.
 # src/utils (device 16777225, inode 2502217): No files, no impossibilities so far.
 # src/tree (device 16777225, inode 2502212): No files, no impossibilities so far.
 # src/execution (device 16777225, inode 2502167): 14 files, no impossibilities so far.
@@ -210,7 +209,7 @@ VSCODE_PID = 3036
 # src/parsing (device 16777225, inode 2502200): No files, no impossibilities so far.
 # src/parenthesis (device 16777225, inode 2502195): No files, no impossibilities so far.
 
-# 59 files, no impossibilities in 11 directories.
+# 64 files, no impossibilities in 11 directories.
 
 # Implicit Rules
 
@@ -228,6 +227,7 @@ obj/%.o: %.c minishell.h
 src/lexer/fix_tokens.c:
 #  Implicit rule search has been done.
 #  Last modified 2023-11-18 15:59:56
+ 
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -245,7 +245,7 @@ src/lexer/redin_errors.c:
 obj/src/lexer/redir_general_errors.o: src/lexer/redir_general_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/redir_general_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -258,7 +258,7 @@ obj/src/lexer/redir_general_errors.o: src/lexer/redir_general_errors.c include/m
 obj/src/execution/execute_redout.o: src/execution/execute_redout.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_redout'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -293,7 +293,7 @@ all: minishell
 # Not a target:
 include/minishell.h:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-19 15:33:31
+#  Last modified 2023-11-19 17:56:47
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -331,11 +331,10 @@ src/lexer/delim_append_errors.c:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
- 
 obj/src/lexer/tokenising.o: src/lexer/tokenising.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/tokenising'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -354,7 +353,7 @@ obj/src/tree/tree_init.o:
 # Not a target:
 src/minishell/program_loop.c:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-19 15:40:09
+#  Last modified 2023-11-19 18:20:04
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -363,7 +362,7 @@ src/minishell/program_loop.c:
 obj/src/lexer/syntax_errors.o: src/lexer/syntax_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/syntax_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -385,7 +384,7 @@ src/execution/execute_pipe.c:
 obj/src/lexer/token_errors.o: src/lexer/token_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/token_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -398,7 +397,7 @@ obj/src/lexer/token_errors.o: src/lexer/token_errors.c include/minishell.h
 obj/src/execution/execute.o: src/execution/execute.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -426,7 +425,7 @@ src/lexer/tokenising.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-19 16:03:52
+#  Last modified 2023-11-19 18:05:41
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -444,7 +443,7 @@ src/execution/execute_redin.c:
 obj/src/execution/shlvl.o: src/execution/shlvl.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/shlvl'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -466,7 +465,7 @@ src/lexer/redout_errors.c:
 obj/src/execution/execute_word.o: src/execution/execute_word.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_word'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -479,7 +478,7 @@ obj/src/execution/execute_word.o: src/execution/execute_word.c include/minishell
 obj/src/lexer/fix_tokens2.o: src/lexer/fix_tokens2.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/fix_tokens2'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -496,6 +495,7 @@ obj/src/utils/handle_input.o:
 #  File has not been updated.
 
 # Not a target:
+ 
 src/execution/execute_append.c:
 #  Implicit rule search has been done.
 #  Last modified 2023-11-18 15:59:56
@@ -536,7 +536,7 @@ src/execution/execute_utils.c:
 
 minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.o obj/src/execution/execute_append.o obj/src/execution/execute_builtins.o obj/src/execution/execute_delim.o obj/src/execution/execute_logic.o obj/src/execution/execute_pipe.o obj/src/execution/execute_redin.o obj/src/execution/execute_redout.o obj/src/execution/execute_utils.o obj/src/execution/execute_word.o obj/src/execution/shlvl.o obj/src/lexer/delim_append_errors.o obj/src/lexer/fix_tokens.o obj/src/lexer/fix_tokens2.o obj/src/lexer/lexical_analysis.o obj/src/lexer/redin_errors.o obj/src/lexer/redir_general_errors.o obj/src/lexer/redout_errors.o obj/src/lexer/syntax_errors.o obj/src/lexer/token_errors.o obj/src/lexer/token_lists.o obj/src/lexer/tokenising.o obj/src/minishell/minishell.o obj/src/minishell/program_loop.o obj/src/parenthesis/parenthesis.o obj/src/parenthesis/parenthesis_errors.o obj/src/parenthesis/parenthesis_utils.o obj/src/parenthesis/parenthesis_utils2.o obj/src/parsing/commands.o obj/src/parsing/envir_list.o obj/src/parsing/envirlists_utils.o obj/src/parsing/environment.o obj/src/parsing/file_parse.o obj/src/parsing/sorted_envir.o obj/src/quotes/check_quotes.o obj/src/quotes/expaning.o obj/src/quotes/quote_errors.o obj/src/quotes/quotes_utils.o obj/src/tree/extend_asterisk.o obj/src/tree/tokenise_for_tree.o obj/src/tree/tree_init.o obj/src/tree/tree_utils.o obj/src/utils/exit.o obj/src/utils/free.o obj/src/utils/handle_input.o obj/src/utils/init_data.o obj/src/utils/reset.o obj/src/utils/signals.o obj/src/utils/utils1.o obj/src/utils/utils2.o obj/src/utils/utils3.o
 #  Implicit rule search has not been done.
-#  Last modified 2023-11-19 15:36:11
+#  Last modified 2023-11-19 18:18:56
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -546,11 +546,10 @@ minishell: lib/libft/libft.a obj/src/execution/echo.o obj/src/execution/execute.
 	@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 	
 
- 
 obj/src/execution/execute_logic.o: src/execution/execute_logic.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_logic'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -569,7 +568,7 @@ obj/src/quotes/quotes_utils.o:
 obj/src/execution/echo.o: src/execution/echo.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/echo'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -600,7 +599,7 @@ obj/src/parenthesis/parenthesis_utils.o:
 obj/src/lexer/redin_errors.o: src/lexer/redin_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/redin_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -623,7 +622,7 @@ fclean: clean lib_fclean
 # Not a target:
 src/lexer/lexical_analysis.c:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-18 15:59:56
+#  Last modified 2023-11-19 17:19:19
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -687,7 +686,7 @@ src/execution/execute_builtins.c:
 obj/src/lexer/delim_append_errors.o: src/lexer/delim_append_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/delim_append_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -700,7 +699,7 @@ obj/src/lexer/delim_append_errors.o: src/lexer/delim_append_errors.c include/min
 obj/src/lexer/token_lists.o: src/lexer/token_lists.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/token_lists'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -718,6 +717,7 @@ re: fclean all
 
 # Not a target:
 src/minishell/minishell.c:
+ 
 #  Implicit rule search has been done.
 #  Last modified 2023-11-18 15:59:56
 #  File has been updated.
@@ -756,7 +756,7 @@ obj/src/tree/tree_utils.o:
 obj/src/execution/execute_builtins.o: src/execution/execute_builtins.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_builtins'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -775,7 +775,7 @@ obj/src/parsing/file_parse.o:
 obj/src/execution/execute_redin.o: src/execution/execute_redin.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_redin'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -800,7 +800,7 @@ obj/src/utils/utils1.o:
 # Not a target:
 src/lexer/syntax_errors.c:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-18 15:59:56
+#  Last modified 2023-11-19 16:21:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -809,7 +809,7 @@ src/lexer/syntax_errors.c:
 obj/src/lexer/lexical_analysis.o: src/lexer/lexical_analysis.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/lexical_analysis'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -818,12 +818,11 @@ obj/src/lexer/lexical_analysis.o: src/lexer/lexical_analysis.c include/minishell
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(RL_CFLAGS) -c $< -o $@
 	
- 
 
 obj/src/lexer/redout_errors.o: src/lexer/redout_errors.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/redout_errors'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -884,7 +883,7 @@ lib_clean:
 obj/src/execution/execute_append.o: src/execution/execute_append.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_append'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -897,7 +896,7 @@ obj/src/execution/execute_append.o: src/execution/execute_append.c include/minis
 obj/src/execution/execute_delim.o: src/execution/execute_delim.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_delim'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -910,7 +909,7 @@ obj/src/execution/execute_delim.o: src/execution/execute_delim.c include/minishe
 # Not a target:
 src/lexer/fix_tokens2.c:
 #  Implicit rule search has been done.
-#  Last modified 2023-11-18 15:59:56
+#  Last modified 2023-11-19 16:41:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -918,7 +917,7 @@ src/lexer/fix_tokens2.c:
 
 lib/libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:52
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 53):
@@ -946,7 +945,7 @@ src/execution/execute_word.c:
 obj/src/execution/execute_utils.o: src/execution/execute_utils.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_utils'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -959,7 +958,7 @@ obj/src/execution/execute_utils.o: src/execution/execute_utils.c include/minishe
 obj/src/minishell/minishell.o: src/minishell/minishell.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/minishell/minishell'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -972,7 +971,7 @@ obj/src/minishell/minishell.o: src/minishell/minishell.c include/minishell.h
 obj/src/lexer/fix_tokens.o: src/lexer/fix_tokens.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/lexer/fix_tokens'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -984,6 +983,7 @@ obj/src/lexer/fix_tokens.o: src/lexer/fix_tokens.c include/minishell.h
 
 # Not a target:
 obj/src/parenthesis/parenthesis_utils2.o:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -997,7 +997,7 @@ obj/src/parsing/environment.o:
 obj/src/execution/execute_pipe.o: src/execution/execute_pipe.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/execution/execute_pipe'
-#  Last modified 2023-11-19 15:36:08
+#  Last modified 2023-11-19 18:18:53
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -1010,7 +1010,7 @@ obj/src/execution/execute_pipe.o: src/execution/execute_pipe.c include/minishell
 obj/src/minishell/program_loop.o: src/minishell/program_loop.c include/minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `src/minishell/program_loop'
-#  Last modified 2023-11-19 15:36:09
+#  Last modified 2023-11-19 18:18:54
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -1093,7 +1093,6 @@ src/execution/echo.c:
 # No `vpath' search paths.
 
 # General (`VPATH' variable) search path:
- 
 # src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/quotes:src/tree:src/utils:include
 
 # # of strings in strcache: 1
@@ -1101,6 +1100,6 @@ src/execution/echo.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sun Nov 19 16:04:03 2023
+# Finished Make data base on Sun Nov 19 18:25:45 2023
 
  

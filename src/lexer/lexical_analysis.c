@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 16:10:27 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 17:19:19 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,22 @@ void concantenate_word_tokens(t_token **head)
 	tmp = *head;
 	while (tmp && tmp->next != NULL && tmp->next->type != T_NEWLINE)
 	{
-		if (tmp->prev && (tmp->prev->type == T_DELIM || tmp->prev->type == T_RED_INP
-			|| tmp->prev->type == T_RED_OUT || tmp->prev->type == T_APPEND))
-			tmp = tmp->next;
+		if (tmp->type == T_APPEND || tmp->type == T_RED_INP 
+			|| tmp->type == T_RED_OUT || tmp->type == T_IN_OUT || tmp->type == T_THREE_IN
+			|| tmp->type == T_DELIM)
+		{
+			if (tmp->next && tmp->next->type == T_WORD)
+			{
+				ft_strdel(&tmp->word);
+				tmp->word = ft_strdup(tmp->next->word);
+				ft_strdel(&tmp->next->word);
+				tmp2 = tmp->next;
+				tmp->next = tmp->next->next;
+				if (tmp->next)
+					tmp->next->prev = tmp;
+				free(tmp2);
+			}
+		}
 		if (tmp->type == T_WORD && tmp->next && tmp->next->type == T_WORD)
 		{
 			str = malloc(sizeof(char) * (ft_strlen(tmp->word) + ft_strlen(tmp->next->word) + 2));
@@ -82,8 +95,7 @@ void concantenate_word_tokens(t_token **head)
 			ft_strdel(&tmp2->word);
 			free(tmp2);
 		}
-		else
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 }
 
