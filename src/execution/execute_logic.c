@@ -12,7 +12,7 @@ int evaluate_leftmost_leaf(t_data *data, t_tree *tree)
 
 int	execute_and(t_data *data, t_tree *tree)
 {
-	if (evaluate_left_execution(data, tree->left))
+	if (evaluate_execution(data, tree->left))
 		return (1);
 	if (data->exit_status == 0)
 	{

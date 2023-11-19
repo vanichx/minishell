@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:50:49 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 16:48:03 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_tree {
 	char			*value;
 	char			**args_array;
 	int				parenth;
-	// struct s_tree	*last_input;
-	// struct s_tree	*last_output;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }				t_tree;
@@ -315,6 +313,10 @@ t_tree		*init_tree_root(void);
 int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
+void		fix_tree(t_tree *tree);
+void		fix_delim(t_tree *tree);
+void		fix_right_delim(t_tree *tree);
+void		fix_left_delim(t_tree *tree);
 
 
 

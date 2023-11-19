@@ -3,28 +3,28 @@
 t_token	*find_first_root(t_token **root_token)
 {
 	t_token *token = *root_token;
-	t_token *special = NULL;
-	int flag = 0;
+	t_token *pipetoken = NULL;
+	int pipe = 0;
 
 	while (token && token->next && token->next->type != T_NEWLINE)
 	{
-		if (token->type == T_OR || token->type == T_AND || is_special_type(token))
+		if (token->type == T_OR || token->type == T_AND || token->type == T_PIPE)
 		{
 			if (token->type == T_OR)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token) && !flag)
+			if (token->type == T_PIPE)
 			{
-				flag = 1;
-				special = token;
+				pipe = 1;
+				pipetoken = token;
 			}
 		}
 		token = token->next;
 	}
-	if (special)
-		return (special);
-	return (token);
+	if (pipe)
+		return (pipetoken);
+	return (*root_token);
 }
 
 
@@ -40,8 +40,6 @@ t_tree	*init_tree_root(void)
 	tree->value = NULL;
 	tree->args_array = NULL;
 	tree->parenth = 0;
-	// tree->last_input = NULL;
-	// tree->last_output = NULL;
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);
@@ -50,7 +48,7 @@ t_tree	*init_tree_root(void)
 
 int is_special_type(t_token *address)
 {
-	return (address->type == T_PIPE || address->type == T_RED_INP 
+	return (address->type == T_RED_INP 
 		|| address->type == T_RED_OUT
 		|| address->type == T_APPEND || address->type == T_DELIM 
 		|| address->type == T_THREE_IN);
@@ -60,8 +58,8 @@ int is_special_type(t_token *address)
 t_token	*find_tree_root_right(t_token **root_token)
 {
 	t_token *token = *root_token;
-	t_token *special = NULL;
-	int flag = 0;
+	t_token *pipetoken = NULL;
+	int pipe = 0;
 
 	if (!token)
 		return (NULL);
@@ -69,30 +67,30 @@ t_token	*find_tree_root_right(t_token **root_token)
 		return (NULL);
 	while (token && token->next && token->next->type != T_NEWLINE && ft_strcmp(token->next->word, "boundary"))
 	{
-		if (token->type == T_OR || token->type == T_AND || is_special_type(token))
+		if (token->type == T_OR || token->type == T_AND || token->type == T_PIPE)
 		{
 			if (token->type == T_OR)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token) && !flag)
+			if (token->type == T_PIPE)
 			{
-				flag = 1;
-				special = token;
+				pipe = 1;
+				pipetoken = token;
 			}
 		}
 		token = token->next;
 	}
-	if (special)
-		return (special);
-	return (token);
+	if (pipe)
+		return (pipetoken);
+	return (*root_token);
 }
 
 t_token	*find_tree_root_left(t_token **root_token)
 {
 	t_token *token = *root_token;
-	t_token *special = NULL;
-	int flag = 0;
+	t_token *pipetoken = NULL;
+	int pipe = 0;
 
 	if (!token)
 		return (NULL);
@@ -100,22 +98,22 @@ t_token	*find_tree_root_left(t_token **root_token)
 		return (NULL);
 	while (token != NULL && token->prev != NULL && ft_strcmp(token->prev->word, "boundary"))
 	{
-		if (token->type == T_OR || token->type == T_AND || is_special_type(token))
+		if (token->type == T_OR || token->type == T_AND || token->type == T_PIPE)
 		{
 			if (token->type == T_OR)
 				return (token);
 			if (token->type == T_AND)
 				return (token);
-			if (is_special_type(token) && !flag)
+			if (token->type == T_PIPE)
 			{
-				flag = 1;
-				special = token;
+				pipe = 1;
+				pipetoken = token;
 			}
 		}
 		token = token->prev;
 	}
-	if (special)
-		return (special);
+	if (pipe)
+		return (pipetoken);
 	return (token);
 }
 

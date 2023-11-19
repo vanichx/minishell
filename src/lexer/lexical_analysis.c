@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 10:54:37 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 16:10:27 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void concantenate_word_tokens(t_token **head)
 	tmp = *head;
 	while (tmp && tmp->next != NULL && tmp->next->type != T_NEWLINE)
 	{
+		if (tmp->prev && (tmp->prev->type == T_DELIM || tmp->prev->type == T_RED_INP
+			|| tmp->prev->type == T_RED_OUT || tmp->prev->type == T_APPEND))
+			tmp = tmp->next;
 		if (tmp->type == T_WORD && tmp->next && tmp->next->type == T_WORD)
 		{
 			str = malloc(sizeof(char) * (ft_strlen(tmp->word) + ft_strlen(tmp->next->word) + 2));

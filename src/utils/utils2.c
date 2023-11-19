@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:45:36 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:46:03 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 13:12:10 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	**dup_2darray(char **array)
 	while (array[i] != NULL)
 		i++;
 	dup = (char **)malloc(sizeof(char *) * (i + 1));
-	printf("dup_2darray malloc success\n");
 	if (dup == NULL)
 		return (NULL);
 	i = 0;
