@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 17:56:47 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/19 23:16:39 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,29 +313,12 @@ t_tree		*init_tree_root(void);
 int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
-void		fix_tree(t_tree *tree);
-void		fix_delim(t_tree *tree);
-void		fix_right_delim(t_tree *tree);
-void		fix_left_delim(t_tree *tree);
+void		fix_tree(t_tree **tree);
+void		processTWordNode(t_tree **address, t_tree **tmp, char ***command);
+void		processNonTWordNode(t_tree **tmp2, t_tree **tmp);
 
-
-char **join2darrays(char **str1, char **str2);
-void	find_command_right(t_tree **tree);
-void	find_command_left(t_tree **tree);
-void fix_tree(t_tree *tree);
-
-
-
-
-
-
-
-
-
-
-
-
-
+char	**join2darrays(char **str1, char **str2);
+void	find_command(t_tree **tree);
 
 /* echo.c */
 void		echo_handle_option(char ***args, int *no_newline);
