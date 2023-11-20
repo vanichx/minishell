@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 15:23:18 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:03:31 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,11 +334,6 @@ int			execute_echo(char *args[]);
 int			execute_redout(t_data *data, t_tree *tree);
 int			handle_child_process_redout(t_data *data, t_tree *tree);
 int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
-
-/* execute_append.c */
-int			execute_append(t_data *data, t_tree *tree);
-int			handle_child_process_append(t_data *data, t_tree *tree);
-int			handle_parent_process_append(t_data *data, pid_t pid, int fd);
 
 /* execute_redinp.c */
 int			execute_redin(t_data *data, t_tree *tree);

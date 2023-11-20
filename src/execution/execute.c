@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 15:38:53 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:21:38 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int evaluate_execution(t_data *data, t_tree *tree)
 	if (is_logic_root(tree))
 		if (execute_logic(data, tree))
 		return (1);	
-	if (tree->type == T_PIPE)
-		if (execute_pipe(data, tree))
-			return (1);
+	// if (tree->type == T_PIPE)
+	// 	if (execute_pipe(data, tree))
+	// 		return (1);
 	if (is_word_root(tree))
 	{
 		if (tree->right->type == T_NEWLINE || tree->right == NULL)
@@ -56,22 +56,18 @@ int	execute_logic(t_data *data, t_tree *tree)
 
 int execute_special(t_data *data, t_tree *tree)
 {
+
 	if (tree != NULL)
 	{
-		if (tree->right->type == T_RED_INP || tree->right->type == T_THREE_IN)
+		if (tree->right->type == T_RED_INP || tree->right->type == T_THREE_IN || tree->right->type == T_DELIM)
 			if (execute_redin(data, tree))
 				return (1);
-		if (tree->right->type == T_RED_OUT)
+		if (tree->right->type == T_RED_OUT || tree->right->type == T_APPEND)
 		{
 			if (execute_redout(data, tree))
 				return (1);
 		}
-		if (tree->right->type == T_APPEND)
-			if (execute_append(data, tree))
-				return (1);
-		if (tree->type == T_DELIM)
-			if (execute_delim(data, tree, tree->right->args_array[0]))
-				return (1);
+		
 	}
 	else
 		return (1);

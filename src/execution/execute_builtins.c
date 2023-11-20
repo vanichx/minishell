@@ -32,37 +32,14 @@ int check_echo(t_data *data, t_tree *tree)
 	}
 	else
 	{
-		cmd = malloc(sizeof(char *) * 4);
-		if (ft_strcmp(&tree->args_array[0][4], "$PWD"))
+		if (!ft_strncmp(tree->args_array[0], "echo", 4))
 		{
-			cmd[0] = ft_strdup("echo");
-			cmd[1] = ft_strdup("-n");
-			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
-			cmd[3] = NULL;
-			if (!ft_strncmp(tree->args_array[0], "echo", 4))
-				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
-			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
-				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
-			if (execute_echo(cmd) == 0)
-				data->exit_status = 127;
+			ft_putstr_fd("minishell: ", STDOUT_FILENO);
+			ft_putstr_fd(tree->args_array[0], STDOUT_FILENO);
 			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
+			data->exit_status = 127;
+			return (1);
 		}
-		else
-		{
-			cmd[0] = ft_strdup("echo");
-			cmd[1] = ft_strdup("-n");
-			cmd[2] = ft_substr(tree->args_array[0], 4, ft_strlen(tree->args_array[0]));
-			cmd[3] = NULL;
-			if (!ft_strncmp(tree->args_array[0], "echo", 4))
-				ft_putstr_fd("minishell: echo", STDOUT_FILENO);
-			else if (!ft_strncmp(tree->args_array[0], "ECHO", 4))
-				ft_putstr_fd("minishell: ECHO", STDOUT_FILENO);
-			if (execute_echo(cmd) == 0)
-				data->exit_status = 127;
-			ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
-		}
-		free_2darray(cmd);
-		return (1);
 	}
 	return (0);
 }

@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 {
 	int		fd;
@@ -13,7 +14,9 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 	while (1)
 	{
 		buf = readline("> ");
-		if (!buf || !ft_strncmp(delemiter, buf, ft_strlen(delemiter) + 1))
+		printf("buf: :%s:\n", buf);
+		printf("delemiter: :%s:\n", delemiter);
+		if (!ft_strncmp(delemiter, buf, ft_strlen(delemiter) + 1))
 			break ;
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
@@ -25,7 +28,7 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 
 	pid = fork();
 	if (pid < 0)
-		return (-1);
+		return (1);
 	else if (pid == 0)
 	{
 		fd = open(".heredoc_tmp", O_RDONLY);
@@ -39,7 +42,6 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 			printf("minishell: %s\n", strerror(errno));
 			exit(1);
 		}
-		evaluate_execution(data, tree->left);
 		close(fd);
 		exit(127);
 	}

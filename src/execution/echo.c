@@ -26,16 +26,22 @@ void	echo_handle_option(char ***args, int *no_newline)
 int	execute_echo(char *args[])
 {
 	int		no_newline;
+	int		i;
 
-	args++;
+	i = 1;
+
 	no_newline = 0;
 	echo_handle_option(&args, &no_newline);
-	while (*args && *args[0] != '\0')
+	while (args[i] && args[i][0] != '\0')
 	{
-		if (*(args + 1) && *(args + 1)[0] != '\0')
+		if (i == 1)
+			ft_putstr_fd(args[i], STDOUT_FILENO);
+		else
+		{
 			ft_putstr_fd(" ", STDOUT_FILENO);
-		ft_putstr_fd(*args, STDOUT_FILENO);
-		args++;
+			ft_putstr_fd(args[i], STDOUT_FILENO);
+		}
+		i++;
 	}
 	if (!no_newline)
 		ft_putstr_fd("\n", STDOUT_FILENO);

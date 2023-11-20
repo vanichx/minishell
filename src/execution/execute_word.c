@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 13:42:36 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:05:16 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	execute_word(t_data *data, t_tree *tree)
 {
 	if (is_builtin(tree->args_array[0]))
 	{
-		
 		if (execute_builtin(data, tree))
 			return (1);
 	}
