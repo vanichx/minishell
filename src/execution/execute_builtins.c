@@ -243,14 +243,18 @@ int	execute_export(t_data *data, t_tree *tree)
 	{
 		while (tree->args_array[++i])
 		{
-			if (!ft_strrchr(tree->args_array[i], '='))
+			if (!has_equal_sign(tree->args_array[i]))
+			{
+				printf("are we here\n");
+				if (has_asterisk(tree->args_array[i]))
+						return (printf("minishell: export: `%s': not a valid identifier\n", tree->args_array[i]), 1);
 				export(&data->env_list, tree->args_array[i], "visible", data);
+			}
 			else
 			{
 				temp = ft_split_parenth(tree->args_array[i], '=');
 				if (temp[1] && !temp[2])
 				{
-					printf("are we heren\n");
 					if (has_asterisk(temp[0]))
 						return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
 					export(&data->env_list, temp[0], temp[1], data);
@@ -275,30 +279,51 @@ void	export(t_envir **env_list, char *var_name, char *var_value, t_data *data)
 	int		i;
 
 	i = 0;
-	new_envir = ft_envnew();
-	new_envir->var_name = ft_strdup(var_name);
-	temp = find_envir_variable(data, new_envir->var_name, ft_strlen(new_envir->var_name));
+	temp = find_envir_variable(data, var_name, ft_strlen(var_name));
 	if (temp && ft_strcmp(var_value, "visible"))
 	{
 		ft_strdel(&temp->var_value);
 		temp->var_value = ft_strdup(var_value);
-		ft_strdel(&new_envir->var_name);
+		if (temp->visible == 1)
+			temp->visible = 0;
 	}
-	else
+	else if (temp && !ft_strcmp(var_value, "visible"))
 	{
+		if (temp->visible == 0)
+			temp->visible = 1;
+		ft_strdel(&temp->var_value);
+		temp->var_value = ft_strdup("");
+	}
+	else if (!temp)
+	{
+		new_envir = ft_envnew();
+		new_envir->var_name = ft_strdup(var_name);
 		if (!ft_strcmp(var_value, "visible"))
 		{
 			new_envir->visible = 1;
 			new_envir->var_value = ft_strdup("");
 			ft_envadd_back(env_list, new_envir);
-			printf("%d\n", new_envir->visible);
 		}
 		else
 		{
 			new_envir->var_value = ft_strdup(var_value);
 			ft_envadd_back(env_list, new_envir);
+			new_envir->visible = 0;
 		}
+
 	}
 }
 
+int has_equal_sign(char *str)
+{
+	int i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}

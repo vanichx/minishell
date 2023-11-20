@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int handle_child_process(t_data *data, t_tree *tree)
+int handle_child_process_redout(t_data *data, t_tree *tree)
 {
 	int fd = -1;
 	char *file_name;
@@ -21,7 +21,7 @@ int handle_child_process(t_data *data, t_tree *tree)
 				printf("minishell: dup2 error\n");
 				exit(-1);
 			}
-			
+			close(fd);
 		}
 		current = current->right;
 	}
@@ -40,7 +40,7 @@ int handle_child_process(t_data *data, t_tree *tree)
 	}
 }
 
-int handle_parent_process(t_data *data, pid_t pid, int fd)
+int handle_parent_process_redout(t_data *data, pid_t pid, int fd)
 {
 	printf("EXECUTE REDOUT PARENT\n");
 	int status;
@@ -65,8 +65,8 @@ int	execute_redout(t_data *data, t_tree *tree)
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
-		handle_child_process(data, tree);
+		handle_child_process_redout(data, tree);
 	else
-		handle_parent_process(data, pid, fd);
+		handle_parent_process_redout(data, pid, fd);
 	return (0);
 }

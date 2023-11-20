@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 23:16:39 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:23:18 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,9 +332,13 @@ int			execute_echo(char *args[]);
 
 /* execute_redout.c */
 int			execute_redout(t_data *data, t_tree *tree);
+int			handle_child_process_redout(t_data *data, t_tree *tree);
+int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
 
 /* execute_append.c */
 int			execute_append(t_data *data, t_tree *tree);
+int			handle_child_process_append(t_data *data, t_tree *tree);
+int			handle_parent_process_append(t_data *data, pid_t pid, int fd);
 
 /* execute_redinp.c */
 int			execute_redin(t_data *data, t_tree *tree);
@@ -372,6 +376,7 @@ int			is_logic_root(t_tree *tree);
 int			is_word_root(t_tree *tree);
 int			is_special_root(t_tree *tree);
 int			is_only_asterisks(char *str);
+int			has_equal_sign(char *str);
 
 /* execute_word.c */
 int			execute_word(t_data *data, t_tree *tree);

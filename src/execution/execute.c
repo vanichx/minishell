@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 12:57:54 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:38:53 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int evaluate_execution(t_data *data, t_tree *tree)
 			return (1);
 	if (is_word_root(tree))
 	{
-		if (tree->right->type == T_NEWLINE)
+		if (tree->right->type == T_NEWLINE || tree->right == NULL)
 		{
 			if (execute_word(data, tree))
 				return (1);	
@@ -63,13 +63,10 @@ int execute_special(t_data *data, t_tree *tree)
 				return (1);
 		if (tree->right->type == T_RED_OUT)
 		{
-			// if (tree->right && tree->right->type == T_RED_OUT)
-			// 	if (execute_special(data, tree->right))
-			// 		return (1);
 			if (execute_redout(data, tree))
 				return (1);
 		}
-		if (tree->type == T_APPEND)
+		if (tree->right->type == T_APPEND)
 			if (execute_append(data, tree))
 				return (1);
 		if (tree->type == T_DELIM)
