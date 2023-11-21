@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 05:12:27 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:32:26 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	start_loop(t_data *data)
 			continue ;
 		fix_tree(&data->tree);
 		print_tree(data->tree, 0);
-		// if (execute(data))
-		// 	continue ;
+		if (execute(data))
+			continue ;
 	}
 }
 

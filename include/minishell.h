@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 05:16:24 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/21 11:50:42 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,8 +318,8 @@ void		fix_command(t_tree **tree);
 void		fix_redirection(t_tree **tree);
 void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
 
-char	**join2darrays(char **str1, char **str2);
-void	find_command(t_tree **tree);
+char		**join2darrays(char **str1, char **str2);
+void		find_command(t_tree **tree);
 
 /* echo.c */
 void		echo_handle_option(char ***args, int *no_newline);
@@ -337,7 +337,9 @@ int			handle_child_process_redout(t_data *data, t_tree *tree);
 int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
 
 /* execute_redinp.c */
-int			execute_redin(t_data *data, t_tree *tree);
+int			execute_redin(t_data *data, t_tree *tree, t_tree *root);
+int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
+int			handle_parent_process_redin(t_data *data, pid_t pid);
 
 /* execute_delim.c */
 int			execute_delim(t_data *data, t_tree *tree, char *delemiter);
@@ -380,7 +382,15 @@ int			execute_word(t_data *data, t_tree *tree);
 /* execute.c */
 int			execute(t_data *data);
 int			evaluate_execution(t_data *data, t_tree *tree);
+
+
+
+
 int			execute_special(t_data *data, t_tree *tree);
+int			execute_special_left(t_data *data, t_tree *tree);
+
+
+
 int			execute_command(t_data *data, t_tree *tree);
 int			fork_command(t_data *data, t_tree *tree, char *exec_path);
 

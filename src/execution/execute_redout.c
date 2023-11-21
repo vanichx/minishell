@@ -91,7 +91,7 @@ int handle_parent_process_redout(t_data *data, pid_t pid, int fd)
 
 int	execute_redout(t_data *data, t_tree *tree)
 {
-	// printf("EXECUTE redout\n");
+	printf("EXECUTE redout\n");
 	int		fd;
 	pid_t  pid;
 

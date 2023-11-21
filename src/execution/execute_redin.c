@@ -1,13 +1,17 @@
 #include "minishell.h"
 
-int handle_child_process_redin(t_data *data, t_tree *tree)
+int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 {
-    int fd;
-    char *file_name = tree->right->args_array[0];
-	t_tree *curr = tree->right;
+	printf("FUNC handle_child_process_redin\n");
+	int fd;
+	t_tree *curr = tree;
+	char *file_name;
 
-	while (curr)
+	while (curr != NULL)
 	{
+		printf("Hello im in the while loop\n");
+		printf("curr->type = %d\tvalue = %s\n", curr->type, curr->value);
+
 		if (curr->type == T_NEWLINE)
 			break ;
 		else if (curr->type == T_DELIM)
@@ -17,53 +21,68 @@ int handle_child_process_redin(t_data *data, t_tree *tree)
 		}
 		else if (curr->type == T_RED_INP)
 		{
-			if((fd = open(file_name, O_RDONLY)) < 0)
-			{
-				printf("minishell: %s: %s\n", file_name, strerror(errno));
-				exit(1);
-			}
-			if (dup2(fd, STDIN_FILENO) != STDIN_FILENO) 
-			{
-				printf("minishell: dup2 error\n");
-				exit(-1);
-			}
-			if (tree->right->type == T_RED_OUT)
-				execute_redout(data, tree->right);
-			else if (tree->right->type == T_PIPE)
-				execute_pipe(data, tree->right);
-			else
-				execute_word(data, tree->left);
-			close(fd);
-			exit(127);
+			file_name = curr->value;
 		}
 		curr = curr->right;
 	}
-	return (0);
+	if (file_name)
+	{
+		printf("file_name = %s\n", file_name);
+		if((fd = open(file_name, O_RDONLY)) < 0)
+		{	
+			printf("minishell: %s: %s\n", file_name, strerror(errno));
+			exit(1);
+		}
+		if (dup2(fd, STDIN_FILENO) != STDIN_FILENO) 
+		{
+			printf("minishell: dup2 error\n");
+			exit(-1);
+		}
+		close(fd);
+	}
+	printf("root->type = %d, root->value = %s\n", root->type, root->value);
+	if (root->type == T_WORD && (curr == NULL || curr->right == NULL))
+	{
+		printf("HELLO IM IN THAT PLACE\n");
+		if (execute_special(data, root))
+		{
+			perror("execute_word");
+			exit(127);
+		}
+	}
+	
+	// if (root->right->type == T_RED_OUT)
+	//     execute_redout(data, root->right);
+	// else if (tree->right->type == T_PIPE)
+	//     execute_pipe(data, tree->right);
+	// else
+	exit(127);
 }
 
 int handle_parent_process_redin(t_data *data, pid_t pid)
 {
-    int status;
+	int status;
 
-    waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        data->exit_status = WEXITSTATUS(status);
-    return (0);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		data->exit_status = WEXITSTATUS(status);
+	return (0);
 }
 
-int execute_redin(t_data *data, t_tree *tree)
+int execute_redin(t_data *data, t_tree *tree, t_tree *root)
 {
-    pid_t pid;
 
-    if (!tree->right || !tree->right->args_array)
-        return (-1);
+	pid_t pid;
+	printf("FUNC execute_redin\n");
+	if (!tree || !tree->value)
+		return (-1);
 
-    pid = fork();
-    if (pid < 0)
-        return (-1);
-    else if (pid == 0)
-        handle_child_process_redin(data, tree);
-    else
-        handle_parent_process_redin(data, pid);
-    return (0);
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	else if (pid == 0)
+		handle_child_process_redin(data, tree, root);
+	else
+		handle_parent_process_redin(data, pid);
+	return (0);
 }
