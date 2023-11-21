@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 19:02:06 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:39:12 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_word(t_data *data, t_tree *tree)
 	}
 	else
 	{
-		printf("execute_word else\n");
+		// printf("execute_word else\n");
 		if (execute_command(data, tree))
 			return (1);		
 	}
@@ -35,7 +35,7 @@ int	execute_word(t_data *data, t_tree *tree)
 int execute_command(t_data *data, t_tree *tree)
 {
 	char *exec_path;
-	printf("FUNC execute_command\n");
+	// printf("FUNC execute_command\n");
 	// printf("tree->args_array[0] = %s\n", tree->args_array[0]);
 	exec_path = find_executable_path(data, tree->args_array[0]);
 	if (exec_path == NULL)

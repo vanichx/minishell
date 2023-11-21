@@ -16,8 +16,8 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 	{
 		buf = readline("> ");
 		//Somewhere her eshould be a check for ctrl + C
-		printf("buf: :%s:\n", buf);
-		printf("delemiter: :%s:\n", delemiter);
+		// printf("buf: :%s:\n", buf);
+		// printf("delemiter: :%s:\n", delemiter);
 		if (!ft_strncmp(delemiter, buf, ft_strlen(delemiter) + 1))
 			break ;
 		write(fd, buf, ft_strlen(buf));

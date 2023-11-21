@@ -60,6 +60,8 @@ int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 			exit(127);
 		}
 	}
+	if (execute_command(data, data->tree))
+			exit(1);
 	exit(127);
 }
 
