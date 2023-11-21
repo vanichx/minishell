@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 19:03:31 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 05:16:24 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,8 +314,9 @@ int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 void		fix_tree(t_tree **tree);
-void		processTWordNode(t_tree **address, t_tree **tmp, char ***command);
-void		processNonTWordNode(t_tree **tmp2, t_tree **tmp);
+void		fix_command(t_tree **tree);
+void		fix_redirection(t_tree **tree);
+void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
 
 char	**join2darrays(char **str1, char **str2);
 void	find_command(t_tree **tree);

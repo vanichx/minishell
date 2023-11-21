@@ -131,13 +131,16 @@ void print_tree(t_tree *tree, int depth)
             printf("\t");
         printf("Parenth on\n");
     }
-	if (tree->type == T_WORD) 
+	if (tree->type == T_WORD || tree->type == T_DELIM) 
 	{
-		printf("Args array: ");
-		for (int i = 0; tree->args_array[i] != NULL; i++) {
-			printf("arg[%d] = %s ", i, tree->args_array[i]);
+		if (tree->args_array)
+		{
+			printf("Args array: ");
+			for (int i = 0; tree->args_array[i] != NULL; i++) {
+				printf("arg[%d] = %s ", i, tree->args_array[i]);
+			}
+			printf("\n");
 		}
-		printf("\n");
 	}
 	if (tree->left)
 	{

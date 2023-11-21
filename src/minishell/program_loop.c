@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/20 18:23:14 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 05:12:27 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,139 +36,8 @@ void	start_loop(t_data *data)
 			continue ;
 		fix_tree(&data->tree);
 		print_tree(data->tree, 0);
-		if (execute(data))
-			continue ;
+		// if (execute(data))
+		// 	continue ;
 	}
 }
 
-void fix_tree(t_tree **tree)
-{
-    t_tree *tmp;
-    t_tree *tmp2;
-
-    if (!tree || !*tree)
-        return ;
-
-    if ((*tree)->type == T_APPEND || (*tree)->type == T_DELIM|| (*tree)->type == T_RED_INP
-        || (*tree)->type == T_RED_OUT ||(*tree)->type == T_WORD)
-    {
-        tmp = init_tree_root();
-        tmp->type = T_WORD;
-        tmp2 = *tree;
-        tmp->right = tmp2;
-        *tree = tmp;
-        find_command(&tmp);
-		if (!tmp->args_array)
-		{
-			tmp->value = ft_strdup("");
-			tmp->args_array = (char**)malloc(sizeof(char*) * 2);
-			tmp->args_array[0] = ft_strdup("");
-			tmp->args_array[1] = NULL;
-		}
-		else
-			tmp->value = ft_strdup(tmp->args_array[0]);
-    }
-    else
-    {
-        fix_tree(&(*tree)->left);
-        fix_tree(&(*tree)->right);
-    }
-}
-
-void find_command(t_tree **tree)
-{
-    t_tree *tmp;
-    t_tree *tmp2;
-    t_tree *address;
-    char **command;
-
-    command = NULL;
-
-    if (!tree || !*tree)
-        return;
-
-    tmp2 = NULL;
-    tmp = (*tree)->right;
-    address = (*tree);
-    t_tree *firstNonTWord = NULL;
-    t_tree *lastNonTWord = NULL;
-
-    while (tmp)
-    {
-        if (tmp->type != T_WORD)
-        {
-            if (!firstNonTWord)
-            {
-                firstNonTWord = tmp;
-                lastNonTWord = firstNonTWord;
-            }
-            else
-            {
-                lastNonTWord->right = tmp;
-                lastNonTWord = tmp;
-            }
-            tmp2 = tmp;
-            tmp = tmp->right;
-        }
-        else if (tmp->type == T_WORD)
-        {
-            address->args_array = join2darrays(address->args_array, tmp->args_array);
-            ft_strdel(&tmp->value);
-            tmp2 = tmp->right;
-            address->right = tmp2;
-            free(tmp);
-            tmp = tmp2;
-        }
-    }
-
-    if (lastNonTWord)
-        lastNonTWord->right = NULL; // Terminate the list of non-T_WORD tokens
-	address->right = firstNonTWord;
-}
-
-
-
-char** join2darrays(char** str1, char** str2) {
-    int len1;
-    int len2;
-	int i;
-    char** result;
-
-	if (!str1)
-	{
-		result = dup_2darray(str2);
-		free_2darray(str2);
-		return (result);
-	}
-	len1 = len_2darray(str1);
-    len2 = len_2darray(str2);
-	i = 0;
-    result = (char**)malloc((len1 + len2 + 1) * sizeof(char*));
-	if (!result)
-		return (NULL);
-    while (*str1) 
-	{
-        result[i] = ft_strdup(*str1);
-		if (!result[i])
-			free_2darray(result);
-        i++;
-        str1++;
-    }
-    while (*str2)
-	{
-        result[i] = ft_strdup(*str2);
-		if (!result[i])
-		{
-			free_2darray(result);
-			return (NULL);
-		}
-        i++;
-        str2++;
-    }
-    result[i] = NULL;
-	str1 -= len1;
-    str2 -= len2;
-	free_2darray(&str1[0]);
-	free_2darray(&str2[0]);
-    return (result);
-}
