@@ -45,7 +45,10 @@ int	execute_delim(t_data *data, t_tree *tree, char *delemiter)
 			exit(1);
 		}
 		close(fd);
-		exit(127);
+		if (execute_command(data, data->tree))
+			exit(1);
+		else
+			exit(0);
 	}
 	else
 	{

@@ -1,6 +1,0 @@
-execute_word else
-In this modification, I moved the close(fd)
-statement outside the while loop
-to ensure that the file descriptor is closed after the dup2 operation.
-This should help in properly closing 
-the file descriptors and resolving the issue you are facing.
