@@ -2,16 +2,13 @@
 
 int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 {
-	printf("FUNC handle_child_process_redin\n");
+	// printf("FUNC handle_child_process_redin\n");
 	int fd;
 	t_tree *curr = tree;
 	char *file_name;
 
 	while (curr != NULL)
 	{
-		printf("Hello im in the while loop\n");
-		printf("curr->type = %d\tvalue = %s\n", curr->type, curr->value);
-
 		if (curr->type == T_NEWLINE)
 			break ;
 		else if (curr->type == T_DELIM)
@@ -25,13 +22,26 @@ int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 		}
 		curr = curr->right;
 	}
+	
 	if (file_name)
 	{
-		printf("file_name = %s\n", file_name);
 		if((fd = open(file_name, O_RDONLY)) < 0)
 		{	
 			printf("minishell: %s: %s\n", file_name, strerror(errno));
+			if (fd == -1 && root->type == T_WORD && (curr == NULL || curr->right == NULL))
+			{
+				// printf("HELLO I COULD NOT FIND A FILE SEEMS LIKE IT DOESNOT EXIST\n");
+				// printf("root->value = %s\n", root->value);
+
+				if (execute_special(data, root, 0))
+				{
+					perror("execute_word");
+					exit(127);
+				}
+			}
+			data->exit_status = 1;
 			exit(1);
+
 		}
 		if (dup2(fd, STDIN_FILENO) != STDIN_FILENO) 
 		{
@@ -40,22 +50,17 @@ int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 		}
 		close(fd);
 	}
-	printf("root->type = %d, root->value = %s\n", root->type, root->value);
+	
 	if (root->type == T_WORD && (curr == NULL || curr->right == NULL))
 	{
-		printf("HELLO IM IN THAT PLACE\n");
-		if (execute_special(data, root))
+		// printf("HELLO IM IN THAT PLACE\n");
+		if (execute_special(data, root, 1))
 		{
 			perror("execute_word");
 			exit(127);
 		}
 	}
-	
-	// if (root->right->type == T_RED_OUT)
-	//     execute_redout(data, root->right);
-	// else if (tree->right->type == T_PIPE)
-	//     execute_pipe(data, tree->right);
-	// else
+
 	exit(127);
 }
 
@@ -73,7 +78,7 @@ int execute_redin(t_data *data, t_tree *tree, t_tree *root)
 {
 
 	pid_t pid;
-	printf("FUNC execute_redin\n");
+	// printf("FUNC execute_redin\n");
 	if (!tree || !tree->value)
 		return (-1);
 

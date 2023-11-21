@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 11:50:42 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:41:05 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,8 +332,8 @@ int			execute_echo(char *args[]);
 
 
 /* execute_redout.c */
-int			execute_redout(t_data *data, t_tree *tree);
-int			handle_child_process_redout(t_data *data, t_tree *tree);
+int			execute_redout(t_data *data, t_tree *tree, int file_found);
+int			handle_child_process_redout(t_data *data, t_tree *tree, int file_found);
 int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
 
 /* execute_redinp.c */
@@ -343,7 +343,7 @@ int			handle_parent_process_redin(t_data *data, pid_t pid);
 
 /* execute_delim.c */
 int			execute_delim(t_data *data, t_tree *tree, char *delemiter);
-
+int			execute_commands_after_delim(t_data *data, t_tree *tree);
 /* execute_pipe.c */
 int			execute_pipe(t_data *data, t_tree *tree);
 
@@ -386,7 +386,7 @@ int			evaluate_execution(t_data *data, t_tree *tree);
 
 
 
-int			execute_special(t_data *data, t_tree *tree);
+int			execute_special(t_data *data, t_tree *tree, int file_name);
 int			execute_special_left(t_data *data, t_tree *tree);
 
 

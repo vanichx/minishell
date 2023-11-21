@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 12:41:08 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:39:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int evaluate_execution(t_data *data, t_tree *tree)
 			}	
 			else if (tree->right && is_special_root(tree->right))
 			{
-				if (execute_special(data, tree))
+				if (execute_special(data, tree, 1))
 					return (1);
 			}
 		}
@@ -65,7 +65,7 @@ int	execute_logic(t_data *data, t_tree *tree)
 }
 
 
-int execute_special(t_data *data, t_tree *tree)
+int execute_special(t_data *data, t_tree *tree, int file_name)
 {
 	t_tree *root;
 
@@ -80,7 +80,7 @@ int execute_special(t_data *data, t_tree *tree)
 		}
 		if (tree->right->type == T_RED_OUT || tree->right->type == T_APPEND)
 		{
-			if (execute_redout(data, tree))
+			if (execute_redout(data, tree, file_name))
 				return (1);
 		}
 		
@@ -107,7 +107,7 @@ int execute_special_left(t_data *data, t_tree *tree)
 				return (1);
 		if (left_top_node->type == T_RED_OUT || left_top_node->type == T_APPEND)
 		{
-			if (execute_redout(data, left_top_node))
+			if (execute_redout(data, left_top_node, 1))
 				return (1);
 		}
 	}

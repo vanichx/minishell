@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 12:30:31 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:28:18 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	execute_word(t_data *data, t_tree *tree)
 {
+	// printf("FUNC execute_word\n");
+	// printf("tree->value = %s\n", tree->value);
+	if (tree == NULL || tree->value == NULL || tree->args_array == NULL)
+		return (1);
 	if (is_builtin(tree->args_array[0]))
 	{
 		if (execute_builtin(data, tree))
@@ -21,6 +25,7 @@ int	execute_word(t_data *data, t_tree *tree)
 	}
 	else
 	{
+		printf("execute_word else\n");
 		if (execute_command(data, tree))
 			return (1);		
 	}
@@ -29,18 +34,18 @@ int	execute_word(t_data *data, t_tree *tree)
 
 int execute_command(t_data *data, t_tree *tree)
 {
-    char *exec_path;
+	char *exec_path;
 	// printf("FUNC execute_command\n");
-    exec_path = find_executable_path(data, tree->args_array[0]);
-    if (exec_path == NULL)
-    {
+	exec_path = find_executable_path(data, tree->args_array[0]);
+	if (exec_path == NULL)
+	{
 		ft_putstr_fd("minishell: ", 0);
 		ft_putstr_fd(tree->args_array[0], 0);
 		ft_putstr_fd(": command not found\n", 0);
-        data->exit_status = 127;
-        return (1);
-    }
-    return (fork_command(data, tree, exec_path));
+		data->exit_status = 127;
+		return (1);
+	}
+	return (fork_command(data, tree, exec_path));
 }
 
 int	fork_command(t_data *data, t_tree *tree, char *exec_path)
@@ -50,6 +55,7 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 	char **envp = NULL;
 
 	pid = fork();
+	
 	if (pid == -1)
 	{
 		perror("fork");
@@ -85,35 +91,35 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 // this function will copy the envp list to a char **array
 char **env(t_envir **lst)
 {
-    if (!lst)
-        return (NULL);
-    char **envp;
-    t_envir *tmp;
-    int i;
-    
-    i = 0;
-    tmp = *lst;
-    while (tmp)
-    {
-        i++;
-        tmp = tmp->next;
-    }
-    envp = malloc(sizeof(char *) * (i + 1));
-    i = 0;
-    tmp = *lst;
-    while (tmp)
-    {
-        // Calculate the length of the string we need to allocate
-        int len = ft_strlen(tmp->var_name) + ft_strlen(tmp->var_value) + 2;  // +2 for the '=' and the null terminator
-        envp[i] = malloc(len);
-        ft_strcpy(envp[i], tmp->var_name);
-        ft_strcat(envp[i], "=");
-        ft_strcat(envp[i], tmp->var_value);
-        i++;
-        tmp = tmp->next;
-    }
-    envp[i] = NULL;
-    return (envp);
+	if (!lst)
+		return (NULL);
+	char **envp;
+	t_envir *tmp;
+	int i;
+	
+	i = 0;
+	tmp = *lst;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	envp = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	tmp = *lst;
+	while (tmp)
+	{
+		// Calculate the length of the string we need to allocate
+		int len = ft_strlen(tmp->var_name) + ft_strlen(tmp->var_value) + 2;  // +2 for the '=' and the null terminator
+		envp[i] = malloc(len);
+		ft_strcpy(envp[i], tmp->var_name);
+		ft_strcat(envp[i], "=");
+		ft_strcat(envp[i], tmp->var_value);
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = NULL;
+	return (envp);
 }
 
 //this function will print the 2d array
