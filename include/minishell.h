@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 17:10:57 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 18:08:31 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,13 +124,13 @@ typedef struct s_token
 
 /* environment.c */
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
-void		print_env_node(t_envir *env_node);
+void		print_env_node(t_envir *env_node, int fd_out);
 void		free_envir_array(char **env_array);
 void		ft_envadd_back(t_envir **lst, t_envir *new);
 void		ft_envadd_front(t_envir **lst, t_envir *new);
 void		ft_envclear(t_envir **lst);
 void		ft_envdelone(t_envir *lst, void (*del));
-void		ft_enviter(t_envir *lst, void (*f)(t_envir *));
+void		ft_enviter(t_envir *lst, int fd_out, void (*f)(t_envir *));
 t_envir		*ft_envlast(t_envir *lst);
 int			ft_envsize(t_envir *lst);
 t_envir		*fill_env(char **env, t_data *data);
@@ -144,7 +144,7 @@ t_envir		*copy_envir_list(t_envir *original);
 void		swap_nodes(t_envir *a, t_envir *b);
 void		sort_envir_list(t_envir *list);
 t_envir		*copy_and_sort_envir_list(t_envir *original);
-void		print_env_node_sorted(t_envir *env_node);
+void		*print_env_node_sorted(t_envir *env_node, int fd_out);
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);
@@ -391,10 +391,10 @@ int			check_echo(t_data *data, t_tree *tree, int fd_out);
 int			execute_cd(t_data *data, char *path);
 int			execute_pwd(t_data *data);
 int			execute_unset(t_data *data, t_tree *tree);
-void		execute_env(t_envir **env);
+void		execute_env(t_envir **env, int fd_out);
 char		*get_curr_dir(void);
 char		*get_home_dir(void);
-int			execute_export(t_data *data, t_tree *tree);
+int			execute_export(t_data *data, t_tree *tree, int fd_out);
 
 /* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);

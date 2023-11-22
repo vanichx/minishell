@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envirlists_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 22:53:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:10:27 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ void	ft_envdelone(t_envir *lst, void (*del))
     free(lst);
 }
 
-void	ft_enviter(t_envir *lst, void (*f)(t_envir *))
-{
-    if (!f)
-        return ;
-    while (lst)
-    {
-        f(lst);
-        lst = lst->next;
-    }
-}
+// void	ft_enviter(t_envir *lst, int fd_out, void (*f)(t_envir *))
+// {
+//     if (!f)
+//         return ;
+//     while (lst)
+//     {
+//         f(lst, fd_out);
+//         lst = lst->next;
+//     }
+// }
 
 t_envir	*ft_envlast(t_envir *lst)
 {

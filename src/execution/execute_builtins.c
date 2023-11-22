@@ -65,14 +65,14 @@ int	execute_builtin(t_data *data, t_tree *tree, int fd_out)
 	if (!ft_strcmp(tree->args_array[0], "pwd") || !ft_strcmp(tree->args_array[0], "PWD"))
 		if (execute_pwd(data))
 			return (1);
-	if (!ft_strcmp(tree->args_array[0], "export") || !ft_strcmp(tree->args_array[0], "EXPORT"))
-		if (execute_export(data, tree))
-			return (1);
+	// if (!ft_strcmp(tree->args_array[0], "export") || !ft_strcmp(tree->args_array[0], "EXPORT"))
+	// 	if (execute_export(data, tree, fd_out))
+	// 		return (1);
 	if (!ft_strcmp(tree->args_array[0], "unset") || !ft_strcmp(tree->args_array[0], "UNSET"))
 		if (execute_unset(data, tree))
 			return (1);
-	if (!ft_strcmp(tree->args_array[0], "env") || !ft_strcmp(tree->args_array[0], "ENV"))
-		execute_env(&data->env_list);
+	// if (!ft_strcmp(tree->args_array[0], "env") || !ft_strcmp(tree->args_array[0], "ENV"))
+	// 	execute_env(&data->env_list, fd_out);
 	if (!ft_strcmp(tree->args_array[0], "exit") || !ft_strcmp(tree->args_array[0], "EXIT"))
 		if (execute_exit(data, tree))
 			return (1);
@@ -141,10 +141,10 @@ int	execute_unset(t_data *data, t_tree *tree)
 	return (0);
 }
 
-void	execute_env(t_envir **env)
-{
-	ft_enviter(*env, print_env_node);
-}
+// void	execute_env(t_envir **env, int fd_out)
+// {
+// 	// ft_enviter(*env, fd_out, print_env_node);
+// }
 
 int execute_cd(t_data *data, char *path)
 {
@@ -201,53 +201,53 @@ char *get_home_dir(void)
 	return (getenv("HOME"));
 }
 
-int	execute_export(t_data *data, t_tree *tree)
-{
-	t_envir *sorted;
-	char **temp;
-	int i;
+// int	execute_export(t_data *data, t_tree *tree, int fd_out)
+// {
+// 	t_envir *sorted;
+// 	char **temp;
+// 	int i;
 
-	i = 0;
-	sorted = NULL;
-	temp = NULL;
-	if (!tree->args_array[1])
-	{
-		sorted = copy_and_sort_envir_list(data->env_list);
-		ft_enviter(sorted, print_env_node_sorted);
-		return (ft_envclear(&sorted), 0);
-	}
-	else
-	{
-		while (tree->args_array[++i])
-		{
-			if (!has_equal_sign(tree->args_array[i]))
-			{
-				printf("are we here\n");
-				if (has_asterisk(tree->args_array[i]))
-						return (printf("minishell: export: `%s': not a valid identifier\n", tree->args_array[i]), 1);
-				export(&data->env_list, tree->args_array[i], "visible", data);
-			}
-			else
-			{
-				temp = ft_split_parenth(tree->args_array[i], '=');
-				if (temp[1] && !temp[2])
-				{
-					if (has_asterisk(temp[0]))
-						return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
-					export(&data->env_list, temp[0], temp[1], data);
-				}
-				else if (temp[0] && !temp[1])
-				{
-					if (has_asterisk(temp[0]))
-						return (printf("minishell: export: `%s': not a valid identifier\n", temp[0]), free_2darray(temp), 1);
-					export(&data->env_list, temp[0], "", data);
-				}
-				free_2darray(temp);
-			}
-		}
-	}
-	return 0;
-}
+// 	i = 0;
+// 	sorted = NULL;
+// 	temp = NULL;
+// 	if (!tree->args_array[1])
+// 	{
+// 		sorted = copy_and_sort_envir_list(data->env_list);
+// 		ft_enviter(sorted, print_env_node_sorted, fd_out);
+// 		return (ft_envclear(&sorted), 0);
+// 	}
+// 	else
+// 	{
+// 		while (tree->args_array[++i])
+// 		{
+// 			if (!has_equal_sign(tree->args_array[i]))
+// 			{
+// 				printf("are we here\n");
+// 				if (has_asterisk(tree->args_array[i]))
+// 						return (printf("minishell: export: `%s': not a valid identifier\n", tree->args_array[i]), 1);
+// 				export(&data->env_list, tree->args_array[i], "visible", data);
+// 			}
+// 			else
+// 			{
+// 				temp = ft_split_parenth(tree->args_array[i], '=');
+// 				if (temp[1] && !temp[2])
+// 				{
+// 					if (has_asterisk(temp[0]))
+// 						return (printf("minishell: export: `%s=%s': not a valid identifier\n", temp[0], temp[1]), free_2darray(temp), 1);
+// 					export(&data->env_list, temp[0], temp[1], data);
+// 				}
+// 				else if (temp[0] && !temp[1])
+// 				{
+// 					if (has_asterisk(temp[0]))
+// 						return (printf("minishell: export: `%s': not a valid identifier\n", temp[0]), free_2darray(temp), 1);
+// 					export(&data->env_list, temp[0], "", data);
+// 				}
+// 				free_2darray(temp);
+// 			}
+// 		}
+// 	}
+// 	return 0;
+// }
 
 void	export(t_envir **env_list, char *var_name, char *var_value, t_data *data)
 {
