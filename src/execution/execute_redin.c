@@ -28,21 +28,15 @@ void handle_file_duplication(int fd)
 
 int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 {
-	// printf("FUNC handle_child_process_redin\n");
 	int fd;
 	t_tree *curr = tree;
 	char *file_name;
 
-	while (curr != NULL)
+	while (curr != NULL) 
 	{
 		if (curr->type == T_NEWLINE)
 			break ;
-		else if (curr->type == T_DELIM)
-		{
-			if (execute_delim(data, tree, curr->value))
-				return (1);
-		}
-		else if (curr->type == T_RED_INP && curr->value)
+		else if (curr->value)
 		{
 			file_name = curr->value;
 			if((fd = open(file_name, O_RDONLY)) < 0)
@@ -53,7 +47,6 @@ int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 	}
 	if (root->type == T_WORD && (curr == NULL || curr->right == NULL))
 	{
-		// printf("HELLO IM IN THAT PLACE\n");
 		if (execute_special(data, root, 1))
 		{
 			perror("execute_word");
@@ -61,7 +54,10 @@ int handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root)
 		}
 	}
 	if (execute_command(data, data->tree))
-			exit(1);
+	{
+		printf("minishell: %s: command not found\n", data->tree->value);
+		exit(1);
+	}
 	exit(127);
 }
 
@@ -78,7 +74,6 @@ int handle_parent_process_redin(t_data *data, pid_t pid)
 int execute_redin(t_data *data, t_tree *tree, t_tree *root)
 {
 	pid_t pid;
-	// printf("FUNC execute_redin\n");
 	if (!tree || !tree->value)
 		return (-1);
 
@@ -88,6 +83,10 @@ int execute_redin(t_data *data, t_tree *tree, t_tree *root)
 	else if (pid == 0)
 		handle_child_process_redin(data, tree, root);
 	else
+	{
+		child_pid = pid;
 		handle_parent_process_redin(data, pid);
+		child_pid = 0;
+	}
 	return (0);
 }

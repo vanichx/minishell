@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 18:04:28 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 03:24:13 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	free_data(t_data *data)
 		ft_strdel(&data->input_line);
 	if (data->root_directory && *data->root_directory)
 		free_2darray(data->root_directory);
+	if (data->heredoc_file)
+		free_heredoc_files(data->heredoc_file);
 	if (data->tree)
 	{
 		free_tree(&data->tree);
@@ -123,27 +125,3 @@ void	free_tree(t_tree **tree)
 	free_tree(&left);
 	free_tree(&right);
 }
-
-// void	free_commands(t_cmdexe **head, void (*del)(void *))
-// {
-// 	t_cmdexe *tmp;
-// 	t_cmdexe *tmp2;
-
-// 	if (!head || !del)
-// 		return ;
-// 	tmp = *head;
-// 	while (tmp)
-// 	{
-// 		printf("free_commands inside while \n");
-// 		if (tmp->cmd)
-// 			ft_strdel(&tmp->cmd);
-// 		if (tmp->path)
-// 			ft_strdel(&tmp->path);
-// 		if (tmp->args_array)
-// 			free_2darray(tmp->args_array);
-// 		tmp2 = tmp->next;
-// 		free(tmp);
-// 		tmp = tmp2;
-// 	}
-// 	*head = NULL;
-// }

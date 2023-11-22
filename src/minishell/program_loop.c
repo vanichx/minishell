@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 19:03:48 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 04:57:38 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	start_loop(t_data *data)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		if (odd_quote(line, data))
-			continue ;
+			continue ;   
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
 		// data->input_line = ft_strdup("cmd1 << delim1 cmd2 << delim2 cmd3  && cmd4 << delim5 cmd5 > file_name ");
@@ -35,7 +35,7 @@ void	start_loop(t_data *data)
 		if (init_tree(data, &data->token_list))
 			continue ;
 		fix_tree(&data->tree);
-		print_tree(data->tree, 0);
+		// print_tree(data->tree, 0);
 		if (execute(data))
 			continue ;
 	}

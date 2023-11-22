@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 17:41:05 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 03:23:57 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,38 @@ typedef struct s_tree {
 	struct s_tree	*right;
 }				t_tree;
 
+typedef struct	s_heredoc_file {
+	int		id;
+	char	*filename;
+	struct	s_heredoc_file *next;
+}				t_heredoc_file;
+
+typedef struct	s_heredoc_info {
+    char	*filename;
+    int		heredoc_count;
+	char 	*limiter;
+}				t_heredoc_info;
+
 typedef struct s_data {
-	struct s_tree	*tree;
-	struct s_token	*token_list;
-	t_envir			*env_list;
-	t_envir			*sorted_env_list;
-	int				single_quote;
-	int				double_quote;
-	long int		exit_status;
-	int				cmd_nbrs;
-	int				pid;
-	int				count;
-	int				arg_nums;
-	int				parenthesis_scope;
-	int				forked;
-	char			*input_minishell;
-	char			*input_line;
-	char			*curr_dir;
-	char			**root_directory;
-	char			*exit_str;
+	struct s_tree			*tree;
+	struct s_token			*token_list;
+	t_heredoc_file	        *heredoc_file;
+	t_envir					*env_list;
+	t_envir					*sorted_env_list;
+	int						single_quote;
+	int						double_quote;
+	long int				exit_status;
+	int						cmd_nbrs;
+	int						pid;
+	int						count;
+	int						arg_nums;
+	int						parenthesis_scope;
+	int						forked;
+	char					*input_minishell;
+	char					*input_line;
+	char					*curr_dir;
+	char					**root_directory;
+	char					*exit_str;
 }				t_data;
 
 typedef struct s_token
@@ -138,6 +151,7 @@ void		exit_shell(char *message, int exit_code, t_data *data);
 
 /* free.c */
 void		free_data(t_data *data);
+void		free_heredoc_files(t_heredoc_file *head);
 void		free_temp_data(t_data *data);
 void		free_envir(t_envir *envir);
 void		free_2darray(char **array);
@@ -342,8 +356,10 @@ int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
 int			handle_parent_process_redin(t_data *data, pid_t pid);
 
 /* execute_delim.c */
-int			execute_delim(t_data *data, t_tree *tree, char *delemiter);
-int			execute_commands_after_delim(t_data *data, t_tree *tree);
+int			execute_delim(t_token **head, t_data *data);
+char		*create_temp_filename(t_heredoc_info *info);
+void		process_heredoc(t_heredoc_info *info, t_data *data);
+void		add_heredoc_file(t_data *data, char *filename, int id);
 /* execute_pipe.c */
 int			execute_pipe(t_data *data, t_tree *tree);
 
@@ -394,5 +410,6 @@ int			execute_special_left(t_data *data, t_tree *tree);
 int			execute_command(t_data *data, t_tree *tree);
 int			fork_command(t_data *data, t_tree *tree, char *exec_path);
 
+extern pid_t child_pid;
 
 #endif

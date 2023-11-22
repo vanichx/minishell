@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 19:39:12 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 04:03:15 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 		envp = env(&data->env_list);
 		if (execve(exec_path, tree->args_array, envp) == -1)
 		{
+			perror("execve");
 			ft_strdel(&exec_path);
-			exit(EXIT_FAILURE);
+        	exit(EXIT_FAILURE);
 		}
 		if (exec_path)
 			ft_strdel(&exec_path);
@@ -76,17 +77,19 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 		exit(EXIT_SUCCESS);
 	}
 	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-		{
-			data->exit_status = 1;
-			ft_strdel(&exec_path);
-		}
-		else
-			ft_strdel(&exec_path);
-	}
-	return 0;
+    {
+		child_pid = pid;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status))
+        {
+            data->exit_status = WEXITSTATUS(status);
+            ft_strdel(&exec_path);
+        }
+        else
+            ft_strdel(&exec_path);
+		child_pid = 0;
+    }
+    return (0);
 }
 
 // this function will copy the envp list to a char **array

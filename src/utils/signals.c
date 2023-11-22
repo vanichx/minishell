@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:38:05 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 04:56:45 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,40 @@ void	handle_signal(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	handle_c(int signo)
+void handle_c(int signo)
 {
-	if (signo == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	if (signo == SIGTSTP || signo == SIGQUIT)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+    if (signo == SIGINT)
+    {
+        if (isatty(STDIN_FILENO))
+        {
+            write(1, "\n", 1);
+            if (child_pid != 0)
+                kill(child_pid, SIGINT);
+            else
+            {
+                rl_on_new_line();
+                rl_replace_line("", 0);
+                rl_redisplay();
+            }
+        }
+        else
+        {
+            write(1, "\n", 1);
+            exit(EXIT_SUCCESS);
+        }
+    }
+    else if (signo == SIGTSTP || signo == SIGQUIT)
+    {
+        if (isatty(STDIN_FILENO))
+        {
+            rl_replace_line("", 0);
+            rl_redisplay();
+        }
+        else
+        {
+            exit(EXIT_SUCCESS);
+        }
+    }
 }
 
 int	handle_d(t_data *data, char *line)

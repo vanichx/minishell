@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/21 17:39:01 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 05:05:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int evaluate_execution(t_data *data, t_tree *tree)
 	// 		return (1);
 	if (is_word_root(tree))
 	{
+		if (ft_strlen(tree->value) == 0)
+			return (1);
 		if ((tree->right->type == T_NEWLINE || tree->right == NULL) && tree->left == NULL )
 		{
 			if (execute_word(data, tree))

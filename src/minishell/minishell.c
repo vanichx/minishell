@@ -6,11 +6,13 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:50:43 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 22:02:54 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 04:38:12 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+pid_t	child_pid = 0;
 
 int	main(int argc, char **argv, char *envp[])
 {
