@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 02:20:21 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:39:04 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_envir	*find_envir_variable(t_data *data, char *var_name, int len)
 	current = data->env_list;
 	while (current)
 	{
-		if (ft_strncmp(current->var_name, var_name, len) == 0)
+		if (ft_strcmp(current->var_name, var_name) == 0)
 			return (current);
 		current = current->next;
 	}
