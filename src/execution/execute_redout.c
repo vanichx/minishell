@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int get_output_file(t_data *data, t_tree *tree)
+int get_output_file(t_tree *tree)
 {
-	printf("Executing get_output_file function\n");
+	// printf("Executing get_output_file function\n");
 	int fd;
 	int last_fd;
 	char *file_name;
