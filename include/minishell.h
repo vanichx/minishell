@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 03:23:57 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:10:57 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,8 @@ t_token		*last_token(t_token *lst);
 void		add_token(t_token **token, t_token *new);
 int			set_token_type(t_data *data);
 void		set_token_type2(t_token *token);
+int			set_token_type_tree(t_data *data);
+int			lexical_analysis_tree(t_data *data, char *input);
 
 
 
@@ -342,18 +344,36 @@ int			extract_var_name(char **arg, char **var_name);
 int			handle_env_var(t_data *data, char *var_name);
 // int			echo_handle_quotes(char *arg, char qoute);
 // int			echo_handle_dollar(t_data *data, char *arg);
-int			execute_echo(char *args[]);
+int			execute_echo(char *args[], int fd_out);
+
+
+
+
 
 
 /* execute_redout.c */
-int			execute_redout(t_data *data, t_tree *tree, int file_found);
-int			handle_child_process_redout(t_data *data, t_tree *tree, int file_found);
-int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
+// int			execute_redout(t_data *data, t_tree *tree, int file_found);
+int			get_output_file(t_data *data, t_tree *tree);
+// int			handle_child_process_redout(t_data *data, t_tree *tree, int file_found);
+// int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
+// int			execute_left_right(t_data *data, t_tree *tree);
+// int			handle_file_error(t_data *data, char *file_name, t_tree *root, int fd);
+// int			handle_file_duplication(int fd);
+
+
+
+
+
+
+
+
 
 /* execute_redinp.c */
-int			execute_redin(t_data *data, t_tree *tree, t_tree *root);
-int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
-int			handle_parent_process_redin(t_data *data, pid_t pid);
+int			get_input_file(t_data *data, t_tree *tree);
+
+// int			execute_redin(t_data *data, t_tree *tree, t_tree *root);
+// int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
+// int			handle_parent_process_redin(t_data *data, pid_t pid);
 
 /* execute_delim.c */
 int			execute_delim(t_token **head, t_data *data);
@@ -366,8 +386,8 @@ int			execute_pipe(t_data *data, t_tree *tree);
 
 /* execute_builtins.c */
 int			is_builtin(char *cmd);
-int			execute_builtin(t_data *data, t_tree *tree);
-int			check_echo(t_data *data, t_tree *tree);
+int			execute_builtin(t_data *data, t_tree *tree, int fd_out);
+int			check_echo(t_data *data, t_tree *tree, int fd_out);
 int			execute_cd(t_data *data, char *path);
 int			execute_pwd(t_data *data);
 int			execute_unset(t_data *data, t_tree *tree);
@@ -393,7 +413,7 @@ int			is_only_asterisks(char *str);
 int			has_equal_sign(char *str);
 
 /* execute_word.c */
-int			execute_word(t_data *data, t_tree *tree);
+int			execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out);
 
 /* execute.c */
 int			execute(t_data *data);
@@ -402,13 +422,13 @@ int			evaluate_execution(t_data *data, t_tree *tree);
 
 
 
-int			execute_special(t_data *data, t_tree *tree, int file_name);
+int			execute_special_right(t_data *data, t_tree *tree, int file_name);
 int			execute_special_left(t_data *data, t_tree *tree);
 
 
 
-int			execute_command(t_data *data, t_tree *tree);
-int			fork_command(t_data *data, t_tree *tree, char *exec_path);
+int 		execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
+int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out);
 
 extern pid_t child_pid;
 

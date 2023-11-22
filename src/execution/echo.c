@@ -23,7 +23,7 @@ void	echo_handle_option(char ***args, int *no_newline)
 	}
 }
 
-int	execute_echo(char *args[])
+int	execute_echo(char *args[], int fd_out)
 {
 	int		no_newline;
 	int		i;
@@ -35,15 +35,15 @@ int	execute_echo(char *args[])
 	while (args[i] && args[i][0] != '\0')
 	{
 		if (i == 1)
-			ft_putstr_fd(args[i], STDOUT_FILENO);
+			ft_putstr_fd(args[i], fd_out);
 		else
 		{
-			ft_putstr_fd(" ", STDOUT_FILENO);
-			ft_putstr_fd(args[i], STDOUT_FILENO);
+			ft_putstr_fd(" ", fd_out);
+			ft_putstr_fd(args[i], fd_out);
 		}
 		i++;
 	}
 	if (!no_newline)
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", fd_out);
 	return (0);
 }

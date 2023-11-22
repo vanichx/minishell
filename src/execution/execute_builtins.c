@@ -20,23 +20,23 @@ int is_builtin(char *cmd)
 	return (0);
 }
 
-int check_echo(t_data *data, t_tree *tree)
+int check_echo(t_data *data, t_tree *tree,int fd_out)
 {
 	char **cmd;
 
 	cmd = NULL;
 	if (!ft_strcmp(tree->args_array[0], "echo") || !ft_strcmp(tree->args_array[0], "ECHO"))
 	{
-		if (execute_echo(tree->args_array))
+		if (execute_echo(tree->args_array, fd_out))
 			return (1);
 	}
 	else
 	{
 		if (!ft_strncmp(tree->args_array[0], "echo", 4))
 		{
-			ft_putstr_fd("minishell: ", STDOUT_FILENO);
-			ft_putstr_fd(tree->args_array[0], STDOUT_FILENO);
-			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
+			ft_putstr_fd("minishell: ", fd_out);///////////STDOUT_FILENO
+			ft_putstr_fd(tree->args_array[0], fd_out);///////////STDOUT_FILENO
+			ft_putstr_fd(": command not found\n", fd_out);///////////STDOUT_FILENO
 			data->exit_status = 127;
 			return (1);
 		}
@@ -44,12 +44,12 @@ int check_echo(t_data *data, t_tree *tree)
 	return (0);
 }
 
-int	execute_builtin(t_data *data, t_tree *tree)
+int	execute_builtin(t_data *data, t_tree *tree, int fd_out)
 {
 
 	if (!ft_strncmp(tree->args_array[0], "echo", 4) || !ft_strncmp(tree->args_array[0], "ECHO", 4))
 	{
-		if (check_echo(data, tree))
+		if (check_echo(data, tree, fd_out))
 			return (1);
 	}
 	if (!ft_strcmp(tree->args_array[0], "cd") || !ft_strcmp(tree->args_array[0], "CD"))

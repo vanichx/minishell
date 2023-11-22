@@ -3,40 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 04:03:15 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:57:36 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_word(t_data *data, t_tree *tree)
+int	execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 {
-	// printf("FUNC execute_word\n");
-	// printf("tree->value = %s\n", tree->value);
 	if (tree == NULL || tree->value == NULL || tree->args_array == NULL)
 		return (1);
+	// if (fd_out == 0)
+	// 	fd_out = 1;
 	if (is_builtin(tree->args_array[0]))
 	{
-		if (execute_builtin(data, tree))
+		if (execute_builtin(data, tree, fd_out))
 			return (1);
 	}
 	else
 	{
-		// printf("execute_word else\n");
-		if (execute_command(data, tree))
+		if (ft_strlen(tree->value) == 0)
+			return (1);
+		if (execute_command(data, tree, fd_inp, fd_out))
 			return (1);		
 	}
 	return (0);
 }
 
-int execute_command(t_data *data, t_tree *tree)
+int execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 {
 	char *exec_path;
-	// printf("FUNC execute_command\n");
-	// printf("tree->args_array[0] = %s\n", tree->args_array[0]);
+
 	exec_path = find_executable_path(data, tree->args_array[0]);
 	if (exec_path == NULL)
 	{
@@ -46,17 +46,16 @@ int execute_command(t_data *data, t_tree *tree)
 		data->exit_status = 127;
 		return (1);
 	}
-	return (fork_command(data, tree, exec_path));
+	return (fork_command(data, tree, exec_path, fd_inp, fd_out));
 }
 
-int	fork_command(t_data *data, t_tree *tree, char *exec_path)
+int	fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out)
 {
 	pid_t	pid;
 	int		status;
 	char **envp = NULL;
 
 	pid = fork();
-	
 	if (pid == -1)
 	{
 		perror("fork");
@@ -64,12 +63,24 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 	}
 	else if (pid == 0)
 	{
+		if (fd_inp != STDIN_FILENO)
+		{
+			dup2(fd_inp, STDIN_FILENO);
+			if(fd_inp != 0)  // if fd_inp is not standard input, output, or error
+				close(fd_inp);
+		}
+		if (fd_out != STDOUT_FILENO)
+		{
+			dup2(fd_out, STDOUT_FILENO);
+			if (fd_out != 1)  // if fd_out is not standard input, output, or error
+				close(fd_out);
+		}
 		envp = env(&data->env_list);
 		if (execve(exec_path, tree->args_array, envp) == -1)
 		{
-			perror("execve");
+			printf("execve failded\n");
 			ft_strdel(&exec_path);
-        	exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		if (exec_path)
 			ft_strdel(&exec_path);
@@ -77,19 +88,23 @@ int	fork_command(t_data *data, t_tree *tree, char *exec_path)
 		exit(EXIT_SUCCESS);
 	}
 	else
-    {
+	{
 		child_pid = pid;
-        waitpid(pid, &status, 0);
-        if (WIFEXITED(status))
-        {
-            data->exit_status = WEXITSTATUS(status);
-            ft_strdel(&exec_path);
-        }
-        else
-            ft_strdel(&exec_path);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			data->exit_status = WEXITSTATUS(status);
+			ft_strdel(&exec_path);
+		}
+		else
+			ft_strdel(&exec_path);
 		child_pid = 0;
-    }
-    return (0);
+		if (fd_inp != 0)
+			close(fd_inp);
+		if (fd_out != 1)
+			close(fd_out);
+	}
+	return (0);
 }
 
 // this function will copy the envp list to a char **array

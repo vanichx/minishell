@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fix_tokens2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:09:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 16:41:18 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:49:43 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,15 @@ void	find_asterisk(t_token **head, t_data *data)
 		tmp = current;
 		if (tmp->type == T_WORD)
 		{
-			if (has_asterisk(tmp->word))
+			if ((tmp->prev && tmp->prev->type == T_DELIM)
+				|| (has_asterisk(tmp->word) && tmp->prev && tmp->prev->prev && tmp->prev->type == T_SPACE
+				&& tmp->prev->prev->type == T_DELIM))
 			{
-				extend_asterisk(tmp, data);
+				printf("%u\n", tmp->prev->type);
+				current = current->next;
 			}
+			else if (has_asterisk(tmp->word))
+				extend_asterisk(tmp, data);
 		}
 		current = current->next;
 	}

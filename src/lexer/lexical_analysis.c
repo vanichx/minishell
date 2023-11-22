@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 03:15:44 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:10:28 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,43 @@ int	lexical_analysis(t_data *data, char *input)
 	if (set_token_type(data))
 		return (1);
 	tmp = data->token_list;
+	return (0);
+}
+
+int	lexical_analysis_tree(t_data *data, char *input)
+{
+	t_token	*tmp;
+
+	tmp = NULL;
+	if (!input || !input[0])
+		return (1);
+	tokenise(data, input);
+	if (set_token_type_tree(data))
+		return (1);
+	tmp = data->token_list;
+	return (0);
+}
+
+int	set_token_type_tree(t_data *data)
+{
+	t_token	*head;
+
+	head = data->token_list;
+	while (data->token_list)
+	{
+		set_token_type2(data->token_list);
+		data->token_list = data->token_list->next;
+	}
+	data->token_list = head;
+	clean_null_tokens(&data->token_list);
+	fix_tokens(&data->token_list, data);
+	if (syntax_errors(data->token_list, data))
+		return (1);
+	if (lexic_with_parenth(data))
+		return (1);
+	clean_space_tokens(&data->token_list);
+	concantenate_word_tokens(&data->token_list);
+	// print_tokens(data);
 	return (0);
 }
 
