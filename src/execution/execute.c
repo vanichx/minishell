@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 18:28:47 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 18:56:36 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ int evaluate_execution(t_data *data, t_tree *tree)
 	if (is_logic_root(tree))
 		if (execute_logic(data, tree))
 		return (1);	
-	// if (tree->type == T_PIPE)
-	// 	if (execute_pipe(data, tree))
-	// 		return (1);
+	if (tree->type == T_PIPE)
+		if (execute_pipe(data, tree))
+			return (1);
 	if (is_word_root(tree))
 	{
 		fd_out = get_output_file(tree);
-		// if (fd_out != 1)
-		// 	printf("CONGRATS  OUT FILE = %d\n", fd_out);
+
 		fd_inp = get_input_file(tree);
 		if (fd_inp == -1)
 		{
@@ -46,8 +45,6 @@ int evaluate_execution(t_data *data, t_tree *tree)
 				close(fd_out);
 			return (1);
 		}
-		// if (fd_inp != 0)
-		// 	printf("CONGRATS INP FILE = %d\n", fd_inp);
 		if (execute_word(data, tree, fd_inp, fd_out))
 		{
 			if (fd_inp != 0)

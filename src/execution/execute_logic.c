@@ -13,7 +13,6 @@ int	execute_and(t_data *data, t_tree *tree)
 		data->exit_status = 1;
 		return (1);
 	}
-	printf("EXECUTED AND SUCCESFULLY\n");
 	data->exit_status = 0;
 	return (0);
 }
@@ -30,7 +29,6 @@ int	execute_or(t_data *data, t_tree *tree)
 		data->exit_status = 0;
 		return (0);
 	}
-	printf("EXECUTED OR SUCCESFULLY\n");
 	data->exit_status = 0;
 	return (data->exit_status);
 }

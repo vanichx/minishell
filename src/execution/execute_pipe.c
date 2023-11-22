@@ -31,7 +31,7 @@ int	execute_pipe(t_data *data, t_tree *tree)
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
-		if (evaluate_execution(data, tree->right) == -1)
+		if (evaluate_execution(data, tree->right)== -1)
 			exit(127);
 		exit(0);
 	}
