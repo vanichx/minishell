@@ -1,49 +1,49 @@
 #include "minishell.h"
 
 
-void	echo_handle_option(char ***args, int *no_newline)
+int	echo_handle_option(char **args)
 {
-	char *arg;
-
-	if (**args && !ft_strncmp(**args, "-n", 2))
+	int i;
+	int j;
+	i = 1;
+	j = 0;
+	
+	if (args[i] && args[i][j] == '-')
 	{
-		arg = **args + 1;
-		*no_newline = 1;
-		while (*arg)
+		j++;
+		while (args[i][j] == 'n')
 		{
-			if (*arg != 'n')
-			{
-				*no_newline = 0;
-				break;
-			}
-			arg++;
+			j++;
 		}
-		if (*no_newline)
-			(*args)++;
+		if (args[i][j] == '\0')
+			return (1);
 	}
+	return (0);
 }
 
 int	execute_echo(char *args[], int fd_out)
 {
-	int		no_newline;
-	int		i;
+    int		no_newline;
+    int		i;
+	int		first_arg_printed;
 
-	i = 1;
-
-	no_newline = 0;
-	echo_handle_option(&args, &no_newline);
-	while (args[i] && args[i][0] != '\0')
-	{
-		if (i == 1)
-			ft_putstr_fd(args[i], fd_out);
-		else
-		{
-			ft_putstr_fd(" ", fd_out);
-			ft_putstr_fd(args[i], fd_out);
-		}
-		i++;
-	}
-	if (!no_newline)
-		ft_putstr_fd("\n", fd_out);
-	return (0);
+    i = 1;
+	first_arg_printed = 0;
+    no_newline = echo_handle_option(args);
+    if (no_newline)
+        i++;
+    while (args[i])
+    {
+        if (args[i][0] != '\0')
+        {
+            if (first_arg_printed)
+                ft_putstr_fd(" ", fd_out);
+            ft_putstr_fd(args[i], fd_out);
+            first_arg_printed = 1;
+        }
+        i++;
+    }
+    if (!no_newline)
+        ft_putstr_fd("\n", fd_out);
+    return (0);
 }

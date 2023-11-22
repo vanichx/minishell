@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 18:20:15 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:43:22 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,7 +338,7 @@ char		**join2darrays(char **str1, char **str2);
 void		find_command(t_tree **tree);
 
 /* echo.c */
-void		echo_handle_option(char ***args, int *no_newline);
+int			echo_handle_option(char **args);
 char		*handle_dollar_question(t_data *data, char **arg);
 int			extract_var_name(char **arg, char **var_name);
 int			handle_env_var(t_data *data, char *var_name);
@@ -353,7 +353,7 @@ int			execute_echo(char *args[], int fd_out);
 
 /* execute_redout.c */
 // int			execute_redout(t_data *data, t_tree *tree, int file_found);
-int			get_output_file(t_data *data, t_tree *tree);
+int			get_output_file(t_tree *tree);
 // int			handle_child_process_redout(t_data *data, t_tree *tree, int file_found);
 // int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
 // int			execute_left_right(t_data *data, t_tree *tree);
@@ -369,7 +369,7 @@ int			get_output_file(t_data *data, t_tree *tree);
 
 
 /* execute_redinp.c */
-int			get_input_file(t_data *data, t_tree *tree);
+int			get_input_file(t_tree *tree);
 
 // int			execute_redin(t_data *data, t_tree *tree, t_tree *root);
 // int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
