@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 18:05:20 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:46:03 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,27 +124,9 @@ typedef struct s_token
 
 /* environment.c */
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
-void		print_env_node(t_envir *env_node, int fd_out);
-void		free_envir_array(char **env_array);
-void		ft_envadd_back(t_envir **lst, t_envir *new);
-void		ft_envadd_front(t_envir **lst, t_envir *new);
-void		ft_envclear(t_envir **lst);
-void		ft_envdelone(t_envir *lst, void (*del));
-void		ft_enviter(t_envir *lst, int fd_out, void (*f)(t_envir *, int));
-t_envir		*ft_envlast(t_envir *lst);
-int			ft_envsize(t_envir *lst);
-t_envir		*fill_env(char **env, t_data *data);
-t_envir		*ft_envnew(void);
 char		**env(t_envir **lst);
 char		**create_envp(void);
 
-
-/*sorted envariment */
-t_envir		*copy_envir_list(t_envir *original);
-void		swap_nodes(t_envir *a, t_envir *b);
-void		sort_envir_list(t_envir *list);
-t_envir		*copy_and_sort_envir_list(t_envir *original);
-void		print_env_node_sorted(t_envir *env_node, int fd_out);
 
 /* free.c */
 void		free_heredoc_files(t_heredoc_file *head);
@@ -166,20 +148,6 @@ void		start_loop(t_data *data);
 /* shlvl.c */
 void		incr_shell_lvl(t_data *data);
 void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
-
-
-
-/* quotes.c */
-int			in_quotes(char *s, int pos);
-void		find_quotes(char **str, t_data *data);
-
-
-int			check_single_quote(char *s, int *i, int pos);
-int			check_double_quote(char *s, int *i, int pos);
-
-
-int			is_valid_env_char(char c);
-
 
 
 /* tokens */
@@ -373,6 +341,66 @@ int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* commands.c */
+void		free_paths(char **paths, char **original_paths);          
+char		*find_executable_path(t_data *data, char *cmd);/////////////NORM//////////////////////
+t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
+
+/* envir_list.c */
+void		extract_env_var(t_envir *envir, char *env);
+t_envir		*fill_env(char **env, t_data *data);
+
+/* envirlists_utils.c */
+void		ft_envadd_back(t_envir **lst, t_envir *new);
+void		ft_envadd_front(t_envir **lst, t_envir *new);
+void		ft_envclear(t_envir **lst);
+void		ft_envdelone(t_envir *lst, void (*del));
+
+
+/* envirlists_utils2.c */
+void		ft_enviter(t_envir *lst, int fd_out, void (*f)(t_envir *, int));
+t_envir		*ft_envlast(t_envir *lst);
+t_envir		*ft_envnew(void);
+int			ft_envsize(t_envir *lst);
+
+/* environment.c */
+void		print_env_node(t_envir *env_node, int fd_out);
+void		print_env_node_sorted(t_envir *env_node, int fd_out);
+void		free_envir_array(char **env_array);
+
+/* sorted_envir.c */
+t_envir		*copy_envir_list(t_envir *original);
+void		swap_nodes(t_envir *a, t_envir *b);
+void		sort_envir_list(t_envir *list);
+t_envir		*copy_and_sort_envir_list(t_envir *original);
 
 /* check_quotes.c */
 int			is_valid_env_char(char c);

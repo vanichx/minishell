@@ -3,71 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 18:39:04 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 18:45:56 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *find_executable_path(t_data *data, char *cmd)
+void	free_paths(char **paths, char **original_paths)
 {
-    char *tmp;
-    char *command;
-    char **paths;
-    t_envir *path;
+	paths = original_paths;
+	while (*paths)
+	{
+		ft_strdel(paths);
+		paths++;
+	}
+	free(original_paths);
+}
 
-    path = find_envir_variable(data, "PATH", 4);
-    if (!path)
-        return NULL;
+char	*find_executable_path(t_data *data, char *cmd)
+{
+	char	*tmp;
+	char	*command;
+	char	**paths;
+	t_envir	*path;
+	char	**original_paths;
 
-    paths = ft_split(path->var_value, ':');
-    char **original_paths = paths;
-
-    while (*paths)
-    {
+	path = find_envir_variable(data, "PATH", 4);
+	if (!path)
+		return (NULL);
+	paths = ft_split(path->var_value, ':');
+	original_paths = paths;
+	while (*paths)
+	{
 		if (access(cmd, X_OK) == 0)
 		{
 			command = ft_strdup(cmd);
 			return (free_2darray(paths), command);
 		}
-        tmp = ft_strjoin(*paths, "/");
-        command = ft_strjoin(tmp, cmd);
-        ft_strdel(&tmp);
-        if (access(command, F_OK) == 0)
-        {
-            // Free individual strings
-            paths = original_paths;
-            while (*paths)
-            {
-                ft_strdel(paths);
-                paths++;
-            }
-
-            free(original_paths); // Free the array itself
-            return command;
-        }
-
-        ft_strdel(&command);
-        paths++;
-    }
-
-    // Free individual strings
-    paths = original_paths;
-    while (*paths)
-    {
-        ft_strdel(paths);
-        paths++;
-    }
-
-    free(original_paths); // Free the array itself
-    return NULL;
+		tmp = ft_strjoin(*paths, "/");
+		command = ft_strjoin(tmp, cmd);
+		ft_strdel(&tmp);
+		if (access(command, F_OK) == 0)
+		{
+			free_paths(paths, original_paths);
+			return (command);
+		}
+		ft_strdel(&command);
+		paths++;
+	}
+	paths = original_paths;
+	while (*paths)
+	{
+		ft_strdel(paths);
+		paths++;
+	}
+	free(original_paths);
+	return (NULL);
 }
 
 t_envir	*find_envir_variable(t_data *data, char *var_name, int len)
-{	
+{
 	t_envir	*current;
 
 	current = data->env_list;

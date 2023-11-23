@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envir_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:20:21 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/16 21:53:02 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 18:29:58 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned int	find_equal_sign(char *str)
+static unsigned int	find_equal_sign(char *str)
 {
 	unsigned int	i;
 
@@ -22,25 +22,29 @@ unsigned int	find_equal_sign(char *str)
 	return (i);
 }
 
-t_envir	*fill_env(char **env, t_data *data)
+void	extract_env_var(t_envir *envir, char *env)
 {
 	unsigned int	i;
 	size_t			len;
+
+	i = find_equal_sign(env);
+	len = ft_strlen(env);
+	envir->var_name = ft_substr(env, 0, i);
+	envir->var_value = ft_substr(env, i + 1, len - i);
+}
+
+t_envir	*fill_env(char **env, t_data *data)
+{
 	t_envir			*envir;
 	t_envir			*head;
 
 	if (!*env)
 		return (NULL);
-	i = 0;
-	len = 0;
 	envir = ft_envnew();
 	head = envir;
 	while (*env)
 	{
-		i = find_equal_sign(*env);
-		len = ft_strlen(*env);
-		envir->var_name = ft_substr(*env, 0, i);
-		envir->var_value = ft_substr(*env, i + 1, len - i);
+		extract_env_var(envir, *env);
 		env++;
 		if (*env)
 		{
@@ -52,7 +56,3 @@ t_envir	*fill_env(char **env, t_data *data)
 	data->env_list = head;
 	return (head);
 }
-
-// t_envir *fill_sorted_env(t_envir *sorted_lst, char **env)
-// {
-// }
