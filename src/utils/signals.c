@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 04:56:45 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 13:16:16 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,40 +25,50 @@ void	handle_signal(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void handle_c(int signo)
+void	handle_sigint(int signo)
 {
-    if (signo == SIGINT)
-    {
-        if (isatty(STDIN_FILENO))
-        {
-            write(1, "\n", 1);
-            if (child_pid != 0)
-                kill(child_pid, SIGINT);
-            else
-            {
-                rl_on_new_line();
-                rl_replace_line("", 0);
-                rl_redisplay();
-            }
-        }
-        else
-        {
-            write(1, "\n", 1);
-            exit(EXIT_SUCCESS);
-        }
-    }
-    else if (signo == SIGTSTP || signo == SIGQUIT)
-    {
-        if (isatty(STDIN_FILENO))
-        {
-            rl_replace_line("", 0);
-            rl_redisplay();
-        }
-        else
-        {
-            exit(EXIT_SUCCESS);
-        }
-    }
+	if (signo == SIGINT)
+	{
+		if (isatty(STDIN_FILENO))
+		{
+			write(1, "\n", 1);
+			if (child_pid != 0)
+				kill(child_pid, SIGINT);
+			else
+			{
+				rl_on_new_line();
+				rl_replace_line("", 0);
+				rl_redisplay();
+			}
+		}
+		else
+		{
+			write(1, "\n", 1);
+			exit(EXIT_SUCCESS);
+		}
+	}
+}
+
+void	handle_sigtstp_sigquit(int signo)
+{
+	if (signo == SIGTSTP || signo == SIGQUIT)
+	{
+		if (isatty(STDIN_FILENO))
+		{
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else
+		{
+			exit(EXIT_SUCCESS);
+		}
+	}
+}
+
+void	handle_c(int signo)
+{
+	handle_sigint(signo);
+	handle_sigtstp_sigquit(signo);
 }
 
 int	handle_d(t_data *data, char *line)

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:40 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 09:26:28 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 13:03:17 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// takes the input and trims the spaces and tabs of every 
-// word outside the quotes
 char	*trim_input(char *input)
 {
 	char	*str;
@@ -79,14 +77,4 @@ int	ft_has_only_digit(char *str)
 		str++;
 	}
 	return (1);
-}
-
-int	arraylen(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }

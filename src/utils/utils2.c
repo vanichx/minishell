@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:45:36 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/19 13:12:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 13:02:55 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ingores all whitespaces before the first character
 char	*ignore_spaces(char *input)
 {
 	while (*input == ' ' || (*input >= 9 && *input <= 13))
@@ -20,7 +19,6 @@ char	*ignore_spaces(char *input)
 	return (input);
 }
 
-// checks if the string contains only ascii characters
 int	is_only_ascii(char *str)
 {
 	while (*str)
@@ -29,7 +27,6 @@ int	is_only_ascii(char *str)
 	return (1);
 }
 
-// duplicates a 2d array
 char	**dup_2darray(char **array)
 {
 	int		i;
@@ -56,7 +53,6 @@ char	**dup_2darray(char **array)
 	return (dup);
 }
 
-// counts the length of a 2d array
 int	len_2darray(char **array)
 {
 	int	i;
@@ -67,7 +63,6 @@ int	len_2darray(char **array)
 	return (i);
 }
 
-// turnes true if the character is in the string
 int	is_char_in_str(char c, char *str)
 {
 	while (*str)

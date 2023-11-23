@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 18:58:53 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:26:47 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,25 +146,13 @@ void		sort_envir_list(t_envir *list);
 t_envir		*copy_and_sort_envir_list(t_envir *original);
 void		print_env_node_sorted(t_envir *env_node, int fd_out);
 
-/* exit.c */
-void		exit_shell(char *message, int exit_code, t_data *data);
-
 /* free.c */
-void		free_data(t_data *data);
 void		free_heredoc_files(t_heredoc_file *head);
-void		free_temp_data(t_data *data);
-void		free_envir(t_envir *envir);
-void		free_2darray(char **array);
+
+
 void		print2darray(char **array);
 
-/* handle_input.c */
 int			execute_exit(t_data *data, t_tree *tree);
-void		print_parsed_input(char *command);
-int			is_valid_env(char *str);
-int			is_valid_env2(char *str);
-
-/* init_data.c */
-void		init_data(t_data **data, char **envp);
 
 /* parsing_commads.c */
 int			lexical_analysis(t_data *data, char *input);
@@ -173,30 +161,13 @@ int			parse_command(t_data *data);
 void		child(t_data *data);
 // static char			*find_executable_path(char **paths, char *cmd);
 
-/* reset.c */
-void		reset_data(t_data *data);;
-
-/* signals.c */
-int			handle_d(t_data *data, char *line);
-void		handle_c(int signo);
-void		handle_signal(void);
 void		start_loop(t_data *data);
 
 /* shlvl.c */
 void		incr_shell_lvl(t_data *data);
 void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
 
-/* utils.c */
-char		*ignore_spaces(char *input);
-char		**dup_2darray(char **array);
-int			is_only_ascii(char *str);
-int			len_2darray(char **array);
-int			ft_has_only_digit(char *str);
-int			only_spaces_parenth(char *str);
-char		*trim_input(char *input);
-void		process_input(char *input, char *str, int *i, int *j);
-char		**ft_split_args(char *s, char c);
-int			arraylen(char **str);
+
 
 /* quotes.c */
 int			odd_quote(char *str, t_data *data);
@@ -217,12 +188,10 @@ int			has_dollar(char *str);
 
 
 /* tokens */
-int			ft_is_in_stri(char c, char *str);
-int			is_chr_str(char c, char *str);
+
 void		tokenise(t_data *data, char *str);
 int			find_token2(int i, char *str, char *splt);
 int			find_token(t_data *data, char *str, int *i, t_token **head);
-void		free_tokens(t_token **begin, void (*del)(void *));
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 t_token		*last_token(t_token *lst);
@@ -285,9 +254,6 @@ int			check_first_half_pipe_or(t_token *tmp);
 int			check_second_half_pipe_or(t_token *tmp);
 int			check_numbers(t_token *tmp);
 
-/* Command Parsing*/
-int			token_len(t_token *token);
-
 /* Wildcard */
 char		**get_root_directory(void);
 int			count_root_directory(void);
@@ -317,7 +283,7 @@ int			check_parenthesis(int parenCount, int parenth_total);
 t_token		*copy_tokens(t_token *head);
 
 /*Binary Tree*/
-void		free_tree(t_tree **tree);
+
 int			tokenise_for_tree(t_token *t_parenth, t_data *data);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
@@ -342,38 +308,13 @@ int			echo_handle_option(char **args);
 char		*handle_dollar_question(t_data *data, char **arg);
 int			extract_var_name(char **arg, char **var_name);
 int			handle_env_var(t_data *data, char *var_name);
-// int			echo_handle_quotes(char *arg, char qoute);
-// int			echo_handle_dollar(t_data *data, char *arg);
 int			execute_echo(char *args[], int fd_out);
 
-
-
-
-
-
 /* execute_redout.c */
-// int			execute_redout(t_data *data, t_tree *tree, int file_found);
 int			get_output_file(t_tree *tree);
-// int			handle_child_process_redout(t_data *data, t_tree *tree, int file_found);
-// int			handle_parent_process_redout(t_data *data, pid_t pid, int fd);
-// int			execute_left_right(t_data *data, t_tree *tree);
-// int			handle_file_error(t_data *data, char *file_name, t_tree *root, int fd);
-// int			handle_file_duplication(int fd);
-
-
-
-
-
-
-
-
 
 /* execute_redinp.c */
 int			get_input_file(t_tree *tree);
-
-// int			execute_redin(t_data *data, t_tree *tree, t_tree *root);
-// int			handle_child_process_redin(t_data *data, t_tree *tree, t_tree *root);
-// int			handle_parent_process_redin(t_data *data, pid_t pid);
 
 /* execute_delim.c */
 int			execute_delim(t_token **head, t_data *data);
@@ -429,6 +370,79 @@ int			execute_special_left(t_data *data, t_tree *tree);
 
 int 		execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
 int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out);
+
+
+
+
+
+
+
+/////////////NORM FIXED////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+/* exit.c */
+void		exit_shell(char *message, int exit_code, t_data *data);
+
+/* free.c */
+void		free_data(t_data *data);
+void		free_temp_data(t_data *data);
+void		free_tokens(t_token **begin, void (*del)(void *));
+void		free_envir(t_envir *envir);
+
+/* free2.c */
+void		free_2darray(char **array);
+void		free_tree(t_tree **tree);
+
+/* handle_input.c */
+void		print_parsed_input(char *command);
+int			is_valid_env(char *str);
+int			is_valid_env2(char *str);
+
+/* init_data.c */
+void		init_data(t_data **data, char **envp);
+
+/* reset.c */
+void		reset_data(t_data *data);
+
+/* signals.c  */
+void		handle_signal(void);
+void		handle_sigint(int signo);
+void		handle_sigtstp_sigquit(int signo);
+void		handle_c(int signo);
+int			handle_d(t_data *data, char *line);
+
+/* utils1.c	*/
+char		*trim_input(char *input);
+void		process_input(char *input, char *str, int *i, int *j);
+int			ft_is_in_stri(char c, char *str);
+int			is_chr_str(char c, char *str);
+int			ft_has_only_digit(char *str);
+
+/* utils2.c */
+char		*ignore_spaces(char *input);
+int			is_only_ascii(char *str);
+char		**dup_2darray(char **array);
+int			len_2darray(char **array);
+int			is_char_in_str(char c, char *str);
+
+/* utils3.c */
+int			only_spaces_parenth(char *str);
+int			token_len(t_token *token);
+
+/* utils4.c */
+int			ft_countarr_args(char *s, char c);
+int			ft_arrarr_args(char **arr, char *s, char c, int str);
+char		**ft_split_args(char *s, char c);
+int			arraylen(char **str);
 
 extern pid_t child_pid;
 
