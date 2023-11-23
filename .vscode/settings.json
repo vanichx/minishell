@@ -36,6 +36,7 @@
 		"tuple": "c",
 		"type_traits": "c",
 		"__string": "c",
-		"_rsize_t.h": "c"
+		"_rsize_t.h": "c",
+		"ios": "c"
 	}
 }

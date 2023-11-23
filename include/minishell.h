@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 16:51:36 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:05:20 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,21 +170,16 @@ void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
 
 
 /* quotes.c */
-int			odd_quote(char *str, t_data *data);
-char		*expand_quotes(t_data *data, char *s);
-int			special_chars(char *str);
-int			is_escaped(char *s, int pos);
 int			in_quotes(char *s, int pos);
 void		find_quotes(char **str, t_data *data);
-int			has_quotes(char *str);
-char		*expand_dollar(t_data *data, char *s, int *i);
+
+
 int			check_single_quote(char *s, int *i, int pos);
 int			check_double_quote(char *s, int *i, int pos);
-char		*expand_single_quotes(char *s, int *i, char *result);
-char		*expand_double_quotes(t_data *data, char *s, int *i, char *result);
-char		*expand_dollar_and_join(t_data *data, char *s, int *i, char *result);
+
+
 int			is_valid_env_char(char c);
-int			has_dollar(char *str);
+
 
 
 /* tokens */
@@ -356,43 +351,52 @@ int 		execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
 int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /////////////NORM FIXED////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* check_quotes.c */
+int			is_valid_env_char(char c);
+void		find_quotes(char **str, t_data *data);
+int			check_double_quote(char *s, int *i, int pos);
+int			check_single_quote(char *s, int *i, int pos);
+int			in_quotes(char *s, int pos);
+
+/* expaning.c */
+char		*expand_dollar_and_join(t_data *data, char *s, int *i, char *result);
+char		*expand_quotes(t_data *data, char *s);
+char		*expand_double_quotes(t_data *data, char *s, int *i, char *result);
+char		*expand_single_quotes(char *s, int *i, char *result);
+char		*expand_dollar(t_data *data, char *s, int *i);
+
+/* quote_errors.c */
+int			odd_quote(char *str, t_data *data);/////////////////////////////NORM///////////////////////////
+
+/* quotes_utils.c */
+int			is_escaped(char *s, int pos);
+char		first_quote(char *str);
+int			special_chars(char *str);
+int			has_quotes(char *str);
+int			has_dollar(char *str);
 
 /* build_tree_utils.c */
 int			create_left_node(t_tree **t, t_token **address, t_data *data, int flag);
@@ -424,9 +428,7 @@ void		handle_tree_type(t_tree **tree, t_tree *tmp, t_tree *tmp2);
 void		fix_command(t_tree **tree);
 
 /* fix_tree_utils.c */
-void		append_non_tword(t_tree *nontWord, t_tree **fntword, t_tree **lntword);
-void		process_word(t_tree *word, t_tree *address);
-void		find_command(t_tree **tree);
+void		find_command(t_tree **tree);///////////////////////////////////////NORM////////////////////
 
 /* fix_tree.c */
 void		fix_tree(t_tree **tree);
@@ -461,11 +463,7 @@ t_tree		*init_tree_root(void);
 int			is_special_type(t_token *address);
 
 /* tree_utils2.c */
-char		**dup_and_free_if_null(char **str1, char **str2);
-char		**allocate_result_array(char **str1, char **str2);
-void		copy_2darray_to_result(char **src, char **result, int *index);
-void		free_original_2darrays(char **str1, char **str2, int len1, int len2);
-char		**join2darrays(char **str1, char **str2);
+char		**join2darrays(char **str1, char **str2);/////////////////////NORM///////////////////
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);

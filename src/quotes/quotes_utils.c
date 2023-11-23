@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:04:19 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:13:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 17:43:57 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ int	special_chars(char *str)
 	return (0);
 }
 
-int has_quotes(char *str)
+int	has_quotes(char *str)
 {
 	while (*str)
 	{
-		if (*str == '\"' ||*str == '\'')
+		if (*str == '\"' || *str == '\'')
 			return (1);
 		str++;
 	}
 	return (0);
 }
 
-int has_dollar(char *str)
+int	has_dollar(char *str)
 {
 	while (*str)
 	{

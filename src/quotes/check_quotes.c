@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_utils2.c                                    :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:13:32 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/18 15:16:33 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 18:04:31 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_valid_env_char(char c)
 
 void	find_quotes(char **str, t_data *data)
 {
-	char *temp;
+	char	*temp;
 
 	temp = NULL;
 	while (*str)
@@ -39,8 +39,8 @@ void	find_quotes(char **str, t_data *data)
 
 int	check_double_quote(char *s, int *i, int pos)
 {
-	int double_q;
-	int j;
+	int	double_q;
+	int	j;
 
 	j = *i + 1;
 	double_q = 1;
@@ -50,21 +50,21 @@ int	check_double_quote(char *s, int *i, int pos)
 		{
 			double_q = 0;
 			if (pos > *i && pos < j)
-				return 2;
+				return (2);
 			else
-				break;
+				break ;
 		}
 		else
 			j++;
 	}
 	*i = j;
-	return double_q;
+	return (double_q);
 }
 
 int	check_single_quote(char *s, int *i, int pos)
 {
-	int single_q;
-	int j;
+	int	single_q;
+	int	j;
 
 	j = *i + 1;
 	single_q = 1;
@@ -74,22 +74,23 @@ int	check_single_quote(char *s, int *i, int pos)
 		{
 			single_q = 0;
 			if (pos > *i && pos < j)
-				return 1;
+				return (1);
 			else
-				break;
+				break ;
 		}
 		else
 			j++;
 	}
 	*i = j;
-	return single_q;
+	return (single_q);
 }
 
 int	in_quotes(char *s, int pos)
 {
-	int i = 0;
-	int result;
+	int	i;
+	int	result;
 
+	i = 0;
 	while (s[i] != '\0')
 	{
 		if (s[i] == '\"' || s[i] == '\'')

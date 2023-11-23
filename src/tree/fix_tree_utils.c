@@ -6,62 +6,60 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:05:39 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/23 16:18:41 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:37:49 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	append_non_tword(t_tree *nontWord, t_tree **fntword, t_tree **lntword)
+void find_command(t_tree **tree)
 {
-	if (!*fntword)
-	{
-		*fntword = nontWord;
-		*lntword = *fntword;
-	}
-	else
-	{
-		(*lntword)->right = nontWord;
-		*lntword = nontWord;
-	}
+	 t_tree *tmp;
+	 t_tree *tmp2;
+	 t_tree *address;
+	 char **command;
+
+	 command = NULL;
+
+	 if (!tree || !*tree)
+		  return;
+
+	 tmp2 = NULL;
+	 tmp = (*tree)->right;
+	 address = (*tree);
+	 t_tree *firstNonTWord = NULL;
+	 t_tree *lastNonTWord = NULL;
+
+	 while (tmp)
+	 {
+		  if (tmp->type != T_WORD)
+		  {
+				if (!firstNonTWord)
+				{
+					 firstNonTWord = tmp;
+					 lastNonTWord = firstNonTWord;
+				}
+				else
+				{
+					 lastNonTWord->right = tmp;
+					 lastNonTWord = tmp;
+				}
+				tmp2 = tmp;
+				tmp = tmp->right;
+		  }
+		  else if (tmp->type == T_WORD)
+		  {
+				address->args_array = join2darrays(address->args_array, tmp->args_array);
+				ft_strdel(&tmp->value);
+				tmp2 = tmp->right;
+				address->right = tmp2;
+				free(tmp);
+				tmp = tmp2;
+		  }
+	 }
+
+	 if (lastNonTWord)
+		  lastNonTWord->right = NULL; // Terminate the list of non-T_WORD tokens
+	address->right = firstNonTWord;
 }
 
-void	process_word(t_tree *word, t_tree *address)
-{
-	t_tree	*tmp2;
-
-	address->args_array = join2darrays(address->args_array, word->args_array);
-	ft_strdel(&word->value);
-	tmp2 = word->right;
-	address->right = tmp2;
-	free(word);
-}
-
-void	find_command(t_tree **tree)
-{
-	t_tree	*tmp;
-	t_tree	*address;
-	t_tree	*firstnontword;
-	t_tree	*lastnontword;
-
-	tmp = (*tree)->right;
-	address = *tree;
-	firstnontword = NULL;
-	lastnontword = NULL;
-	while (tmp)
-	{
-		if (tmp->type != T_WORD)
-		{
-			append_non_tword(tmp, &firstnontword, &lastnontword);
-			tmp = tmp->right;
-		}
-		else if (tmp->type == T_WORD)
-		{
-			process_word(tmp, address);
-			tmp = tmp->right;
-		}
-	}
-	if (lastnontword)
-		lastnontword->right = NULL;
-	address->right = firstnontword;
-}
