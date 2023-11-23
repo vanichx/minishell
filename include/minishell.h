@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 13:26:47 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:51:36 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,15 +254,9 @@ int			check_first_half_pipe_or(t_token *tmp);
 int			check_second_half_pipe_or(t_token *tmp);
 int			check_numbers(t_token *tmp);
 
-/* Wildcard */
-char		**get_root_directory(void);
-int			count_root_directory(void);
-int			has_asterisk(char *str);
+
+
 void		find_asterisk(t_token **head, t_data *data);
-void		extend_asterisk(t_token *token, t_data *data);
-void		sort_directory(char **arr);
-void		check_matches(t_token *token, char **root_directory);
-int			match_pattern(const char *pattern, const char *string);
 
 
 
@@ -280,19 +274,10 @@ int			find_token3(t_data *data, char *str, int *i, t_token **head);
 int			find_parenthesis(char *str);
 int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
 int			check_parenthesis(int parenCount, int parenth_total);
-t_token		*copy_tokens(t_token *head);
 
 /*Binary Tree*/
 
-int			tokenise_for_tree(t_token *t_parenth, t_data *data);
-t_data		*init_temp_data(void);
-t_token		*find_token_parenth(t_token **head);
-t_token		*find_tree_root_right(t_token **root_token);
-t_token		*find_first_root(t_token **root_token);
-t_token		*find_tree_root_left(t_token **root_token);
-int			is_special_type(t_token *address);
-t_tree		*init_tree_root(void);
-int			built_tree(t_tree **tree, t_token *address, t_data *data);
+
 int			init_tree(t_data *data, t_token **head);
 void 		print_tree(t_tree *tree, int depth);
 void		fix_tree(t_tree **tree);
@@ -300,7 +285,6 @@ void		fix_command(t_tree **tree);
 void		fix_redirection(t_tree **tree);
 void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
 
-char		**join2darrays(char **str1, char **str2);
 void		find_command(t_tree **tree);
 
 /* echo.c */
@@ -377,17 +361,111 @@ int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////////NORM FIXED////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/* build_tree_utils.c */
+int			create_left_node(t_tree **t, t_token **address, t_data *data, int flag);
+int			create_right_node(t_tree **t, t_token **address, t_data *data, int flag);
+int			tokenise_and_find_root(t_token **address, t_data *data);
 
+/* build_tree.c */
+int			handle_left_node(t_tree **tmp_tree, t_token **adr, t_data *data, int *flag);
+int			handle_right_node(t_tree **tmp_tree, t_token **adr, t_data *data, int *flag);
+int			built_tree(t_tree **tree, t_token *address, t_data *data);
 
+/* extend_asterisk.c */////////////////////////////////////////////////////NORM//////////////////////
+void		extend_asterisk(t_token *token, t_data *data);/////////////////NORM//////////////////////
+void		check_matches(t_token *token, char **root_directory);//////////NORM//////////////////////
+int			match_pattern(const char *pattern, const char *string);////////NORM//////////////////////
+char		**get_root_directory(void);////////////////////////////////////NORM//////////////////////
+void		sort_directory(char **arr);////////////////////////////////////NORM//////////////////////
+int			count_root_directory(void);////////////////////////////////////NORM//////////////////////
+int			has_asterisk(char *str);///////////////////////////////////////NORM//////////////////////
 
+/* find_tree_root.c */
+t_token		*handle_token_type(t_token *tok, int *pipe, t_token **pipetoken);
+t_token		*find_first_root(t_token **root_token);
+t_token		*find_tree_root_right(t_token **root_token);
+t_token		*find_tree_root_left(t_token **root_token);
 
+/* fix_tree_command.c */
+void		handle_tree_type(t_tree **tree, t_tree *tmp, t_tree *tmp2);
+void		fix_command(t_tree **tree);
 
+/* fix_tree_utils.c */
+void		append_non_tword(t_tree *nontWord, t_tree **fntword, t_tree **lntword);
+void		process_word(t_tree *word, t_tree *address);
+void		find_command(t_tree **tree);
 
+/* fix_tree.c */
+void		fix_tree(t_tree **tree);
+void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
+void		handle_word_type(t_tree **tree, t_tree **temp, t_tree **temp_redir);
+void		fix_redirection(t_tree **tree);
 
+/* print_tree.c */
+void		print_tabs(int count);
+void		print_node_info(t_tree *tree, int depth);
+void		print_args_array(char **args_array);
+void		print_child_node(t_tree *child, int depth, const char *position);
+void		print_tree(t_tree *tree, int depth);
 
+/* tokenise_for_tree.c */
+t_token		*init_temp_data_and_copy_tokens(t_token *t_parenth);
+t_token		*find_tail(t_token *head);
+void		handle_head(t_token *atach_left, t_token *head, t_data *data);
+void		handle_tail(t_token *atach_left, t_token *atach_right, t_token *tail);
+int			tokenise_for_tree(t_token *t_parenth, t_data *data);
 
+/* tree_init.c */
+int			handle_parentheses(t_data *data, t_token **root_token, t_token **head);
+void		handle_non_parentheses(t_data *data, t_token **root_token);
+int			init_tree(t_data *data, t_token **head);
+
+/* tree_utils.c */
+t_data		*init_temp_data(void);
+t_token 	*find_token_parenth(t_token **head);
+t_token 	*copy_tokens(t_token *head);
+t_tree		*init_tree_root(void);
+int			is_special_type(t_token *address);
+
+/* tree_utils2.c */
+char		**dup_and_free_if_null(char **str1, char **str2);
+char		**allocate_result_array(char **str1, char **str2);
+void		copy_2darray_to_result(char **src, char **result, int *index);
+void		free_original_2darrays(char **str1, char **str2, int len1, int len2);
+char		**join2darrays(char **str1, char **str2);
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);
