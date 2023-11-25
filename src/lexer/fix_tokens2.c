@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:09:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 17:49:43 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:11:56 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void	find_asterisk(t_token **head, t_data *data)
 		if (tmp->type == T_WORD)
 		{
 			if ((tmp->prev && tmp->prev->type == T_DELIM)
-				|| (has_asterisk(tmp->word) && tmp->prev && tmp->prev->prev && tmp->prev->type == T_SPACE
+				|| (has_asterisk(tmp->word) && tmp->prev \
+				&& tmp->prev->prev && tmp->prev->type == T_SPACE \
 				&& tmp->prev->prev->type == T_DELIM))
 			{
 				printf("%u\n", tmp->prev->type);
