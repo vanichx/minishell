@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 12:15:29 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 12:56:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,6 +314,12 @@ void		execute_env(t_envir **env, int fd_out);
 char		*get_curr_dir(void);
 char		*get_home_dir(void);
 int			execute_export(t_data *data, t_tree *tree, int fd_out);
+int			handle_no_equal_sign(t_data *data, char *arg);
+int			handle_equal_sign(t_data *data, char *arg);
+int			process_export_args(t_data *data, t_tree *tree);
+void		handle_new_variable(t_envir **env_list, char *var_name, char *var_value);
+void		handle_visible_variable(t_envir *temp);
+void		handle_existing_variable(t_envir *temp, char *var_value);
 
 /* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);

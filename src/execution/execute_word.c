@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 10:49:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 12:29:25 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 	if (is_builtin(tree->args_array[0]))
 	{
 		if (execute_builtin(data, tree, fd_out))
-			return (1);
+			return (data->exit_status);
 	}
 	else
 	{
