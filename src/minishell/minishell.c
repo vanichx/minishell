@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:50:43 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 04:38:12 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:13:26 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	child_pid = 0;
+pid_t	g_child_pid = 0;
 
 int	main(int argc, char **argv, char *envp[])
 {
 	t_data	*data;
+	char	**env;
+
 	(void)argc;
 	(void)argv;
-	char **env;
-	
 	data = NULL;
 	env = NULL;
 	if (!*envp)
@@ -42,7 +42,7 @@ char	**create_envp(void)
 {
 	char	**envp;
 	char	cwd[PATH_MAX];
-	
+
 	envp = malloc(sizeof(char *) * 4);
 	if (!envp)
 		exit(1);

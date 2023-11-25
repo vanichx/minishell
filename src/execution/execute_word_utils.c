@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 10:26:41 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 10:38:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:15:21 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,16 @@ void	execute_forked_command(t_data *data, t_tree *tree, char *exec_path)
 
 int	handle_exit_status(t_data *data, pid_t pid, int status, char **exec_path)
 {
-	if (child_pid == pid + 1)
-		return (data->exit_status = 130, child_pid = 0, \
+	if (g_child_pid == pid + 1)
+		return (data->exit_status = 130, g_child_pid = 0, \
 		ft_strdel(exec_path), 1);
-	else if (child_pid == pid + 2)
-		return (data->exit_status = 131, child_pid = 0, \
+	else if (g_child_pid == pid + 2)
+		return (data->exit_status = 131, g_child_pid = 0, \
 		ft_strdel(exec_path), 1);
 	if (WIFEXITED(status))
 		return (data->exit_status = WEXITSTATUS(status), \
-		child_pid = 0, ft_strdel(exec_path), 1);
-	return (child_pid = 0, ft_strdel(exec_path), 0);
+		g_child_pid = 0, ft_strdel(exec_path), 1);
+	return (g_child_pid = 0, ft_strdel(exec_path), 0);
 }
 
 int	fork_command(t_command_args *args)
@@ -86,7 +86,7 @@ int	fork_command(t_command_args *args)
 	}
 	else
 	{
-		child_pid = pid;
+		g_child_pid = pid;
 		waitpid(pid, &status, 0);
 		return (handle_exit_status(args->data, pid, status, &args->exec_path));
 	}

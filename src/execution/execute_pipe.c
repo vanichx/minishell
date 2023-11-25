@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 11:11:25 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 12:04:37 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:14:59 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static pid_t	create_and_check_child(t_pipe_info *args)
 
 static void	wait_for_child(pid_t pid, int *status)
 {
-	child_pid = pid;
+	g_child_pid = pid;
 	waitpid(pid, status, 0);
-	child_pid = 0;
+	g_child_pid = 0;
 }
 
 int	execute_pipe(t_data *data, t_tree *tree)

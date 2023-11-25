@@ -22,32 +22,40 @@ void connect_nodes(t_tree **temp_redir, t_tree *temp2)
 	 }
 }
 
+void process_tree_nodes(t_tree **tree)
+{
+    t_tree *temp, *temp_redir;
+
+    temp = *tree;
+    temp_redir = (*tree)->left;
+
+    while (temp && temp->right && temp->right->type != T_NEWLINE) {
+        if (temp->right->type == T_DELIM || temp->right->type == T_RED_INP)
+        {
+            t_tree *temp2 = temp->right;
+            temp->right = temp2->right;
+
+            connect_nodes(&temp_redir, temp2);
+        }
+        else
+            temp = temp->right;
+    }
+    (*tree)->left = temp_redir;
+}
+
 void fix_redirection(t_tree **tree)
 {
-	 t_tree *temp;
-	 t_tree *temp_redir;
+	t_tree	*temp;
+	t_tree	*temp_redir;
 
-	 temp = NULL;
-	 temp_redir = NULL;
-	 if (!tree || !*tree)
-		  return;
-	 if ((*tree)->type == T_WORD) {
-		  temp = *tree;
-		  temp_redir = (*tree)->left;
-
-		  while (temp && temp->right && temp->right->type != T_NEWLINE) {
-				if (temp->right->type == T_DELIM || temp->right->type == T_RED_INP)
-			{
-					 t_tree *temp2 = temp->right;
-					 temp->right = temp2->right;
-
-					 connect_nodes(&temp_redir, temp2);
-				}
-			else
-					 temp = temp->right;
-		  }
-		  (*tree)->left = temp_redir;
-	 }
+	temp = NULL;
+	temp_redir = NULL;
+	if (!tree || !*tree)
+		return;
+	if ((*tree)->type == T_WORD)
+	{
+		process_tree_nodes(tree);
+	}
 	else
 	{
 		  fix_redirection(&(*tree)->left);
@@ -57,36 +65,38 @@ void fix_redirection(t_tree **tree)
 
 void fix_command(t_tree **tree)
 {
-	t_tree *tmp;
-	 t_tree *tmp2;
+	if (!tree || !*tree)
+		return ;
+	if ((*tree)->type == T_APPEND || (*tree)->type == T_DELIM|| (*tree)->type == T_RED_INP
+		|| (*tree)->type == T_RED_OUT ||(*tree)->type == T_WORD)
+		process_fix_com(tree);
+	else
+	{
+		fix_command(&(*tree)->left);
+		fix_command(&(*tree)->right);
+	}
+}
 
-	 if (!tree || !*tree)
-		  return ;
+void process_fix_com(t_tree **tree)
+{
+    t_tree *tmp;
+	t_tree *tmp2;
 
-	 if ((*tree)->type == T_APPEND || (*tree)->type == T_DELIM|| (*tree)->type == T_RED_INP
-		  || (*tree)->type == T_RED_OUT ||(*tree)->type == T_WORD)
-	 {
-		  tmp = init_tree_root();
-		  tmp->type = T_WORD;
-		  tmp2 = *tree;
-		  tmp->right = tmp2;
-		  *tree = tmp;
-		  find_command(&tmp);
-		if (!tmp->args_array)
-		{
-			tmp->value = ft_strdup("");
-			tmp->args_array = (char**)malloc(sizeof(char*) * 2);
-			tmp->args_array[0] = ft_strdup("");
-			tmp->args_array[1] = NULL;
-		}
-		else
-			tmp->value = ft_strdup(tmp->args_array[0]);
-	 }
-	 else
-	 {
-		  fix_command(&(*tree)->left);
-		  fix_command(&(*tree)->right);
-	 }
+    tmp = init_tree_root();
+    tmp->type = T_WORD;
+    tmp2 = *tree;
+    tmp->right = tmp2;
+    *tree = tmp;
+    find_command(&tmp);
+    if (!tmp->args_array)
+    {
+        tmp->value = ft_strdup("");
+        tmp->args_array = (char**)malloc(sizeof(char*) * 2);
+        tmp->args_array[0] = ft_strdup("");
+        tmp->args_array[1] = NULL;
+    }
+    else
+        tmp->value = ft_strdup(tmp->args_array[0]);
 }
 
 void find_command(t_tree **tree)

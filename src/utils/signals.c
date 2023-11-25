@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 10:01:27 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:21:27 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	handle_sigint(int signo)
 		if (isatty(STDIN_FILENO))
 		{
 			write(1, "\n", 1);
-			if (child_pid == 42)
-				child_pid = 44;
-			if (child_pid != 0 && child_pid != 44)
+			if (g_child_pid == 42)
+				g_child_pid = 44;
+			if (g_child_pid != 0 && g_child_pid != 44)
 			{
-				kill(child_pid, SIGINT);
-				child_pid++;
+				kill(g_child_pid, SIGINT);
+				g_child_pid++;
 			}
 			else
 			{
@@ -57,15 +57,15 @@ void	handle_sigtstp_sigquit(int signo)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			if (child_pid == 0)
+			if (g_child_pid == 0)
 			{
 				rl_replace_line("", 0);
-				rl_redisplay();	
+				rl_redisplay();
 			}
 			else
 			{
-				kill(child_pid, signo);
-				child_pid += 2;
+				kill(g_child_pid, signo);
+				g_child_pid += 2;
 			}
 		}
 	}

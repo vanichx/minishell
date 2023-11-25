@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/25 04:16:48 by eseferi          ###   ########.fr        #
+#    Updated: 2023/11/25 16:18:57 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

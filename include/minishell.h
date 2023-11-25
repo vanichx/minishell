@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 12:56:48 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:13:37 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -484,6 +484,7 @@ t_token		*find_tree_root_left(t_token **root_token);
 /* fix_tree_command.c */
 void		handle_tree_type(t_tree **tree, t_tree *tmp, t_tree *tmp2);
 void		fix_command(t_tree **tree);
+void		process_fix_com(t_tree **tree);
 
 /* fix_tree_utils.c */
 void		find_command(t_tree **tree);///////////////////////////////////////NORM////////////////////
@@ -578,6 +579,6 @@ int			ft_arrarr_args(char **arr, char *s, char c, int str);
 char		**ft_split_args(char *s, char c);
 int			arraylen(char **str);
 
-extern pid_t child_pid;
+extern pid_t g_child_pid;
 
 #endif

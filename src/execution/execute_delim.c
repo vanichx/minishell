@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_delim.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 07:46:25 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:14:33 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	process_heredoc(t_heredoc_info *info, t_data *data)
 	if (fd < 0)
 		return (printf("minishell: %s\n", strerror(errno)), 1);
 	add_heredoc_file(data, info->filename, fd);
-	child_pid = 42;
+	g_child_pid = 42;
 	while (1)
 	{
 		buf = readline("> ");
-		if (!buf || !ft_strcmp(info->limiter, buf) || child_pid == 44)
-			return (child_pid = 0, free(buf), close(fd), 0);
+		if (!buf || !ft_strcmp(info->limiter, buf) || g_child_pid == 44)
+			return (g_child_pid = 0, free(buf), close(fd), 0);
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
 		free(buf);
@@ -46,7 +46,7 @@ int	process_heredoc(t_heredoc_info *info, t_data *data)
 	if (buf)
 		free(buf);
 	info->heredoc_count++;
-	return (child_pid = 0, close (fd), 0);
+	return (g_child_pid = 0, close (fd), 0);
 }
 
 int	execute_delim(t_token **head, t_data *data)
@@ -102,7 +102,7 @@ void	add_heredoc_file(t_data *data, char *filename, int id)
 // 	write(STDOUT_FILENO, str, 2);
 // 	while (read(STDIN_FILENO, &buffer, 1) > 0)
 // 	{
-// 		if (child_pid == 43 || buffer == '\n')
+// 		if (g_child_pid == 43 || buffer == '\n')
 // 			break ;
 // 		tmp = realloc(line, len + 2);
 // 		if (!tmp)

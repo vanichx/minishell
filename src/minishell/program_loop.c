@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 18:43:18 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:12:12 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	start_loop(t_data *data)
 {
 	char	*line;
-	
+
 	while (1)
 	{
 		reset_data(data);
@@ -25,10 +25,9 @@ void	start_loop(t_data *data)
 		if (ft_strlen(line) > 0)
 			add_history(line);
 		if (odd_quote(line, data))
-			continue ;   
+			continue ;
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		// data->input_line = ft_strdup("cmd1 << delim1 cmd2 << delim2 cmd3  && cmd4 << delim5 cmd5 > file_name ");
 		if ((special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
@@ -40,4 +39,3 @@ void	start_loop(t_data *data)
 			continue ;
 	}
 }
-
