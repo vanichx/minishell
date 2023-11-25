@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 06:29:33 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:42:52 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,21 @@ void	free_paths(char **paths, char **original_paths)
 		paths++;
 	}
 	free(original_paths);
+}
+
+static char	*duplicate_cmd_and_free_paths(char *cmd, char **paths)
+{
+	char	*command;
+
+	command = ft_strdup(cmd);
+	free_2darray(paths);
+	return (command);
+}
+
+char	*free_paths_and_return_cmd(char **paths, char **orig_paths, char *cmd)
+{
+	free_paths(paths, orig_paths);
+	return (cmd);
 }
 
 char	*find_executable_path(t_data *data, char *cmd)
@@ -39,28 +54,16 @@ char	*find_executable_path(t_data *data, char *cmd)
 	while (*paths)
 	{
 		if (access(cmd, X_OK) == 0)
-		{
-			command = ft_strdup(cmd);
-			return (free_2darray(paths), command);
-		}
+			return (duplicate_cmd_and_free_paths(cmd, paths));
 		tmp = ft_strjoin(*paths, "/");
 		command = ft_strjoin(tmp, cmd);
 		ft_strdel(&tmp);
 		if (access(command, F_OK) == 0)
-		{
-			free_paths(paths, original_paths);
-			return (command);
-		}
+			return (free_paths_and_return_cmd(paths, original_paths, command));
 		ft_strdel(&command);
 		paths++;
 	}
-	paths = original_paths;
-	while (*paths)
-	{
-		ft_strdel(paths);
-		paths++;
-	}
-	free(original_paths);
+	free_paths(paths, original_paths);
 	return (NULL);
 }
 
