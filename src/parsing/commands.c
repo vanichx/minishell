@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 18:45:56 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 06:29:33 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_envir	*find_envir_variable(t_data *data, char *var_name, int len)
 	current = data->env_list;
 	while (current)
 	{
-		if (ft_strcmp(current->var_name, var_name) == 0)
+		if (ft_strncmp(current->var_name, var_name, len) == 0)
 			return (current);
 		current = current->next;
 	}

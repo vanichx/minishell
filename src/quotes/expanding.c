@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expaning.c                                         :+:      :+:    :+:   */
+/*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 18:42:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 17:59:45 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 06:40:41 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@ char	*expand_quotes(t_data *data, char *s)
 	while (s[++i])
 	{
 		if (s[i] == '\"')
-			result = expand_double_quotes(data, s, &i, result);
+			result = process_dquote(data, s, &i, result);
 		else if (s[i] == '\'')
-			result = expand_single_quotes(s, &i, result);
+			result = process_squote(s, &i, result);
 		else if (s[i] == '$')
 			result = expand_dollar_and_join(data, s, &i, result);
 		else
 		{
 			temp = ft_substr(s, i, 1);
 			if (temp)
-			{
 				result = ft_strjoin_double_free(result, temp);
-			}
 		}
 	}
 	return (result);
@@ -70,9 +68,7 @@ char	*expand_double_quotes(t_data *data, char *s, int *i, char *result)
 		{
 			temp = ft_substr(s, *i, 1);
 			if (temp)
-			{
 				result = ft_strjoin_double_free(result, temp);
-			}
 		}
 	}
 	return (result);

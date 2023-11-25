@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 04:13:56 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 06:38:36 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,6 +417,8 @@ char		*expand_quotes(t_data *data, char *s);
 char		*expand_double_quotes(t_data *data, char *s, int *i, char *result);
 char		*expand_single_quotes(char *s, int *i, char *result);
 char		*expand_dollar(t_data *data, char *s, int *i);
+char		*process_squote(char *s, int *i, char *result);
+char		*process_dquote(t_data *data, char *s, int *i, char *result);
 
 /* quote_errors.c */
 int			odd_quote(char *str, t_data *data);/////////////////////////////NORM///////////////////////////
