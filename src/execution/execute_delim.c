@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_delim.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 17:04:53 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 06:03:42 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,32 @@ char	*create_temp_filename(t_heredoc_info *info)
 	return (temp_filename);
 }
 
-void	process_heredoc(t_heredoc_info *info, t_data *data)
+int	process_heredoc(t_heredoc_info *info, t_data *data)
 {
 	int		fd;
 	char	*buf;
 
 	info->filename = create_temp_filename(info);
-	
 	fd = open(info->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
-	{
-		printf("minishell: %s\n", strerror(errno));
-		return;
-	}
+		return (printf("minishell: %s\n", strerror(errno)), 1);
 	add_heredoc_file(data, info->filename, fd);
+	child_pid = 42;
 	while (1)
 	{
-		buf = readline("> ");
+		buf = get_heredoc_line();
+		if (child_pid == 43)
+			return (free(buf), close(fd), child_pid = 0, 1);
 		if (!buf || !ft_strcmp(info->limiter, buf))
-			break ;
+			return (free(buf), close(fd), child_pid = 0, 0);
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
 		free(buf);
 	}
 	if (buf)
 		free(buf);
-	close(fd);
 	info->heredoc_count++;
+	return (child_pid = 0, close (fd), 0);
 }
 
 int	execute_delim(t_token **head, t_data *data)
@@ -68,7 +67,8 @@ int	execute_delim(t_token **head, t_data *data)
 			else
 				info.filename = current->next->word;
 			info.limiter = info.filename;
-			process_heredoc(&info, data);
+			if (process_heredoc(&info, data))
+				return (ft_strdel(&info.filename), 1);
 			if (current->next->type == T_SPACE)
 				current->next->next->word = ft_strdup(info.filename);
 			else
@@ -80,7 +80,7 @@ int	execute_delim(t_token **head, t_data *data)
 	return (0);
 }
 
-void add_heredoc_file(t_data *data, char *filename, int id)
+void	add_heredoc_file(t_data *data, char *filename, int id)
 {
 	t_heredoc_file	*new_file;
 
@@ -91,18 +91,31 @@ void add_heredoc_file(t_data *data, char *filename, int id)
 	data->heredoc_file = new_file;
 }
 
-void free_heredoc_files(t_heredoc_file *head)
+char	*get_heredoc_line(void)
 {
-    t_heredoc_file *tmp;
-	int				ret;
-    while (head != NULL)
-    {
-        tmp = head->next;
-		ret = unlink(head->filename);
-		if (ret < 0)
-			printf("minishell: %s\n", strerror(errno));
-        free(head->filename);
-        free(head);
-		head = tmp;
-    }
+	char	*line;
+	char	buffer;
+	size_t	len;
+	char	*tmp;
+
+	line = NULL;
+	tmp = NULL;
+	len = 0;
+	write(STDOUT_FILENO, "> ", 2);
+	while (read(STDIN_FILENO, &buffer, 1) > 0)
+	{
+		if (child_pid == 43 || buffer == '\n')
+			break ;
+		tmp = realloc(line, len + 2);
+		if (!tmp)
+		{
+			ft_strdel(&line);
+			return (NULL);
+		}
+		line = tmp;
+		line[len++] = buffer;
+	}
+	if (line)
+		line[len] = '\0';
+	return (line);
 }

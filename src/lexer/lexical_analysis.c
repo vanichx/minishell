@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analysis.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 17:10:28 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:36:01 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,9 @@ int	set_token_type(t_data *data)
 	if (syntax_errors(data->token_list, data))
 		return (1);
 	if (execute_delim(&data->token_list, data))
-		return (1);
+		return (child_pid = 0, 1);
 	if (lexic_with_parenth(data))
-		return (1);
+		return (write(STDOUT_FILENO, "\n", 1) ,1);
 	clean_space_tokens(&data->token_list);
 	concantenate_word_tokens(&data->token_list);
 	// print_tokens(data);

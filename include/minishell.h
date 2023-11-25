@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 18:46:03 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:13:56 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,8 +266,10 @@ int			get_input_file(t_tree *tree);
 /* execute_delim.c */
 int			execute_delim(t_token **head, t_data *data);
 char		*create_temp_filename(t_heredoc_info *info);
-void		process_heredoc(t_heredoc_info *info, t_data *data);
+int			process_heredoc(t_heredoc_info *info, t_data *data);
 void		add_heredoc_file(t_data *data, char *filename, int id);
+char		*get_heredoc_line(void);
+
 /* execute_pipe.c */
 int			execute_pipe(t_data *data, t_tree *tree);
 

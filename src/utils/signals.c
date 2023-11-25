@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 13:16:16 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 06:02:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void	handle_sigint(int signo)
 		if (isatty(STDIN_FILENO))
 		{
 			write(1, "\n", 1);
-			if (child_pid != 0)
+			if (child_pid == 42)
+				child_pid = 43;
+			if (child_pid != 0 && child_pid != 43 && child_pid != 42)
 				kill(child_pid, SIGINT);
-			else
+			else if (child_pid == 0 || child_pid == 43 || child_pid == 42)
 			{
 				rl_on_new_line();
 				rl_replace_line("", 0);
@@ -42,10 +44,7 @@ void	handle_sigint(int signo)
 			}
 		}
 		else
-		{
-			write(1, "\n", 1);
 			exit(EXIT_SUCCESS);
-		}
 	}
 }
 
@@ -53,6 +52,8 @@ void	handle_sigtstp_sigquit(int signo)
 {
 	if (signo == SIGTSTP || signo == SIGQUIT)
 	{
+		if (child_pid == 42)
+			child_pid = 43;
 		if (isatty(STDIN_FILENO))
 		{
 			rl_replace_line("", 0);

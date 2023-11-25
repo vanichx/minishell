@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 13:22:14 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 05:45:51 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,21 @@ void	free_envir(t_envir *envir)
 		tmp->var_value = NULL;
 	}
 	free(tmp);
+}
+
+void	free_heredoc_files(t_heredoc_file *head)
+{
+	t_heredoc_file	*tmp;
+	int				ret;
+
+	while (head != NULL)
+	{
+		tmp = head->next;
+		ret = unlink(head->filename);
+		if (ret < 0)
+			printf("minishell: %s\n", strerror(errno));
+		free(head->filename);
+		free(head);
+		head = tmp;
+	}
 }
