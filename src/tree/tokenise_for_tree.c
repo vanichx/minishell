@@ -6,47 +6,43 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/23 16:03:27 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:09:26 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*init_temp_data_and_copy_tokens(t_token *t_parenth)
+int	tokenise_for_tree(t_token *t_parenth, t_data *data)
 {
-	t_data	*temp_data;
-	t_token	*new_tokens;
+   	t_token *head;
+    t_token *tail;
+    t_token *temp;
+    t_token *atach_left;
+    t_token *atach_right;
+    t_data *temp_data;
+	t_token *new_tokens;
 
-	temp_data = init_temp_data();
-	temp_data->input_line = ft_strdup(t_parenth->word);
-	if (lexical_analysis_tree(temp_data, temp_data->input_line))
-		return (NULL);
+    atach_left = t_parenth->prev;
+    atach_right = t_parenth->next;
+
+    temp_data = init_temp_data();
+    temp_data->input_line = ft_strdup(t_parenth->word);
+    if (lexical_analysis_tree(temp_data, temp_data->input_line))
+        return (1);
 	new_tokens = copy_tokens(temp_data->token_list);
 	if (!new_tokens)
 	{
 		printf("malloc error\n");
-		return (NULL);
+		return (1);
 	}
 	free_temp_data(temp_data);
-	return (new_tokens);
-}
-
-t_token	*find_tail(t_token *head)
-{
-	t_token	*temp;
-	t_token	*tail;
-
+	head = new_tokens;
 	temp = head;
 	while (temp && temp->type != T_NEWLINE)
 		temp = temp->next;
 	tail = temp->prev;
 	ft_strdel(&temp->word);
 	free(temp);
-	return (tail);
-}
-
-void	handle_head(t_token *atach_left, t_token *head, t_data *data)
-{
 	if (!atach_left && head)
 	{
 		head->prev = NULL;
@@ -59,10 +55,6 @@ void	handle_head(t_token *atach_left, t_token *head, t_data *data)
 		atach_left->next = head;
 		head->prev = atach_left;
 	}
-}
-
-void	handle_tail(t_token *atach_left, t_token *atach_right, t_token *tail)
-{
 	if (atach_right->type && tail)
 	{
 		if (!atach_left)
@@ -79,22 +71,59 @@ void	handle_tail(t_token *atach_left, t_token *atach_right, t_token *tail)
 		atach_right->prev = tail;
 		tail->next = atach_right;
 	}
+    return (0);
 }
 
-int	tokenise_for_tree(t_token *t_parenth, t_data *data)
+t_data	*init_temp_data(void)
 {
-	t_token	*head;
-	t_token	*tail;
-	t_token	*atach_left;
-	t_token	*atach_right;
+	t_data *temp_data;
+	temp_data = malloc(sizeof(t_data));
+	temp_data->token_list = NULL;
+	temp_data->tree = NULL;
+	temp_data->env_list = NULL;
+	temp_data->sorted_env_list = NULL;
+	temp_data->input_line = NULL;
+	temp_data->input_minishell = NULL;
+	temp_data->curr_dir = NULL;
+	temp_data->exit_str = NULL;
+	return (temp_data);
+}
 
-	atach_left = t_parenth->prev;
-	atach_right = t_parenth->next;
-	head = init_temp_data_and_copy_tokens(t_parenth);
-	if (!head)
-		return (1);
-	tail = find_tail(head);
-	handle_head(atach_left, head, data);
-	handle_tail(atach_left, atach_right, tail);
-	return (0);
+t_token *find_token_parenth(t_token **head)
+{
+	t_token *tmp;
+	tmp = *head;
+	while (tmp)
+	{
+		if (tmp->type == T_PARENTHESES)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (tmp);
+}
+
+t_token *copy_tokens(t_token *head)
+{
+    t_token *tmp;
+    t_token *new_head;
+    t_token *new_tmp;
+
+    tmp = head;
+    new_head = NULL;
+    while (tmp)
+    {
+        new_tmp = malloc(sizeof(t_token));
+        if (!new_tmp)
+        {
+            free_tokens(&new_head, free);
+            return (NULL);
+        }
+        new_tmp->type = tmp->type;
+        new_tmp->word = ft_strdup(tmp->word);
+        new_tmp->next = NULL;
+        new_tmp->prev = NULL;
+        add_token(&new_head, new_tmp);
+        tmp = tmp->next;
+    }
+    return (new_head);
 }
