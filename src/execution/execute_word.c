@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 12:29:25 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 18:22:18 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 	return (fork_command(&args));
 }
 
-// this function will copy the envp list to a char **array
 char	**env(t_envir **lst)
 {
 	char	**envp;
@@ -95,7 +94,6 @@ void	fill_envp(char **envp, t_envir **lst)
 	envp[i] = NULL;
 }
 
-//this function will print the 2d array
 void	print2darray(char **array)
 {
 	int	i;

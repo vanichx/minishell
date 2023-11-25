@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 16:13:37 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:37:00 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,6 @@
 # include <errno.h>
 # include "libft.h"
 # include "stdbool.h"
-
-# define MAX_ENV_VARS 100
-# define MAX_DOLLAR_VALUE_LEN 100
-# define MAX_PATH_LEN 100
-# define MAX_CMD_LEN 100
-
-# define NEW_LINE_ERR "syntax error near unexpected token `newline'"
-# define SINGLE_PIPE_ERR "syntax error near unexpected token `|'"
-# define DOUBLE_PIPE_ERR "syntax error near unexpected token `||'"
-# define DEL_ERR "syntax error near unexpected token `<<'"
 
 typedef enum e_token_type {
 	T_WORD = 1,
@@ -147,258 +137,208 @@ typedef struct	s_pipe_info {
 	int		std_fd;
 }				t_pipe_info;
 
-
-
-/* environment.c */
-t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
-char		**env(t_envir **lst);
-char		**create_envp(void);
-
-
-/* free.c */
-void		free_heredoc_files(t_heredoc_file *head);
-
-
-void		print2darray(char **array);
-
-int			execute_exit(t_data *data, t_tree *tree);
-
-/* parsing_commads.c */
-int			lexical_analysis(t_data *data, char *input);
-// int			find_command_path(t_data *data, t_cmdexe *cmd);
-int			parse_command(t_data *data);
-void		child(t_data *data);
-// static char			*find_executable_path(char **paths, char *cmd);
-
-void		start_loop(t_data *data);
-
-/* shlvl.c */
-void		incr_shell_lvl(t_data *data);
-void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
-
-
-/* tokens */
-
-void		tokenise(t_data *data, char *str);
-int			find_token2(int i, char *str, char *splt);
-int			find_token(t_data *data, char *str, int *i, t_token **head);
-t_token		*create_token(t_data *data, int i);
-t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
-t_token		*last_token(t_token *lst);
-void		add_token(t_token **token, t_token *new);
-int			set_token_type(t_data *data);
-void		set_token_type2(t_token *token);
-int			set_token_type_tree(t_data *data);
-int			lexical_analysis_tree(t_data *data, char *input);
-
-
-
-
-void		add_token_front(t_token **head, t_token *new);
-int			tokens_len(t_token **head);
-void		fix_tokens(t_token **head, t_data *data);
-void		find_ortokens(t_token **head);
-void		find_andtokens(t_token **head);
-void		find_threein(t_token **head);
-void		find_threeout(t_token **head);
-void		find_append(t_token *current);
-void		find_delim(t_token *current);
-void		find_inout(t_token **head);
-void		clean_space_tokens(t_token **head);
-void		clean_null_tokens(t_token **head);
-void 		concantenate_word_tokens(t_token **head);
-void		print_tokens(t_data *data);
-
-char		*find_executable_path(t_data *data, char *cmd);
-
-/* error check */
-int			check_threeout(t_token *token);
-int			check_threein(t_token *token);
-int			check_delim(t_token *token);
-int			check_first_half_delim(t_token *token);
-int			check_second_half_delim(t_token *token);
-int			check_append(t_token *token);
-char		*check_first_token(char *str, int *i);
-char		*check_first_half(char *str, int *i);
-char		*check_second_half(char *str, int *i);
-int			syntax_errors(t_token *token, t_data *data);
-int			syntax_error_parenth(t_token **token);
-int			check_prev_token(t_token **token);
-int			check_next_token(t_token **token);
-int			check_and(t_token *token, char *str);
-int			check_red(t_token *token, char *str);
-int			check_red_general(t_token *tmp);
-int			check_first_half_general(t_token *tmp);
-int			check_second_half_general(t_token *tmp);
-int			check_red_in(t_token *token);
-int			check_redin_first_half(t_token *token);
-int			check_redin_second_half(t_token *token);
-int			check_redin_last_part(t_token *token);
-int			check_red_out(t_token *token);
-int			check_first_half_out(t_token *token);
-int			check_second_half_out(t_token *token);
-int			check_last_part_out(t_token *token);
-int			check_inout(t_token *token);
-int			check_pipe_or(t_token *token);
-int			check_first_half_pipe_or(t_token *tmp);
-int			check_second_half_pipe_or(t_token *tmp);
-int			check_numbers(t_token *tmp);
-
-
-
-void		find_asterisk(t_token **head, t_data *data);
-
-
-
-/* Parentheses */
-t_token		*create_parenth_token(t_data *data, int i, char *input);
-int			lexic_with_parenth(t_data *data);
-void		tokenise_parenth(t_data *data, char *str);
-void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
-int			find_parenth_token(t_data *data, char *str, int *i, t_token **head);
-void		set_token_parenth2(t_token *token);
-int			set_token_parenth(t_data *data);
-int			only_parenth(char *str);
-int			operand_error_parenth(int i);
-int			find_token3(t_data *data, char *str, int *i, t_token **head);
-int			find_parenthesis(char *str);
-int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
-int			check_parenthesis(int parenCount, int parenth_total);
-
-/*Binary Tree*/
-
-
-int			init_tree(t_data *data, t_token **head);
-void 		print_tree(t_tree *tree, int depth);
-void		fix_tree(t_tree **tree);
-void		fix_command(t_tree **tree);
-void		fix_redirection(t_tree **tree);
-void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
-
-void		find_command(t_tree **tree);
-
-/* echo.c */
-int			echo_handle_option(char **args);
-char		*handle_dollar_question(t_data *data, char **arg);
-int			extract_var_name(char **arg, char **var_name);
-int			handle_env_var(t_data *data, char *var_name);
-int			execute_echo(char *args[], int fd_out);
-
-/* execute_redout.c */
-int			get_output_file(t_tree *tree);
-
-/* execute_redinp.c */
-int			get_input_file(t_tree *tree);
-
-/* execute_delim.c */
-int			execute_delim(t_token **head, t_data *data);
-char		*create_temp_filename(t_heredoc_info *info);
-int			process_heredoc(t_heredoc_info *info, t_data *data);
-void		add_heredoc_file(t_data *data, char *filename, int id);
-char		*get_heredoc_line(char *str);
-
-/* execute_pipe.c */
-int			execute_pipe(t_data *data, t_tree *tree);
-void		create_pipe_and_check(int pipe_fd[2]);
-void		close_pipe(int pipe_fd[2]);
-
-
-/* execute_builtins.c */
+/* execute_buildins.c */
 int			is_builtin(char *cmd);
 int			execute_builtin(t_data *data, t_tree *tree, int fd_out);
 int			check_echo(t_data *data, t_tree *tree, int fd_out);
-int			execute_cd(t_data *data, char *path);
-int			execute_pwd(t_data *data);
-int			execute_unset(t_data *data, t_tree *tree);
-void		execute_env(t_envir **env, int fd_out);
+
+/* execute_buildins2.c */
 char		*get_curr_dir(void);
 char		*get_home_dir(void);
-int			execute_export(t_data *data, t_tree *tree, int fd_out);
+int			execute_pwd(t_data *data);
+int			execute_exit(t_data *data, t_tree *tree);
+void		execute_env(t_envir **env, int fd_out);
+
+/* execute_buildins3.c */
+int			execute_cd(t_data *data, char *path);
+int			execute_unset(t_data *data, t_tree *tree);
+
+/* execute_delim.c */
+char		*create_temp_filename(t_heredoc_info *info);
+int			process_heredoc(t_heredoc_info *info, t_data *data);
+int			execute_delim(t_token **head, t_data *data);
+void		add_heredoc_file(t_data *data, char *filename, int id);
+
+/* execute_echo.c */
+int			echo_handle_option(char **args);
+int			execute_echo(char *args[], int fd_out);
+
+/* execute_export_utils.c */
 int			handle_no_equal_sign(t_data *data, char *arg);
 int			handle_equal_sign(t_data *data, char *arg);
+int			has_equal_sign(char *str);
 int			process_export_args(t_data *data, t_tree *tree);
-void		handle_new_variable(t_envir **env_list, char *var_name, char *var_value);
-void		handle_visible_variable(t_envir *temp);
+
+/* execute_export.c */
+int			execute_export(t_data *data, t_tree *tree, int fd_out);
 void		handle_existing_variable(t_envir *temp, char *var_value);
+void		handle_visible_variable(t_envir *temp);
+void		handle_new_variable(t_envir **env_list, char *var_name, char *var_value);
+void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
 
 /* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);
 int			execute_or(t_data *data, t_tree *tree);
-int			execute_logic(t_data *data, t_tree *tree);
+
+/* execute_pipe_utils.c */
+void		create_pipe_and_check(int pipe_fd[2]);
+void		close_pipe(int pipe_fd[2]);
+
+/* execute_pipe.c */
+int			execute_pipe(t_data *data, t_tree *tree);
+
+/* execute_redin.c */
+int			get_input_file(t_tree *tree);
+
+/* execute_redout.c */
+int			get_output_file(t_tree *tree);
 
 /* execute_utils.c */
 int			is_logic_root(t_tree *tree);
 int			is_word_root(t_tree *tree);
 int			is_special_root(t_tree *tree);
 int			is_only_asterisks(char *str);
-int			has_equal_sign(char *str);
+
+/* execute_word_utils.c */
+pid_t		create_child_process(char **exec_path);
+void		redirect_fds(int fd_inp, int fd_out);
+void		execute_forked_command(t_data *data, t_tree *tree, char *exec_path);
+int			handle_exit_status(t_data *data, pid_t pid, int status, char **exec_path);
+int			fork_command(t_command_args *args);
 
 /* execute_word.c */
 int			execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out);
-int			execute_and_handle_files(t_data *data, t_tree *tree);
+int			execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
+char		**env(t_envir **lst);
+void		fill_envp(char **envp, t_envir **lst);
+void		print2darray(char **array);
+
 /* execute.c */
 int			execute(t_data *data);
-int 		execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
+int			execute_and_handle_files(t_data *data, t_tree *tree);
 int			evaluate_execution(t_data *data, t_tree *tree);
-int			fork_command(t_command_args *args);
-int			handle_exit_status(t_data *data, pid_t pid, int status, char **exec_path);
-void		execute_forked_command(t_data *data, t_tree *tree, char *exec_path);
-void		redirect_fds(int fd_inp, int fd_out);
-pid_t		create_child_process(char **exec_path);
+int			execute_logic(t_data *data, t_tree *tree);
 
-/////////////NORM FIXED////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/* shlvl.c */
+void		incr_shell_lvl(t_data *data);
 
+/* delim_append_errors.c */
+int			check_first_half_delim(t_token *token);
+int			check_second_half_delim(t_token *token);
+int			check_delim(t_token *token);
+int			check_append(t_token *token);
 
+/* find_token.c */
+int			find_token(t_data *data, char *str, int *i, t_token **head);
+int			find_token2(int i, char *str, char *splt);
 
+/* fix_tokens.c */
+void		find_ortokens(t_token **head);
+void		find_andtokens(t_token **head);
+void		find_threein(t_token **head);
+void		find_delim(t_token *current);
+void		find_threeout(t_token **head);
 
+/* fix_tokens2.c */
+void		fix_tokens(t_token **head, t_data *data);
+void		find_append(t_token *current);
+void		find_inout(t_token **head);
+void		clean_null_tokens(t_token **head);
+void		find_asterisk(t_token **head, t_data *data);
 
+/* lexical_analysis.c */
+int			lexical_analysis(t_data *data, char *input);
+int			lexical_analysis_tree(t_data *data, char *input);
+int			set_token_type(t_data *data);
+void		set_token_type2(t_token *token);
+int			set_token_type_tree(t_data *data);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* lexical_analysis2.c */
+void		tokenise(t_data *data, char *str);
+void		update_word_and_free(t_token **tmp, t_token **tmp2);
+void		concatenate_and_update(t_token **tmp, t_token **tmp2);
+void		concantenate_word_tokens(t_token **head);
 
 
+/* redin_errors.c */
+int			check_red(t_token *token, char *str);
+int			check_redin_first_half(t_token *token);
+int			check_redin_second_half(t_token *token);
+int			check_redin_last_part(t_token *token);
+int			check_red_in(t_token *token);
 
+/* redir_general_errors.c */
+int			check_first_half_general(t_token *tmp);
+int			check_second_half_general(t_token *tmp);
+int			check_red_general(t_token *tmp);
+int			check_inout(t_token *token);
+int			check_numbers(t_token *tmp);
 
+/* redout_errors.c */
+int			check_first_half_out(t_token *token);
+int			check_second_half_out(t_token *token);
+int			check_last_part_out(t_token *token);
+int			check_red_out(t_token *token);
 
+/* syntax_errors.c */
+int			syntax_errors(t_token *token, t_data *data);
+char		*check_first_half(char *str, int *i);
+char		*check_second_half(char *str, int *i);
+char		*check_first_token(char *str, int *i);
+int			check_and(t_token *token, char *str);
 
+/* token_errors.c */
+int			check_threein(t_token *token);
+int			check_threeout(t_token *token);
+int			check_first_half_pipe_or(t_token *tmp);
+int			check_second_half_pipe_or(t_token *tmp);
+int			check_pipe_or(t_token *tmp);
 
+/* token_lists.c */
+void		add_token(t_token **head, t_token *new);
+t_token		*last_token(t_token *lst);
+void		add_token_front(t_token **head, t_token *new);
+int			tokens_len(t_token **head);
 
+/* tokenising.c */
+void		print_tokens(t_data *data);
+t_token		*create_token(t_data *data, int i);
+t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
+void		clean_space_tokens(t_token **head);
 
+/* minishell.c */
+char		**create_envp(void);
 
+/* program_loop.c */
+void		start_loop(t_data *data);
 
+/* parenthesis_errors.c */
+int			syntax_error_parenth(t_token **token);
+int			check_prev_token(t_token **token);
+int			check_next_token(t_token **token);
 
+/* parentheses_utils.c */
+int			only_parenth(char *str);
+int			operand_error_parenth(int i);
+int			count_parenthesis(char *str, int *parenCount, int *parenth_total);
+int			check_parenthesis(int parenCount, int parenth_total);
+int			find_parenthesis(char *str);
+
+/* parenthesis_utils2.c */
+int			find_parenth_token(t_data *data, char *str, int *i, t_token **head);
+t_token		*create_parenth_token(t_data *data, int i, char *input);
+int			set_token_parenth(t_data *data);
+int			find_token3(t_data *data, char *str, int *i, t_token **head);
+void		set_token_parenth2(t_token *token);
+
+/* parenthesis.c */
+int			lexic_with_parenth(t_data *data);
+void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
+void		tokenise_parenth(t_data *data, char *str);
 
 /* commands.c */
 void		free_paths(char **paths, char **original_paths);          
-char		*find_executable_path(t_data *data, char *cmd);/////////////NORM//////////////////////
+char		*find_executable_path(t_data *data, char *cmd);
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
 
 /* envir_list.c */
@@ -410,7 +350,6 @@ void		ft_envadd_back(t_envir **lst, t_envir *new);
 void		ft_envadd_front(t_envir **lst, t_envir *new);
 void		ft_envclear(t_envir **lst);
 void		ft_envdelone(t_envir *lst, void (*del));
-
 
 /* envirlists_utils2.c */
 void		ft_enviter(t_envir *lst, int fd_out, void (*f)(t_envir *, int));
@@ -437,17 +376,19 @@ int			check_double_quote(char *s, int *i, int pos);
 int			check_single_quote(char *s, int *i, int pos);
 int			in_quotes(char *s, int pos);
 
+/* expanding_utils.c */
+char		*process_squote(char *s, int *i, char *result);
+char		*process_dquote(t_data *data, char *s, int *i, char *result);
+
 /* expaning.c */
 char		*expand_dollar_and_join(t_data *data, char *s, int *i, char *result);
 char		*expand_quotes(t_data *data, char *s);
 char		*expand_double_quotes(t_data *data, char *s, int *i, char *result);
 char		*expand_single_quotes(char *s, int *i, char *result);
 char		*expand_dollar(t_data *data, char *s, int *i);
-char		*process_squote(char *s, int *i, char *result);
-char		*process_dquote(t_data *data, char *s, int *i, char *result);
 
 /* quote_errors.c */
-int			odd_quote(char *str, t_data *data);/////////////////////////////NORM///////////////////////////
+int			odd_quote(char *str, t_data *data);
 
 /* quotes_utils.c */
 int			is_escaped(char *s, int pos);
@@ -456,73 +397,46 @@ int			special_chars(char *str);
 int			has_quotes(char *str);
 int			has_dollar(char *str);
 
-/* build_tree_utils.c */
-int			create_left_node(t_tree **t, t_token **address, t_data *data, int flag);
-int			create_right_node(t_tree **t, t_token **address, t_data *data, int flag);
-int			tokenise_and_find_root(t_token **address, t_data *data);
+///////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM///////////////////
 
-/* build_tree.c */
-int			handle_left_node(t_tree **tmp_tree, t_token **adr, t_data *data, int *flag);
-int			handle_right_node(t_tree **tmp_tree, t_token **adr, t_data *data, int *flag);
-int			built_tree(t_tree **tree, t_token *address, t_data *data);
-
-/* extend_asterisk.c */////////////////////////////////////////////////////NORM//////////////////////
-void		extend_asterisk(t_token *token, t_data *data);/////////////////NORM//////////////////////
-void		check_matches(t_token *token, char **root_directory);//////////NORM//////////////////////
-int			match_pattern(const char *pattern, const char *string);////////NORM//////////////////////
-char		**get_root_directory(void);////////////////////////////////////NORM//////////////////////
-void		sort_directory(char **arr);////////////////////////////////////NORM//////////////////////
-int			count_root_directory(void);////////////////////////////////////NORM//////////////////////
-int			has_asterisk(char *str);///////////////////////////////////////NORM//////////////////////
-
-/* find_tree_root.c */
-t_token		*handle_token_type(t_token *tok, int *pipe, t_token **pipetoken);
-t_token		*find_first_root(t_token **root_token);
-t_token		*find_tree_root_right(t_token **root_token);
-t_token		*find_tree_root_left(t_token **root_token);
-
-/* fix_tree_command.c */
-void		handle_tree_type(t_tree **tree, t_tree *tmp, t_tree *tmp2);
-void		fix_command(t_tree **tree);
-void		process_fix_com(t_tree **tree);
-
-/* fix_tree_utils.c */
-void		find_command(t_tree **tree);///////////////////////////////////////NORM////////////////////
+/* extend_asterisk.c */
+void		extend_asterisk(t_token *token, t_data *data);
+void		check_matches(t_token *token, char **root_directory);
+int			match_pattern(const char *pattern, const char *string);
+char		**get_root_directory(void);
+void		sort_directory(char **arr);
+int			count_root_directory(void);
+int			has_asterisk(char *str);
 
 /* fix_tree.c */
 void		fix_tree(t_tree **tree);
 void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
-void		handle_word_type(t_tree **tree, t_tree **temp, t_tree **temp_redir);
+void		process_tree_nodes(t_tree **tree);
 void		fix_redirection(t_tree **tree);
-
-/* print_tree.c */
-void		print_tabs(int count);
-void		print_node_info(t_tree *tree, int depth);
-void		print_args_array(char **args_array);
-void		print_child_node(t_tree *child, int depth, const char *position);
-void		print_tree(t_tree *tree, int depth);
+void		fix_command(t_tree **tree);
+void		process_fix_com(t_tree **tree);
+void		find_command(t_tree **tree);
+char** 		join2darrays(char** str1, char** str2);
 
 /* tokenise_for_tree.c */
-t_token		*init_temp_data_and_copy_tokens(t_token *t_parenth);
-t_token		*find_tail(t_token *head);
-void		handle_head(t_token *atach_left, t_token *head, t_data *data);
-void		handle_tail(t_token *atach_left, t_token *atach_right, t_token *tail);
 int			tokenise_for_tree(t_token *t_parenth, t_data *data);
+t_data		*init_temp_data(void);
+t_token		*find_token_parenth(t_token **head);
+t_token 	*copy_tokens(t_token *head);
 
 /* tree_init.c */
-int			handle_parentheses(t_data *data, t_token **root_token, t_token **head);
-void		handle_non_parentheses(t_data *data, t_token **root_token);
 int			init_tree(t_data *data, t_token **head);
+int			built_tree(t_tree **tree, t_token *address, t_data *data);
 
 /* tree_utils.c */
-t_data		*init_temp_data(void);
-t_token 	*find_token_parenth(t_token **head);
-t_token 	*copy_tokens(t_token *head);
+t_token		*find_first_root(t_token **root_token);
 t_tree		*init_tree_root(void);
 int			is_special_type(t_token *address);
+t_token		*find_tree_root_right(t_token **root_token);
+t_token		*find_tree_root_left(t_token **root_token);
+void		print_tree(t_tree *tree, int depth);
 
-/* tree_utils2.c */
-char		**join2darrays(char **str1, char **str2);/////////////////////NORM///////////////////
+///////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM///////////////////
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);
@@ -532,6 +446,7 @@ void		free_data(t_data *data);
 void		free_temp_data(t_data *data);
 void		free_tokens(t_token **begin, void (*del)(void *));
 void		free_envir(t_envir *envir);
+void		free_heredoc_files(t_heredoc_file *head);
 
 /* free2.c */
 void		free_2darray(char **array);

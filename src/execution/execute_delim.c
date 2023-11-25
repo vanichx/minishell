@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 16:14:33 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 18:29:30 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,32 +88,3 @@ void	add_heredoc_file(t_data *data, char *filename, int id)
 	new_file->next = data->heredoc_file;
 	data->heredoc_file = new_file;
 }
-
-// char	*get_heredoc_line(char *str)
-// {
-// 	char	*line;
-// 	char	buffer;
-// 	size_t	len;
-// 	char	*tmp;
-
-// 	line = NULL;
-// 	tmp = NULL;
-// 	len = 0;
-// 	write(STDOUT_FILENO, str, 2);
-// 	while (read(STDIN_FILENO, &buffer, 1) > 0)
-// 	{
-// 		if (g_child_pid == 43 || buffer == '\n')
-// 			break ;
-// 		tmp = realloc(line, len + 2);
-// 		if (!tmp)
-// 		{
-// 			ft_strdel(&line);
-// 			return (NULL);
-// 		}
-// 		line = tmp;
-// 		line[len++] = buffer;
-// 	}
-// 	if (line)
-// 		line[len] = '\0';
-// 	return (line);
-// }

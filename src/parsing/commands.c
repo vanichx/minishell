@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:55:53 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 16:42:52 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:54:49 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static char	*duplicate_cmd_and_free_paths(char *cmd, char **paths)
 	return (command);
 }
 
-char	*free_paths_and_return_cmd(char **paths, char **orig_paths, char *cmd)
+static char	*free_paths_and_return_cmd(char **paths, char **orig_p, char *cmd)
 {
-	free_paths(paths, orig_paths);
+	free_paths(paths, orig_p);
 	return (cmd);
 }
 

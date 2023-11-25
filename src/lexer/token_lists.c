@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lists.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:21:49 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:23:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 18:05:13 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	add_token(t_token **head, t_token *new)
 	}
 }
 
-// for what we need also this ?
 t_token	*last_token(t_token *lst)
 {
 	t_token	*node;
@@ -52,10 +51,8 @@ t_token	*last_token(t_token *lst)
 	return (node);
 }
 
-// adds a token in the front of the list
 void	add_token_front(t_token **head, t_token *new)
 {
-	printf("add_token_front\n");
 	if (*head)
 	{
 		new->next = *head;
@@ -66,7 +63,6 @@ void	add_token_front(t_token **head, t_token *new)
 		*head = new;
 }
 
-// caunts the len of the tokens list
 int	tokens_len(t_token **head)
 {
 	t_token	*tmp;
