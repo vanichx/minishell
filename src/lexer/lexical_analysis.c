@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 04:36:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 07:49:18 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	set_token_type(t_data *data)
 	clean_null_tokens(&data->token_list);
 	fix_tokens(&data->token_list, data);
 	if (syntax_errors(data->token_list, data))
-		return (1);
+		return (data->exit_status = 258, 1);
 	if (execute_delim(&data->token_list, data))
 		return (child_pid = 0, 1);
 	if (lexic_with_parenth(data))

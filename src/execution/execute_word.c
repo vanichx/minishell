@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:40:22 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/22 16:57:36 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/25 10:49:01 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 {
 	if (tree == NULL || tree->value == NULL || tree->args_array == NULL)
 		return (1);
-	// if (fd_out == 0)
-	// 	fd_out = 1;
 	if (is_builtin(tree->args_array[0]))
 	{
 		if (execute_builtin(data, tree, fd_out))
@@ -28,14 +26,15 @@ int	execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 		if (ft_strlen(tree->value) == 0)
 			return (1);
 		if (execute_command(data, tree, fd_inp, fd_out))
-			return (1);		
+			return (1);
 	}
 	return (0);
 }
 
-int execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out)
+int	execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 {
-	char *exec_path;
+	char			*exec_path;
+	t_command_args	args;
 
 	exec_path = find_executable_path(data, tree->args_array[0]);
 	if (exec_path == NULL)
@@ -46,76 +45,23 @@ int execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out)
 		data->exit_status = 127;
 		return (1);
 	}
-	return (fork_command(data, tree, exec_path, fd_inp, fd_out));
-}
-
-int	fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out)
-{
-	pid_t	pid;
-	int		status;
-	char **envp = NULL;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return (ft_strdel(&exec_path), 1);
-	}
-	else if (pid == 0)
-	{
-		if (fd_inp != STDIN_FILENO)
-		{
-			dup2(fd_inp, STDIN_FILENO);
-			if(fd_inp != 0)  // if fd_inp is not standard input, output, or error
-				close(fd_inp);
-		}
-		if (fd_out != STDOUT_FILENO)
-		{
-			dup2(fd_out, STDOUT_FILENO);
-			if (fd_out != 1)  // if fd_out is not standard input, output, or error
-				close(fd_out);
-		}
-		envp = env(&data->env_list);
-		if (execve(exec_path, tree->args_array, envp) == -1)
-		{
-			printf("execve failded\n");
-			ft_strdel(&exec_path);
-			exit(EXIT_FAILURE);
-		}
-		if (exec_path)
-			ft_strdel(&exec_path);
-		free_2darray(envp);
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		child_pid = pid;
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-		{
-			data->exit_status = WEXITSTATUS(status);
-			ft_strdel(&exec_path);
-		}
-		else
-			ft_strdel(&exec_path);
-		child_pid = 0;
-		if (fd_inp != 0)
-			close(fd_inp);
-		if (fd_out != 1)
-			close(fd_out);
-	}
-	return (0);
+	args.data = data;
+	args.tree = tree;
+	args.exec_path = exec_path;
+	args.fd_inp = fd_inp;
+	args.fd_out = fd_out;
+	return (fork_command(&args));
 }
 
 // this function will copy the envp list to a char **array
-char **env(t_envir **lst)
+char	**env(t_envir **lst)
 {
+	char	**envp;
+	t_envir	*tmp;
+	int		i;
+
 	if (!lst)
 		return (NULL);
-	char **envp;
-	t_envir *tmp;
-	int i;
-	
 	i = 0;
 	tmp = *lst;
 	while (tmp)
@@ -124,12 +70,21 @@ char **env(t_envir **lst)
 		tmp = tmp->next;
 	}
 	envp = malloc(sizeof(char *) * (i + 1));
+	fill_envp(envp, lst);
+	return (envp);
+}
+
+void	fill_envp(char **envp, t_envir **lst)
+{
+	int		i;
+	int		len;
+	t_envir	*tmp;
+
 	i = 0;
 	tmp = *lst;
 	while (tmp)
 	{
-		// Calculate the length of the string we need to allocate
-		int len = ft_strlen(tmp->var_name) + ft_strlen(tmp->var_value) + 2;  // +2 for the '=' and the null terminator
+		len = ft_strlen(tmp->var_name) + ft_strlen(tmp->var_value) + 2;
 		envp[i] = malloc(len);
 		ft_strcpy(envp[i], tmp->var_name);
 		ft_strcat(envp[i], "=");
@@ -138,13 +93,12 @@ char **env(t_envir **lst)
 		tmp = tmp->next;
 	}
 	envp[i] = NULL;
-	return (envp);
 }
 
 //this function will print the 2d array
-void print2darray(char **array)
+void	print2darray(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i])

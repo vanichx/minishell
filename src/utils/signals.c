@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 06:02:37 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 10:01:27 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void	handle_sigint(int signo)
 		{
 			write(1, "\n", 1);
 			if (child_pid == 42)
-				child_pid = 43;
-			if (child_pid != 0 && child_pid != 43 && child_pid != 42)
+				child_pid = 44;
+			if (child_pid != 0 && child_pid != 44)
+			{
 				kill(child_pid, SIGINT);
-			else if (child_pid == 0 || child_pid == 43 || child_pid == 42)
+				child_pid++;
+			}
+			else
 			{
 				rl_on_new_line();
 				rl_replace_line("", 0);
@@ -52,16 +55,18 @@ void	handle_sigtstp_sigquit(int signo)
 {
 	if (signo == SIGTSTP || signo == SIGQUIT)
 	{
-		if (child_pid == 42)
-			child_pid = 43;
 		if (isatty(STDIN_FILENO))
 		{
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-		else
-		{
-			exit(EXIT_SUCCESS);
+			if (child_pid == 0)
+			{
+				rl_replace_line("", 0);
+				rl_redisplay();	
+			}
+			else
+			{
+				kill(child_pid, signo);
+				child_pid += 2;
+			}
 		}
 	}
 }

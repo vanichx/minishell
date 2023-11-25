@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 06:38:36 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 12:15:29 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,6 @@ typedef struct	s_heredoc_file {
 	struct	s_heredoc_file *next;
 }				t_heredoc_file;
 
-typedef struct	s_heredoc_info {
-    char	*filename;
-    int		heredoc_count;
-	char 	*limiter;
-}				t_heredoc_info;
-
 typedef struct s_data {
 	struct s_tree			*tree;
 	struct s_token			*token_list;
@@ -112,6 +106,7 @@ typedef struct s_data {
 	char					*exit_str;
 }				t_data;
 
+
 typedef struct s_token
 {
 	t_token_type		type;
@@ -119,6 +114,38 @@ typedef struct s_token
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;
+
+/* structures to pas info for more than 5 arguments */
+typedef struct	s_heredoc_info {
+    char	*filename;
+    int		heredoc_count;
+	char 	*limiter;
+}				t_heredoc_info;
+
+typedef struct	s_quote_info {
+	int		s_quo;
+	int		d_quo;
+	char	*str;
+	int		i;
+	t_data 	*data;
+}				t_quote_info;
+
+typedef struct	s_command_args
+{
+	t_data	*data;
+	t_tree	*tree;
+	char	*exec_path;
+	int		fd_inp;
+	int		fd_out;
+}				t_command_args;
+
+typedef struct	s_pipe_info {
+	int		*pipe_fd;
+	t_data	*data;
+	t_tree	*tree;
+	int		end;
+	int		std_fd;
+}				t_pipe_info;
 
 
 
@@ -268,10 +295,12 @@ int			execute_delim(t_token **head, t_data *data);
 char		*create_temp_filename(t_heredoc_info *info);
 int			process_heredoc(t_heredoc_info *info, t_data *data);
 void		add_heredoc_file(t_data *data, char *filename, int id);
-char		*get_heredoc_line(void);
+char		*get_heredoc_line(char *str);
 
 /* execute_pipe.c */
 int			execute_pipe(t_data *data, t_tree *tree);
+void		create_pipe_and_check(int pipe_fd[2]);
+void		close_pipe(int pipe_fd[2]);
 
 
 /* execute_builtins.c */
@@ -290,10 +319,6 @@ int			execute_export(t_data *data, t_tree *tree, int fd_out);
 int			execute_and(t_data *data, t_tree *tree);
 int			execute_or(t_data *data, t_tree *tree);
 int			execute_logic(t_data *data, t_tree *tree);
-int			evaluate_leftmost_leaf(t_data *data, t_tree *tree);
-
-
-
 
 /* execute_utils.c */
 int			is_logic_root(t_tree *tree);
@@ -304,22 +329,16 @@ int			has_equal_sign(char *str);
 
 /* execute_word.c */
 int			execute_word(t_data *data, t_tree *tree, int fd_inp, int fd_out);
-
+int			execute_and_handle_files(t_data *data, t_tree *tree);
 /* execute.c */
 int			execute(t_data *data);
-int			evaluate_execution(t_data *data, t_tree *tree);
-
-
-
-
-int			execute_special_right(t_data *data, t_tree *tree, int file_name);
-int			execute_special_left(t_data *data, t_tree *tree);
-
-
-
 int 		execute_command(t_data *data, t_tree *tree, int fd_inp, int fd_out);
-int			fork_command(t_data *data, t_tree *tree, char *exec_path, int fd_inp, int fd_out);
-
+int			evaluate_execution(t_data *data, t_tree *tree);
+int			fork_command(t_command_args *args);
+int			handle_exit_status(t_data *data, pid_t pid, int status, char **exec_path);
+void		execute_forked_command(t_data *data, t_tree *tree, char *exec_path);
+void		redirect_fds(int fd_inp, int fd_out);
+pid_t		create_child_process(char **exec_path);
 
 /////////////NORM FIXED////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -403,6 +422,7 @@ t_envir		*copy_envir_list(t_envir *original);
 void		swap_nodes(t_envir *a, t_envir *b);
 void		sort_envir_list(t_envir *list);
 t_envir		*copy_and_sort_envir_list(t_envir *original);
+void		fill_envp(char **envp, t_envir **lst);
 
 /* check_quotes.c */
 int			is_valid_env_char(char c);
