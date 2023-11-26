@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:05:49 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/14 11:14:05 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 09:49:57 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,20 @@ static int	ft_arrarr(char **arr, const char *s, char c, int str)
 	return (1);
 }
 
+static void	process_array_element(char **arr, int *i)
+{
+	char	*temp;
+
+	if (arr[*i][0] == '\"' || arr[*i][0] == '\'')
+	{
+		temp = ft_substr(arr[*i], 1, ft_strlen(arr[*i]) - 2);
+		ft_strdel(&arr[*i]);
+		arr[*i] = ft_strdup(temp);
+		free(temp);
+	}
+	(*i)++;
+}
+
 char	**ft_split_parenth(char const *s, char c)
 {
 	char	**arr;
@@ -76,17 +90,6 @@ char	**ft_split_parenth(char const *s, char c)
 		return (NULL);
 	}
 	while (arr[i])
-	{
-		if (arr[i][0] == '\"' || arr[i][0] == '\'')
-		{
-			temp = ft_substr(arr[i], 1, ft_strlen(arr[i]) - 2);
-			ft_strdel(&arr[i]);
-			arr[i] = ft_strdup(temp);
-			free(temp);
-			i++;
-		}
-		else
-			i++;
-	}
+		process_array_element(arr, &i);
 	return (arr);
 }
