@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:51:52 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/26 08:42:32 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:13:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ t_token	*copy_tokens(t_token *head)
 			return (NULL);
 		}
 		new_tmp->type = tmp->type;
-		new_tmp->word = ft_strdup(tmp->word);
+		if (tmp->word)
+			new_tmp->word = ft_strdup(tmp->word);
 		new_tmp->next = NULL;
 		new_tmp->prev = NULL;
 		add_token(&new_head, new_tmp);

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:47:59 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 19:59:21 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:10:42 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ int	check_second_half_general(t_token *tmp)
 			|| tmp->next->next->type == T_OR))
 		return (printf("minishell: syntax error near %s\n", \
 		"unexpected token `>|'"), 1);
-	if (tmp->next->type != T_WORD)
+	if (tmp->next->type != T_WORD && tmp->type != T_OR && tmp->type != T_AND)
+	{
 		return (printf("minishell: syntax error near unexpected token `%s'\n", \
 		tmp->next->word), 1);
+	}
 	return (0);
 }
 

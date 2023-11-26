@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 17:13:34 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/26 03:08:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:00:29 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	handle_word_concatenation(t_token **tmp)
 	t_token	*tmp2;
 	char	*str;
 
+	if ((*tmp)->word)
+		return ;
 	str = malloc(sizeof(char) * (ft_strlen((*tmp)->word) + \
 	ft_strlen((*tmp)->next->word) + 2));
 	ft_strcpy(str, (*tmp)->word);

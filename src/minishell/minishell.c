@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:50:43 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 16:13:26 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/26 11:16:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ pid_t	g_child_pid = 0;
 
 int	main(int argc, char **argv, char *envp[])
 {
-	t_data	*data;
-	char	**env;
+	t_data			*data;
+	char			**env;
 
 	(void)argc;
 	(void)argv;

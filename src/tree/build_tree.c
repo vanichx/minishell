@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 09:31:42 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 09:40:56 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 11:22:05 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,18 @@ static int	handle_right_node(t_tree **tree, t_token **address, t_data *data)
 	return (0);
 }
 
-int	built_tree(t_tree **tree, t_token *address, t_data *data)
+static int	handle_left_node(t_tree **tree, t_token **address, t_data *data)
 {
 	t_token	*tmp_left;
-	t_token	*tmp_right;
 	t_tree	*tmp_tree;
 
+	tmp_left = find_tree_root_left(&(*address)->prev);
 	tmp_tree = *tree;
-	if (!address || address->type == T_NEWLINE)
-		return (0);
-	tmp_left = find_tree_root_left(&address->prev);
 	if (tmp_left && tmp_left->type == T_PARENTHESES)
 	{
 		if (tokenise_for_tree(tmp_left, data))
 			return (1);
-		tmp_left = find_tree_root_left(&address->prev);
+		tmp_left = find_tree_root_left(&(*address)->prev);
 	}
 	if (tmp_left && ft_strcmp(tmp_left->word, "boundary"))
 	{
@@ -104,6 +101,18 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 	}
 	else
 		tmp_tree->left = NULL;
+	return (0);
+}
+
+int	built_tree(t_tree **tree, t_token *address, t_data *data)
+{
+	t_tree	*tmp_tree;
+
+	tmp_tree = *tree;
+	if (!address || address->type == T_NEWLINE)
+		return (0);
+	if (handle_left_node(&tmp_tree, &address, data))
+		return (1);
 	if (handle_right_node(&tmp_tree, &address, data))
 		return (1);
 	return (0);

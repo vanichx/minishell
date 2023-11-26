@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 06:40:25 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 03:17:55 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 12:59:38 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,17 @@ void	check_matches(t_token *token, char **root_directory)
 
 	temp = NULL;
 	k = -1;
+	if (!token || !root_directory)
+		return ;
 	while (root_directory[++k])
 	{
-		if (match_pattern(token->word, root_directory[k]))
+		if (token->word && match_pattern(token->word, root_directory[k]))
 			temp = update_aster_temp(temp, root_directory[k]);
 	}
 	if (temp)
 	{
-		ft_strdel(&token->word);
+		if (token->word)
+			ft_strdel(&token->word);
 		token->word = ft_strdup(temp);
 		ft_strdel(&temp);
 	}
