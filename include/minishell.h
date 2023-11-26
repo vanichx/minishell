@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 08:41:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 08:58:59 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,13 +158,13 @@ char			**command;
 
 typedef struct	s_tokenise_tree
 {
-    t_token *head;
-    t_token *tail;
-    t_token *temp;
-    t_token *atach_left;
-    t_token *atach_right;
-    t_data *temp_data;
-    t_token *new_tokens;
+	t_token *head;
+	t_token *tail;
+	t_token *temp;
+	t_token *atach_left;
+	t_token *atach_right;
+	t_data *temp_data;
+	t_token *new_tokens;
 }				t_tokenise_tree;
 
 /* execute_buildins.c */

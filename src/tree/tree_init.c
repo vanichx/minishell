@@ -1,29 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tree_init.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 09:18:26 by eseferi           #+#    #+#             */
+/*   Updated: 2023/11/26 09:24:25 by eseferi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+int	init_tree_one_parenth(t_data *data, t_token **root_token, t_token **head)
+{
+	ft_strdel(&data->input_line);
+	data->input_line = ft_strdup((*root_token)->word);
+	free_tokens(&data->token_list, free);
+	if (lexical_analysis(data, data->input_line))
+		return (1);
+	*root_token = find_first_root(head);
+	data->tree->type = (*root_token)->type;
+	data->tree->value = ft_strdup((*root_token)->word);
+	ft_strdel(&(*root_token)->word);
+	(*root_token)->word = ft_strdup("boundary");
+	if (data->tree->type == T_WORD)
+	{
+		data->tree->args_array = ft_split_args(data->tree->value, ' ');
+		find_quotes(data->tree->args_array, data);
+	}
+	return (0);
+}
 
 int	init_tree(t_data *data, t_token **head)
 {
-	t_token *root_token;
+	t_token	*root_token;
 
 	data->tree = init_tree_root();
-	root_token =  find_first_root(head);
-
+	root_token = find_first_root(head);
 	if (root_token->type == T_PARENTHESES)
 	{
-		ft_strdel(&data->input_line);
-		data->input_line = ft_strdup(root_token->word);
-		free_tokens(&data->token_list, free);
-		if (lexical_analysis(data, data->input_line))
+		if (init_tree_one_parenth(data, &root_token, &head))
 			return (1);
-		root_token = find_first_root(head);
-		data->tree->type = root_token->type;
-		data->tree->value = ft_strdup(root_token->word);
-		ft_strdel(&root_token->word);
-		root_token->word = ft_strdup("boundary");
-		if (data->tree->type == T_WORD)
-		{
-			data->tree->args_array = ft_split_args(data->tree->value, ' ');
-			find_quotes(data->tree->args_array, data);
-		}
 	}
 	else
 	{
@@ -36,7 +54,6 @@ int	init_tree(t_data *data, t_token **head)
 		}
 		free(root_token->word);
 		root_token->word = ft_strdup("boundary");
-		// printf("%p\n", data->tree->args_array);
 	}
 	if (built_tree(&data->tree, root_token, data))
 		return (1);
@@ -45,16 +62,15 @@ int	init_tree(t_data *data, t_token **head)
 
 int	built_tree(t_tree **tree, t_token *address, t_data *data)
 {
-	t_token *tmp_left;
-	t_token *tmp_right;
+	t_token	*tmp_left;
+	t_token	*tmp_right;
 	t_tree	*tmp_tree;
 	int		flag;
 
 	flag = 0;
 	tmp_tree = *tree;
 	if (!address || address->type == T_NEWLINE)
-		return 0;
-	
+		return (0);
 	tmp_left = find_tree_root_left(&address->prev);
 	if (tmp_left && tmp_left->type == T_PARENTHESES)
 	{
@@ -70,14 +86,15 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		tmp_tree->left = init_tree_root();
 		tmp_tree->left->parenth = flag;
 		if (tmp_left->type)
- 			tmp_tree->left->type = tmp_left->type;
+			tmp_tree->left->type = tmp_left->type;
 		if (tmp_left->word)
 			tmp_tree->left->value = ft_strdup(tmp_left->word);
 		ft_strdel(&tmp_left->word);
 		tmp_left->word = ft_strdup("boundary");
 		if (tmp_tree->left->type == T_WORD)
 		{
-			tmp_tree->left->args_array = ft_split_args(tmp_tree->left->value, ' ');
+			tmp_tree->left->args_array = \
+			ft_split_args(tmp_tree->left->value, ' ');
 			find_quotes(tmp_tree->left->args_array, data);
 		}
 		if (built_tree(&tmp_tree->left, tmp_left, data))
@@ -108,7 +125,8 @@ int	built_tree(t_tree **tree, t_token *address, t_data *data)
 		tmp_right->word = ft_strdup("boundary");
 		if (tmp_tree->right->type == T_WORD)
 		{
-			tmp_tree->right->args_array = ft_split_args(tmp_tree->right->value, ' ');
+			tmp_tree->right->args_array = \
+			ft_split_args(tmp_tree->right->value, ' ');
 			find_quotes(tmp_tree->right->args_array, data);
 		}
 		if (built_tree(&tmp_tree->right, tmp_right, data))
