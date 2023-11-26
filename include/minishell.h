@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 09:31:26 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 10:03:42 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,34 +67,33 @@ typedef struct s_tree {
 	struct s_tree	*right;
 }				t_tree;
 
-typedef struct	s_heredoc_file {
-	int		id;
-	char	*filename;
-	struct	s_heredoc_file *next;
+typedef struct s_heredoc_file {
+	int						id;
+	char					*filename;
+	struct s_heredoc_file	*next;
 }				t_heredoc_file;
 
 typedef struct s_data {
-	struct s_tree			*tree;
-	struct s_token			*token_list;
-	t_heredoc_file	        *heredoc_file;
-	t_envir					*env_list;
-	t_envir					*sorted_env_list;
-	int						single_quote;
-	int						double_quote;
-	long int				exit_status;
-	int						cmd_nbrs;
-	int						pid;
-	int						count;
-	int						arg_nums;
-	int						parenthesis_scope;
-	int						forked;
-	char					*input_minishell;
-	char					*input_line;
-	char					*curr_dir;
-	char					**root_directory;
-	char					*exit_str;
+	struct s_tree	*tree;
+	struct s_token	*token_list;
+	t_heredoc_file	*heredoc_file;
+	t_envir			*env_list;
+	t_envir			*sorted_env_list;
+	int				single_quote;
+	int				double_quote;
+	long int		exit_status;
+	int				cmd_nbrs;
+	int				pid;
+	int				count;
+	int				arg_nums;
+	int				parenthesis_scope;
+	int				forked;
+	char			*input_minishell;
+	char			*input_line;
+	char			*curr_dir;
+	char			**root_directory;
+	char			*exit_str;
 }				t_data;
-
 
 typedef struct s_token
 {
@@ -104,23 +103,22 @@ typedef struct s_token
 	struct s_token		*prev;
 }					t_token;
 
-/* structures to pas info for more than 5 arguments */
-typedef struct	s_heredoc_info {
-    char	*filename;
-    int		heredoc_count;
+typedef struct s_heredoc_info {
+	char	*filename;
+	int		heredoc_count;
 	char	*token;
-	char 	*limiter;
+	char	*limiter;
 }				t_heredoc_info;
 
-typedef struct	s_quote_info {
+typedef struct s_quote_info {
+	int		i;
+	char	*str;
 	int		s_quo;
 	int		d_quo;
-	char	*str;
-	int		i;
-	t_data 	*data;
+	t_data	*data;
 }				t_quote_info;
 
-typedef struct	s_command_args
+typedef struct s_command_args
 {
 	t_data	*data;
 	t_tree	*tree;
@@ -129,7 +127,7 @@ typedef struct	s_command_args
 	int		fd_out;
 }				t_command_args;
 
-typedef struct	s_pipe_info {
+typedef struct s_pipe_info {
 	int		*pipe_fd;
 	t_data	*data;
 	t_tree	*tree;
@@ -145,25 +143,25 @@ typedef struct s_copy_params
 	t_heredoc_file	**current_file;
 }				t_copy_params;
 
-typedef struct	s_find_command
+typedef struct s_find_command
 {
 	t_tree	*tmp;
 	t_tree	*tmp2;
 	t_tree	*address;
-	t_tree	*firstNonTWord;
-	t_tree	*lastNonTWord;
-char			**command;
+	t_tree	*f_nontokw;
+	t_tree	*l_nontokw;
+	char	**command;
 }				t_find_command;
 
-typedef struct	s_tokenise_tree
+typedef struct s_tokenise_tree
 {
-	t_token *head;
-	t_token *tail;
-	t_token *temp;
-	t_token *atach_left;
-	t_token *atach_right;
-	t_data *temp_data;
-	t_token *new_tokens;
+	t_token	*head;
+	t_token	*tail;
+	t_token	*temp;
+	t_token	*atach_left;
+	t_token	*atach_right;
+	t_data	*temp_data;
+	t_token	*new_tokens;
 }				t_tokenise_tree;
 
 /* execute_buildins.c */
@@ -203,8 +201,10 @@ int			process_export_args(t_data *data, t_tree *tree);
 int			execute_export(t_data *data, t_tree *tree, int fd_out);
 void		handle_existing_variable(t_envir *temp, char *var_value);
 void		handle_visible_variable(t_envir *temp);
-void		handle_new_variable(t_envir **env_list, char *var_name, char *var_value);
-void		export(t_envir **env_list, char *var_name, char *var_value, t_data *data);
+void		handle_new_variable(t_envir **env_list, char *var_name, \
+char *var_value);
+void		export(t_envir **env_list, char *var_name, char *var_value, \
+t_data *data);
 
 /* execute_logic.c */
 int			execute_and(t_data *data, t_tree *tree);
@@ -233,7 +233,8 @@ int			is_only_asterisks(char *str);
 pid_t		create_child_process(char **exec_path);
 void		redirect_fds(int fd_inp, int fd_out);
 void		execute_forked_command(t_data *data, t_tree *tree, char *exec_path);
-int			handle_exit_status(t_data *data, pid_t pid, int status, char **exec_path);
+int			handle_exit_status(t_data *data, pid_t pid, int status, \
+char **exec_path);
 int			fork_command(t_command_args *args);
 
 /* execute_word.c */
@@ -288,7 +289,6 @@ void		tokenise(t_data *data, char *str);
 void		update_word_and_free(t_token **tmp, t_token **tmp2);
 void		concatenate_and_update(t_token **tmp, t_token **tmp2);
 void		concantenate_word_tokens(t_token **head);
-
 
 /* redin_errors.c */
 int			check_red(t_token *token, char *str);
@@ -365,11 +365,11 @@ void		set_token_parenth2(t_token *token);
 int			lexic_with_parenth(t_data *data);
 void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
 void		tokenise_parenth(t_data *data, char *str);
-void	    update_input_line(t_data *data);
+void		update_input_line(t_data *data);
 void		copy_filename(t_data *data, t_copy_params *params);
 
 /* commands.c */
-void		free_paths(char **paths, char **original_paths);          
+void		free_paths(char **paths, char **original_paths);
 char		*find_executable_path(t_data *data, char *cmd);
 t_envir		*find_envir_variable(t_data *data, char *var_name, int len);
 
@@ -413,7 +413,8 @@ char		*process_squote(char *s, int *i, char *result);
 char		*process_dquote(t_data *data, char *s, int *i, char *result);
 
 /* expaning.c */
-char		*expand_dollar_and_join(t_data *data, char *s, int *i, char *result);
+char		*expand_dollar_and_join(t_data *data, char *s, int *i, \
+char *result);
 char		*expand_quotes(t_data *data, char *s);
 char		*expand_double_quotes(t_data *data, char *s, int *i, char *result);
 char		*expand_single_quotes(char *s, int *i, char *result);
@@ -429,8 +430,6 @@ int			special_chars(char *str);
 int			has_quotes(char *str);
 int			has_dollar(char *str);
 
-///////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM///////////////////
-
 /* extend_asterisk.c */
 void		extend_asterisk(t_token *token, t_data *data);
 void		check_matches(t_token *token, char **root_directory);
@@ -445,23 +444,25 @@ int			has_asterisk(char *str);
 void		fix_tree(t_tree **tree);
 void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
 void		process_tree_nodes(t_tree **tree);
-void		update_non_tword_nodes(t_tree **firstNonTWord, t_tree **lastNonTWord, t_tree **tmp, t_tree **tmp2);
+void		update_non_tword_nodes(t_tree **f_nontokw, t_tree **l_nontokw, \
+t_tree **tmp, t_tree **tmp2);
 void		update_tword_node(t_tree *address, t_tree **tmp, t_tree **tmp2);
 void		fix_redirection(t_tree **tree);
 void		fix_command(t_tree **tree);
 void		process_fix_com(t_tree **tree);
 void		find_command(t_tree **tree);
-char** 		join2darrays(char** str1, char** str2);
+char		**join2darrays(char **str1, char **str2);
 
 /* tokenise_for_tree.c */
 int			tokenise_for_tree(t_token *t_parenth, t_data *data);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
-t_token 	*copy_tokens(t_token *head);
+t_token		*copy_tokens(t_token *head);
 void		initialize_vars(t_tokenise_tree *vars, t_token *t_parenth);
 
 /* tree_init.c */
-int			init_tree_one_parenth(t_data *data, t_token **root_token, t_token **head);
+int			init_tree_one_parenth(t_data *data, t_token **root_token, \
+t_token **head);
 int			init_tree(t_data *data, t_token **head);
 int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			handle_lexical_analysis(t_tokenise_tree *vars);
@@ -476,8 +477,6 @@ int			is_special_type(t_token *address);
 t_token		*find_tree_root_right(t_token **root_token);
 t_token		*find_tree_root_left(t_token **root_token);
 void		print_tree(t_tree *tree, int depth);
-
-///////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM////////////////////////////////////////NORM///////////////////
 
 /* exit.c */
 void		exit_shell(char *message, int exit_code, t_data *data);
@@ -535,6 +534,6 @@ int			ft_arrarr_args(char **arr, char *s, char c, int str);
 char		**ft_split_args(char *s, char c);
 int			arraylen(char **str);
 
-extern pid_t g_child_pid;
+extern pid_t	g_child_pid;
 
 #endif
