@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 07:26:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 07:58:41 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	execute_delim(t_token **head, t_data *data)
 {
 	t_heredoc_info	info;
 	t_token			*current;
-	t_token			*temp;
 
 	info.heredoc_count = 0;
 	current = *head;

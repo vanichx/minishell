@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 07:22:48 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 08:41:26 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,27 @@ typedef struct s_copy_params
 	int				*j;
 	t_heredoc_file	**current_file;
 }				t_copy_params;
+
+typedef struct	s_find_command
+{
+	t_tree	*tmp;
+	t_tree	*tmp2;
+	t_tree	*address;
+	t_tree	*firstNonTWord;
+	t_tree	*lastNonTWord;
+char			**command;
+}				t_find_command;
+
+typedef struct	s_tokenise_tree
+{
+    t_token *head;
+    t_token *tail;
+    t_token *temp;
+    t_token *atach_left;
+    t_token *atach_right;
+    t_data *temp_data;
+    t_token *new_tokens;
+}				t_tokenise_tree;
 
 /* execute_buildins.c */
 int			is_builtin(char *cmd);
@@ -438,10 +459,15 @@ int			tokenise_for_tree(t_token *t_parenth, t_data *data);
 t_data		*init_temp_data(void);
 t_token		*find_token_parenth(t_token **head);
 t_token 	*copy_tokens(t_token *head);
+void		initialize_vars(t_tokenise_tree *vars, t_token *t_parenth);
 
 /* tree_init.c */
 int			init_tree(t_data *data, t_token **head);
 int			built_tree(t_tree **tree, t_token *address, t_data *data);
+int			handle_lexical_analysis(t_tokenise_tree *vars);
+void		find_tail(t_tokenise_tree *vars);
+void		handle_atach_left(t_tokenise_tree *vars, t_data *data);
+void		handle_atach_right(t_tokenise_tree *vars);
 
 /* tree_utils.c */
 t_token		*find_first_root(t_token **root_token);
