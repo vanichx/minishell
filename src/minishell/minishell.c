@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:50:43 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 11:16:28 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 14:14:56 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char *envp[])
 	(void)argv;
 	data = NULL;
 	env = NULL;
+	printbanner();
 	if (!*envp)
 	{
 		env = create_envp();
@@ -58,4 +59,30 @@ char	**create_envp(void)
 	}
 	envp[3] = NULL;
 	return (envp);
+}
+
+void	printbanner(void)
+{
+	printf("\n\t%s\
+	███╗   ███╗██╗███╗   ██╗██╗ ██████╗██╗   ╔██╗╔████████╗██╗%s\n", \
+	CYAN, END);
+	printf("\t%s\
+	██╔████╔██║██║██╔██╗ ██║██║██╔════╝██╝   ╚██╝║██══════╝██║%s \n", \
+	BLUE, END);
+	printf("\t%s\
+	██║╚██╔╝██║██║██║╚██╗██║██║╚█████╗ █████████╗║████████╗██║%s \n", \
+	GREEN, END);
+	printf("\t%s\
+	██║ ╚═╝ ██║██║██║  ╚███║██║ ╚═══██╗██╔═══╗██║║██╔═════╝██║%s\n", \
+	BLUE, END);
+	printf("\t%s\
+	██║     ██║██║██║   ╚██╝██║██████╔╝██║   ║██║║████████╗████████╗%s\n", \
+	CYAN, END);
+	printf("\t%s\
+	╚═╝     ╚═╝╚═╝╚═╝    ╚═╝═╝╚══════╝ ╚═╝	  ╚══╝╚═══════╝╚═══════╝%s\n", \
+	CYAN, END);
+	printf("%s\n\t\t\tBy: ipetrunin%s\t\t\t   %sBy: eseferi%s\n", BLUE, \
+	END, GREEN, END);
+	printf("\t\t  ────────────────────── {.⋅ ✯&&✯ ⋅.}───────────────────────\
+	\n\n");
 }

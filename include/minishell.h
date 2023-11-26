@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 13:11:36 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 14:11:21 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@
 # include <errno.h>
 # include "libft.h"
 # include "stdbool.h"
+
+# define RED "\033[0;31m"
+# define GREEN "\033[1;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[1;34m"
+# define END "\033[0m"
+# define CYAN "\033[1;36m"
 
 typedef enum e_token_type {
 	T_WORD = 1,
@@ -335,10 +342,11 @@ void		print_tokens(t_data *data);
 t_token		*create_token(t_data *data, int i);
 t_token		*create_arg_token(t_data *data, char *word, enum e_token_type type);
 void		clean_space_tokens(t_token **head);
-void		fix_tokens_tree(t_token **head, t_data *data);
+void		fix_tokens_tree(t_token **head);
 
 /* minishell.c */
 char		**create_envp(void);
+void		printbanner(void);
 
 /* program_loop.c */
 void		start_loop(t_data *data);

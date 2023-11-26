@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:27:42 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 13:11:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 14:11:07 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	clean_space_tokens(t_token **head)
 	}
 }
 
-void	fix_tokens_tree(t_token **head, t_data *data)
+void	fix_tokens_tree(t_token **head)
 {
 	find_ortokens(head);
 	find_andtokens(head);
