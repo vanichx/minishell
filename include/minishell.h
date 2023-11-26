@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 03:28:07 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 07:22:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_token
 typedef struct	s_heredoc_info {
     char	*filename;
     int		heredoc_count;
+	char	*token;
 	char 	*limiter;
 }				t_heredoc_info;
 
@@ -137,6 +138,14 @@ typedef struct	s_pipe_info {
 	int		std_fd;
 }				t_pipe_info;
 
+typedef struct s_copy_params
+{
+	char			**new_input_line;
+	int				*i;
+	int				*j;
+	t_heredoc_file	**current_file;
+}				t_copy_params;
+
 /* execute_buildins.c */
 int			is_builtin(char *cmd);
 int			execute_builtin(t_data *data, t_tree *tree, int fd_out);
@@ -154,10 +163,11 @@ int			execute_cd(t_data *data, char *path);
 int			execute_unset(t_data *data, t_tree *tree);
 
 /* execute_delim.c */
-char		*create_temp_filename(t_heredoc_info *info);
+void		create_temp_filename(t_heredoc_info *info);
 int			process_heredoc(t_heredoc_info *info, t_data *data);
 int			execute_delim(t_token **head, t_data *data);
 void		add_heredoc_file(t_data *data, char *filename, int id);
+void		free_heredoc_info(t_heredoc_info *info);
 
 /* execute_echo.c */
 int			echo_handle_option(char **args);
@@ -335,6 +345,8 @@ void		set_token_parenth2(t_token *token);
 int			lexic_with_parenth(t_data *data);
 void		tokenize_parenth2(t_data *data, char *str, int *i, t_token ***head);
 void		tokenise_parenth(t_data *data, char *str);
+void	    update_input_line(t_data *data);
+void		copy_filename(t_data *data, t_copy_params *params);
 
 /* commands.c */
 void		free_paths(char **paths, char **original_paths);          
@@ -413,6 +425,8 @@ int			has_asterisk(char *str);
 void		fix_tree(t_tree **tree);
 void		connect_nodes(t_tree **temp_redir, t_tree *temp2);
 void		process_tree_nodes(t_tree **tree);
+void		update_non_tword_nodes(t_tree **firstNonTWord, t_tree **lastNonTWord, t_tree **tmp, t_tree **tmp2);
+void		update_tword_node(t_tree *address, t_tree **tmp, t_tree **tmp2);
 void		fix_redirection(t_tree **tree);
 void		fix_command(t_tree **tree);
 void		process_fix_com(t_tree **tree);

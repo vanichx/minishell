@@ -99,6 +99,32 @@ void process_fix_com(t_tree **tree)
         tmp->value = ft_strdup(tmp->args_array[0]);
 }
 
+void update_non_tword_nodes(t_tree **firstNonTWord, t_tree **lastNonTWord, t_tree **tmp, t_tree **tmp2)
+{
+    if (!*firstNonTWord)
+    {
+        *firstNonTWord = *tmp;
+        *lastNonTWord = *firstNonTWord;
+    }
+    else
+    {
+        (*lastNonTWord)->right = *tmp;
+        *lastNonTWord = *tmp;
+    }
+    *tmp2 = *tmp;
+    *tmp = (*tmp)->right;
+}
+
+void update_tword_node(t_tree *address, t_tree **tmp, t_tree **tmp2)
+{
+    address->args_array = join2darrays(address->args_array, (*tmp)->args_array);
+    ft_strdel(&(*tmp)->value);
+    *tmp2 = (*tmp)->right;
+    address->right = *tmp2;
+    free(*tmp);
+    *tmp = *tmp2;
+}
+
 void find_command(t_tree **tree)
 {
 	t_tree	*tmp;
@@ -107,50 +133,24 @@ void find_command(t_tree **tree)
 	char	**command;
 
 	command = NULL;
-
 	if (!tree || !*tree)
 		return;
-
 	tmp2 = NULL;
 	tmp = (*tree)->right;
 	address = (*tree);
 	t_tree *firstNonTWord = NULL;
 	t_tree *lastNonTWord = NULL;
-
 	while (tmp)
 	{
 		if (tmp->type != T_WORD)
-		{
-				if (!firstNonTWord)
-				{
-					firstNonTWord = tmp;
-					lastNonTWord = firstNonTWord;
-				}
-				else
-				{
-					lastNonTWord->right = tmp;
-					lastNonTWord = tmp;
-				}
-				tmp2 = tmp;
-				tmp = tmp->right;
-		}
+			update_non_tword_nodes(&firstNonTWord, &lastNonTWord, &tmp, &tmp2);
 		else if (tmp->type == T_WORD)
-		{
-				address->args_array = join2darrays(address->args_array, tmp->args_array);
-				ft_strdel(&tmp->value);
-				tmp2 = tmp->right;
-				address->right = tmp2;
-				free(tmp);
-				tmp = tmp2;
-		}
+			update_tword_node(address, &tmp, &tmp2);
 	}
-
 	if (lastNonTWord)
 		lastNonTWord->right = NULL;
 	address->right = firstNonTWord;
 }
-
-
 
 char**	join2darrays(char** str1, char** str2) {
 	int		len1;

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 19:13:24 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 02:46:08 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 06:27:32 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	set_token_type(t_data *data)
 		return (data->exit_status = 258, 1);
 	if (execute_delim(&data->token_list, data))
 		return (g_child_pid = 0, 1);
+	if (find_parenthesis(data->input_line))
+		update_input_line(data);
 	if (lexic_with_parenth(data))
 		return (write(STDOUT_FILENO, "\n", 1), 1);
 	clean_space_tokens(&data->token_list);
