@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 18:37:00 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/26 03:28:07 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,6 +403,7 @@ int			has_dollar(char *str);
 void		extend_asterisk(t_token *token, t_data *data);
 void		check_matches(t_token *token, char **root_directory);
 int			match_pattern(const char *pattern, const char *string);
+char		**read_directory(DIR *d, char **root_directory);
 char		**get_root_directory(void);
 void		sort_directory(char **arr);
 int			count_root_directory(void);

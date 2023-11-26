@@ -101,62 +101,62 @@ void process_fix_com(t_tree **tree)
 
 void find_command(t_tree **tree)
 {
-	 t_tree *tmp;
-	 t_tree *tmp2;
-	 t_tree *address;
-	 char **command;
+	t_tree	*tmp;
+	t_tree	*tmp2;
+	t_tree	*address;
+	char	**command;
 
-	 command = NULL;
+	command = NULL;
 
-	 if (!tree || !*tree)
-		  return;
+	if (!tree || !*tree)
+		return;
 
-	 tmp2 = NULL;
-	 tmp = (*tree)->right;
-	 address = (*tree);
-	 t_tree *firstNonTWord = NULL;
-	 t_tree *lastNonTWord = NULL;
+	tmp2 = NULL;
+	tmp = (*tree)->right;
+	address = (*tree);
+	t_tree *firstNonTWord = NULL;
+	t_tree *lastNonTWord = NULL;
 
-	 while (tmp)
-	 {
-		  if (tmp->type != T_WORD)
-		  {
+	while (tmp)
+	{
+		if (tmp->type != T_WORD)
+		{
 				if (!firstNonTWord)
 				{
-					 firstNonTWord = tmp;
-					 lastNonTWord = firstNonTWord;
+					firstNonTWord = tmp;
+					lastNonTWord = firstNonTWord;
 				}
 				else
 				{
-					 lastNonTWord->right = tmp;
-					 lastNonTWord = tmp;
+					lastNonTWord->right = tmp;
+					lastNonTWord = tmp;
 				}
 				tmp2 = tmp;
 				tmp = tmp->right;
-		  }
-		  else if (tmp->type == T_WORD)
-		  {
+		}
+		else if (tmp->type == T_WORD)
+		{
 				address->args_array = join2darrays(address->args_array, tmp->args_array);
 				ft_strdel(&tmp->value);
 				tmp2 = tmp->right;
 				address->right = tmp2;
 				free(tmp);
 				tmp = tmp2;
-		  }
-	 }
+		}
+	}
 
-	 if (lastNonTWord)
-		  lastNonTWord->right = NULL; // Terminate the list of non-T_WORD tokens
+	if (lastNonTWord)
+		lastNonTWord->right = NULL;
 	address->right = firstNonTWord;
 }
 
 
 
-char** join2darrays(char** str1, char** str2) {
-	 int len1;
-	 int len2;
-	int i;
-	 char** result;
+char**	join2darrays(char** str1, char** str2) {
+	int		len1;
+	int		len2;
+	int		i;
+	char**	result;
 
 	if (!str1)
 	{
@@ -165,34 +165,34 @@ char** join2darrays(char** str1, char** str2) {
 		return (result);
 	}
 	len1 = len_2darray(str1);
-	 len2 = len_2darray(str2);
+	len2 = len_2darray(str2);
 	i = 0;
-	 result = (char**)malloc((len1 + len2 + 1) * sizeof(char*));
+	result = (char**)malloc((len1 + len2 + 1) * sizeof(char*));
 	if (!result)
 		return (NULL);
-	 while (*str1) 
+	while (*str1) 
 	{
-		  result[i] = ft_strdup(*str1);
+		result[i] = ft_strdup(*str1);
 		if (!result[i])
 			free_2darray(result);
-		  i++;
-		  str1++;
-	 }
-	 while (*str2)
+		i++;
+		str1++;
+	}
+	while (*str2)
 	{
-		  result[i] = ft_strdup(*str2);
+		result[i] = ft_strdup(*str2);
 		if (!result[i])
 		{
 			free_2darray(result);
 			return (NULL);
 		}
-		  i++;
-		  str2++;
-	 }
-	 result[i] = NULL;
+		i++;
+		str2++;
+	}
+	result[i] = NULL;
 	str1 -= len1;
-	 str2 -= len2;
+	str2 -= len2;
 	free_2darray(&str1[0]);
 	free_2darray(&str2[0]);
-	 return (result);
+	return (result);
 }

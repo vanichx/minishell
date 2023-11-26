@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 10:53:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 10:57:14 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 02:42:36 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	get_output_file(t_tree *tree)
 			fd = open_file(file_name, O_WRONLY | O_CREAT | O_APPEND);
 			update_last_fd(&last_fd, fd);
 		}
+		ft_strdel(&file_name);
 		curr = curr->right;
 	}
 	return (last_fd);

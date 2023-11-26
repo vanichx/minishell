@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_delim.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 18:29:30 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/26 03:09:20 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,48 @@ char	*create_temp_filename(t_heredoc_info *info)
 
 	counter_str = ft_itoa(info->heredoc_count);
 	temp_filename = ft_strjoin(info->filename, counter_str);
-	free(counter_str);
+	ft_strdel(&counter_str);
 	return (temp_filename);
+}
+
+int	handle_heredoc_input(t_heredoc_info *info, int fd, char **old_filename)
+{
+	char	*buf;
+
+	while (1)
+	{
+		buf = readline("> ");
+		if (!buf || !ft_strcmp(info->limiter, buf) || g_child_pid == 44)
+		{
+			ft_strdel(old_filename);
+			ft_strdel(&buf);
+			close(fd);
+			return (0);
+		}
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		ft_strdel(&buf);
+	}
+	return (0);
 }
 
 int	process_heredoc(t_heredoc_info *info, t_data *data)
 {
 	int		fd;
-	char	*buf;
+	char	*old_filename;
 
+	old_filename = info->filename;
 	info->filename = create_temp_filename(info);
 	fd = open(info->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
-		return (printf("minishell: %s\n", strerror(errno)), 1);
+		return (printf("minishell: %s\n", strerror(errno)), \
+		ft_strdel(&old_filename), 1);
 	add_heredoc_file(data, info->filename, fd);
 	g_child_pid = 42;
-	while (1)
-	{
-		buf = readline("> ");
-		if (!buf || !ft_strcmp(info->limiter, buf) || g_child_pid == 44)
-			return (g_child_pid = 0, free(buf), close(fd), 0);
-		write(fd, buf, ft_strlen(buf));
-		write(fd, "\n", 1);
-		free(buf);
-	}
-	if (buf)
-		free(buf);
+	if (handle_heredoc_input(info, fd, &old_filename) != 0)
+		return (1);
 	info->heredoc_count++;
-	return (g_child_pid = 0, close (fd), 0);
+	return (ft_strdel(&old_filename), g_child_pid = 0, close (fd), 0);
 }
 
 int	execute_delim(t_token **head, t_data *data)
