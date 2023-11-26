@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:06:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 02:42:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 10:33:00 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	execute_and_handle_files(t_data *data, t_tree *tree)
 			close(fd_out);
 		return (data->exit_status);
 	}
+	if (fd_inp != 0)
+		close(fd_inp);
+	if (fd_out != 1)
+		close(fd_out);
 	return (0);
 }
 
