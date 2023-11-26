@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fix_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 07:47:19 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 08:31:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 09:56:25 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ void	process_fix_com(t_tree **tree)
 		tmp->value = ft_strdup(tmp->args_array[0]);
 }
 
-void	update_non_tword_nodes(t_tree **firstNonTWord, t_tree **lastNonTWord, \
+void	update_non_tword_nodes(t_tree **f_nontokw, t_tree **l_nontokw, \
 	t_tree **tmp, t_tree **tmp2)
 {
-	if (!*firstNonTWord)
+	if (!*f_nontokw)
 	{
-		*firstNonTWord = *tmp;
-		*lastNonTWord = *firstNonTWord;
+		*f_nontokw = *tmp;
+		*l_nontokw = *f_nontokw;
 	}
 	else
 	{
-		(*lastNonTWord)->right = *tmp;
-		*lastNonTWord = *tmp;
+		(*l_nontokw)->right = *tmp;
+		*l_nontokw = *tmp;
 	}
 	*tmp2 = *tmp;
 	*tmp = (*tmp)->right;
@@ -67,20 +67,20 @@ void	find_command(t_tree **tree)
 
 	if (!tree || !*tree)
 		return ;
-	vars.firstNonTWord = NULL;
-	vars.lastNonTWord = NULL;
+	vars.f_nontokw = NULL;
+	vars.l_nontokw = NULL;
 	vars.tmp2 = NULL;
 	vars.tmp = (*tree)->right;
 	vars.address = (*tree);
 	while (vars.tmp)
 	{
 		if (vars.tmp->type != T_WORD)
-			update_non_tword_nodes(&vars.firstNonTWord, \
-			&vars.lastNonTWord, &vars.tmp, &vars.tmp2);
+			update_non_tword_nodes(&vars.f_nontokw, \
+			&vars.l_nontokw, &vars.tmp, &vars.tmp2);
 		else if (vars.tmp->type == T_WORD)
 			update_tword_node(vars.address, &vars.tmp, &vars.tmp2);
 	}
-	if (vars.lastNonTWord)
-		vars.lastNonTWord->right = NULL;
-	vars.address->right = vars.firstNonTWord;
+	if (vars.l_nontokw)
+		vars.l_nontokw->right = NULL;
+	vars.address->right = vars.f_nontokw;
 }
