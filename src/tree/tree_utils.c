@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 08:46:15 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 09:19:34 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 09:29:42 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_tree	*init_tree_root(void)
 	tree->type = 0;
 	tree->value = NULL;
 	tree->args_array = NULL;
-	tree->parenth = 0;
 	tree->left = NULL;
 	tree->right = NULL;
 	return (tree);

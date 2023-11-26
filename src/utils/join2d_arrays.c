@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 08:15:03 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 08:22:30 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 09:44:41 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 static char	**initialize_result(char **str1, char **str2)
 {
+	char	**result;
+
 	if (!str1)
 	{
-		char **result = dup_2darray(str2);
+		result = dup_2darray(str2);
 		free_2darray(str2);
-		return result;
+		return (result);
 	}
-	return NULL;
+	return (NULL);
 }
 
 static char	**allocate_result(char **str1, char **str2)
 {
-	int len1;
-	int len2;
+	int	len1;
+	int	len2;
 
 	len1 = len_2darray(str1);
 	len2 = len_2darray(str2);
-	return ((char**)malloc((len1 + len2 + 1) * sizeof(char*)));
+	return ((char **)malloc((len1 + len2 + 1) * sizeof(char *)));
 }
 
 static char	**copy_array(char **src, char **dest, int *i)
@@ -41,35 +43,34 @@ static char	**copy_array(char **src, char **dest, int *i)
 		if (!dest[*i])
 		{
 			free_2darray(dest);
-			return NULL;
+			return (NULL);
 		}
 		(*i)++;
 		src++;
 	}
-	return dest;
+	return (dest);
 }
 
 char	**join2darrays(char **str1, char **str2)
 {
-	int i = 0;
-	char **result = initialize_result(str1, str2);
-	if (result)
-		return result;
+	char	**result;
+	int		i;
 
+	i = 0;
+	result = initialize_result(str1, str2);
+	if (result)
+		return (result);
 	result = allocate_result(str1, str2);
 	if (!result)
-		return NULL;
-
+		return (NULL);
 	result = copy_array(str1, result, &i);
 	if (!result)
-		return NULL;
-
+		return (NULL);
 	result = copy_array(str2, result, &i);
 	if (!result)
-		return NULL;
-
-	result[i] = NULL;
+		return (NULL);
+	result[i] = (NULL);
 	free_2darray(str1);
 	free_2darray(str2);
-	return result;
+	return (result);
 }

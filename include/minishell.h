@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:00:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 08:58:59 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 09:31:26 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_tree {
 	t_token_type	type;
 	char			*value;
 	char			**args_array;
-	int				parenth;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }				t_tree;
@@ -462,6 +461,7 @@ t_token 	*copy_tokens(t_token *head);
 void		initialize_vars(t_tokenise_tree *vars, t_token *t_parenth);
 
 /* tree_init.c */
+int			init_tree_one_parenth(t_data *data, t_token **root_token, t_token **head);
 int			init_tree(t_data *data, t_token **head);
 int			built_tree(t_tree **tree, t_token *address, t_data *data);
 int			handle_lexical_analysis(t_tokenise_tree *vars);
