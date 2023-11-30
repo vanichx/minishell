@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parenthesis_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 18:38:11 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 18:41:35 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:10:00 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	set_token_parenth(t_data *data)
 	}
 	data->token_list = head;
 	clean_null_tokens(&data->token_list);
-	fix_tokens(&data->token_list);
+	fix_tokens(&data->token_list, data);
 	if (syntax_error_parenth(&data->token_list))
 		return (1);
 	return (0);
@@ -72,13 +72,11 @@ int	set_token_parenth(t_data *data)
 
 int	find_token3(t_data *data, char *str, int *i, t_token **head)
 {
-	if (is_chr_str(str[*i], " \t*(") && !in_quotes(str, *i)
+	if (is_chr_str(str[*i], " \t(") && !in_quotes(str, *i)
 		&& !is_escaped(str, *i - 1))
 	{
 		add_token(head, create_token(data, *i));
-		if (str[*i] == '*')
-			add_token(head, create_arg_token(data, "*", T_STAR));
-		else if (str[*i] == ' ' || str[*i] == '\t')
+		if (str[*i] == ' ' || str[*i] == '\t')
 			add_token(head, create_arg_token(data, " ", T_SPACE));
 		else if (str[*i] == '(')
 			(*i)--;
@@ -108,8 +106,6 @@ void	set_token_parenth2(t_token *token)
 		token->type = T_DOLLAR;
 	else if (!ft_strcmp(token->word, " "))
 		token->type = T_SPACE;
-	else if (!ft_strcmp(token->word, "*"))
-		token->type = T_STAR;
 	else if (!ft_strcmp(token->word, "&"))
 		token->type = T_AMPER;
 	else if (token->type != T_NEWLINE && token->type != T_PARENTHESES)

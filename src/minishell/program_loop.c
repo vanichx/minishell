@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:51:13 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/05 18:22:13 by alappas          ###   ########.fr       */
+/*   Updated: 2023/11/26 08:45:12 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,25 @@ void	start_loop(t_data *data)
 {
 	char	*line;
 
-	while (1)
+	while (42)
 	{
 		reset_data(data);
 		line = readline(data->input_minishell);
-		// data->input_line = "(1 | 2)";
 		if (handle_d(data, line))
 			continue ;
 		if (ft_strlen(line) > 0)
 			add_history(line);
+		if (odd_quote(line, data))
+			continue ;
 		data->input_line = trim_input(line);
 		ft_strdel(&line);
-		check_exit(data->input_line);
-		if ((odd_quote(data->input_line, data))
-			|| (special_chars(data->input_line))
+		if ((special_chars(data->input_line))
 			|| (lexical_analysis(data, data->input_line)))
 			continue ;
-		init_tree(data);
-		// print_tree(data->tree);
+		if (init_tree(data, &data->token_list))
+			continue ;
+		fix_tree(&data->tree);
+		if (execute(data))
+			continue ;
 	}
 }
-// last_input(data->tree);
-// last_output(data->tree);
-// printf("token length: %d\n", token_len(data->token_list));
-// free(data->input_line);

@@ -6,34 +6,12 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:27:42 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:29:03 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/26 14:11:07 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	find_token(t_data *data, char *str, int *i, t_token **head)
-{
-	if (is_chr_str(str[*i], " \t*") && !in_quotes(str, *i)
-		&& !is_escaped(str, *i - 1))
-	{
-		add_token(head, create_token(data, *i));
-		if (str[*i] == '*')
-			add_token(head, create_arg_token(data, "*", T_STAR));
-		else if (str[*i] == ' ' || str[*i] == '\t')
-			add_token(head, create_arg_token(data, " ", T_SPACE));
-		(*i)++;
-		data->count = 0;
-		return (0);
-	}
-	else if (is_chr_str(str[*i], "|<>&") && !in_quotes(str, *i)
-		&& !is_escaped(str, *i - 1) && *i > 0
-		&& !is_chr_str(str[*i - 1], "|<>&"))
-		add_token(head, create_token(data, *i));
-	return (1);
-}
-
-// printing the tokens to debug
 void	print_tokens(t_data *data)
 {
 	t_token	*tmp;
@@ -95,4 +73,13 @@ void	clean_space_tokens(t_token **head)
 		else
 			current = current->next;
 	}
+}
+
+void	fix_tokens_tree(t_token **head)
+{
+	find_ortokens(head);
+	find_andtokens(head);
+	find_inout(head);
+	find_threeout(head);
+	find_threein(head);
 }

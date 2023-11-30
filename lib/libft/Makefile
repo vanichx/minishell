@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:23 by eseferi           #+#    #+#              #
-#    Updated: 2023/10/26 09:49:59 by eseferi          ###   ########.fr        #
+#    Updated: 2023/11/04 22:54:41 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,17 +18,7 @@ RM				=	rm -rf
 
 # Paths and Files
 VPATH			=	src:src/conversion:src/list:src/memory:src/output:src/string
-SRCS			=	ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_isspace.c\
-					ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
-					ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_bzero.c ft_calloc.c \
-					ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-					ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
-					ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
-					ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c ft_striteri.c \
-					ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-					ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
-					ft_strjoin_free.c ft_strjoin_double_free.c ft_strdel.c ft_strcat.c  ft_strcpy.c\
-					ft_ssplit.c ft_split_n.c ft_chr_in_str.c
+SRCS 			= 	$(wildcard src/*.c src/conversion/*.c src/list/*.c src/memory/*.c src/output/*.c src/string/*.c)
 							
 OBJS			=	$(addprefix obj/,$(SRCS:.c=.o))
 

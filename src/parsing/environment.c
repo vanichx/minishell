@@ -3,59 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 21:01:10 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/23 18:14:01 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	save_envir(t_data *data, char **env_str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (env_str[j])
-		j++;
-	data->env_array = malloc(sizeof(char *) * (j + 1));
-	printf("save envir malloc success\n");
-	while (env_str[i])
-	{
-		data->env_array[i] = ft_strdup(env_str[i]);
-		i++;
-	}
-	data->env_array[i] = NULL;
-}
-
-int	find_envir_line(t_envir *env, char *var_name)
-{
-	int	i;
-
-	i = 0;
-	while (var_name[i])
-	{
-		if (ft_strcmp(env->var_name[i], var_name) == 0)
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-void	print_env_node(void *env_node)
+void	print_env_node(t_envir *env_node, int fd_out)
 {
 	t_envir	*env;
 	int		i;
 
-	env = (t_envir *)env_node;
+	if (!env_node)
+		return ;
+	env = env_node;
 	i = 0;
-	while (env->var_name[i])
+	if (!env->visible)
 	{
-		printf("%s=%s\n", env->var_name[i], env->var_value[i]);
-		i++;
+		ft_putstr_fd(env->var_name, fd_out);
+		ft_putstr_fd("=", fd_out);
+		ft_putstr_fd(env->var_value, fd_out);
+		ft_putstr_fd("\n", fd_out);
+	}
+	else
+		return ;
+}
+
+void	print_env_node_sorted(t_envir *env_node, int fd_out)
+{
+	t_envir	*env;
+	int		i;
+
+	if (!env_node)
+		return ;
+	env = env_node;
+	i = 0;
+	if (env->visible)
+	{
+		ft_putstr_fd("declare -x ", fd_out);
+		ft_putstr_fd(env->var_name, fd_out);
+		ft_putstr_fd("\n", fd_out);
+	}
+	else
+	{
+		ft_putstr_fd("declare -x ", fd_out);
+		ft_putstr_fd(env->var_name, fd_out);
+		ft_putstr_fd("=\"", fd_out);
+		ft_putstr_fd(env->var_value, fd_out);
+		ft_putstr_fd("\"\n", fd_out);
 	}
 }
 

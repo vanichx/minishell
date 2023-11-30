@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:45:14 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/25 19:55:35 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/04 22:16:10 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ int	ft_strchr(const char *s, int c)
 			return (1);
 		s++;
 	}
-	
 	return (0);
 }

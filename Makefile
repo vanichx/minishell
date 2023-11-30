@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/05 03:07:15 by alappas          ###   ########.fr        #
+#    Updated: 2023/11/26 12:57:36 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g #-fsanitize=address -fno-omit-frame-pointer
+CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
 MINISHELL			=   minishell
@@ -22,7 +22,7 @@ NAME				=	$(MINISHELL)
 RL_PREFIX = $(HOME)/.local/pkg/readline
 RL_CFLAGS = -I $(RL_PREFIX)/include
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
-VALGRIND  = valgrind --leak-check=full #--show-leak-kinds=all -s --track-origins=yes
+VALGRIND  = valgrind --track-fds=yes --trace-children=yes#--log-file="valog" #--leak-check=full  -s --show-leak-kinds=all #--track-origins=yes
 LEAKS	  = leaks --atExit --
 
 # Libraries
@@ -34,7 +34,7 @@ CFLAGS				+=	-I $(LIBFT_DIR)/include
 MAKE_LIB			=	make --no-print-directory -C
 
 # Source and Object Files
-VPATH				=	src:include:src/execution:src/lexer:src/parsing:src/quotes:src/utils:include
+VPATH				=	src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/expander:src/tree:src/utils:include
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	$(shell find src -name '*.c')
 

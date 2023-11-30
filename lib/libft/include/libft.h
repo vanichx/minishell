@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:42:09 by eseferi           #+#    #+#             */
-/*   Updated: 2023/10/26 09:49:46 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/18 13:27:34 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 int					ft_atoi(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
-char				*ft_strjoin_double_free(char const *s1, char const *s2);
+char				*ft_strjoin_double_free(const char *s1, const char *s2);
 char				*ft_strjoin_free(char *s1, char *s2);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
-char				**ft_ssplit(char const *s, char *set);
-char				**ft_split_n(char const *s, char c, int n);
+char				**ft_split_parenth(char const *s, char c);
 char				*ft_itoa(int n);
 void				ft_strdel(char **s);
 char				*ft_strcat(char *dst, const char *src);
@@ -69,7 +68,7 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 
 void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char *s, int fd);
+int					ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 

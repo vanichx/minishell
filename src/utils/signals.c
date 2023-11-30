@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/04 20:34:19 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/30 09:29:10 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -25,20 +27,53 @@ void	handle_signal(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void	handle_c(int signo)
+void	handle_sigint(int signo)
 {
 	if (signo == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (isatty(STDIN_FILENO))
+		{
+			write(1, "\n", 1);
+			if (g_child_pid == 42)
+				g_child_pid = 44;
+			if (g_child_pid != 0 && g_child_pid != 44)
+			{
+				kill(g_child_pid, SIGINT);
+				g_child_pid++;
+			}
+			else
+			{
+				rl_on_new_line();
+				rl_replace_line("", 0);
+				rl_redisplay();
+			}
+		}
+		else
+			exit(EXIT_SUCCESS);
 	}
+}
+
+void	handle_sigtstp_sigquit(int signo)
+{
 	if (signo == SIGTSTP || signo == SIGQUIT)
 	{
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (isatty(STDIN_FILENO))
+		{
+			if (g_child_pid == 0)
+				rl_redisplay();
+			else
+			{
+				kill(g_child_pid, signo);
+				g_child_pid += 2;
+			}
+		}
 	}
+}
+
+void	handle_c(int signo)
+{
+	handle_sigint(signo);
+	handle_sigtstp_sigquit(signo);
 }
 
 int	handle_d(t_data *data, char *line)

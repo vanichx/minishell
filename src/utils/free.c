@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alappas <alappas@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:48:33 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/06 19:19:42 by alappas          ###   ########.fr       */
+/*   Updated: 2023/11/25 05:45:51 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,37 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
-	free_2darray(data->env_array);
-	free_tokens(&data->token_list, free);
+	if (data->env_list)
+		ft_envclear(&data->env_list);
+	if (data->sorted_env_list)
+		ft_envclear(&data->sorted_env_list);
+	if (data->token_list)
+		free_tokens(&data->token_list, free);
+	if (data->curr_dir)
+		ft_strdel(&data->curr_dir);
+	if (data->input_line)
+		ft_strdel(&data->input_line);
+	if (data->root_directory && *data->root_directory)
+		free_2darray(data->root_directory);
+	if (data->heredoc_file)
+		free_heredoc_files(data->heredoc_file);
+	if (data->tree)
+	{
+		free_tree(&data->tree);
+		data->tree = NULL;
+	}
+	free(data);
+	data = NULL;
+}
+
+void	free_temp_data(t_data *data)
+{
+	if (!data)
+		return ;
+	if (data->input_line)
+		ft_strdel(&data->input_line);
+	if (data->token_list)
+		free_tokens(&data->token_list, free);
 	free(data);
 	data = NULL;
 }
@@ -60,64 +89,19 @@ void	free_envir(t_envir *envir)
 	free(tmp);
 }
 
-void	free_2darray(char **array)
+void	free_heredoc_files(t_heredoc_file *head)
 {
-	int	i;
+	t_heredoc_file	*tmp;
+	int				ret;
 
-	i = -1;
-	if (!array)
-		return ;
-	while (array[++i])
-		ft_strdel(&array[i]);
-	free(array);
-	array = NULL;
+	while (head != NULL)
+	{
+		tmp = head->next;
+		ret = unlink(head->filename);
+		if (ret < 0)
+			printf("minishell: %s\n", strerror(errno));
+		free(head->filename);
+		free(head);
+		head = tmp;
+	}
 }
-
-// void	free_tree(t_data *data)
-
-// {
-// 	int i;
-// 	t_tree *right;
-
-// 	i = 0;
-// 	if (!data->tree)
-// 		return ;
-// 	while (data->tree)
-// 	{
-// 		right = data->tree->right;
-// 		if (data->tree->left)
-// 		{
-// 			if (data->tree->left->args_array)
-// 				free_2darray(data->tree->left->args_array);
-// 			free(data->tree->left);
-// 			data->tree->left = NULL;
-// 		}
-// 		free_2darray(data->tree->args_array);
-// 		free(data->tree);
-// 		data->tree = right;
-// 	}
-// }
-
-// void	free_commands(t_cmdexe **head, void (*del)(void *))
-// {
-// 	t_cmdexe *tmp;
-// 	t_cmdexe *tmp2;
-
-// 	if (!head || !del)
-// 		return ;
-// 	tmp = *head;
-// 	while (tmp)
-// 	{
-// 		printf("free_commands inside while \n");
-// 		if (tmp->cmd)
-// 			ft_strdel(&tmp->cmd);
-// 		if (tmp->path)
-// 			ft_strdel(&tmp->path);
-// 		if (tmp->args_array)
-// 			free_2darray(tmp->args_array);
-// 		tmp2 = tmp->next;
-// 		free(tmp);
-// 		tmp = tmp2;
-// 	}
-// 	*head = NULL;
-// }
