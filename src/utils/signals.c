@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 11:07:08 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/30 09:29:10 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -58,10 +60,7 @@ void	handle_sigtstp_sigquit(int signo)
 		if (isatty(STDIN_FILENO))
 		{
 			if (g_child_pid == 0)
-			{
-				rl_replace_line("", 0);
 				rl_redisplay();
-			}
 			else
 			{
 				kill(g_child_pid, signo);

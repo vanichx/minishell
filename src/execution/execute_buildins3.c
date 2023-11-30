@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_buildins3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 13:03:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 13:11:51 by eseferi          ###   ########.fr       */
+/*   Updated: 2023/11/30 09:28:19 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	execute_unset(t_data *data, t_tree *tree)
 	args = tree->args_array;
 	while (args[++i])
 	{
+		if (ft_strcmp(args[i], "ENV"))
+			return (0);
 		if (validate_and_remove_env_var(data, args[i]))
 			return (1);
 	}
