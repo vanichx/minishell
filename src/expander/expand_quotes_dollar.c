@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   expand_quotes_dollar.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 18:42:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 06:40:41 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:17:30 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,13 @@ char	*expand_double_quotes(t_data *data, char *s, int *i, char *result)
 char	*expand_single_quotes(char *s, int *i, char *result)
 {
 	char	*temp;
-	int		j;
 
 	temp = NULL;
-	j = 0;
 	while (s[++(*i)] != '\'')
 	{
 		temp = ft_substr(s, *i, 1);
 		if (temp)
-		{
 			result = ft_strjoin_double_free(result, temp);
-			j = ft_strlen(result);
-		}
 	}
 	return (result);
 }

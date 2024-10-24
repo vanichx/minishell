@@ -6,7 +6,7 @@
 /*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:32:51 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/30 09:43:46 by ipetruni         ###   ########.fr       */
+/*   Updated: 2023/11/22 11:03:47 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	reset_data(t_data *data)
 		data->heredoc_file = NULL;
 	}
 	data->root_directory = get_root_directory();
-	if (!data->root_directory)
-		exit_shell("failed to get root directory\n", 1, data);
 	if (data->input_line && ft_strlen(data->input_line) > 0)
 		ft_strdel(&data->input_line);
 	if (data->tree)

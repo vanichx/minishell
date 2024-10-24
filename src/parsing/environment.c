@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:58:54 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/23 18:14:01 by ipetruni         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:22:44 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	print_env_node(t_envir *env_node, int fd_out)
 {
 	t_envir	*env;
-	int		i;
 
 	if (!env_node)
 		return ;
 	env = env_node;
-	i = 0;
 	if (!env->visible)
 	{
 		ft_putstr_fd(env->var_name, fd_out);
@@ -35,12 +33,10 @@ void	print_env_node(t_envir *env_node, int fd_out)
 void	print_env_node_sorted(t_envir *env_node, int fd_out)
 {
 	t_envir	*env;
-	int		i;
 
 	if (!env_node)
 		return ;
 	env = env_node;
-	i = 0;
 	if (env->visible)
 	{
 		ft_putstr_fd("declare -x ", fd_out);

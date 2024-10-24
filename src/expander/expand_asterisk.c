@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_asterisk.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:35:05 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 12:50:21 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:16:32 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ void	update_asterisk_token(t_token *token, t_data *data)
 
 void	extend_asterisk(t_token *token, t_data *data)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
 	if (is_only_asterisks(token->word))
 		update_asterisk_token(token, data);
 	else if (has_asterisk(token->word))

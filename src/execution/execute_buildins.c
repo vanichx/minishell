@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_buildins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:05:06 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/25 13:09:49 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:08:25 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ int	execute_builtin(t_data *data, t_tree *tree, int fd_out)
 
 int	check_echo(t_data *data, t_tree *tree, int fd_out)
 {
-	char	**cmd;
-
-	cmd = NULL;
 	if (!ft_strcmp(tree->args_array[0], "echo")
 		|| !ft_strcmp(tree->args_array[0], "ECHO"))
 	{

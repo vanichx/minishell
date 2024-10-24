@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 20:34:12 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/30 09:29:10 by ipetruni         ###   ########.fr       */
+/*   Updated: 2024/04/11 15:44:55 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 #include "minishell.h"
 
@@ -21,7 +19,6 @@ void	handle_signal(void)
 	sa.sa_handler = handle_c;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-	rl_catch_signals = 0;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
@@ -33,7 +30,8 @@ void	handle_sigint(int signo)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			write(1, "\n", 1);
+			int i = write(1, "\n", 1);
+			(void) i;
 			if (g_child_pid == 42)
 				g_child_pid = 44;
 			if (g_child_pid != 0 && g_child_pid != 44)
@@ -44,7 +42,6 @@ void	handle_sigint(int signo)
 			else
 			{
 				rl_on_new_line();
-				rl_replace_line("", 0);
 				rl_redisplay();
 			}
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fix_tree2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 08:23:01 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 08:23:29 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:23:15 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ void	process_tree_nodes(t_tree **tree)
 
 void	fix_redirection(t_tree **tree)
 {
-	t_tree	*temp;
-	t_tree	*temp_redir;
-
-	temp = NULL;
-	temp_redir = NULL;
 	if (!tree || !*tree)
 		return ;
 	if ((*tree)->type == T_WORD)

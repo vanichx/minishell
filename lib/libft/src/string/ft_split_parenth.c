@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_parenth.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:05:49 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 09:49:57 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:11:35 by ipetruni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,9 @@ static void	process_array_element(char **arr, int *i)
 char	**ft_split_parenth(char const *s, char c)
 {
 	char	**arr;
-	char	*temp;
 	int		i;
 
 	i = 0;
-	temp = NULL;
 	if (!s)
 		return (NULL);
 	arr = ft_calloc((ft_countarr(s, c) + 1), sizeof(char *));

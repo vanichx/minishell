@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:20:50 by ipetruni          #+#    #+#             */
-/*   Updated: 2023/11/23 13:22:02 by ipetruni         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:23:37 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_2darray(char **array)
 
 void	free_tree(t_tree **tree)
 {
-	int		i;
 	t_tree	*temp_tree;
 	t_tree	*left;
 	t_tree	*right;
@@ -35,7 +34,6 @@ void	free_tree(t_tree **tree)
 	temp_tree = *tree;
 	left = NULL;
 	right = NULL;
-	i = 0;
 	if (!temp_tree)
 		return ;
 	if (temp_tree->value)

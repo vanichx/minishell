@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   root_directory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 03:19:23 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/30 09:28:38 by ipetruni         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:17:53 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ char	**read_directory(DIR *d, char **root_directory)
 
 	i = 0;
 	dir = readdir(d);
-	if (dir == 0)
-		return (NULL);
 	while (dir != NULL)
 	{
 		if (ft_strncmp(dir->d_name, ".", 1))
 		{
+			root_directory[i] = ft_strdup(dir->d_name);
 			if (root_directory[i] == NULL)
 			{
+				while (i > 0)
+					ft_strdel(&root_directory[--i]);
+				free(root_directory);
+				closedir(d);
 				return (NULL);
 			}
-			root_directory[i] = ft_strdup(dir->d_name);
 			i++;
 		}
 		dir = readdir(d);
@@ -43,10 +45,8 @@ char	**get_root_directory(void)
 {
 	DIR				*d;
 	int				len;
-	int				i;
 	char			**root_directory;
 
-	i = 0;
 	len = count_root_directory();
 	root_directory = malloc(sizeof(char *) * (len + 1));
 	if (root_directory == NULL)
@@ -58,8 +58,6 @@ char	**get_root_directory(void)
 		if (root_directory == NULL)
 			return (NULL);
 	}
-	else
-		return (NULL);
 	sort_directory(root_directory);
 	return (root_directory);
 }
@@ -74,7 +72,7 @@ void	sort_directory(char **arr)
 	while (arr[i] != NULL)
 	{
 		j = i + 1;
-		while (arr[j] != NULL && arr[i] != NULL)
+		while (arr[j] != NULL)
 		{
 			if (ft_strcmp(arr[i], arr[j]) > 0)
 			{
@@ -96,8 +94,6 @@ int	count_root_directory(void)
 
 	count = 0;
 	d = opendir("/");
-	if (d == NULL)
-		return (0);
 	if (d)
 	{
 		dir = readdir(d);

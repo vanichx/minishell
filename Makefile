@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+         #
+#    By: ipetruni <ipetruni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 16:46:30 by eseferi           #+#    #+#              #
-#    Updated: 2023/11/26 12:57:36 by eseferi          ###   ########.fr        #
+#    Updated: 2024/10/24 14:11:03 by ipetruni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Variables
 CC					=	gcc
-CFLAGS				=	-Wall -Wextra -Iinclude -Isrc -O3 -g -fsanitize=address -fno-omit-frame-pointer
+CFLAGS				=	-Wall -Wextra -Iinc -Isrc #-O3 -g -fsanitize=address -fno-omit-frame-pointer
 
 RM					=	rm -rf
 MINISHELL			=   minishell
@@ -20,7 +20,7 @@ NAME				=	$(MINISHELL)
 
 # readline, leaks, valgrind
 RL_PREFIX = $(HOME)/.local/pkg/readline
-RL_CFLAGS = -I $(RL_PREFIX)/include
+RL_CFLAGS = -I $(RL_PREFIX)/inc
 RL_LIBS   = -L $(RL_PREFIX)/lib -lreadline -lhistory -lcurses
 VALGRIND  = valgrind --track-fds=yes --trace-children=yes#--log-file="valog" #--leak-check=full  -s --show-leak-kinds=all #--track-origins=yes
 LEAKS	  = leaks --atExit --
@@ -29,12 +29,12 @@ LEAKS	  = leaks --atExit --
 LIBFT				=	libft.a
 LIBFT_DIR			=	lib/libft
 LIBFT_FILE			=	$(LIBFT_DIR)/$(LIBFT)
-CFLAGS				+=	-I $(LIBFT_DIR)/include
+CFLAGS				+=	-I $(LIBFT_DIR)/inc
 
-MAKE_LIB			=	make --no-print-directory -C
+MAKE_LIB			=	make --no-print-directory -C 
 
 # Source and Object Files
-VPATH				=	src:include:src/execution:src/lexer:src/parenthesis:src/parsing:src/expander:src/tree:src/utils:include
+VPATH				=	src:inc:src/execution:src/lexer:src/parenthesis:src/parsing:src/expander:src/tree:src/utils:inc
 MINISHELL_INC		=	minishell.h
 MINISHELL_SRC		=	$(shell find src -name '*.c')
 
@@ -53,7 +53,7 @@ $(LIBFT_FILE):
 					$(MAKE_LIB) $(LIBFT_DIR)
 
 $(NAME):			$(LIBFT_FILE) $(MINISHELL_OBJ)
-					@$(CC) $(CFLAGS) $(LIBFT_FILE) $(MINISHELL_OBJ) $(RL_LIBS) -o $@
+					@$(CC) $(CFLAGS) $(MINISHELL_OBJ) $(LIBFT_FILE) $(RL_LIBS) -o $@
 					@echo "$(GREEN)$(NAME) was successfully created!$(DEFAULT)"
 
 lib_clean:

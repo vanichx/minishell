@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_delim.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eseferi <eseferi@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 02:29:39 by eseferi           #+#    #+#             */
-/*   Updated: 2023/11/26 07:58:41 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:14:02 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	create_temp_filename(t_heredoc_info *info)
 int	handle_heredoc_input(t_heredoc_info *info, int fd, char **old_filename)
 {
 	char	*buf;
+	int		write_ret = 0;
 
 	while (42)
 	{
@@ -34,8 +35,9 @@ int	handle_heredoc_input(t_heredoc_info *info, int fd, char **old_filename)
 			close(fd);
 			return (0);
 		}
-		write(fd, buf, ft_strlen(buf));
-		write(fd, "\n", 1);
+		write_ret += write(fd, buf, ft_strlen(buf));
+		write_ret += write(fd, "\n", 1);
+		(void) write_ret; 
 		ft_strdel(&buf);
 	}
 	return (0);
