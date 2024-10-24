@@ -88,7 +88,7 @@ This process allows Minishell to handle complex command lines with multiple comm
 
 - Clone Repository by cloning also in recursive the submodule since im using my libft archive
 
-    git clone --recursive https://github.com/Vikingu-del/Minishell
+   git clone https://github.com/vanichx/minishell.git minishell
 
 - In case your readline has problems especially if you are on macs of 42 navigate to the collections directory and run the bash script
 
